@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Institute;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -9,12 +9,13 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword;
+    use Authenticatable, Authorizable, CanResetPassword, SoftDeletes;
 
     /**
      * The database table used by the model.
@@ -28,7 +29,9 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['user', 'password', 'role_id', 'remember_token'];
+    protected $dates = ['deleted_at'];
+    public $timestamps = false;
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -36,4 +39,21 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+    public function setPasswordAttribute($valor){
+        if(!empty($valor)){
+            $this->attributes['password'] = \Hash::make($valor);
+        }
+    }
+    public function role()
+    {
+        return $this->belongsTo('Institute\Role');
+    }
+    public function student()
+    {
+        return $this->hasOne('Institute\People','id');
+    }
+    public function teacher()
+    {
+        return $this->hasOne('Institute\Teacher','id');
+    }
 }

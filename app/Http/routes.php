@@ -11,6 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','FrontController@index');
+Route::get('admin','FrontController@admin');
+
+Route::get('password/email','Auth\PasswordController@getEmail');
+Route::post('password/email','Auth\PasswordController@postEmail');
+
+Route::get('password/reset/{token}','Auth\PasswordController@getReset');
+Route::post('password/reset','Auth\PasswordController@postReset');
+
+Route::resource('user','UserController');
+Route::resource('admin/role','RoleController');
+Route::resource('admin/functionality','FunctionalityController');
+Route::resource('admin/system','SystemController');
+Route::resource('admin/menu','MenuController');
+Route::resource('log','LogController');
+Route::get('logout','LogController@logout');

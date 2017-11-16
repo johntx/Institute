@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Institute\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
@@ -38,7 +38,7 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('auth/login');
+                return redirect()->guest('log');
             }
         }
 
