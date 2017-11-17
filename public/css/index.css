@@ -1,0 +1,14 @@
+#banner{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	position: relative;
+}
+#banner>img{
+	position: relative;
+	height: 100%;
+}
+#careers{
+	height: 800px;
+}

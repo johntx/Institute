@@ -14,9 +14,9 @@
 		<img src="{!!URL::to('icons/logo.svg')!!}">
 	</div>
 	<ul>
-		<li><a href="#">Opcion</a></li>
-		<li><a href="#">Opcion</a></li>
-		<li><div>Opcion</div></li>
+		<li><a href="#">Inicio</a></li>
+		<li><a href="#">Nosotros</a></li>
+		<li><div>Carreras</div></li>
 		@if(!Auth::user())
 		<li><div class="log">Log In</div></li>
 		@else

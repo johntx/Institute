@@ -4,15 +4,15 @@
 {!! Form::model($functionality) !!}
 <div class="form-group">
 	{!! Form::label('Code*') !!}
-	{!! Form::label('code',null,['class'=>'form-control']) !!}
+	{!! Form::label($functionality->code,null,['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Label*') !!}
-	{!! Form::label('label',null,['class'=>'form-control']) !!}
+	{!! Form::label($functionality->label,null,['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Path*') !!}
-	{!! Form::label('path',null,['class'=>'form-control']) !!}
+	{!! Form::label($functionality->path,null,['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Menu*') !!}
