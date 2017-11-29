@@ -16,8 +16,9 @@
 </div>
 <div class="form-group">
 	{!! Form::label('Menu*') !!}
-	{!! Form::select('menu_id', $menus, null, ['class'=>'form-control']) !!}
-</div>	{!! Form::close() !!}
+	{!! Form::select('menu_id', $menus, null, ['class'=>'form-control','disabled']) !!}
+</div>
+{!! Form::close() !!}
 <div class="col-md-10"></div>
 <div class="col-md-1">
 	{!! Form::open(['route' => ['admin.functionality.destroy',$functionality->id],'method'=>'delete']) !!}

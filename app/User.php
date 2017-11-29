@@ -48,12 +48,8 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->belongsTo('Institute\Role');
     }
-    public function student()
+    public function people()
     {
         return $this->hasOne('Institute\People','id');
-    }
-    public function teacher()
-    {
-        return $this->hasOne('Institute\Teacher','id');
     }
 }

@@ -9,8 +9,8 @@
   {!!Html::style('css/metisMenu.min.css')!!}
   {!!Html::style('css/sb-admin-2.css')!!}
   {!!Html::style('css/font-awesome.min.css')!!}
-  {!!Html::style('css/admin.css')!!}
   {!!Html::style('css/bootstrap-select.css')!!}
+  {!!Html::style('css/admin.css')!!}
 </head>
 <body>
   <div id="wrapper">

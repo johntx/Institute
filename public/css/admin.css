@@ -4,3 +4,6 @@
     right: 20px;
     z-index: 5000;
 }
+.required{
+	color: #FA3939;
+}

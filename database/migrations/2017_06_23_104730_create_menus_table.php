@@ -17,7 +17,6 @@ class CreateMenusTable extends Migration
             $table->string('code',10)->unique();
             $table->string('label',20);
             $table->string('icon',20)->nullable();
-            $table->softDeletes();
         });
     }
 
