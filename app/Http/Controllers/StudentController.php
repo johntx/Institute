@@ -49,7 +49,10 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('admin/student.create');
+        $careers = \Institute\Career::join('startclasses','careers.id','=','startclasses.career_id')
+        ->where('startclasses.estado','!=','Cerrado')
+        ->get();
+        return view('admin/student.create',['careers'=>$careers]);
     }
 
     /**

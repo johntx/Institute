@@ -8,11 +8,11 @@ use Institute\Http\Requests;
 use Institute\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Institute\Career;
+use Institute\Group;
 use Illuminate\Routing\Route;
 use Validator;
 
-class CareerController extends Controller
+class GroupController extends Controller
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class CareerController extends Controller
     }
     public function find(Route $route)
     {
-        $this->career = Career::find($route->getParameter('career'));
+        $this->group = Group::find($route->getParameter('group'));
     }
     /**
      * Display a listing of the resource.
@@ -31,8 +31,8 @@ class CareerController extends Controller
      */
     public function index()
     {
-        $careers = Career::orderBy('id','DESC')->paginate(20);
-        return view('admin/career.index',compact('careers'));
+        $groups = Group::orderBy('id','DESC')->paginate(20);
+        return view('admin/group.index',compact('groups'));
     }
 
     /**
@@ -42,8 +42,11 @@ class CareerController extends Controller
      */
     public function create()
     {
-        $offices = \Institute\Office::lists('nombre', 'id');
-        return view('admin/career.create',['offices'=>$offices]);
+        $careers = \Institute\Career::lists('nombre', 'id');
+        $startclasses = \Institute\Startclass::select('startclasses.*')
+        ->where('startclasses.estado','!=','Cerrado')
+        ->get();
+        return view('admin/group.create',['careers'=>$careers, 'startclasses'=>$startclasses]);
     }
 
     /**
@@ -54,9 +57,9 @@ class CareerController extends Controller
      */
     public function store(Request $request)
     {
-        Career::create($request->all());
-        Session::flash('message','Carrera registrada exitosamente');
-        return Redirect::to('/admin/career');
+        Group::create($request->all());
+        Session::flash('message','Grupo registrado exitosamente');
+        return Redirect::to('/admin/group');
     }
 
     /**
@@ -67,7 +70,7 @@ class CareerController extends Controller
      */
     public function show($id)
     {
-        return view('admin/career.delete',['career'=>$this->career]);
+        return view('admin/group.delete',['group'=>$this->group]);
     }
 
     /**
@@ -78,8 +81,11 @@ class CareerController extends Controller
      */
     public function edit($id)
     {
-        $offices = \Institute\Office::lists('nombre', 'id');
-        return view('admin/career.edit',['career'=>$this->career, 'offices'=>$offices]);
+        $startclasses = \Institute\Startclass::select('startclasses.*')
+        ->where('startclasses.estado','!=','Cerrado')
+        ->get();
+        $careers = \Institute\Career::lists('nombre', 'id');
+        return view('admin/group.edit',['group'=>$this->group, 'careers'=>$careers, 'startclasses'=>$startclasses]);
     }
 
     /**
@@ -91,10 +97,10 @@ class CareerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->career->fill($request->all());
-        $this->career->save();
-        Session::flash('message','Carrera editada exitosamente');
-        return Redirect::to('/admin/career');
+        $this->group->fill($request->all());
+        $this->group->save();
+        Session::flash('message','Grupo editado exitosamente');
+        return Redirect::to('/admin/group');
     }
 
     /**
@@ -105,8 +111,8 @@ class CareerController extends Controller
      */
     public function destroy($id)
     {
-        $this->career->delete();
-        Session::flash('message','Carrera borrada exitosamente');
-        return Redirect::to('/admin/career');
+        $this->group->delete();
+        Session::flash('message','Grupo borrado exitosamente');
+        return Redirect::to('/admin/group');
     }
 }

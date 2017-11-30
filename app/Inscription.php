@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Inscription extends Model
 {
 	protected $table = 'inscriptions';
-	protected $fillable = ['estado', 'inscrito', 'student_id', 'career_id', 'group_id', 'user_id'];
+	protected $fillable = ['estado', 'people_id', 'career_id', 'group_id', 'particular_id', 'user_id'];
 
 	public $timestamps = false;
 
     public function student()
     {
-        return $this->belongsTo('Institute\Student');
+        return $this->belongsTo('Institute\People');
     }
     public function career()
     {

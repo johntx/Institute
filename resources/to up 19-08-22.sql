@@ -21,9 +21,11 @@ insert  into `menus` values
 (5,'MCLI','Estudiantes','users'),
 (6,'MDOC','Docentes','male'),
 (7,'MOFF','Sucursal','home'),
-(8,'CAR','Carreras','car'),
-(9,'SUB','Asignaturas','book'),
-(10,'EMP','Empleados','briefcase');
+(8,'MCAR','Carreras','car'),
+(9,'MSUB','Asignaturas','book'),
+(10,'MEMP','Empleados','briefcase'),
+(11,'MSTA','Convocatoria','info'),
+(12,'MGRO','Grupos','cubes');
 
 insert  into `functionalities` values 
 (1,'CMEN','Crear Menu','admin/menu/create',1),
@@ -65,7 +67,15 @@ insert  into `functionalities` values
 (37,'CEMP','Crear Empleado','admin/employee/create',10),
 (38,'EEMP','Editar Empleado','admin/employee/edit',10),
 (39,'DEMP','Eliminar Empleado','admin/employee/delete',10),
-(40,'EMP','Ver Empleados','admin/employee',10);
+(40,'EMP','Ver Empleados','admin/employee',10),
+(41,'CSTA','Crear Convocatoria','admin/startclass/create',11),
+(42,'ESTA','Editar Convocatoria','admin/startclass/edit',11),
+(43,'DSTA','Anular Convocatoria','admin/startclass/delete',11),
+(44,'STA','Ver Convocatoria','admin/startclass',11),
+(45,'CGRO','Crear Grupos','admin/group/create',12),
+(46,'EGRO','Editar Grupos','admin/group/edit',12),
+(47,'DGRO','Anular Grupos','admin/group/delete',12),
+(48,'GRO','Ver Grupos','admin/group',12);
 
 insert  into `privileges`(`id`,`functionality_id`,`role_id`) values 
 (1,1,1),
@@ -107,4 +117,12 @@ insert  into `privileges`(`id`,`functionality_id`,`role_id`) values
 (37,37,1),
 (38,38,1),
 (39,39,1),
-(40,40,1);
+(40,40,1),
+(41,41,1),
+(42,42,1),
+(43,43,1),
+(44,44,1),
+(45,45,1),
+(46,46,1),
+(47,47,1),
+(48,48,1);

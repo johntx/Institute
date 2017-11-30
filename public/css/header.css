@@ -40,6 +40,7 @@ header>ul>li{
 }
 header>ul>li:hover{
 	background-color: #8BB2AA;
+	background-color: rgba(160,188,182,0.6);
 }
 header>ul>li>*{
 	cursor: pointer;

@@ -33,3 +33,17 @@ $('body').on('focus','input.datepicker',function () {
 		changeYear: true
 	}).focus();
 });
+
+$(document).ready(function(){
+		$('#career_select').change(function(){
+			console.log($(this).val());
+			$.get("{{ url('dropdown')}}",
+			{ option: $(this).val() },
+			function(data) {
+				$('#group_id').empty();
+				$.each(data, function(key, element) {
+					$('#group_id').append("<option value='" + key + "'>" + element + "</option>");
+				});
+			});
+		});
+	});

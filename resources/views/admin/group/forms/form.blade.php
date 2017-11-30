@@ -1,0 +1,18 @@
+<div class="form-group">
+	{!! Form::label('Inicio de clases') !!}
+	<select name="startclass_id" class="form-control selectpicker">
+		@foreach ($startclasses as $startclass)
+		<option value="{{ $startclass->id }}"
+			>{{ $startclass->career->nombre }} - [{{ $startclass->fecha_inicio }}] - ({{ $startclass->estado }})
+		</option>
+		@endforeach
+	</select>
+</div>
+<div class="form-group">
+	{!! Form::label('Turno') !!}
+	{!! Form::select('turno',['Mañana' => 'Mañana','Tarde' => 'Tarde','Noche' => 'Noche'],null,['class'=>'form-control','maxlength'=>20]) !!}
+</div>
+<div class="form-group">
+	{!! Form::label('Estado') !!}
+	{!! Form::select('estado',['Vigente' => 'Vigente','Culminado' => 'Culminado'],null,['class'=>'form-control','maxlength'=>20]) !!}
+</div>

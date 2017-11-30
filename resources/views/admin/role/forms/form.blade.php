@@ -4,7 +4,6 @@
 </div>
 
 <br>
-
 		@foreach($menus as $menu)
 		<div class="col-md-3">
 			<div class="panel panel-default">

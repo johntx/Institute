@@ -19,4 +19,8 @@ class Career extends Model
 	{
 		$this->attributes['nombre']=strtoupper($nombre);
 	}
+	public function startclasses()
+	{
+		return $this->hasMany('Institute\Startclass');
+	}
 }

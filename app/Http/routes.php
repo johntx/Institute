@@ -31,5 +31,13 @@ Route::resource('admin/office','OfficeController');
 Route::resource('admin/career','CareerController');
 Route::resource('admin/subject','SubjectController');
 Route::resource('admin/employee','EmployeeController');
+Route::resource('admin/startclass','StartclassController');
+Route::resource('admin/group','GroupController');
+Route::resource('admin/inscription','InscriptionController');
 Route::resource('log','LogController');
 Route::get('logout','LogController@logout');
+Route::get('dropdown/{option?}', function(){
+	$id = $option;
+	$startclasses = \Institute\Career::find($id)->startclasses();
+	return $startclasses->lists('fecha_inicio', 'id');
+});

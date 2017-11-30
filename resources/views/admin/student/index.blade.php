@@ -8,7 +8,6 @@
 		<th>CI</th>
 		<th>Nombre</th>
 		<th>Ingreso</th>
-		<th>Direccion</th>
 		<th>Telefono</th>
 		<th>Edit</th>
 	</thead>
@@ -18,7 +17,6 @@
 		<td>{{$student->ci}}</td>
 		<td>{{$student->nombrecompleto()}}</td>
 		<td>{{$student->fecha_ingreso}}</td>
-		<td>{{$student->direccion}}</td>
 		<td>{{$student->telefono}}</td>
 		@foreach(Auth::user()->role->functionalities as $func)
 		@if ($func->code=='EEST')
