@@ -25,6 +25,7 @@ class EmployeeController extends Controller
     public function find(Route $route)
     {
         $this->employee = People::find($route->getParameter('employee'));
+        $this->user = User::find($route->getParameter('employee'));
     }
     /**
      * Display a listing of the resource.
@@ -68,13 +69,22 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
+        $validator = Validator::make($request->all(), [
+            'user' => 'required|unique:users',
+            ]);
+        if ($validator->fails()) {
+            return redirect('/admin/employee/create')
+            ->withErrors($validator)
+            ->withInput();
+        }
+        $user = new User;
+        $user->fill([
             'user' => $request['user'],
             'password' => $request['password'],
             'role_id' => $request['role_id']
             ]);
-        $user = User::where('user', $request['user'])->first();
-        People::create([
+        $people = new People;
+        $people->fill([
             'id' => $user->id,
             'ci' => $request['ci'],
             'nombre' => $request['nombre'],
@@ -87,6 +97,9 @@ class EmployeeController extends Controller
             'telefono' => $request['telefono'],
             'office_id' => $request['office_id']
             ]);
+        //return $user;
+        $user->save();
+        $user->people()->save($people);
         Session::flash('message','Empleado registrado exitosamente');
         return Redirect::to('/admin/employee');
     }
@@ -124,7 +137,17 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'user' => 'required|unique:users,user,'.$id.',id'
+        ]);
+        if ($validator->fails()) {
+            return redirect('/admin/employee/'.$id.'/edit')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $this->user->fill($request->all());
         $this->employee->fill($request->all());
+        $this->user->save();
         $this->employee->save();
         Session::flash('message','Empleado editado exitosamente');
         return Redirect::to('/admin/employee');

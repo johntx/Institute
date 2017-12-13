@@ -1,28 +1,20 @@
 <br>
 <div class="panel panel-default col-xs-6" style="padding: 0;">
-	<div class="panel-heading">Kardex del Estudiante</div>
+	<div class="panel-heading">Estudiante</div>
 	<div class="panel-body">
 		<div class="form-group required">
-			{!! Form::label('Nombres*') !!}
-			{!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Insert Nombre','required', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
-		</div>
-		<div class="form-group required">
-			{!! Form::label('Apellidos*') !!}
-			{!! Form::text('paterno',null,['class'=>'form-control','placeholder'=>'Insert Apellido','required', 'maxlength'=>100,'style'=>'text-transform: uppercase;']) !!}
-		</div>
-		<div class="form-group">
-			{!! Form::label('CI') !!}
-			{!! Form::text('ci',null,['class'=>'form-control','placeholder'=>'Insert CI', 'maxlength'=>20,'onkeypress'=>"return justNumbers(event);"]) !!}
-		</div>
-		<div class="form-group">
-			{!! Form::label('Fecha de Nacimiento') !!}
-			{!! Form::text('fecha_nacimiento',null,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
-		</div>
-		<div class="form-group">
-			{!! Form::label('Telefonos') !!}
-			{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Insert Telefono', 'maxlength'=>100]) !!}
-		</div>
+			{!! Form::label('(CI) - Estudiante') !!}
+			<select name="user_id" class="form-control selectpicker" required data-live-search="true">
+				<option>Seleccione un estudiante</option>
+				@foreach ($students as $student)
+				<option 
+				value="{{$student->id}}">
+				({{$student->ci}}) - {{$student->nombrecompleto()}}
+			</option>
+			@endforeach
+		</select>
 	</div>
+</div>
 </div>
 <div class="panel panel-default col-xs-6" style="padding: 0;">
 	<div class="panel-heading">Seleccion de Carrera y Grupo</div>
@@ -56,7 +48,7 @@
 				</div>
 				<div class="col-xs-4" style="padding-right: 0;">
 					{!! Form::label('Costo Total') !!}
-					{!! Form::text('total',null,['class'=>'form-control total','placeholder'=>'Insert Total', 'onkeypress'=>"return justNumbers(event);"]) !!}
+					{!! Form::label('',null,['class'=>'form-control total']) !!}
 				</div>
 			</div>
 			<br><br><br>

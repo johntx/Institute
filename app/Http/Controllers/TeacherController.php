@@ -60,7 +60,6 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        $request['ci']=strtoupper($request['ci']);
         $validator = Validator::make($request->all(), [
             'ci' => 'required|unique:peoples'
             ]);
@@ -70,17 +69,17 @@ class TeacherController extends Controller
             ->withErrors($validator)
             ->withInput();
         }
-        User::create([
+        $user = new User;
+        $user->fill([
             'user' => $request['ci'],
             'password' => $request['ci'],
             'role_id' => 4
             ]);
-        $user = User::where('user', $request['ci'])->first();
+        $user->save();
         $cien = 'CIEN-'.$user->id;
         $user->user = $cien;
-        $user->save();
-        People::create([
-            'id' => $user->id,
+        $people = new People;
+        $people->fill([
             'ci' => $request['ci'],
             'nombre' => $request['nombre'],
             'paterno' => $request['paterno'],
@@ -92,8 +91,8 @@ class TeacherController extends Controller
             'telefono' => $request['telefono'],
             'office_id' => $request['office_id']
             ]);
-
-
+        $user->save();
+        $user->people()->save($people);
 
         People::create($request->all());
         Session::flash('message','Docente registrado exitosamente');

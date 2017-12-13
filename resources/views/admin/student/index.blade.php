@@ -7,8 +7,8 @@
 		<th>CIEN</th>
 		<th>CI</th>
 		<th>Nombre</th>
-		<th>Ingreso</th>
-		<th>Telefono</th>
+		<th>Inicio Clases</th>
+		<th>Carrera</th>
 		<th>Edit</th>
 	</thead>
 	@foreach($students as $student)
@@ -16,8 +16,8 @@
 		<td>{{$student->user->user}}</td>
 		<td>{{$student->ci}}</td>
 		<td>{{$student->nombrecompleto()}}</td>
-		<td>{{$student->fecha_ingreso}}</td>
-		<td>{{$student->telefono}}</td>
+		<td>{{$student->inscriptions[0]->group->startclass->fecha_inicio}}</td>
+		<td>{{$student->inscriptions[0]->group->startclass->career->nombre}}</td>
 		@foreach(Auth::user()->role->functionalities as $func)
 		@if ($func->code=='EEST')
 		<td>

@@ -29,41 +29,32 @@
 	<div class="panel-body">
 		<div class="form-group">
 			{!! Form::label('Carrera (Convocatorias)') !!}
-			<select name="startclass_id" id="career_select" class="form-control selectpicker" data-style="btn-info" required>
-				<option selected disabled>Seleccionar Carrera</option>
+
+			<select name="startclass_id" id="career_select" class="form-control " data-style="btn-info">
 				@foreach ($startclasses as $startclass)
 				<option value="{{$startclass->id}}" 
-					costo='{{$startclass->career->costo}}' 
-					duracion='{{$startclass->career->mes}}'
+					@if ($student->inscriptions[0]->group->startclass->id == $startclass->id)
+					selected 
+					@endif
 					>{{$startclass->career->nombre}} - [{{date_format(date_create($startclass->fecha_inicio),'d-m-Y')}}] ({{$startclass->estado}}) [{{$startclass->career->costo}}bs]</option>
 					@endforeach
 				</select>
-			</div>
-			<div class="form-group">
+				<br>
 				{!! Form::label('Grupos') !!}
-				<select id="group_id" name="group_id" class="form-control" required>
-					<option>Debe escoger una Carrera Primero</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<div class=" col-xs-6" style="padding: 0;">
-					{!! Form::label('Costo Mensual') !!}
-					{!! Form::text('monto',null,['class'=>'form-control', 'id'=>'monto','placeholder'=>'Insert Monto', 'duracion'=>'','onkeypress'=>"return justNumbers(event);",'required']) !!}
+				<br>
+				<select id="group_id" name="group_id" class="form-control">
+					@foreach ($groups as $group)
+					<option value="{{$group->id}}" 
+						@if ($student->inscriptions[0]->group->id == $group->id)
+						selected 
+						@endif
+						>{{$group->startclass->career->nombre}} {{$group->turno}} ({{$group->inscritos}} inscritos)</option>
+						@endforeach
+					</select>
 				</div>
-				<div class="col-xs-2" style="padding-right: 0;">
-					{!! Form::label('Meses') !!}
-					{!! Form::label('',null,['class'=>'form-control', 'id'=>'meses']) !!}
+				<div class="form-group">
+					{!! Form::label('Estado') !!}
+					{!! Form::select('estado',['Inscrito' => 'Inscrito','Culminado' => 'Culminado','Retirado' => 'Retirado'],$student->inscriptions[0]->estado,['class'=>'form-control','maxlength'=>20]) !!}
 				</div>
-				<div class="col-xs-4" style="padding-right: 0;">
-					{!! Form::label('Costo Total') !!}
-					{!! Form::text('total',null,['class'=>'form-control total','placeholder'=>'Insert Total', 'onkeypress'=>"return justNumbers(event);"]) !!}
-				</div>
-			</div>
-			<br><br><br>
-			<br><br><br>
-			<div class="form-group">
-				{!! Form::label('Pago Inicial') !!}
-				{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required']) !!}
 			</div>
 		</div>
-	</div>

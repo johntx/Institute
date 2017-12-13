@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Career extends Model
 {
 	protected $table = 'careers';
-	protected $fillable = ['nombre', 'duracion', 'costo', 'office_id'];
+	protected $fillable = ['nombre', 'duracion', 'mes', 'costo', 'office_id'];
 
 	public $timestamps = false;
 	

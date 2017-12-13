@@ -15,6 +15,11 @@ class CreateInscriptionsTable extends Migration
     Schema::create('inscriptions', function (Blueprint $table) {
       $table->increments('id');
       $table->string('estado',20)->nullable();
+      $table->date('fecha_retiro')->nullable();
+      $table->integer('monto')->nullable();
+      $table->integer('abono')->nullable();
+      $table->integer('total')->nullable();
+      $table->string('colegiatura',20)->nullable();
       $table->integer('people_id')->unsigned()->nullable();
       $table->foreign('people_id')->references('id')->on('peoples')->onDelete('set null');
       $table->integer('career_id')->unsigned()->nullable();

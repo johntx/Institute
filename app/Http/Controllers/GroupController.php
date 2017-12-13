@@ -24,6 +24,7 @@ class GroupController extends Controller
     {
         $this->group = Group::find($route->getParameter('group'));
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,6 +46,7 @@ class GroupController extends Controller
         $careers = \Institute\Career::lists('nombre', 'id');
         $startclasses = \Institute\Startclass::select('startclasses.*')
         ->where('startclasses.estado','!=','Cerrado')
+        ->orderBy('fecha_inicio','DESC')
         ->get();
         return view('admin/group.create',['careers'=>$careers, 'startclasses'=>$startclasses]);
     }
@@ -57,6 +59,14 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
+        $fecha_actual = \Carbon\Carbon::now()->format('Y-m-d');
+        $startclass = \Institute\Startclass::find($request['startclass_id']);
+
+        if ($fecha_actual<=$startclass->fecha_fin) {
+            $request['estado'] = 'Vigente';
+        } else {
+            $request['estado'] = 'Culminado';
+        }
         Group::create($request->all());
         Session::flash('message','Grupo registrado exitosamente');
         return Redirect::to('/admin/group');
@@ -82,7 +92,7 @@ class GroupController extends Controller
     public function edit($id)
     {
         $startclasses = \Institute\Startclass::select('startclasses.*')
-        ->where('startclasses.estado','!=','Cerrado')
+        ->orderBy('fecha_inicio','DESC')
         ->get();
         $careers = \Institute\Career::lists('nombre', 'id');
         return view('admin/group.edit',['group'=>$this->group, 'careers'=>$careers, 'startclasses'=>$startclasses]);
@@ -97,6 +107,14 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $fecha_actual = \Carbon\Carbon::now()->format('Y-m-d');
+        $startclass = \Institute\Startclass::find($request['startclass_id']);
+
+        if ($fecha_actual<=$startclass->fecha_fin) {
+            $request['estado'] = 'Vigente';
+        } else {
+            $request['estado'] = 'Culminado';
+        }
         $this->group->fill($request->all());
         $this->group->save();
         Session::flash('message','Grupo editado exitosamente');

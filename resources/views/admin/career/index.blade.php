@@ -15,7 +15,11 @@
 	<tbody>
 		<td>{{$career->id}}</td>
 		<td>{{$career->nombre}}</td>
-		<td>{{$career->duracion}}</td>
+		@if ($career->mes > 0)
+		<td>{{$career->mes}} - meses</td>
+		@else
+		<td>{{$career->duracion}} - semanas</td>
+		@endif
 		<td>{{$career->costo}}</td>
 		<td>{{$career->office->nombre}}</td>
 		@foreach(Auth::user()->role->functionalities as $func)

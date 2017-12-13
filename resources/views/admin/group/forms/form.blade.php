@@ -12,7 +12,7 @@
 	{!! Form::label('Turno') !!}
 	{!! Form::select('turno',['Mañana' => 'Mañana','Tarde' => 'Tarde','Noche' => 'Noche'],null,['class'=>'form-control','maxlength'=>20]) !!}
 </div>
-<div class="form-group">
+<div class="form-group" style="display: none;">
 	{!! Form::label('Estado') !!}
-	{!! Form::select('estado',['Vigente' => 'Vigente','Culminado' => 'Culminado'],null,['class'=>'form-control','maxlength'=>20]) !!}
+	{!! Form::select('estado',['Vigente' => 'Vigente','Culminado' => 'Culminado','Cerrado' => 'Cerrado'],null,['class'=>'form-control','maxlength'=>20]) !!}
 </div>

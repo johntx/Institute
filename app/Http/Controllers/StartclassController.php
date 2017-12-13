@@ -25,6 +25,16 @@ class StartclassController extends Controller
   {
     $this->startclass = Startclass::find($route->getParameter('startclass'));
   }
+
+  public function getgroups(Request $request,$id)
+  {
+    /*$groups = \Institute\Group::groups($id);
+    return $groups;*/
+    if ($request->ajax()) {
+      $groups = \Institute\Group::groups($id);
+      return response()->json($groups);
+    }
+  }
     /**
      * Display a listing of the resource.
      *
@@ -55,16 +65,30 @@ class StartclassController extends Controller
      */
     public function store(Request $request)
     {
+      $fecha_actual = \Carbon\Carbon::now()->format('Y-m-d');
       $career = \Institute\Career::find($request['career_id']);
-      $fecha = date('Y-m-d',strtotime('+'.$career->duracion.' weeks', strtotime($request['fecha_inicio'])));
-      
+      if ($career->duracion > 0) {
+        $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' week', strtotime($request['fecha_inicio'])));
+      } 
+      if ($career->mes > 0) {
+        $fecha_1 = date('Y-m-d',strtotime('+'.$career->mes.' month', strtotime($request['fecha_inicio'])));
+      }
+      $fecha = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
+      $estado = '';
+      if ($fecha_actual<$request['fecha_inicio']) {
+        $estado = 'Espera';
+      } elseif($fecha_actual<$fecha){
+        $estado = 'Iniciado';
+      } else {
+        $estado = 'Cerrado';
+      }
       $startclass = new Startclass();
       $startclass->fill([
-      'fecha_inicio' => $request['fecha_inicio'],
-      'fecha_fin' => $fecha,
-      'career_id' => $request['career_id'],
-      'estado' => $request['estado']
-      ]);
+        'fecha_inicio' => $request['fecha_inicio'],
+        'fecha_fin' => $fecha,
+        'career_id' => $request['career_id'],
+        'estado' => $estado
+        ]);
       $col = collect();
       if (count($request['turno'])>0) {
         for ($i=0; $i < count($request['turno']); $i++) {
@@ -112,13 +136,28 @@ class StartclassController extends Controller
      */
     public function update(Request $request, $id)
     {
+      $fecha_actual = \Carbon\Carbon::now()->format('Y-m-d');
       $career = \Institute\Career::find($request['career_id']);
-      $fecha = date('Y-m-d',strtotime('+'.$career->duracion.' weeks', strtotime($request['fecha_inicio'])));
+      if ($career->duracion > 0) {
+        $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' week', strtotime($request['fecha_inicio'])));
+      } 
+      if ($career->mes > 0) {
+        $fecha_1 = date('Y-m-d',strtotime('+'.$career->mes.' month', strtotime($request['fecha_inicio'])));
+      }
+      $fecha = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
+      $estado = '';
+      if ($fecha_actual<$request['fecha_inicio']) {
+        $estado = 'Espera';
+      } elseif($fecha_actual<$fecha){
+        $estado = 'Iniciado';
+      } else {
+        $estado = 'Cerrado';
+      }
       $this->startclass->fill([
         'fecha_inicio' => $request['fecha_inicio'],
         'fecha_fin' => $fecha,
         'career_id' => $request['career_id'],
-        'estado' => $request['estado']
+        'estado' => $estado
         ]);
       $this->startclass->save();
       Session::flash('message','Inicio de Clases editado exitosamente');

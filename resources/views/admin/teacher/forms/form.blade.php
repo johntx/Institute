@@ -1,6 +1,6 @@
 <div class="form-group required">
 	{!! Form::label('CI*') !!}
-	{!! Form::text('ci',null,['class'=>'form-control','placeholder'=>'Insert CI','required', 'maxlength'=>20]) !!}
+	{!! Form::text('ci',null,['class'=>'form-control','placeholder'=>'Insert CI','required', 'maxlength'=>20,'onkeypress'=>"return justNumbers(event);"]) !!}
 </div>
 <div class="form-group required">
 	{!! Form::label('Nombres*') !!}

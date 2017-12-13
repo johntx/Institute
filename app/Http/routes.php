@@ -34,10 +34,9 @@ Route::resource('admin/employee','EmployeeController');
 Route::resource('admin/startclass','StartclassController');
 Route::resource('admin/group','GroupController');
 Route::resource('admin/inscription','InscriptionController');
+Route::resource('admin/payment','PaymentController');
 Route::resource('log','LogController');
 Route::get('logout','LogController@logout');
-Route::get('dropdown/{option?}', function(){
-	$id = $option;
-	$startclasses = \Institute\Career::find($id)->startclasses();
-	return $startclasses->lists('fecha_inicio', 'id');
-});
+Route::get('admin/groups/{id}','StartclassController@getgroups');
+Route::get('admin/payments/{id}','PaymentController@getpayments');
+Route::get('admin/inscriptions/{id}','PaymentController@getinscriptions');

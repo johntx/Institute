@@ -25,7 +25,9 @@ insert  into `menus` values
 (9,'MSUB','Asignaturas','book'),
 (10,'MEMP','Empleados','briefcase'),
 (11,'MSTA','Convocatoria','info'),
-(12,'MGRO','Grupos','cubes');
+(12,'MGRO','Grupos','cubes'),
+(13,'MPAY','Pagos','dollar'),
+(14,'MINS','Re-Inscripciones','file-text');
 
 insert  into `functionalities` values 
 (1,'CMEN','Crear Menu','admin/menu/create',1),
@@ -44,7 +46,7 @@ insert  into `functionalities` values
 (14,'EUSR','Editar Usuario','user/edit',4),
 (15,'DUSR','Borar Usuarios','user/delete',4),
 (16,'USR','Ver Usuarios','user',4),
-(17,'CEST','Crear Estudiante','admin/student/create',5),
+(17,'CEST','Registrar Estudiante','admin/student/create',5),
 (18,'EEST','Editar Estudiante','admin/student/edit',5),
 (19,'DEST','Borar Estudiantes','admin/student/delete',5),
 (20,'EST','Ver Estudiantes','admin/student',5),
@@ -75,7 +77,15 @@ insert  into `functionalities` values
 (45,'CGRO','Crear Grupos','admin/group/create',12),
 (46,'EGRO','Editar Grupos','admin/group/edit',12),
 (47,'DGRO','Anular Grupos','admin/group/delete',12),
-(48,'GRO','Ver Grupos','admin/group',12);
+(48,'GRO','Ver Grupos','admin/group',12),
+(49,'CPAY','Registrar Pagos','admin/payment/create',13),
+(50,'EPAY','Editar Pagos','admin/payment/edit',13),
+(51,'DPAY','Anular Pagos','admin/payment/delete',13),
+(52,'PAY','Ver Pagos','admin/payment',13),
+(53,'CINS','Registrar Inscripcion','admin/inscription/create',14),
+(54,'EINS','Editar Inscripcion','admin/inscription/edit',14),
+(55,'DINS','Anular Inscripcion','admin/inscription/delete',14),
+(56,'INS','Ver Inscripcion','admin/inscription',14);
 
 insert  into `privileges`(`id`,`functionality_id`,`role_id`) values 
 (1,1,1),
@@ -125,4 +135,12 @@ insert  into `privileges`(`id`,`functionality_id`,`role_id`) values
 (45,45,1),
 (46,46,1),
 (47,47,1),
-(48,48,1);
+(48,48,1),
+(49,49,1),
+(50,50,1),
+(51,51,1),
+(52,52,1),
+(53,53,1),
+(54,54,1),
+(55,55,1),
+(56,56,1);

@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(15);
+        $users = User::orderBy('id','DESC')->paginate(15);
         return view('user.index',compact('users'));
     }
 
@@ -103,11 +103,11 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user' => 'required|unique:users,user,'.$id.',id'
-        ]);
+            ]);
         if ($validator->fails()) {
             return redirect('/user/'.$id.'/edit')
-                ->withErrors($validator)
-                ->withInput();
+            ->withErrors($validator)
+            ->withInput();
         }
         $this->user->fill($request->all());
         $this->user->save();
