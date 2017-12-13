@@ -10,7 +10,15 @@
 </div>
 <div class="form-group">
 	{!! Form::label('Turno') !!}
-	{!! Form::select('turno',['Mañana' => 'Mañana','Tarde' => 'Tarde','Noche' => 'Noche'],null,['class'=>'form-control','maxlength'=>20]) !!}
+	<div class="input-group dropdown">
+		{!! Form::text('turno',null,['class'=>'form-control dropdown-toggle turno','placeholder'=>'Insert Turno', 'maxlength'=>20]) !!}
+		<ul class="dropdown-menu">
+			<li><a href="#" data-value="Mañana">Mañana</a></li>
+			<li><a href="#" data-value="Tarde">Tarde</a></li>
+			<li><a href="#" data-value="Noche">Noche</a></li>
+		</ul>
+		<span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
+	</div>
 </div>
 <div class="form-group" style="display: none;">
 	{!! Form::label('Estado') !!}

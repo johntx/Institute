@@ -75,7 +75,7 @@ $(document).ready(function(){
 			$("#payments_carrera").empty();
 			/*$('#payments_carrera').append(
 			"<option selected disabled> Elija una carrera </option>");*/
-		$('#colegiatura').html(inscription[0].colegiatura);
+			$('#colegiatura').html(inscription[0].colegiatura);
 			cargarpagos(inscription[0].id);
 			for (var i = 0 ; i < inscription.length; i++) {
 				var date = inscription[i].fecha_inicio;
@@ -96,6 +96,13 @@ $(document).ready(function(){
 	$('#payments_carrera').change(function(){
 		cargarpagos(event.target.value);
 		$('#colegiatura').html($(this).children('option:selected').attr('colegiatura'));
+	});
+});
+$(function() {
+	$('.dropdown-menu a').click(function() {
+		console.log($(this).attr('data-value'));
+		$(this).closest('.dropdown').find('input.turno')
+		.val($(this).attr('data-value'));
 	});
 });
 function cargarpagos(inscription_id){
@@ -143,7 +150,7 @@ function cargarpagos(inscription_id){
 				+"</td><td>"
 				+observacion
 				+"</td></tr>"
-			);
+				);
 		}
 	});
 }
