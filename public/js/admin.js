@@ -54,7 +54,7 @@ $('body').on('keyup','.duracion',function () {
 });
 $(document).ready(function(){
 	$('#career_select').change(function(){
-		$.get("/laravel/public/admin/groups/"+event.target.value+"",function(group,response){
+		$.get("/cien/public/admin/groups/"+event.target.value+"",function(group,response){
 			/*console.log(group);*/
 			$("#group_id").empty();
 			for (var i = 0 ; i < group.length; i++) {
@@ -70,7 +70,7 @@ $(document).ready(function(){
 		change_total();
 	});
 	$('#payments_estudiante').change(function(){
-		$.get("/laravel/public/admin/inscriptions/"+event.target.value+"",function(inscription,response){
+		$.get("/cien/public/admin/inscriptions/"+event.target.value+"",function(inscription,response){
 			/*console.log(inscription);*/
 			$("#payments_carrera").empty();
 			/*$('#payments_carrera').append(
@@ -99,7 +99,7 @@ $(document).ready(function(){
 	});
 });
 function cargarpagos(inscription_id){
-	$.get("/laravel/public/admin/payments/"+inscription_id+"",function(payments,response){
+	$.get("/cien/public/admin/payments/"+inscription_id+"",function(payments,response){
 		/*console.log(payments);*/
 		$("#payments_pagos").empty();
 		for (var i = 0 ; i < payments.length; i++) {
@@ -150,7 +150,6 @@ function cargarpagos(inscription_id){
 function change_total(){
 	var total = 0;
 	total = parseInt($('#meses').html())*parseInt($('#monto').val());
-	console.log(total);
 	$('.total').val(total);
 }
 $('body').on('keyup','#monto',function () {
