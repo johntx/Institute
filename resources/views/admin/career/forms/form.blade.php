@@ -16,7 +16,3 @@
 	{!! Form::label('Costo en Bs.') !!}
 	{!! Form::number('costo',null,['class'=>'form-control']) !!}
 </div>
-<div class="form-group">
-	{!! Form::label('Sucursal*') !!}
-	{!! Form::select('office_id', $offices, null, ['class'=>'form-control selectpicker','required']) !!}
-</div>

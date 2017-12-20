@@ -7,3 +7,7 @@
 	{!! Form::label('Carrera') !!}
 	{!! Form::select('career_id', $careers, null, ['class'=>'form-control selectpicker','required' ]) !!}
 </div>
+<div class="form-group">
+	{!! Form::label('Sucursal*') !!}
+	{!! Form::select('office_id', $offices, null, ['class'=>'form-control selectpicker','required']) !!}
+</div>

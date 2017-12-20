@@ -7,8 +7,9 @@
 			<th>Id</th>
 			<th>Fecha de Inicio</th>
 			<th>Fecha de Culminación</th>
-			<th>Estado</th>
 			<th>Carrera</th>
+			<th>Estado</th>
+			<th>Sucursal</th>
 			<th>Edit</th>
 		</thead>
 		@foreach($startclasses as $startclass)
@@ -16,8 +17,9 @@
 			<td>{{$startclass->id}}</td>
 			<td>{{$startclass->fecha_inicio}}</td>
 			<td>{{$startclass->fecha_fin}}</td>
-			<td>{{$startclass->estado}}</td>
 			<td>{{$startclass->career->nombre}}</td>
+			<td>{{$startclass->estado}}</td>
+			<td>{{$startclass->office->nombre}}</td>
 			@foreach(Auth::user()->role->functionalities as $func)
 			@if ($func->code=='ESTA')
 			<td>

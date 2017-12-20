@@ -27,7 +27,8 @@ insert  into `menus` values
 (11,'MSTA','Convocatoria','info'),
 (12,'MGRO','Grupos','cubes'),
 (13,'MPAY','Pagos','dollar'),
-(14,'MINS','Re-Inscripciones','file-text');
+(14,'MINS','Re-Inscripciones','file-text'),
+(15,'MREP','Reportes','file-text');
 
 insert  into `functionalities` values 
 (1,'CMEN','Crear Menu','admin/menu/create',1),
@@ -85,7 +86,8 @@ insert  into `functionalities` values
 (53,'CINS','Registrar Inscripcion','admin/inscription/create',14),
 (54,'EINS','Editar Inscripcion','admin/inscription/edit',14),
 (55,'DINS','Anular Inscripcion','admin/inscription/delete',14),
-(56,'INS','Ver Inscripcion','admin/inscription',14);
+(56,'INS','Ver Inscripcion','admin/inscription',14),
+(57,'PREP','Pendientes','admin/report/debit',15);
 
 insert  into `privileges`(`id`,`functionality_id`,`role_id`) values 
 (1,1,1),

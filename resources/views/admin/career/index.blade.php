@@ -8,7 +8,6 @@
 		<th>Nombre</th>
 		<th>Duracion</th>
 		<th>Costo</th>
-		<th>Sucursal</th>
 		<th>Edit</th>
 	</thead>
 	@foreach($careers as $career)
@@ -21,7 +20,6 @@
 		<td>{{$career->duracion}} - semanas</td>
 		@endif
 		<td>{{$career->costo}}</td>
-		<td>{{$career->office->nombre}}</td>
 		@foreach(Auth::user()->role->functionalities as $func)
 		@if ($func->code=='ECAR')
 		<td>

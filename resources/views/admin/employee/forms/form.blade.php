@@ -4,43 +4,29 @@
 </div>
 <div class="form-group required">
 	{!! Form::label('Nombres*') !!}
-	{!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Insert Nombre','required', 'maxlength'=>50]) !!}
+	{!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Insert Nombre','required', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
 </div>
 <div class="form-group required">
-	{!! Form::label('Apellido Paterno*') !!}
-	{!! Form::text('paterno',null,['class'=>'form-control','placeholder'=>'Insert Apellido','required', 'maxlength'=>50]) !!}
-</div>
-<div class="form-group required">
-	{!! Form::label('Apellido Materno*') !!}
-	{!! Form::text('materno',null,['class'=>'form-control','placeholder'=>'Insert Apellido','required', 'maxlength'=>50]) !!}
+	{!! Form::label('Apellidos*') !!}
+	{!! Form::text('paterno',null,['class'=>'form-control','placeholder'=>'Insert Apellido','required', 'maxlength'=>100,'style'=>'text-transform: uppercase;']) !!}
 </div>
 <div class="form-group">
-	{!! Form::label('Fecha de Ingreso') !!}
-	{!! Form::text('fecha_ingreso',Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+	{!! Form::label('Telefonos') !!}
+	{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Insert Telefono', 'maxlength'=>100]) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Fecha de Nacimiento') !!}
 	{!! Form::text('fecha_nacimiento',null,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
 </div>
 <div class="form-group">
-	{!! Form::label('Nacionalidad') !!}
-	{!! Form::text('nacionalidad',null,['class'=>'form-control','placeholder'=>'Insert Nacionalidad', 'maxlength'=>20]) !!}
-</div>
-<div class="form-group">
 	{!! Form::label('Direccion') !!}
-	{!! Form::text('direccion',null,['class'=>'form-control','placeholder'=>'Insert Direccion', 'maxlength'=>255]) !!}
-</div>
-<div class="form-group">
-	{!! Form::label('Telefonos') !!}
-	{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Insert Telefono', 'maxlength'=>100]) !!}
+	{!! Form::text('direccion',null,['class'=>'form-control','placeholder'=>'Insert Direccion','maxlength'=>255]) !!}
 </div>
 
-<br>
-<br>
+<br><br>
 <b>DATOS DE USUARIO</b>
-<br>
-<br>
-<br>
+<br><br><br>
+
 <div class="form-group">
 	{!! Form::label('Usuario') !!}
 	{!! Form::text('user',null,['class'=>'form-control','placeholder'=>'ingrese Usuario' , 'required', 'maxlength'=>100]) !!}

@@ -39,6 +39,7 @@ class StudentController extends Controller
       ->join('roles','users.role_id','=','roles.id')
       ->select('peoples.*')
       ->where('roles.code','EST')
+      ->where('peoples.office_id',Auth::user()->people->office_id)
       ->orderBy('users.id','DESC')
       ->paginate(20);
       return view('admin/student.index',compact('students'));

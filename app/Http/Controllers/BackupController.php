@@ -8,11 +8,11 @@ use Institute\Http\Requests;
 use Institute\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Institute\Career;
+use Institute\Backup;
 use Illuminate\Routing\Route;
 use Validator;
 
-class CareerController extends Controller
+class BackupController extends Controller
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class CareerController extends Controller
     }
     public function find(Route $route)
     {
-        $this->career = Career::find($route->getParameter('career'));
+        $this->backup = Backup::find($route->getParameter('backup'));
     }
     /**
      * Display a listing of the resource.
@@ -31,8 +31,7 @@ class CareerController extends Controller
      */
     public function index()
     {
-        $careers = Career::orderBy('id','DESC')->paginate(20);
-        return view('admin/career.index',compact('careers'));
+        //
     }
 
     /**
@@ -42,7 +41,7 @@ class CareerController extends Controller
      */
     public function create()
     {
-        return view('admin/career.create');
+        return view('admin/backup.create');
     }
 
     /**
@@ -53,9 +52,12 @@ class CareerController extends Controller
      */
     public function store(Request $request)
     {
-        Career::create($request->all());
-        Session::flash('message','Carrera registrada exitosamente');
-        return Redirect::to('/admin/career');
+        $backup = new Backup();
+// Set to false if you want plain SQL backup files (not gzipped)
+        Session::flash('message','Backup realizado exitosamente');
+
+        return Redirect::to('/admin/backup/create');
+
     }
 
     /**
@@ -66,7 +68,7 @@ class CareerController extends Controller
      */
     public function show($id)
     {
-        return view('admin/career.delete',['career'=>$this->career]);
+        //
     }
 
     /**
@@ -77,7 +79,7 @@ class CareerController extends Controller
      */
     public function edit($id)
     {
-        return view('admin/career.edit',['career'=>$this->career]);
+        //
     }
 
     /**
@@ -89,10 +91,7 @@ class CareerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->career->fill($request->all());
-        $this->career->save();
-        Session::flash('message','Carrera editada exitosamente');
-        return Redirect::to('/admin/career');
+        //
     }
 
     /**
@@ -103,8 +102,6 @@ class CareerController extends Controller
      */
     public function destroy($id)
     {
-        $this->career->delete();
-        Session::flash('message','Carrera borrada exitosamente');
-        return Redirect::to('/admin/career');
+        //
     }
 }

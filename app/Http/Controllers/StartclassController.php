@@ -53,8 +53,9 @@ class StartclassController extends Controller
      */
     public function create()
     {
+        $offices = \Institute\Office::lists('nombre', 'id');
       $careers = \Institute\Career::lists('nombre', 'id');
-      return view('admin/startclass.create',['careers'=>$careers]);
+      return view('admin/startclass.create',['careers'=>$careers,'offices'=>$offices]);
     }
 
     /**
@@ -87,6 +88,7 @@ class StartclassController extends Controller
         'fecha_inicio' => $request['fecha_inicio'],
         'fecha_fin' => $fecha,
         'career_id' => $request['career_id'],
+        'office_id' => $request['office_id'],
         'estado' => $estado
         ]);
       $col = collect();
@@ -123,8 +125,9 @@ class StartclassController extends Controller
      */
     public function edit($id)
     {
+        $offices = \Institute\Office::lists('nombre', 'id');
       $careers = \Institute\Career::lists('nombre', 'id');
-      return view('admin/startclass.edit',['startclass'=>$this->startclass, 'careers'=>$careers]);
+      return view('admin/startclass.edit',['startclass'=>$this->startclass, 'careers'=>$careers, 'offices'=>$offices]);
     }
 
     /**
@@ -157,6 +160,7 @@ class StartclassController extends Controller
         'fecha_inicio' => $request['fecha_inicio'],
         'fecha_fin' => $fecha,
         'career_id' => $request['career_id'],
+        'office_id' => $request['office_id'],
         'estado' => $estado
         ]);
       $this->startclass->save();

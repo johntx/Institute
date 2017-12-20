@@ -69,6 +69,8 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $request['nombre']=strtoupper($request['nombre']);
+        $request['paterno']=strtoupper($request['paterno']);
         $validator = Validator::make($request->all(), [
             'user' => 'required|unique:users',
             ]);
@@ -89,10 +91,8 @@ class EmployeeController extends Controller
             'ci' => $request['ci'],
             'nombre' => $request['nombre'],
             'paterno' => $request['paterno'],
-            'materno' => $request['materno'],
-            'fecha_ingreso' => $request['fecha_ingreso'],
+            'fecha_ingreso' => \Carbon\Carbon::now(),
             'fecha_nacimiento' => $request['fecha_nacimiento'],
-            'nacionalidad' => $request['nacionalidad'],
             'direccion' => $request['direccion'],
             'telefono' => $request['telefono'],
             'office_id' => $request['office_id']
@@ -137,6 +137,8 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request['nombre']=strtoupper($request['nombre']);
+        $request['paterno']=strtoupper($request['paterno']);
         $validator = Validator::make($request->all(), [
             'user' => 'required|unique:users,user,'.$id.',id'
         ]);

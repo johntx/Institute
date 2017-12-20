@@ -6,27 +6,25 @@
 	<thead>
 		<th>CI</th>
 		<th>Nombre</th>
-		<th>Ingreso</th>
-		<th>Nacionalidad</th>
 		<th>Direccion</th>
 		<th>Telefono</th>
+		<th>Fecha Nacimiento</th>
 		<th>Edit</th>
 	</thead>
 	@foreach($employees as $employee)
 	<tbody>
 		<td>{{$employee->ci}}</td>
 		<td>{{$employee->nombrecompleto()}}</td>
-		<td>{{$employee->fecha_ingreso}}</td>
-		<td>{{$employee->nacionalidad}}</td>
 		<td>{{$employee->direccion}}</td>
 		<td>{{$employee->telefono}}</td>
+		<td>{{$employee->fecha_nacimiento}}</td>
 		@foreach(Auth::user()->role->functionalities as $func)
-		@if ($func->code=='EEST')
+		@if ($func->code=='EEMP')
 		<td>
 			{!!link_to_route('admin.employee.edit', $title = 'Editar', $parameters = $employee->id, $attributes = ['class'=>'btn btn-primary'])!!}
 		</td>
 		@endif
-		@if ($func->code=='DEST')
+		@if ($func->code=='DEMP')
 		<td>
 			{!!link_to_route('admin.employee.show', $title = 'Borrar', $parameters = $employee->id, $attributes = ['class'=>'btn btn-danger'])!!}
 		</td>

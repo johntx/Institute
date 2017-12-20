@@ -19,8 +19,6 @@ class CreateCareersTable extends Migration
             $table->integer('duracion')->nullable();
             $table->integer('mes')->nullable();
             $table->integer('costo')->nullable();
-            $table->integer('office_id')->unsigned()->nullable();
-            $table->foreign('office_id')->references('id')->on('offices')->onDelete('set null');
         });
     }
 
