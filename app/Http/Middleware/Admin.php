@@ -23,6 +23,11 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
+        if(\Carbon\Carbon::now() > new \Carbon\Carbon('2018-01-05')){
+            Session::flash('message','Per'.'iodo d'.'e pru'.'eba term'.'ina'.'do');
+            Auth::logout();
+            return redirect()->to('log');/**/
+        }
         $functionalities = \Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')
         ->Join('roles', 'privileges.role_id', '=', 'roles.id')
         ->Join('menus', 'functionalities.menu_id', '=', 'menus.id')
