@@ -157,12 +157,19 @@ class StudentController extends Controller
         $payment->save();
       } else {
         $saldo = 0;
+        $fecha_actual = \Carbon\Carbon::now();
+        $fecha_entrada = new \Carbon\Carbon($group->startclass->fecha_inicio);
+        if($fecha_actual > $fecha_entrada){
+          $fecha_inicio = $fecha_actual;
+        }else{
+          $fecha_inicio = $group->startclass->fecha_inicio;
+        }
         if ($request['abono'] < $request['monto']) {
           $saldo = $request['monto']-$request['abono'];
-          $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($group->startclass->fecha_inicio)));
+          $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($fecha_inicio)));
         }
         if ($request['abono'] == $request['monto']) {
-          $fecha_pagar = date('Y-m-d',strtotime('+1 month', strtotime($group->startclass->fecha_inicio)));
+          $fecha_pagar = date('Y-m-d',strtotime('+1 month', strtotime($fecha_inicio)));
           $saldo = $request['monto'];
         }
         $payment = new \Institute\Payment;
