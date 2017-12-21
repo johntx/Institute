@@ -114,7 +114,7 @@ class StudentController extends Controller
         'ci' => $request['ci'],
         'nombre' => $request['nombre'],
         'paterno' => $request['paterno'],
-        'fecha_ingreso' => \Carbon\Carbon::now(),
+        'fecha_ingreso' => $request['fecha_ingreso'],
         'fecha_nacimiento' => $request['fecha_nacimiento'],
         'direccion' => $request['direccion'],
         'telefono' => $request['telefono'],
@@ -157,10 +157,10 @@ class StudentController extends Controller
         $payment->save();
       } else {
         $saldo = 0;
-        $fecha_actual = \Carbon\Carbon::now();
-        $fecha_entrada = new \Carbon\Carbon($group->startclass->fecha_inicio);
-        if($fecha_actual > $fecha_entrada){
-          $fecha_inicio = $fecha_actual;
+        $fecha_insert = $request['fecha_ingreso'];
+        $fecha_start_class = new \Carbon\Carbon($group->startclass->fecha_inicio);
+        if($fecha_insert > $fecha_start_class){
+          $fecha_inicio = $fecha_insert;
         }else{
           $fecha_inicio = $group->startclass->fecha_inicio;
         }
@@ -175,7 +175,7 @@ class StudentController extends Controller
         $payment = new \Institute\Payment;
         $payment->fill([
           'fecha_pagar' => $group->startclass->fecha_inicio,
-          'fecha_pago' => \Carbon\Carbon::now(),
+          'fecha_pago' => $request['fecha_ingreso'],
           'estado' => 'Pagado',
           'abono' => $request['abono'],
           'saldo' => $request['monto'],

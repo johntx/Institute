@@ -22,6 +22,10 @@
 			{!! Form::label('Telefonos') !!}
 			{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Insert Telefono', 'maxlength'=>100]) !!}
 		</div>
+		<div class="form-group">
+			{!! Form::label('Fecha de Ingreso') !!}
+			{!! Form::text('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+		</div>
 	</div>
 </div>
 <div class="panel panel-default col-xs-6" style="padding: 0;">
