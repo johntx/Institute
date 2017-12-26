@@ -9,6 +9,7 @@
 		<th>Nombre</th>
 		<th>Inicio Clases</th>
 		<th>Carrera</th>
+		<th>Estado</th>
 		<th>Edit</th>
 	</thead>
 	@foreach($students as $student)
@@ -18,6 +19,7 @@
 		<td>{{$student->nombrecompleto()}}</td>
 		<td>{{$student->inscriptions[0]->group->startclass->fecha_inicio}}</td>
 		<td>{{$student->inscriptions[0]->group->startclass->career->nombre}}</td>
+		<td>{{$student->inscriptions[0]->estado}}</td>
 		@foreach(Auth::user()->role->functionalities as $func)
 		@if ($func->code=='EEST')
 		<td>

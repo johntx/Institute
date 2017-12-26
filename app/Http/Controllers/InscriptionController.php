@@ -25,7 +25,7 @@ class InscriptionController extends Controller
     }
     public function find(Route $route)
     {
-        $this->student = People::find($route->getParameter('student'));
+        $this->inscription = Inscription::find($route->getParameter('inscription'));
     }
     /**
      * Display a listing of the resource.
@@ -208,6 +208,9 @@ class InscriptionController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $this->inscription->estado='Retirado';
+      $this->inscription->save();
+      Session::flash('message','Estudiante Retirado exitosamente');
+      return Redirect::to('/admin/report/debit');
     }
 }

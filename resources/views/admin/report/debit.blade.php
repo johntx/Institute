@@ -2,7 +2,7 @@
 @section('content')
 @include('alerts.succes')
 <div class="table-responsive">
-	<table class="table table-hover">
+	<table class="table table-hover table-condensed">
 		<thead>
 			<th>Nombre</th>
 			<th>Carrera</th>
@@ -26,6 +26,11 @@
 				</td>
 				<td>{{$payment->saldo}}</td>
 				<td>{{$payment->inscription->people->telefono}}</td>
+				<td>
+				{!! Form::open(['route' => ['admin.inscription.destroy',$payment->inscription->id],'method'=>'delete']) !!}
+					{!! Form::submit('Retirar',['class'=>'btn btn-danger']) !!}
+					{!! Form::close() !!}
+				</td>
 			</tbody>
 			@endforeach
 		</table>

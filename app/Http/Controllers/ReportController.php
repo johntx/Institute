@@ -39,7 +39,9 @@ class ReportController extends Controller
         $fecha_semana = date('Y-m-d',strtotime('-1 month', strtotime(\Carbon\Carbon::now()) ));
         $fecha_mes = date('Y-m-d',strtotime('+1 week', strtotime(\Carbon\Carbon::now()) ));
         $payments = \Institute\Payment::
-        where('payments.estado','Pendiente')
+        join('inscriptions','payments.inscription_id','=','inscriptions.id')
+        ->where('payments.estado','Pendiente')
+        ->where('inscriptions.estado','Inscrito')
         ->whereBetween('fecha_pagar', array( $fecha_semana, $fecha_mes))
         ->orderBy('fecha_pagar','ASC')
         ->get();
