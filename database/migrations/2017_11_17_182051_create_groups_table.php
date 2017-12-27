@@ -15,7 +15,7 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre',50)->nullable();
-            $table->string('turno',20)->nullable();
+            $table->string('turno',30)->nullable();
             $table->string('estado',20)->nullable();
             $table->integer('startclass_id')->unsigned()->nullable();
             $table->foreign('startclass_id')->references('id')->on('startclasses')->onDelete('set null');

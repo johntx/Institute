@@ -10,6 +10,7 @@
   {!!Html::style('css/sb-admin-2.css')!!}
   {!!Html::style('css/font-awesome.min.css')!!}
   {!!Html::style('css/bootstrap-select.css')!!}
+  {!!Html::style('css/datatables.css')!!}
   {!!Html::style('css/admin.css')!!}
 </head>
 <body>
@@ -80,6 +81,7 @@
   {!!Html::script('js/sb-admin-2.js')!!}
   {!!Html::script('js/admin.js')!!}
   {!!Html::script('js/bootstrap-select.js')!!}
+  {!!Html::script('js/datatables.js')!!}
   </script>
 </body>
 </html>

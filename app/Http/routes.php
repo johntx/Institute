@@ -39,6 +39,7 @@ Route::resource('admin/backup','BackupController');
 Route::resource('log','LogController');
 Route::get('admin/report/debit','ReportController@debit');
 Route::get('admin/report/groups','ReportController@groups');
+Route::get('admin/report/debitbygroups','ReportController@debitByGroups');
 Route::get('logout','LogController@logout');
 Route::get('admin/groups/{id}','StartclassController@getgroups');
 Route::get('admin/payments/{id}','PaymentController@getpayments');

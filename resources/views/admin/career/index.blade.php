@@ -14,11 +14,7 @@
 	<tbody>
 		<td>{{$career->id}}</td>
 		<td>{{$career->nombre}}</td>
-		@if ($career->mes > 0)
-		<td>{{$career->mes}} - meses</td>
-		@else
-		<td>{{$career->duracion}} - semanas</td>
-		@endif
+		<td>{{$career->duracion}} - {{$career->tipo}}/s</td>
 		<td>{{$career->costo}}</td>
 		@foreach(Auth::user()->role->functionalities as $func)
 		@if ($func->code=='ECAR')

@@ -25,6 +25,10 @@ class Inscription extends Model
     {
         return $this->belongsTo('Institute\User');
     }
+    public function payments()
+    {
+        return $this->hasMany('Institute\Payment');
+    }
     public static function inscriptions($id){
         return Inscription::
         join('careers','inscriptions.career_id','=','careers.id')
@@ -34,5 +38,30 @@ class Inscription extends Model
         ->where('people_id',$id)
         ->groupBy('inscriptions.id')
         ->get();
+    }
+    public function lastSaldoPayment(){
+        $payment = $this->payments->where('estado','Pendiente')->first();
+        if ($payment) {
+            return $payment->saldo;
+        }
+        return "<b>Sin deudas</b>";
+    }
+    public function debit(){
+        $payment = $this->payments->where('estado','Pendiente')->first();
+        if ($payment) {
+            if (strtotime($payment->fecha_pagar) < strtotime(\Carbon\Carbon::now())) {
+                return true;
+            }
+        }
+        return null;
+    }
+    public function debitNext(){
+        $payment = $this->payments->where('estado','Pendiente')->first();
+        if ($payment) {
+            if (strtotime($payment->fecha_pagar) < strtotime(\Carbon\Carbon::now()->addWeek(1)) && strtotime($payment->fecha_pagar) > strtotime(\Carbon\Carbon::now())) {
+                return true;
+            }
+        }
+        return null;
     }
 }

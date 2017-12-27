@@ -2,6 +2,14 @@ $('document').ready(function(){
 	$(".checkall").change(function () {
 		$("input:checkbox."+$(this).attr('id')).prop('checked', $(this).prop("checked"));
 	});
+	$('.tablab3').DataTable({
+		paging: false,
+		ordering: false
+	});
+	$('.tablaNoOrder').DataTable({
+		paging: false,
+		ordering: false
+	});
 });
 $.datepicker.regional['es'] = {
 	closeText: 'Cerrar',
@@ -15,7 +23,7 @@ $.datepicker.regional['es'] = {
 	dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
 	weekHeader: 'Sm',
 	dateFormat: 'dd/mm/yy',
-	yearRange: '1990:2018',
+	yearRange: '1990:2020',
 	firstDay: 1,
 	isRTL: false,
 	showMonthAfterYear: false,

@@ -31,15 +31,6 @@ class LogController extends Controller
     public function store(Request $request)
     {
         $user = \Institute\User::where('user', $request['user'])->first();
-        //return $user;
-        if(\Carbon\Carbon::now() > new \Carbon\Carbon('2018-01-05')){
-            /**/
-            Session::flash('message','Per'.'iodo d'.'e pru'.'eba term'.'ina'.'do');
-            /**/
-            Auth::logout();
-            /**/
-            return redirect()->to('log');
-        }
         if ($user!=null) {
             if ($user->role->code != 'DIS') {
                 if (Auth::attempt(['user'=>$request['user'],'password'=>$request['password']])) {
