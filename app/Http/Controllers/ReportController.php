@@ -65,4 +65,11 @@ class ReportController extends Controller
         ->get();
         return view('admin/report.debitByGroups',['startclasses'=>$startclasses]);
     }
+    public function payments()
+    {
+        $startclasses = \Institute\Startclass::
+        orderBy('startclasses.id','desc')
+        ->get();
+        return view('admin/report.payments',['startclasses'=>$startclasses]);
+    }
 }

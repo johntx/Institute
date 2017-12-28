@@ -27,6 +27,7 @@
 								<th>Fch. Inicio</th>
 								<th>Fecha Pagar</th>
 								<th>Fch. Fin</th>
+								<th>Abono</th>
 								<th>Saldo</th>
 								<th>Telefono</th>
 							</tr>
@@ -49,7 +50,8 @@
 								<td>
 									{{\Carbon\Carbon::parse($inscription->fechaFinMes())->format('d/m/Y')}}
 								</td>
-								<td>{!!$inscription->debe!!}</td>
+								<td>{{$inscription->monto-$inscription->debe}}</td>
+								<td>{{$inscription->debe}}</td>
 								<td>{{$inscription->people->telefono}}</td>
 							</tr>
 							@endforeach
