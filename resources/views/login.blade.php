@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
+  <link rel="icon" type="image/png" href="{!!URL::to('icons/logomin.png')!!}" />
   <title>Log In</title>
   {!!Html::style('css/bootstrap.min.css')!!}
   {!!Html::style('css/metisMenu.min.css')!!}

@@ -7,6 +7,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	<title>Enviar email</title>
+	<link rel="icon" type="image/png" href="{!!URL::to('icons/logomin.png')!!}" />
 	{!!Html::style('css/bootstrap.min.css')!!}
 	{!!Html::style('css/metisMenu.min.css')!!}
 	{!!Html::style('css/sb-admin-2.css')!!}

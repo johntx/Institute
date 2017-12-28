@@ -24,7 +24,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{!!URL::to('admin')!!}"><i class="fa fa-database"></i> Admin Institute</a>
+        <a class="navbar-brand" href="{!!URL::to('admin')!!}"><i class="fa fa-database"></i> Admin Instituto C1EN</a>
       </div>
       <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
