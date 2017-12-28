@@ -3,7 +3,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Institute</title>
+  <title>Admin Instituto C1EN</title>
+  <link rel="icon" type="image/png" href="{!!URL::to('icons/logomin.png')!!}" />
   {!!Html::style('css/bootstrap.min.css')!!}
   {!!Html::style('css/jquery-ui.min.css')!!}
   {!!Html::style('css/metisMenu.min.css')!!}

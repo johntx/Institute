@@ -2,10 +2,10 @@
 <html lang="es" ondragstart="return false">
 <!-- oncontextmenu="return false"  onselectstart="return false" -->
 <head>
-	<title>Instituto</title>
+	<title>Instituto C1EN</title>
 	<meta charset="utf-8">
 	<meta name = "format-detection" content = "telephone=no" />
-	<link rel="icon" type="image/png" href="#" />
+	<link rel="icon" type="image/png" href="{!!URL::to('icons/logomin.png')!!}" />
 	{!!Html::style('css/header.css')!!}
 	@yield('css')
 </head>

@@ -4,7 +4,8 @@ $('document').ready(function(){
 	});
 	$('.tablab3').DataTable({
 		paging: false,
-		ordering: false
+		ordering: false,
+		info: false
 	});
 	$('.tablaNoOrder').DataTable({
 		paging: false,

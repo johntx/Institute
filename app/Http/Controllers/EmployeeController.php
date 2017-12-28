@@ -37,7 +37,6 @@ class EmployeeController extends Controller
         $employees = People::join('users','peoples.id','=','users.id')
         ->join('roles','users.role_id','=','roles.id')
         ->select('peoples.*')
-        ->where('roles.code','!=','ADM')
         ->where('roles.code','!=','EST')
         ->where('roles.code','!=','DOC')
         ->orderBy('users.id','DESC')
@@ -123,7 +122,10 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $roles = \Institute\Role::lists('name', 'id');
+        $roles = \Institute\Role::where('roles.code','!=','ROOT')
+        ->where('roles.code','!=','EST')
+        ->where('roles.code','!=','DOC')
+        ->lists('name', 'id');
         $offices = \Institute\Office::lists('nombre', 'id');
         return view('admin/employee.edit',['employee'=>$this->employee, 'roles'=>$roles, 'offices'=>$offices]);
     }

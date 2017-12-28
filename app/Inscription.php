@@ -39,13 +39,6 @@ class Inscription extends Model
         ->groupBy('inscriptions.id')
         ->get();
     }
-    public function lastSaldoPayment(){
-        $payment = $this->payments->where('estado','Pendiente')->first();
-        if ($payment) {
-            return $payment->saldo;
-        }
-        return "<b>Sin deudas</b>";
-    }
     public function debit(){
         $payment = $this->payments->where('estado','Pendiente')->first();
         if ($payment) {
@@ -63,5 +56,29 @@ class Inscription extends Model
             }
         }
         return null;
+    }
+    public function fechaInicioMes()
+    {
+        if (strtotime($this->group->startclass->fecha_inicio) > strtotime($this->people->fecha_ingreso)) {
+            $fecha_inicio = $this->group->startclass->fecha_inicio;
+        } else {
+            $fecha_inicio = $this->people->fecha_ingreso;
+        }
+        $mes = $this->abono / $this->monto;
+        $start_date = date('Y-m-d',strtotime('+'.intval($mes).' month', strtotime($fecha_inicio)));
+        return $start_date;
+    }
+    public function fechaFinMes()
+    {
+        if (strtotime($this->group->startclass->fecha_inicio) > strtotime($this->people->fecha_ingreso)) {
+            $fecha_inicio = $this->group->startclass->fecha_inicio;
+        } else {
+            $fecha_inicio = $this->people->fecha_ingreso;
+        }
+        $mes = $this->abono / $this->monto;
+        $mes = intval($mes) + 1;
+        $start_date_1 = date('Y-m-d',strtotime('-1 day', strtotime($fecha_inicio)));
+        $start_date = date('Y-m-d',strtotime('+'.intval($mes).' month', strtotime($start_date_1)));
+        return $start_date;
     }
 }

@@ -15,8 +15,8 @@
 		@foreach($startclasses as $startclass)
 		<tbody>
 			<td>{{$startclass->id}}</td>
-			<td>{{$startclass->fecha_inicio}}</td>
-			<td>{{$startclass->fecha_fin}}</td>
+			<td>{{\Carbon\Carbon::parse($startclass->fecha_inicio)->format('d/m/Y')}}</td>
+			<td>{{\Carbon\Carbon::parse($startclass->fecha_fin)->format('d/m/Y')}}</td>
 			<td>{{$startclass->career->nombre}}</td>
 			<td>{{$startclass->estado}}</td>
 			<td>{{$startclass->office->nombre}}</td>

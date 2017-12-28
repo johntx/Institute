@@ -24,13 +24,15 @@
 							<tr>
 								<th>Nº</th>
 								<th>Nombre</th>
-								<th>Fch. Ingreso</th>
+								<th>Fch. Inicio</th>
 								<th>Fecha Pagar</th>
+								<th>Fch. Fin</th>
 								<th>Saldo</th>
+								<th>Telefono</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach (\Institute\Inscription::join('payments','inscriptions.id','=','payments.inscription_id')->select('inscriptions.*','payments.fecha_pagar')->where('payments.estado','Pendiente')->where('inscriptions.estado','Inscrito')->where('inscriptions.group_id',$group->id)->orderBy('payments.fecha_pagar','asc')->distinct()->get() as $key=>$inscription)
+							@foreach (\Institute\Inscription::join('payments','inscriptions.id','=','payments.inscription_id')->select('inscriptions.*','payments.fecha_pagar','payments.saldo as debe')->where('payments.estado','Pendiente')->where('inscriptions.estado','Inscrito')->where('inscriptions.group_id',$group->id)->orderBy('payments.fecha_pagar','asc')->distinct()->get() as $key=>$inscription)
 							<tr @if ($inscription->debit())
 								class="danger" 
 								@elseif ($inscription->debitNext())
@@ -41,14 +43,14 @@
 								<td>{{++$key}}</td>
 								<td>{{ucwords(strtolower($inscription->people->nombrecompleto()))}}</td>
 								<td>
-									@if (strtotime($inscription->group->startclass->fecha_inicio) > strtotime($inscription->people->fecha_ingreso))
-									{{\Carbon\Carbon::parse($inscription->group->startclass->fecha_inicio)->format('d/m/Y')}}
-									@else
-									{{\Carbon\Carbon::parse($inscription->people->fecha_ingreso)->format('d/m/Y')}}
-									@endif
+									{{\Carbon\Carbon::parse($inscription->fechaInicioMes())->format('d/m/Y')}}
 								</td>
-								<td>{{\Carbon\Carbon::parse($inscription->fecha_pagar)->format('d/m/Y')}}</td>
-								<td>{!!$inscription->lastSaldoPayment()!!}</td>
+								<td><b>{{\Carbon\Carbon::parse($inscription->fecha_pagar)->format('d/m/Y')}}</b></td>
+								<td>
+									{{\Carbon\Carbon::parse($inscription->fechaFinMes())->format('d/m/Y')}}
+								</td>
+								<td>{!!$inscription->debe!!}</td>
+								<td>{{$inscription->people->telefono}}</td>
 							</tr>
 							@endforeach
 						</tbody>

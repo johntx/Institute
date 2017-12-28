@@ -38,7 +38,13 @@
 				@foreach ($startclasses as $startclass)
 				<option value="{{$startclass->id}}" 
 					costo='{{$startclass->career->costo}}' 
-					duracion='{{$startclass->career->mes}}'
+					duracion='
+					@if ($startclass->career->tipo == 'Semana')
+						1
+					@else
+						{{$startclass->career->duracion}}
+					@endif
+					'
 					>{{$startclass->career->nombre}} - [{{date_format(date_create($startclass->fecha_inicio),'d-m-Y')}}] ({{$startclass->estado}}) [{{$startclass->career->costo}}bs]</option>
 					@endforeach
 				</select>

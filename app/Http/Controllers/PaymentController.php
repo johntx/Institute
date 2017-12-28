@@ -95,7 +95,7 @@ class PaymentController extends Controller
 
         $PaymentSaldo = $lastpayment->saldo - $request['abono'];
         $lastpayment->fill([
-            'fecha_pago' => \Carbon\Carbon::now(),
+            'fecha_pago' => $request['fecha_pago'],
             'estado' => 'Pagado',
             'observacion' => $request['observacion'],
             'abono' => $request['abono']
