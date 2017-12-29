@@ -4,7 +4,7 @@
 </div>
 	<div class="form-group">
 		{!! Form::label('Modalidad (Tipo)') !!}
-		{!! Form::select('tipo',['Mes' => 'Mensual','Semana' => 'Semanal','Modulo' => 'Modular (Duración en meses)'],null,['class'=>'form-control','maxlength'=>20]) !!}
+		{!! Form::select('tipo',['Mes' => 'Mensual','Semana' => 'Semanal'],null,['class'=>'form-control','maxlength'=>20]) !!}
 	</div>
 	<div class="form-group">
 		{!! Form::label('Duracion') !!}

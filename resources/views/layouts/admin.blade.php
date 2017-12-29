@@ -13,6 +13,7 @@
   {!!Html::style('css/bootstrap-select.css')!!}
   {!!Html::style('css/datatables.css')!!}
   {!!Html::style('css/admin.css')!!}
+  @yield('admincss')
 </head>
 <body>
   <div id="wrapper">
@@ -83,6 +84,7 @@
   {!!Html::script('js/admin.js')!!}
   {!!Html::script('js/bootstrap-select.js')!!}
   {!!Html::script('js/datatables.js')!!}
-  </script>
+  {!!Html::script('js/mdb.js')!!}
+  @yield('adminjs')
 </body>
 </html>

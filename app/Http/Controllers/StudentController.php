@@ -67,14 +67,15 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+      
       if (Auth::user()->role->code=='ROOT' || Auth::user()->role->code=='ADM') {
         Session::flash('message','Este usuario no puede realizar esta función');
         return Redirect::to('/admin/student');
       }
       $group=\Institute\Group::find($request['group_id']);
       $total = 0;
-      if ($group->startclass->career->mes > 0) {
-        $total = $request['monto']*$group->startclass->career->mes;
+      if ($group->startclass->career->duracion > 0) {
+        $total = $request['monto']*$group->startclass->career->duracion;
         if ($total != $request['total']) {
           $total=$request['total'];
           $request['monto']=$request['total'];
@@ -148,9 +149,10 @@ class StudentController extends Controller
         $payment->fill([
           'fecha_pagar' => $group->startclass->fecha_inicio,
           'fecha_pago' => \Carbon\Carbon::now(),
-          'estado' => 'Pagado',
+          'estado' => 'Pagado al Contado',
           'abono' => $request['abono'],
           'saldo' => $total,
+          'observacion' => 'Colegiatura completa pagada al contado',
           'inscription_id' => $inscription->id,
           'user_id' => Auth::user()->id
           ]);

@@ -19,7 +19,10 @@
 	<tbody>
 		<td>{{$payment->id}}</td>
 		<td>{{$payment->inscription->people->nombrecompleto()}}</td>
-		<td>{{$payment->fecha_pago}}</td>
+		<td>@if ($payment->fecha_pago)
+			{{\Carbon\Carbon::parse($payment->fecha_pago)->format('d/m/Y')}}
+		@endif
+		</td>
 		<!--td>{!{$payment->fecha_pagar}!}</td-->
 		<td>{{$payment->inscription->career->nombre}}</td>
 		<td>{{$payment->abono}}</td>

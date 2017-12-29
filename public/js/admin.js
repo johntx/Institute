@@ -11,6 +11,10 @@ $('document').ready(function(){
 		paging: false,
 		ordering: false
 	});
+	var hoy = new Date();
+	/*console.log(hoy.getFullYear()+'-'+(hoy.getMonth()-1)+'-1',hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDate());*/
+	cargaringresos(hoy.getFullYear()+'-'+(hoy.getMonth()-1)+'-1',$('#date_ingresos_fin').val());
+
 });
 $.datepicker.regional['es'] = {
 	closeText: 'Cerrar',
@@ -106,6 +110,10 @@ $(document).ready(function(){
 		cargarpagos(event.target.value);
 		$('#colegiatura').html($(this).children('option:selected').attr('colegiatura'));
 	});
+	$('.date_ingresos').change(function(){
+		
+		cargaringresos($('#date_ingresos_inicio').val(),$('#date_ingresos_fin').val());
+	});
 });
 $(function() {
 	$('.dropdown-menu a').click(function() {
@@ -163,6 +171,44 @@ function cargarpagos(inscription_id){
 		}
 	});
 }
+function cargaringresos(inicio,fin){
+	$.get("/cien/public/admin/report/chart/"+inicio+"/"+fin+"",function(listaIngresos,response){
+		console.log(listaIngresos);
+		$("#ingresos").empty();
+		var ctxL = document.getElementById("lineChart").getContext('2d');
+		var myLineChart = new Chart(ctxL, {
+			type: 'line',
+			data: {
+				labels: Object.keys(listaIngresos),
+				datasets: [
+				{
+					label: "Ingresos por mes",
+					fillColor: "rgba(220,220,220,0.2)",
+					strokeColor: "rgba(220,220,220,1)",
+					pointColor: "rgba(220,220,220,1)",
+					pointStrokeColor: "#fff",
+					pointHighlightFill: "#fff",
+					pointHighlightStroke: "rgba(220,220,220,1)",
+					data: Object.values(listaIngresos)
+				}
+				]
+			},
+			options: {
+				responsive: true
+			}    
+		});
+		
+		for (var i = 0; i < Object.keys(listaIngresos).length; i++) {
+			$('#ingresos').append(
+				"<tr><td>"
+				+Object.keys(listaIngresos)[i]
+				+"</td><td>"
+				+Object.values(listaIngresos)[i].toFixed(2)
+				+"</td></tr>"
+				);
+			}
+	});
+}
 function change_total(){
 	var total = 0;
 	total = parseInt($('#meses').html())*parseInt($('#monto').val());
@@ -177,35 +223,3 @@ function justNumbers(e){
 	te = String.fromCharCode(key); 
 	return (patron.test(te) || key == 9 || key == 8 || key == 46 || key == 13);
 }
-var ctxL = document.getElementById("lineChart").getContext('2d');
-var myLineChart = new Chart(ctxL, {
-    type: 'line',
-    data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [
-            {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
-                data: [65, 59, 80, 81, 56, 55, 40]
-            },
-            {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0.2)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
-                data: [28, 48, 40, 19, 86, 27, 90]
-            }
-        ]
-    },
-    options: {
-        responsive: true
-    }    
-});
