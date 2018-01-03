@@ -46,3 +46,4 @@ Route::get('admin/groups/{id}','StartclassController@getgroups');
 Route::get('admin/report/chart/{inicio}/{fin}','ReportController@getchartmensual');
 Route::get('admin/payments/{id}','PaymentController@getpayments');
 Route::get('admin/inscriptions/{id}','PaymentController@getinscriptions');
+Route::get('admin/payment/pdf/{id?}','PaymentController@pdf');

@@ -11,10 +11,7 @@ $('document').ready(function(){
 		paging: false,
 		ordering: false
 	});
-	var hoy = new Date();
-	/*console.log(hoy.getFullYear()+'-'+(hoy.getMonth()-1)+'-1',hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDate());*/
-	cargaringresos(hoy.getFullYear()+'-'+(hoy.getMonth()-1)+'-1',$('#date_ingresos_fin').val());
-
+	cargaringresos($('#date_ingresos_inicio').val(),$('#date_ingresos_fin').val());
 });
 $.datepicker.regional['es'] = {
 	closeText: 'Cerrar',
@@ -94,7 +91,6 @@ $(document).ready(function(){
 				var date = inscription[i].fecha_inicio;
 				date = date.substring(0,10).split('-');
 				date = date[1] + '-' + date[2] + '-' + date[0];
-
 				
 				$('#payments_carrera').append(
 					"<option value='"+inscription[i].id
@@ -145,12 +141,10 @@ function cargarpagos(inscription_id){
 			} else {
 				var abono = payments[i].abono;
 			}
-
 			var date2 = payments[i].fecha_pagar;
 			date2 = date2.substring(0,10).split('-');
 			date2 = date2[1] + '-' + date2[2] + '-' + date2[0];
 			var fecha_pagar = $.datepicker.formatDate('dd M yy', new Date(date2));
-
 			$('#payments_pagos').append(
 				"<tr><td>"
 				+payments[i].id
@@ -206,7 +200,7 @@ function cargaringresos(inicio,fin){
 				+Object.values(listaIngresos)[i].toFixed(2)
 				+"</td></tr>"
 				);
-			}
+		}
 	});
 }
 function change_total(){

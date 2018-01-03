@@ -7,16 +7,16 @@
 	{!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Insert Nombre','required', 'maxlength'=>50]) !!}
 </div>
 <div class="form-group required">
-	{!! Form::label('Apellido Paterno*') !!}
+	{!! Form::label('Apellidos*') !!}
 	{!! Form::text('paterno',null,['class'=>'form-control','placeholder'=>'Insert Apellido Paterno','required', 'maxlength'=>100]) !!}
-</div>
-<div class="form-group required">
-	{!! Form::label('Apellido Materno*') !!}
-	{!! Form::text('materno',null,['class'=>'form-control','placeholder'=>'Insert Apellido Materno','required', 'maxlength'=>100]) !!}
 </div>
 <div class="form-group required">
 	{!! Form::label('Sucursal*') !!}
 	{!! Form::select('office_id', $offices, null, ['class'=>'form-control','required' ]) !!}
+</div>
+<div class="form-group">
+	{!! Form::label('Telefonos') !!}
+	{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Insert Telefono', 'maxlength'=>100]) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Fecha de Ingreso') !!}
@@ -29,8 +29,4 @@
 <div class="form-group">
 	{!! Form::label('Direccion') !!}
 	{!! Form::text('direccion',null,['class'=>'form-control','placeholder'=>'Insert Direccion', 'maxlength'=>255]) !!}
-</div>
-<div class="form-group">
-	{!! Form::label('Telefonos') !!}
-	{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Insert Telefono', 'maxlength'=>100]) !!}
 </div>

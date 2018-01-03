@@ -43,6 +43,14 @@ class PaymentController extends Controller
             return response()->json($inscriptions);
         }
     }
+    public function pdf($id)
+    {
+        $payment = Payment::find($id);
+        $view =  view('pdf/PDFRecivo', ['payment'=>$payment])->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('recivo '.$payment->inscription->people->nombrecompleto().'.pdf');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -68,6 +76,7 @@ class PaymentController extends Controller
         ->select('peoples.*')
         ->where('inscriptions.estado','Inscrito')
         ->distinct()
+        ->orderBy('peoples.id','DESC')
         ->get();
         return view('admin/payment.create',['students'=>$students]);
     }
@@ -237,6 +246,13 @@ class PaymentController extends Controller
                 $this->payment->delete();
             }
         } else {
+            if ($this->payment->abono < $this->payment->saldo) {
+                $lastpayment = \Institute\Payment::where('inscription_id',$this->payment->inscription_id)
+                ->where('estado','Pendiente')
+                ->first();
+                $lastpayment->saldo += $this->payment->abono;
+                $lastpayment->save();
+            }
             $inscription->abono = $inscription->abono - $this->payment->abono;
             $inscription->save();
             $this->payment->delete();
