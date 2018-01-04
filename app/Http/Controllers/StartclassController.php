@@ -143,9 +143,9 @@ class StartclassController extends Controller
       $career = \Institute\Career::find($request['career_id']);
       if ($career->tipo == 'Semana') {
         $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' week', strtotime($request['fecha_inicio'])));
-      } 
+      }
       if ($career->tipo == 'Mes') {
-        $fecha_1 = date('Y-m-d',strtotime('+'.$career->mes.' month', strtotime($request['fecha_inicio'])));
+        $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' month', strtotime($request['fecha_inicio'])));
       }
       $fecha = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
       $estado = '';
