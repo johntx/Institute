@@ -32,7 +32,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        $groups = Group::orderBy('id','DESC')->paginate(20);
+        $groups = Group::join('startclasses','groups.startclass_id','=','startclasses.id')->select('groups.*')->orderBy('id','DESC')->paginate(20);
         return view('admin/group.index',compact('groups'));
     }
 
