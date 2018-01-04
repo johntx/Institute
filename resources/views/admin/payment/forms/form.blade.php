@@ -1,6 +1,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Registrar Pagos</div>
 	<div class="panel-body">
+		<input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
 		<div class=" col-xs-5" style="padding: 0;">
 			{!! Form::label('(CI) - Estudiante') !!}
 			<select name="user_id" class="form-control selectpicker" required data-live-search="true" id="payments_estudiante">

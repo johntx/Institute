@@ -26,7 +26,7 @@
 						<span><b>Recibí de:</b> {{$payment->inscription->people->nombrecompleto()}}</span>
 					</div>
 					<div>
-						<span><b>La suma de:</b> {{$suma}} 00/100</span>
+						<span><b>La suma de:</b> {{$suma}} BOLIVIANOS 00/100</span>
 					</div>
 					<div>
 						<span><b>Por concepto de:</b> CURSO "{{$payment->inscription->career->nombre}}"</span>
@@ -70,7 +70,7 @@
 						<span><b>Recibí de:</b> {{$payment->inscription->people->nombrecompleto()}}</span>
 					</div>
 					<div>
-						<span><b>La suma de:</b> {{$suma}} 00/100</span>
+						<span><b>La suma de:</b> {{$suma}} BOLIVIANOS 00/100</span>
 					</div>
 					<div>
 						<span><b>Por concepto de:</b> CURSO "{{$payment->inscription->career->nombre}}"</span>

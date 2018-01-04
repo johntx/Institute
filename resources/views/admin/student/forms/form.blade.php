@@ -2,6 +2,7 @@
 <div class="panel panel-default col-xs-6" style="padding: 0;">
 	<div class="panel-heading">Kardex del Estudiante</div>
 	<div class="panel-body">
+		<input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
 		<div class="form-group required">
 			{!! Form::label('Nombres*') !!}
 			{!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Insert Nombre','required', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
@@ -40,40 +41,41 @@
 					costo='{{$startclass->career->costo}}' 
 					duracion='
 					@if ($startclass->career->tipo == 'Semana')
-						1
+					1
 					@else
-						{{$startclass->career->duracion}}
+					{{$startclass->career->duracion}}
 					@endif
 					'
-					>{{$startclass->career->nombre}} - [{{date_format(date_create($startclass->fecha_inicio),'d-m-Y')}}] ({{$startclass->estado}}) [{{$startclass->career->costo}}bs]</option>
-					@endforeach
-				</select>
+					>{{$startclass->career->nombre}} - [{{date_format(date_create($startclass->fecha_inicio),'d-m-Y')}}] ({{$startclass->estado}}) [{{$startclass->career->costo}}bs]
+				</option>
+				@endforeach
+			</select>
+		</div>
+		<div class="form-group">
+			{!! Form::label('Grupos') !!}
+			<select id="group_id" name="group_id" class="form-control" required>
+				<option>Debe escoger una Carrera Primero</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<div class=" col-xs-6" style="padding: 0;">
+				{!! Form::label('Costo Mensual') !!}
+				{!! Form::text('monto',null,['class'=>'form-control', 'id'=>'monto','placeholder'=>'Insert Monto', 'duracion'=>'','onkeypress'=>"return justNumbers(event);",'required']) !!}
 			</div>
-			<div class="form-group">
-				{!! Form::label('Grupos') !!}
-				<select id="group_id" name="group_id" class="form-control" required>
-					<option>Debe escoger una Carrera Primero</option>
-				</select>
+			<div class="col-xs-2" style="padding-right: 0;">
+				{!! Form::label('Meses') !!}
+				{!! Form::label('',null,['class'=>'form-control', 'id'=>'meses']) !!}
 			</div>
-			<div class="form-group">
-				<div class=" col-xs-6" style="padding: 0;">
-					{!! Form::label('Costo Mensual') !!}
-					{!! Form::text('monto',null,['class'=>'form-control', 'id'=>'monto','placeholder'=>'Insert Monto', 'duracion'=>'','onkeypress'=>"return justNumbers(event);",'required']) !!}
-				</div>
-				<div class="col-xs-2" style="padding-right: 0;">
-					{!! Form::label('Meses') !!}
-					{!! Form::label('',null,['class'=>'form-control', 'id'=>'meses']) !!}
-				</div>
-				<div class="col-xs-4" style="padding-right: 0;">
-					{!! Form::label('Costo Total') !!}
-					{!! Form::text('total',null,['class'=>'form-control total','placeholder'=>'Insert Total', 'onkeypress'=>"return justNumbers(event);"]) !!}
-				</div>
-			</div>
-			<br><br><br>
-			<br><br><br>
-			<div class="form-group">
-				{!! Form::label('Pago Inicial') !!}
-				{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required']) !!}
+			<div class="col-xs-4" style="padding-right: 0;">
+				{!! Form::label('Costo Total') !!}
+				{!! Form::text('total',null,['class'=>'form-control total','placeholder'=>'Insert Total', 'onkeypress'=>"return justNumbers(event);"]) !!}
 			</div>
 		</div>
+		<br><br><br>
+		<br><br><br>
+		<div class="form-group">
+			{!! Form::label('Pago Inicial') !!}
+			{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required']) !!}
+		</div>
 	</div>
+</div>

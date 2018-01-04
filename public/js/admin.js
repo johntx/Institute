@@ -11,8 +11,59 @@ $('document').ready(function(){
 		paging: false,
 		ordering: false
 	});
-	cargaringresos($('#date_ingresos_inicio').val(),$('#date_ingresos_fin').val());
+	//cargaringresos($('#date_ingresos_inicio').val(),$('#date_ingresos_fin').val());
+	
 });
+$('#inscribir').on('submit',function(e){
+	$.ajaxSetup({
+		header:$('meta[name="_token"]').attr('content')
+	})
+	e.preventDefault(e);
+	$.ajax({
+
+		type:"POST",
+		url:window.location.origin+'/cien/public/admin/student',
+		data:$(this).serialize(),
+		dataType: 'json',
+		success: function(payment){
+			document.getElementById("inscribir").reset();
+			$('#career_select').selectpicker('refresh');
+			$('#group_id option').empty();
+			window.open(window.location.origin+'/cien/public/admin/payment/pdf/'+payment);
+		},
+		error: function(){
+			location.reload();
+		}
+	})
+});
+$('#paymentForm').on('submit',function(e){
+	$.ajaxSetup({
+		header:$('meta[name="_token"]').attr('content')
+	})
+	e.preventDefault(e);
+	$.ajax({
+
+		type:"POST",
+		url:window.location.origin+'/cien/public/admin/payment',
+		data:$(this).serialize(),
+		dataType: 'json',
+		success: function(payment){
+			window.open(window.location.origin+'/cien/public/admin/payment/pdf/'+payment);
+			location.reload();
+		},
+		error: function(){
+			location.reload();
+		}
+	})
+});
+$('.pdfbtn').click(function() {
+	$("#pdfModal iframe").empty();
+	$("#pdfModal iframe").attr('src','');
+	$("#pdfModal .modal-title").html('RECIBO '+$(this).attr('code'));
+	$("#pdfModal iframe").attr('src',$(this).attr('href'));
+	$("#pdfModal").modal();
+	return false;
+})
 $.datepicker.regional['es'] = {
 	closeText: 'Cerrar',
 	prevText: '< Ant',
@@ -75,7 +126,7 @@ $(document).ready(function(){
 			}
 		});
 		$('#monto').val($(this).children('option:selected').attr('costo'));
-		
+
 		$('#meses').html($(this).children('option:selected').attr('duracion'));
 		change_total();
 	});
@@ -107,7 +158,7 @@ $(document).ready(function(){
 		$('#colegiatura').html($(this).children('option:selected').attr('colegiatura'));
 	});
 	$('.date_ingresos').change(function(){
-		
+
 		cargaringresos($('#date_ingresos_inicio').val(),$('#date_ingresos_fin').val());
 	});
 });
@@ -191,7 +242,7 @@ function cargaringresos(inicio,fin){
 				responsive: true
 			}    
 		});
-		
+
 		for (var i = 0; i < Object.keys(listaIngresos).length; i++) {
 			$('#ingresos').append(
 				"<tr><td>"

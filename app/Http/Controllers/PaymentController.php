@@ -112,72 +112,75 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $inscription = \Institute\Inscription::find($request['inscription_id']);
-        if ($inscription->colegiatura == 'Pagado') {
-            return redirect('admin/payment/create')
-            ->withErrors('El cliente ya tiene la colegiatura pagada');
-        }
-        $lastpayment = \Institute\Payment::where('inscription_id',$request['inscription_id'])
-        ->where('estado','Pendiente')
-        ->first();
-        if ($request['abono'] > $lastpayment->saldo) {
-            return redirect('admin/payment/create')
-            ->withErrors('Monto superior al saldo');
-        }
-
-        $PaymentSaldo = $lastpayment->saldo - $request['abono'];
-        $lastpayment->fill([
-            'fecha_pago' => $request['fecha_pago'],
-            'estado' => 'Pagado',
-            'observacion' => $request['observacion'],
-            'abono' => $request['abono']
-            ]);
-        $lastpayment->save();
-
-        $Inscriptionestado = 'Debe';
-        if ($inscription->abono + $request['abono'] == $inscription->total) {
-            $Inscriptionestado = 'Pagado';
-        }
-        $inscription->fill([
-            'abono' => $inscription->abono + $request['abono'],
-            'colegiatura' => $Inscriptionestado
-            ]);
-        $inscription->save();
-
-        if ($inscription->abono < $inscription->total) {
-            if ($PaymentSaldo == 0) {
-                $mes = $inscription->abono / $inscription->monto;
-                $payment = new \Institute\Payment;
-                $fecha_pagar = date('Y-m-d',strtotime('+'.$mes.' month', strtotime($inscription->group->startclass->fecha_inicio)));
-                $saldo = $request['monto'];
-                $payment->fill([
-                    'fecha_pagar' => $fecha_pagar,
-                    'estado' => 'Pendiente',
-                    'abono' => 0,
-                    'saldo' => $inscription->monto,
-                    'inscription_id' => $request['inscription_id'],
-                    'user_id' => Auth::user()->id
-                    ]);
-                $payment->save();
-            } else {
-                $fecha_pagar = $lastpayment->fecha_pagar;
-                if ($lastpayment->saldo == $inscription->monto) {
-                    $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($lastpayment->fecha_pagar)));
-                }
-                $payment = new \Institute\Payment;
-                $payment->fill([
-                    'fecha_pagar' => $fecha_pagar,
-                    'estado' => 'Pendiente',
-                    'abono' => 0,
-                    'saldo' => $PaymentSaldo,
-                    'inscription_id' => $request['inscription_id'],
-                    'user_id' => Auth::user()->id
-                    ]);
-                $payment->save();
+        if ($request->ajax()) {
+            $inscription = \Institute\Inscription::find($request['inscription_id']);
+            if ($inscription->colegiatura == 'Pagado') {
+                return redirect('admin/payment/create')
+                ->withErrors('El cliente ya tiene la colegiatura pagada');
             }
+            $lastpayment = \Institute\Payment::where('inscription_id',$request['inscription_id'])
+            ->where('estado','Pendiente')
+            ->first();
+            if ($request['abono'] > $lastpayment->saldo) {
+                return redirect('admin/payment/create')
+                ->withErrors('Monto superior al saldo');
+            }
+
+            $PaymentSaldo = $lastpayment->saldo - $request['abono'];
+            $lastpayment->fill([
+                'fecha_pago' => $request['fecha_pago'],
+                'estado' => 'Pagado',
+                'observacion' => $request['observacion'],
+                'abono' => $request['abono']
+                ]);
+            $lastpayment->save();
+
+            $Inscriptionestado = 'Debe';
+            if ($inscription->abono + $request['abono'] == $inscription->total) {
+                $Inscriptionestado = 'Pagado';
+            }
+            $inscription->fill([
+                'abono' => $inscription->abono + $request['abono'],
+                'colegiatura' => $Inscriptionestado
+                ]);
+            $inscription->save();
+
+            if ($inscription->abono < $inscription->total) {
+                if ($PaymentSaldo == 0) {
+                    $mes = $inscription->abono / $inscription->monto;
+                    $payment = new \Institute\Payment;
+                    $fecha_pagar = date('Y-m-d',strtotime('+'.$mes.' month', strtotime($inscription->group->startclass->fecha_inicio)));
+                    $saldo = $request['monto'];
+                    $payment->fill([
+                        'fecha_pagar' => $fecha_pagar,
+                        'estado' => 'Pendiente',
+                        'abono' => 0,
+                        'saldo' => $inscription->monto,
+                        'inscription_id' => $request['inscription_id'],
+                        'user_id' => Auth::user()->id
+                        ]);
+                    $payment->save();
+                } else {
+                    $fecha_pagar = $lastpayment->fecha_pagar;
+                    if ($lastpayment->saldo == $inscription->monto) {
+                        $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($lastpayment->fecha_pagar)));
+                    }
+                    $payment = new \Institute\Payment;
+                    $payment->fill([
+                        'fecha_pagar' => $fecha_pagar,
+                        'estado' => 'Pendiente',
+                        'abono' => 0,
+                        'saldo' => $PaymentSaldo,
+                        'inscription_id' => $request['inscription_id'],
+                        'user_id' => Auth::user()->id
+                        ]);
+                    $payment->save();
+                }
+            }
+            Session::flash('message','Pago registrado exitosamente');
+            return $lastpayment->id;
+        //return Redirect::to('admin/payment/create');
         }
-        Session::flash('message','Pago registrado exitosamente');
-        return Redirect::to('admin/payment/create');
     }
 
     /**

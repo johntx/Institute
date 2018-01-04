@@ -67,137 +67,139 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-      
-      if (Auth::user()->role->code=='ROOT' || Auth::user()->role->code=='ADM') {
-        Session::flash('message','Este usuario no puede realizar esta función');
-        return Redirect::to('/admin/student');
-      }
-      $group=\Institute\Group::find($request['group_id']);
-      $total = 0;
-      if ($group->startclass->career->duracion > 0) {
-        $total = $request['monto']*$group->startclass->career->duracion;
-        if ($total != $request['total']) {
-          $total=$request['total'];
-          $request['monto']=$request['total'];
+      if ($request->ajax()) {
+        if (Auth::user()->role->code=='ROOT' || Auth::user()->role->code=='ADM') {
+          Session::flash('message','Este usuario no puede realizar esta función');
+          return Redirect::to('/admin/student');
         }
-      } else {
-        $total = $request['monto'];
-      }
-      if ($request['abono'] > $total) {
-        return redirect('/admin/student/create')
-        ->withErrors('Monto superior al total');
-      }
-      if ($request['abono'] > $request['monto'] && $request['abono'] != $total) {
-        return redirect('/admin/student/create')
-        ->withErrors('Monto superior al pago mensual, realize un pago igual al monto mensual y realize un nuevo pago para cada mensualidad, o haga el pago total de la colegiatura');
-      }
-      $request['nombre']=strtoupper($request['nombre']);
-      $request['paterno']=strtoupper($request['paterno']);
-      $user = new User;
-      if ($request['ci'] != null) {
-        $user->fill([
-          'user' => $request['ci'],
-          'password' => $request['ci'],
-          'role_id' => 3
+        $group=\Institute\Group::find($request['group_id']);
+        $total = 0;
+        if ($group->startclass->career->duracion > 0) {
+          $total = $request['monto']*$group->startclass->career->duracion;
+          if ($total != $request['total']) {
+            $total=$request['total'];
+            $request['monto']=$request['total'];
+          }
+        } else {
+          $total = $request['monto'];
+        }
+        if ($request['abono'] > $total) {
+          return redirect('/admin/student/create')
+          ->withErrors('Monto superior al total');
+        }
+        if ($request['abono'] > $request['monto'] && $request['abono'] != $total) {
+          return redirect('/admin/student/create')
+          ->withErrors('Monto superior al pago mensual, realize un pago igual al monto mensual y realize un nuevo pago para cada mensualidad, o haga el pago total de la colegiatura');
+        }
+        $request['nombre']=strtoupper($request['nombre']);
+        $request['paterno']=strtoupper($request['paterno']);
+        $user = new User;
+        if ($request['ci'] != null) {
+          $user->fill([
+            'user' => $request['ci'],
+            'password' => $request['ci'],
+            'role_id' => 3
+            ]);
+        } else {
+          $user->fill([
+            'user' => 'C1EN',
+            'password' => 'C1EN',
+            'role_id' => 3
+            ]);
+        }
+        $user->save();
+        $cien = 'CIEN-'.$user->id;
+        $user->user = $cien;
+        $people = new People;
+        $people->fill([
+          'ci' => $request['ci'],
+          'nombre' => $request['nombre'],
+          'paterno' => $request['paterno'],
+          'fecha_ingreso' => $request['fecha_ingreso'],
+          'fecha_nacimiento' => $request['fecha_nacimiento'],
+          'direccion' => $request['direccion'],
+          'telefono' => $request['telefono'],
+          'office_id' => Auth::user()->people->office_id
           ]);
-      } else {
-        $user->fill([
-          'user' => 'C1EN',
-          'password' => 'C1EN',
-          'role_id' => 3
+        $inscription = new Inscription;
+        if ($request['abono'] == $total) {
+          $colegiatura = 'Pagado';
+        }
+        if ($request['abono'] < $total) {
+          $colegiatura = 'Debe';
+        }
+        $startclass = \Institute\Startclass::find($request['startclass_id']);
+        $inscription->fill([
+          'estado' => 'Inscrito',
+          'people_id' => $user->id,
+          'monto' => $request['monto'],
+          'abono' => $request['abono'],
+          'total' => $total,
+          'colegiatura' => $colegiatura,
+          'career_id' => $startclass->career->id,
+          'group_id' => $request['group_id'],
+          'user_id' => Auth::user()->id
           ]);
-      }
-      $user->save();
-      $cien = 'CIEN-'.$user->id;
-      $user->user = $cien;
-      $people = new People;
-      $people->fill([
-        'ci' => $request['ci'],
-        'nombre' => $request['nombre'],
-        'paterno' => $request['paterno'],
-        'fecha_ingreso' => $request['fecha_ingreso'],
-        'fecha_nacimiento' => $request['fecha_nacimiento'],
-        'direccion' => $request['direccion'],
-        'telefono' => $request['telefono'],
-        'office_id' => Auth::user()->people->office_id
-        ]);
-      $inscription = new Inscription;
-      if ($request['abono'] == $total) {
-        $colegiatura = 'Pagado';
-      }
-      if ($request['abono'] < $total) {
-        $colegiatura = 'Debe';
-      }
-      $startclass = \Institute\Startclass::find($request['startclass_id']);
-      $inscription->fill([
-        'estado' => 'Inscrito',
-        'people_id' => $user->id,
-        'monto' => $request['monto'],
-        'abono' => $request['abono'],
-        'total' => $total,
-        'colegiatura' => $colegiatura,
-        'career_id' => $startclass->career->id,
-        'group_id' => $request['group_id'],
-        'user_id' => Auth::user()->id
-        ]);
-      $user->save();
-      $user->people()->save($people);
-      $inscription->save();
+        $user->save();
+        $user->people()->save($people);
+        $inscription->save();
 
-      if ($request['abono'] == $total) {
-        $payment = new \Institute\Payment;
-        $payment->fill([
-          'fecha_pagar' => $group->startclass->fecha_inicio,
-          'fecha_pago' => \Carbon\Carbon::now(),
-          'estado' => 'Pagado al Contado',
-          'abono' => $request['abono'],
-          'saldo' => $total,
-          'observacion' => 'Colegiatura completa pagada al contado',
-          'inscription_id' => $inscription->id,
-          'user_id' => Auth::user()->id
-          ]);
-        $payment->save();
-      } else {
-        $saldo = 0;
-        $fecha_insert = $request['fecha_ingreso'];
-        $fecha_start_class = new \Carbon\Carbon($group->startclass->fecha_inicio);
-        if($fecha_insert > $fecha_start_class){
-          $fecha_inicio = $fecha_insert;
-        }else{
-          $fecha_inicio = $group->startclass->fecha_inicio;
+        if ($request['abono'] == $total) {
+          $payment = new \Institute\Payment;
+          $payment->fill([
+            'fecha_pagar' => $group->startclass->fecha_inicio,
+            'fecha_pago' => \Carbon\Carbon::now(),
+            'estado' => 'Pagado al Contado',
+            'abono' => $request['abono'],
+            'saldo' => $total,
+            'observacion' => 'Colegiatura completa pagada al contado',
+            'inscription_id' => $inscription->id,
+            'user_id' => Auth::user()->id
+            ]);
+          $payment->save();
+        } else {
+          $saldo = 0;
+          $fecha_insert = $request['fecha_ingreso'];
+          $fecha_start_class = new \Carbon\Carbon($group->startclass->fecha_inicio);
+          if($fecha_insert > $fecha_start_class){
+            $fecha_inicio = $fecha_insert;
+          }else{
+            $fecha_inicio = $group->startclass->fecha_inicio;
+          }
+          if ($request['abono'] < $request['monto']) {
+            $saldo = $request['monto']-$request['abono'];
+            $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($fecha_inicio)));
+          }
+          if ($request['abono'] == $request['monto']) {
+            $fecha_pagar = date('Y-m-d',strtotime('+1 month', strtotime($fecha_inicio)));
+            $saldo = $request['monto'];
+          }
+          $payment = new \Institute\Payment;
+          $payment->fill([
+            'fecha_pagar' => $group->startclass->fecha_inicio,
+            'fecha_pago' => $request['fecha_ingreso'],
+            'estado' => 'Pagado',
+            'abono' => $request['abono'],
+            'saldo' => $request['monto'],
+            'inscription_id' => $inscription->id,
+            'user_id' => Auth::user()->id
+            ]);
+          $payment->save();
+          $payment2 = new \Institute\Payment;
+          $payment2->fill([
+            'fecha_pagar' => $fecha_pagar,
+            'estado' => 'Pendiente',
+            'abono' => 0,
+            'saldo' => $saldo,
+            'inscription_id' => $inscription->id,
+            'user_id' => Auth::user()->id
+            ]);
+          $payment2->save();
         }
-        if ($request['abono'] < $request['monto']) {
-          $saldo = $request['monto']-$request['abono'];
-          $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($fecha_inicio)));
-        }
-        if ($request['abono'] == $request['monto']) {
-          $fecha_pagar = date('Y-m-d',strtotime('+1 month', strtotime($fecha_inicio)));
-          $saldo = $request['monto'];
-        }
-        $payment = new \Institute\Payment;
-        $payment->fill([
-          'fecha_pagar' => $group->startclass->fecha_inicio,
-          'fecha_pago' => $request['fecha_ingreso'],
-          'estado' => 'Pagado',
-          'abono' => $request['abono'],
-          'saldo' => $request['monto'],
-          'inscription_id' => $inscription->id,
-          'user_id' => Auth::user()->id
-          ]);
-        $payment->save();
-        $payment2 = new \Institute\Payment;
-        $payment2->fill([
-          'fecha_pagar' => $fecha_pagar,
-          'estado' => 'Pendiente',
-          'abono' => 0,
-          'saldo' => $saldo,
-          'inscription_id' => $inscription->id,
-          'user_id' => Auth::user()->id
-          ]);
-        $payment2->save();
+        Session::flash('message','Estudiante registrado exitosamente');
+        return $payment->id;
+        //return Redirect::to('/admin/student');
       }
-      Session::flash('message','Estudiante registrado exitosamente');
-      return Redirect::to('/admin/student');
     }
 
     /**
