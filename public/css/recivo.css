@@ -7,6 +7,15 @@ html, body{
 body{
 	position: relative;
 }
+#separador{
+	width: 100%;
+	height: 0;
+	max-height: 0;
+	display: block;
+	background-color: rgba(54,48,112,0.3);
+	position: absolute;
+	top: 50%;
+}
 .agua{
 	position: absolute;
 	width: 350px;
@@ -74,6 +83,10 @@ body{
 	height: 35px;
 	display: block;
 	position: relative;
+	margin: 5px 0 0 0;
+}
+.recivo>div>.mid>div>div:first-child{
+	margin: 10px 0 0 0;
 }
 .recivo>div>.mid>div>div>span{
 	position: absolute;
@@ -91,21 +104,5 @@ body{
 	left: 210px;
 }
 .recivo>div>.mid>div>div:last-child{
-	margin-top: 75px;
-}
-.recivo>div>.mid>div>div>span.entregue{
-	left: 100px;
-}
-.recivo>div>.mid>div>div>span.recibi{
-	left: 450px;
-}
-.recivo>div>.mid>div>span.entregue_{
-	left: 130px;
-}
-.recivo>div>.mid>div>span.recibi_{
-	left: 465px;
-}
-.recivo>div>.mid>div>span.line{
-	position: absolute;
-	top: 425px;
+	margin-top: 50px;
 }

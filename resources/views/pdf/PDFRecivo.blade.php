@@ -43,16 +43,11 @@
 					<div>
 						<span class="ciudad"><b>Cochabamba</b> {{$fecha_actual}}</span>
 					</div>
-						<span class="entregue_ line">----------------------------------------</span>
-						<span class="recibi_ line">----------------------------------------</span>
-					<div>
-						<span class="entregue"><b>Entregue conforme</b></span>
-						<span class="recibi"><b>Recibí conforme</b></span>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div id="separador"></div>
 	<div class="recivo copia">
 		<div>
 			<img class="agua" src="{!!URL::to('icons/agua.svg')!!}">
@@ -86,12 +81,6 @@
 					</div>
 					<div>
 						<span class="ciudad"><b>Cochabamba</b> {{$fecha_actual}}</span>
-					</div>
-						<span class="entregue_ line">----------------------------------------</span>
-						<span class="recibi_ line">----------------------------------------</span>
-					<div>
-						<span class="entregue"><b>Entregue conforme</b></span>
-						<span class="recibi"><b>Recibí conforme</b></span>
 					</div>
 				</div>
 			</div>
