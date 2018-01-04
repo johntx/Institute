@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Institute\Payment;
 use Institute\People;
+use Institute\Numeroaletras;
 use Illuminate\Routing\Route;
 use Validator;
 use Auth;
@@ -46,10 +47,32 @@ class PaymentController extends Controller
     public function pdf($id)
     {
         $payment = Payment::find($id);
-        $view =  view('pdf/PDFRecivo', ['payment'=>$payment])->render();
+        $fecha_inicio = $this->getMes(\Carbon\Carbon::parse($payment->inscription->group->startclass->fecha_inicio));
+        $fecha_actual = $this->getMes(\Carbon\Carbon::now());
+        $suma = Numeroaletras::convertir($payment->abono);
+        $view =  view('pdf/PDFRecivo', ['payment'=>$payment, 'fecha_inicio'=>$fecha_inicio, 'fecha_actual'=>$fecha_actual, 'suma'=>$suma])->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('recivo '.$payment->inscription->people->nombrecompleto().'.pdf');
+    }
+    public function getMes($mes)
+    {
+        $dia = $mes->day;
+        $anyo = $mes->year;
+        $mes = $mes->format("F");
+        if ($mes=="January") $mes="Enero";
+        if ($mes=="February") $mes="Febrero";
+        if ($mes=="March") $mes="Marzo";
+        if ($mes=="April") $mes="Abril";
+        if ($mes=="May") $mes="Mayo";
+        if ($mes=="June") $mes="Junio";
+        if ($mes=="July") $mes="Julio";
+        if ($mes=="August") $mes="Agosto";
+        if ($mes=="September") $mes="Setiembre";
+        if ($mes=="October") $mes="Octubre";
+        if ($mes=="November") $mes="Noviembre";
+        if ($mes=="December") $mes="Diciembre";
+        return $dia.' de '.$mes.' de '.$anyo;
     }
     /**
      * Display a listing of the resource.

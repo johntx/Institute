@@ -42,7 +42,7 @@
 								class="success" 
 								@endif >
 								<td>{{++$key}}</td>
-								<td>{{ucwords(strtolower($inscription->people->nombrecompleto()))}}</td>
+								<td>{{$inscription->people->nombrecompleto()}}</td>
 								<td>
 									{{\Carbon\Carbon::parse($inscription->fechaInicioMes())->format('d/m/Y')}}
 								</td>

@@ -1,12 +1,17 @@
 *{
 	font-family: arial;
-	color: #363070;
 }
 html, body{
 	margin: 0; padding: 0;
 }
 body{
 	position: relative;
+}
+.agua{
+	position: absolute;
+	width: 350px;
+	left: 230px;
+	top: 150px;
 }
 .recivo{
 	position: absolute;
@@ -24,13 +29,83 @@ body{
 	border: 1px solid #363070;
 	border-radius: 20px;
 }
-.top{
+.recivo>div>.top{
 	height: 100px;
 	display: block;
+	color: #363070;
 }
-.top>*{
+.recivo>div>.top>*{
 	float: left;
 }
-.top>img{
+.recivo>div>.top>img{
 	height: 100px;
+}
+.recivo>div>.top>h1{
+	padding-left: 80px;
+	font-size: 50px;
+	margin-top: 20px;
+}
+.recivo>div>.top>div{
+	float: right;
+	width: 140px;
+	height: 100px;
+	margin-right: 20px;
+}
+.recivo>div>.top>div>span.abono{
+	border: 1px solid #363070;
+	border-radius: 5px;
+}
+.recivo>div>.top>div>span{
+	display: block;
+	padding: 10px;
+	font-size: 25px;
+}
+.recivo>div>.mid{
+	width: 100%;
+	height: 345px;
+	padding: 15px 15px 0 15px;
+}
+.recivo>div>.mid>div{
+	width: 100%;
+	height: 315px;
+}
+.recivo>div>.mid>div>div{
+	font-size: 20px;
+	height: 35px;
+	display: block;
+	position: relative;
+}
+.recivo>div>.mid>div>div>span{
+	position: absolute;
+}
+.recivo>div>.mid>div>div>span.inicio{
+	left: 350px;
+}
+.recivo>div>.mid>div>div>span.acuenta{
+	left: 220px;
+}
+.recivo>div>.mid>div>div>span.saldo{
+	left: 500px;
+}
+.recivo>div>.mid>div>div>span.ciudad{
+	left: 210px;
+}
+.recivo>div>.mid>div>div:last-child{
+	margin-top: 75px;
+}
+.recivo>div>.mid>div>div>span.entregue{
+	left: 100px;
+}
+.recivo>div>.mid>div>div>span.recibi{
+	left: 450px;
+}
+.recivo>div>.mid>div>span.entregue_{
+	left: 130px;
+}
+.recivo>div>.mid>div>span.recibi_{
+	left: 465px;
+}
+.recivo>div>.mid>div>span.line{
+	position: absolute;
+	top: 425px;
 }
