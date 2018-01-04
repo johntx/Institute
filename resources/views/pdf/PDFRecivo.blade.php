@@ -36,8 +36,8 @@
 						<span class="inicio"><b>Inicio:</b> {{$fecha_inicio}}</span>
 					</div>
 					<div>
-						<span class="total"><b>Total:</b> {{$payment->abono}}</span>
-						<span class="acuenta"><b>A cuenta:</b> {{$payment->saldo}}</span>
+						<span class="total"><b>Total:</b> {{$payment->saldo}}</span>
+						<span class="acuenta"><b>A cuenta:</b> {{$payment->abono}}</span>
 						<span class="saldo"><b>Saldo:</b> {{$payment->saldo-$payment->abono}}</span>
 					</div>
 					<div>
@@ -80,8 +80,8 @@
 						<span class="inicio"><b>Inicio:</b> {{$fecha_inicio}}</span>
 					</div>
 					<div>
-						<span class="total"><b>Total:</b> {{$payment->abono}}</span>
-						<span class="acuenta"><b>A cuenta:</b> {{$payment->saldo}}</span>
+						<span class="total"><b>Total:</b> {{$payment->saldo}}</span>
+						<span class="acuenta"><b>A cuenta:</b> {{$payment->abono}}</span>
 						<span class="saldo"><b>Saldo:</b> {{$payment->saldo-$payment->abono}}</span>
 					</div>
 					<div>
