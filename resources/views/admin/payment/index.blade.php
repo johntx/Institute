@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 @section('content')
 @include('alerts.succes')
+<?php $eliminar=false;?>
+@foreach(Auth::user()->role->functionalities as $func)
+@if ($func->code=='DPAY')
+<?php $eliminar=true; ?>
+@endif
+@endforeach
 <div class="table-responsive">
 	<table class="table table-hover">
 		<thead>
@@ -29,14 +35,12 @@
 			<td>{{$payment->saldo}}</td>
 			<td>{{$payment->observacion}}</td>
 			<td>{{$payment->user}}</td>
-			@foreach(Auth::user()->role->functionalities as $func)
-			@if ($func->code=='DPAY' && $payment->abono != 0)
+			@if ($payment->abono != 0)
+			@if ($eliminar)
 			<td>
 				{!!link_to_route('admin.payment.show', $title = 'Borrar', $parameters = $payment->id, $attributes = ['class'=>'btn btn-danger'])!!}
 			</td>
 			@endif
-			@endforeach
-			@if ($payment->abono != 0)
 			<td>
 				{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
 			</td>
@@ -53,7 +57,7 @@
 				<h4 class="modal-title" id="myModalLabel">RECIBO</h4>
 			</div>
 			<div style="text-align: center;">
-				<iframe src="" style="width:800px; height:600px;" frameborder="0"></iframe>
+				<iframe src="" style="width:100%; height:540px;" frameborder="0"></iframe>
 			</div>
 		</div>
 	</div>

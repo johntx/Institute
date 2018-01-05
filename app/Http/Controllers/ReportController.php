@@ -51,8 +51,8 @@ class ReportController extends Controller
 
     public function groups()
     {
-        $fecha_semana = date('Y-m-d',strtotime('+1 month', strtotime(\Carbon\Carbon::now()) ));
-        $fecha_mes = date('Y-m-d',strtotime('-1 week', strtotime(\Carbon\Carbon::now()) ));
+        $fecha_semana = date('Y-m-d',strtotime('+2 month', strtotime(\Carbon\Carbon::now()) ));
+        $fecha_mes = date('Y-m-d',strtotime('-1 month', strtotime(\Carbon\Carbon::now()) ));
         $startclasses = \Institute\Startclass::
         whereBetween('fecha_inicio',array( $fecha_mes, $fecha_semana))
         ->get();

@@ -35,11 +35,11 @@
 						<tbody>
 							@foreach (\Institute\Inscription::join('payments','inscriptions.id','=','payments.inscription_id')->select('inscriptions.*','payments.fecha_pagar','payments.saldo as debe')->where('payments.estado','Pendiente')->where('inscriptions.estado','Inscrito')->where('inscriptions.group_id',$group->id)->orderBy('payments.fecha_pagar','asc')->distinct()->get() as $key=>$inscription)
 							<tr @if ($inscription->debit())
-								class="danger" 
+								style="background-color: rgba(255,0,0,0.25);" 
 								@elseif ($inscription->debitNext())
-								class="warning" 
+								style="background-color: rgba(255,255,0,0.25);" 
 								@else
-								class="success" 
+								style="background-color: rgba(0,255,0,0.25);" 
 								@endif >
 								<td>{{++$key}}</td>
 								<td>{{$inscription->people->nombrecompleto()}}</td>

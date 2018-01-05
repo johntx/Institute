@@ -57,12 +57,13 @@ $('#paymentForm').on('submit',function(e){
 	})
 });
 $('.pdfbtn').click(function() {
-	$("#pdfModal iframe").empty();
-	$("#pdfModal iframe").attr('src','');
-	$("#pdfModal .modal-title").html('RECIBO '+$(this).attr('code'));
 	$("#pdfModal iframe").attr('src',$(this).attr('href'));
+	$("#pdfModal .modal-title").html('RECIBO '+$(this).attr('code'));
 	$("#pdfModal").modal();
 	return false;
+})
+$('#pdfModal').on('hidden.bs.modal', function () {
+	$("#pdfModal iframe").attr('src','');
 })
 $.datepicker.regional['es'] = {
 	closeText: 'Cerrar',
@@ -76,7 +77,7 @@ $.datepicker.regional['es'] = {
 	dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
 	weekHeader: 'Sm',
 	dateFormat: 'dd/mm/yy',
-	yearRange: '1990:2020',
+	yearRange: '1995:'+(new Date).getFullYear(),
 	firstDay: 1,
 	isRTL: false,
 	showMonthAfterYear: false,

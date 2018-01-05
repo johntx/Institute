@@ -74,11 +74,11 @@ class StartclassController extends Controller
       if ($career->tipo == 'Mes') {
         $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' month', strtotime($request['fecha_inicio'])));
       }
-      $fecha = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
+      $fecha_fin = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
       $estado = '';
       if ($fecha_actual<$request['fecha_inicio']) {
         $estado = 'Espera';
-      } elseif($fecha_actual<$fecha){
+      } elseif($fecha_actual<$fecha_fin){
         $estado = 'Iniciado';
       } else {
         $estado = 'Cerrado';
@@ -86,7 +86,7 @@ class StartclassController extends Controller
       $startclass = new Startclass();
       $startclass->fill([
         'fecha_inicio' => $request['fecha_inicio'],
-        'fecha_fin' => $fecha,
+        'fecha_fin' => $fecha_fin,
         'career_id' => $request['career_id'],
         'office_id' => $request['office_id'],
         'estado' => $estado
@@ -147,18 +147,18 @@ class StartclassController extends Controller
       if ($career->tipo == 'Mes') {
         $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' month', strtotime($request['fecha_inicio'])));
       }
-      $fecha = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
+      $fecha_fin = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
       $estado = '';
       if ($fecha_actual<$request['fecha_inicio']) {
         $estado = 'Espera';
-      } elseif($fecha_actual<$fecha){
+      } elseif($fecha_actual<$fecha_fin){
         $estado = 'Iniciado';
       } else {
         $estado = 'Cerrado';
       }
       $this->startclass->fill([
         'fecha_inicio' => $request['fecha_inicio'],
-        'fecha_fin' => $fecha,
+        'fecha_fin' => $fecha_fin,
         'career_id' => $request['career_id'],
         'office_id' => $request['office_id'],
         'estado' => $estado
