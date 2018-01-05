@@ -115,7 +115,6 @@ class StudentController extends Controller
           'ci' => $request['ci'],
           'nombre' => $request['nombre'],
           'paterno' => $request['paterno'],
-          'fecha_ingreso' => $request['fecha_ingreso'],
           'fecha_nacimiento' => $request['fecha_nacimiento'],
           'direccion' => $request['direccion'],
           'telefono' => $request['telefono'],
@@ -131,6 +130,7 @@ class StudentController extends Controller
         $startclass = \Institute\Startclass::find($request['startclass_id']);
         $inscription->fill([
           'estado' => 'Inscrito',
+          'fecha_ingreso' => $request['fecha_ingreso'],
           'people_id' => $user->id,
           'monto' => $request['monto'],
           'abono' => $request['abono'],
@@ -255,7 +255,6 @@ class StudentController extends Controller
         'ci' => $request['ci'],
         'nombre' => $request['nombre'],
         'paterno' => $request['paterno'],
-        'fecha_ingreso' => \Carbon\Carbon::now(),
         'fecha_nacimiento' => $request['fecha_nacimiento'],
         'direccion' => $request['direccion'],
         'telefono' => $request['telefono']

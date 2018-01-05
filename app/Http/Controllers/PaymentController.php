@@ -47,7 +47,11 @@ class PaymentController extends Controller
     public function pdf($id)
     {
         $payment = Payment::find($id);
-        $fecha_inicio = $this->getMes(\Carbon\Carbon::parse($payment->inscription->group->startclass->fecha_inicio));
+        if ($payment->inscription->group->startclass->fecha_inicio > $payment->inscription->fecha_ingreso) {
+            $fecha_inicio = $this->getMes(\Carbon\Carbon::parse($payment->inscription->group->startclass->fecha_inicio));
+        } else {
+            $fecha_inicio = $this->getMes(\Carbon\Carbon::parse($payment->inscription->fecha_ingreso));
+        }
         $fecha_actual = $this->getMes(\Carbon\Carbon::now());
         $suma = Numeroaletras::convertir($payment->abono);
         $view =  view('pdf/PDFRecivo', ['payment'=>$payment, 'fecha_inicio'=>$fecha_inicio, 'fecha_actual'=>$fecha_actual, 'suma'=>$suma])->render();
@@ -149,7 +153,11 @@ class PaymentController extends Controller
                 if ($PaymentSaldo == 0) {
                     $mes = $inscription->abono / $inscription->monto;
                     $payment = new \Institute\Payment;
-                    $fecha_pagar = date('Y-m-d',strtotime('+'.$mes.' month', strtotime($inscription->group->startclass->fecha_inicio)));
+                    if ($inscription->group->startclass->fecha_inicio > $inscription->fecha_ingreso) {
+                        $fecha_pagar = date('Y-m-d',strtotime('+'.$mes.' month', strtotime($inscription->group->startclass->fecha_inicio)));
+                    } else {
+                        $fecha_pagar = date('Y-m-d',strtotime('+'.$mes.' month', strtotime($inscription->fecha_ingreso)));
+                    }
                     $saldo = $request['monto'];
                     $payment->fill([
                         'fecha_pagar' => $fecha_pagar,

@@ -15,6 +15,7 @@ class CreateInscriptionsTable extends Migration
     Schema::create('inscriptions', function (Blueprint $table) {
       $table->increments('id');
       $table->string('estado',20)->nullable();
+      $table->date('fecha_ingreso')->nullable();
       $table->date('fecha_retiro')->nullable();
       $table->integer('monto')->nullable();
       $table->integer('abono')->nullable();
