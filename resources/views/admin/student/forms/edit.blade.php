@@ -56,5 +56,9 @@
 					{!! Form::label('Estado') !!}
 					{!! Form::select('estado',['Inscrito' => 'Inscrito','Culminado' => 'Culminado','Retirado' => 'Retirado'],$student->inscriptions[0]->estado,['class'=>'form-control','maxlength'=>20]) !!}
 				</div>
+				<div class="form-group">
+					{!! Form::label('Fecha de Ingreso') !!}
+					{!! Form::text('fecha_ingreso',null,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+				</div>
 			</div>
 		</div>

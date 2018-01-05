@@ -261,15 +261,16 @@ class StudentController extends Controller
         ]);
       $inscription = Inscription::find($this->student->inscriptions[0]->id);
       $startclass = \Institute\Startclass::find($request['startclass_id']);
-      if ($request['estado']!='Inscrito') {
-        $inscription->fecha_retiro=\Carbon\Carbon::now();
-      }
       $inscription->fill([
         'estado' => $request['estado'],
         'career_id' => $startclass->career->id,
+        'fecha_ingreso' => $request['fecha_ingreso'],
         'group_id' => $request['group_id'],
         'user_id' => Auth::user()->id
         ]);
+      if ($request['estado']!='Inscrito') {
+        $inscription->fecha_retiro=\Carbon\Carbon::now();
+      }
       $inscription->save();
       $this->student->save();
       Session::flash('message','Estudiante editado exitosamente');

@@ -27,13 +27,11 @@ class FrontController extends Controller
   }
   public function admin()
   {
-    $inscriptions = \Institute\Inscription::get();
+    /*$inscriptions = \Institute\Inscription::get();
     foreach ($inscriptions as $inscription) {
-      if (!$inscription->fecha_ingreso) {
         $inscription->fecha_ingreso = $inscription->people->fecha_ingreso;
         $inscription->save();
-      }
-    }
+    }*/
     /*Startclasses*/
     $fecha_despues = date('Y-m-d',strtotime('+1 month', strtotime(Carbon::now()) ));
     $fecha_antes = date('Y-m-d',strtotime('-1 month', strtotime(Carbon::now()) ));

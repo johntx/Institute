@@ -47,7 +47,7 @@ class PaymentController extends Controller
     public function pdf($id)
     {
         $payment = Payment::find($id);
-        if ($payment->inscription->group->startclass->fecha_inicio > $payment->inscription->fecha_ingreso) {
+        if ($payment->inscription->group->startclass->fecha_inicio < $payment->inscription->fecha_ingreso) {
             $fecha_inicio = $this->getMes(\Carbon\Carbon::parse($payment->inscription->group->startclass->fecha_inicio));
         } else {
             $fecha_inicio = $this->getMes(\Carbon\Carbon::parse($payment->inscription->fecha_ingreso));

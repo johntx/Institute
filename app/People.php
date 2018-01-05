@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class People extends Model
 {
 	protected $table = 'peoples';
-	protected $fillable = ['id', 'code', 'ci', 'nombre', 'paterno', 'fecha_ingreso', 'fecha_nacimiento', 'nacionalidad', 'estado_civil', 'direccion', 'telefono', 'genero', 'tipo_sanguineo', 'email', 'office_id'];
+	protected $fillable = ['id', 'code', 'ci', 'nombre', 'paterno', 'fecha_nacimiento', 'nacionalidad', 'estado_civil', 'direccion', 'telefono', 'genero', 'tipo_sanguineo', 'email', 'office_id'];
 
 	public $timestamps = false;
 
