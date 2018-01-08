@@ -26,7 +26,7 @@
 			<td>{{$student->user->user}}</td>
 			<td>{{$student->ci}}</td>
 			<td>{{$student->nombrecompleto()}}</td>
-			<td>{{$student->inscriptions[0]->fecha_ingreso}}</td>
+			<td>{{\Carbon\Carbon::parse($student->inscriptions[0]->fecha_ingreso)->format('d-m-Y')}}</td>
 			<td>{{$student->inscriptions[0]->group->startclass->career->nombre}}</td>
 			<td>{{$student->inscriptions[0]->estado}}</td>
 			@if ($editar)

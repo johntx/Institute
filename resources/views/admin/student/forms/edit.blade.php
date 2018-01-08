@@ -58,7 +58,7 @@
 				</div>
 				<div class="form-group">
 					{!! Form::label('Fecha de Ingreso') !!}
-					{!! Form::text('fecha_ingreso',null,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+					{!! Form::text('fecha_ingreso',$student->inscriptions[0]->fecha_ingreso,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
 				</div>
 			</div>
 		</div>

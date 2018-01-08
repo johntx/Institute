@@ -137,10 +137,10 @@ $(document).ready(function(){
 			$("#payments_carrera").empty();
 			/*$('#payments_carrera').append(
 			"<option selected disabled> Elija una carrera </option>");*/
-				var dateQQ = inscription[0].fecha_ingreso;
+				/*var dateQQ = inscription[0].fecha_ingreso;
 				dateQQ = dateQQ.substring(0,10).split('-');
-				dateQQ = dateQQ[2] + '-' + dateQQ[1] + '-' + dateQQ[0];
-			$('#colegiatura').html(dateQQ);
+				dateQQ = dateQQ[2] + '-' + dateQQ[1] + '-' + dateQQ[0];*/
+			$('#colegiatura').html(inscription[0].colegiatura);
 			cargarpagos(inscription[0].id);
 			for (var i = 0 ; i < inscription.length; i++) {
 				var date = inscription[i].fecha_inicio;
