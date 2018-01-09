@@ -5,7 +5,7 @@
 		<div class=" col-xs-5" style="padding: 0;">
 			{!! Form::label('(CI) - Estudiante') !!}
 			<select name="user_id" class="form-control selectpicker" required data-live-search="true" id="payments_estudiante">
-				<option>Seleccione un estudiante</option>
+				<option disabled selected>Seleccione un estudiante</option>
 				@foreach ($students as $student)
 				<option value="{{$student->id}}">
 					({{$student->ci}}) - {{$student->nombrecompleto()}}
@@ -29,10 +29,7 @@
 			{!! Form::label('Abono') !!}
 			{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required']) !!}
 		</div>
-
 		{!! Form::submit('Registrar',['class'=>'btn btn-primary col-xs-2','style'=>'margin-top:23.5px;']) !!}
-
-
 		<div class=" col-xs-3" style="padding: 0;">
 			{!! Form::label('Colegiatura Estado') !!}
 			{!! Form::label('','',['class'=>'form-control','id'=>'colegiatura']) !!}
@@ -41,7 +38,6 @@
 			{!! Form::label('Observaciones') !!}
 			{!! Form::text('observacion',null,['class'=>'form-control','placeholder'=>'Insert Observación', 'maxlength'=>255]) !!}
 		</div>
-
 	</div>
 	<table class="table table-hover">
 		<thead>

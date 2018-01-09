@@ -28,37 +28,38 @@
 	<div class="panel-heading">Seleccion de Carrera y Grupo</div>
 	<div class="panel-body">
 		<div class="form-group">
-			{!! Form::label('Carrera (Convocatorias)') !!}
-
+			{!! Form::label('Carrera (Convocatorias)') !!}p
 			<select name="startclass_id" id="career_select" class="form-control " data-style="btn-info">
 				@foreach ($startclasses as $startclass)
 				<option value="{{$startclass->id}}" 
 					@if ($student->inscriptions[0]->group->startclass->id == $startclass->id)
 					selected 
 					@endif
-					>{{$startclass->career->nombre}} - [{{date_format(date_create($startclass->fecha_inicio),'d-m-Y')}}] ({{$startclass->estado}}) [{{$startclass->career->costo}}bs]</option>
-					@endforeach
-				</select>
-				<br>
-				{!! Form::label('Grupos') !!}
-				<br>
-				<select id="group_id" name="group_id" class="form-control">
-					@foreach ($groups as $group)
-					<option value="{{$group->id}}" 
-						@if ($student->inscriptions[0]->group->id == $group->id)
-						selected 
-						@endif
-						>{{$group->startclass->career->nombre}} {{$group->turno}} ({{$group->inscritos}} inscritos)</option>
-						@endforeach
-					</select>
-				</div>
-				<div class="form-group">
-					{!! Form::label('Estado') !!}
-					{!! Form::select('estado',['Inscrito' => 'Inscrito','Culminado' => 'Culminado','Retirado' => 'Retirado'],$student->inscriptions[0]->estado,['class'=>'form-control','maxlength'=>20]) !!}
-				</div>
-				<div class="form-group">
-					{!! Form::label('Fecha de Ingreso') !!}
-					{!! Form::text('fecha_ingreso',$student->inscriptions[0]->fecha_ingreso,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
-				</div>
-			</div>
+					>{{$startclass->career->nombre}} - [{{date_format(date_create($startclass->fecha_inicio),'d-m-Y')}}] ({{$startclass->estado}}) [{{$startclass->career->costo}}bs]
+				</option>
+				@endforeach
+			</select>
+			<br>
+			{!! Form::label('Grupos') !!}
+			<br>
+			<select id="group_id" name="group_id" class="form-control">
+				@foreach ($groups as $group)
+				<option value="{{$group->id}}" 
+					@if ($student->inscriptions[0]->group->id == $group->id)
+					selected 
+					@endif
+					>{{$group->startclass->career->nombre}} {{$group->turno}} ({{$group->inscritos}} inscritos)
+				</option>
+				@endforeach
+			</select>
 		</div>
+		<div class="form-group">
+			{!! Form::label('Estado') !!}
+			{!! Form::select('estado',['Inscrito' => 'Inscrito','Culminado' => 'Culminado','Retirado' => 'Retirado'],$student->inscriptions[0]->estado,['class'=>'form-control','maxlength'=>20]) !!}
+		</div>
+		<div class="form-group">
+			{!! Form::label('Fecha de Ingreso') !!}
+			{!! Form::text('fecha_ingreso',$student->inscriptions[0]->fecha_ingreso,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+		</div>
+	</div>
+</div>

@@ -117,8 +117,16 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         if ($request->ajax()) {
+            if ($request['user_id']==null) {
+                header('HTTP/1.1 500 Seleccione un estudiante');
+                header('Content-Type: application/json; charset=UTF-8');
+                die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
+            }
             $inscription = \Institute\Inscription::find($request['inscription_id']);
             if ($inscription->colegiatura == 'Pagado') {
+                header('HTTP/1.1 500 El cliente ya tiene la colegiatura pagada');
+                header('Content-Type: application/json; charset=UTF-8');
+                die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
                 return redirect('admin/payment/create')
                 ->withErrors('El cliente ya tiene la colegiatura pagada');
             }
@@ -126,8 +134,10 @@ class PaymentController extends Controller
             ->where('estado','Pendiente')
             ->first();
             if ($request['abono'] > $lastpayment->saldo) {
-                return redirect('admin/payment/create')
-                ->withErrors('Monto superior al saldo');
+
+                header('HTTP/1.1 500 Monto superior al saldo');
+                header('Content-Type: application/json; charset=UTF-8');
+                die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
             }
 
             $PaymentSaldo = $lastpayment->saldo - $request['abono'];

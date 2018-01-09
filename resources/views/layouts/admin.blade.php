@@ -19,14 +19,19 @@
   <div id="wrapper">
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">
+        <a class="navbar-brand">
+          <img alt="C1EN" src="{!!URL::to('icons/brand.svg')!!}" height="25px">
+        </a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
+          <span class="sr-only">Menu</span>
         </button>
-        <a class="navbar-brand" href="{!!URL::to('admin')!!}"><i class="fa fa-database"></i> Admin Instituto C1EN</a>
+        <a style="padding-left: 0" class="navbar-brand" href="{!!URL::to('admin')!!}">Admin Instituto C1EN</a>
       </div>
+      <!--form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+        <input type="text" id="buscador" class="form-control typeahead" placeholder="Buscar" data-provide="typeahead">
+        </div>
+      </form-->
       <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{Auth::user()->user}} <b>/{{Auth::user()->role->name}}</b><i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
@@ -61,30 +66,31 @@
                     ->where('functionalities.path','not like','%delete')
                     ->distinct()->get()
                     as $functionality)
-                  <li>
-                    <a href="{{URL::to($functionality->path)}}"><i class='fa fa-circle-o fa-fw'></i> {{ $functionality->label }}</a>
-                  </li>
-                  @endforeach
-                </ul>
-              </li>
-            @endforeach
-          </ul>
+                    <li>
+                      <a href="{{URL::to($functionality->path)}}"><i class='fa fa-circle-o fa-fw'></i> {{ $functionality->label }}</a>
+                    </li>
+                    @endforeach
+                  </ul>
+                </li>
+                @endforeach
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div id="page-wrapper">
+          @yield('content')
         </div>
       </div>
-    </nav>
-    <div id="page-wrapper">
-      @yield('content')
-    </div>
-  </div>
-  {!!Html::script('js/jquery.js')!!}
-  {!!Html::script('js/jquery-ui.min.js')!!}
-  {!!Html::script('js/bootstrap.min.js')!!}
-  {!!Html::script('js/metisMenu.min.js')!!}
-  {!!Html::script('js/sb-admin-2.js')!!}
-  {!!Html::script('js/admin.js')!!}
-  {!!Html::script('js/bootstrap-select.js')!!}
-  {!!Html::script('js/datatables.js')!!}
-  {!!Html::script('js/mdb.js')!!}
-  @yield('adminjs')
-</body>
-</html>
+      {!!Html::script('js/jquery.js')!!}
+      {!!Html::script('js/jquery-ui.min.js')!!}
+      {!!Html::script('js/bootstrap.min.js')!!}
+      {!!Html::script('js/metisMenu.min.js')!!}
+      {!!Html::script('js/sb-admin-2.js')!!}
+      {!!Html::script('js/admin.js')!!}
+      {!!Html::script('js/bootstrap-select.js')!!}
+      {!!Html::script('js/datatables.js')!!}
+      {!!Html::script('js/mdb.js')!!}
+      {!!Html::script('js/bootstrap3.js')!!}
+      @yield('adminjs')
+    </body>
+    </html>

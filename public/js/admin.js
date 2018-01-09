@@ -4,6 +4,7 @@ $('document').ready(function(){
 	});
 	$('.tablab3').DataTable({
 		paging: false,
+		searching: false,
 		ordering: false,
 		info: false
 	});
@@ -12,12 +13,14 @@ $('document').ready(function(){
 		ordering: false
 	});
 	//cargaringresos($('#date_ingresos_inicio').val(),$('#date_ingresos_fin').val());
-	
 });
+function close_alert() {
+	$('.alert_cli').fadeOut();
+}
 $('#inscribir').on('submit',function(e){
 	$.ajaxSetup({
 		header:$('meta[name="_token"]').attr('content')
-	})
+	});
 	e.preventDefault(e);
 	$.ajax({
 
@@ -34,12 +37,12 @@ $('#inscribir').on('submit',function(e){
 		error: function(){
 			location.reload();
 		}
-	})
+	});
 });
 $('#paymentForm').on('submit',function(e){
 	$.ajaxSetup({
 		header:$('meta[name="_token"]').attr('content')
-	})
+	});
 	e.preventDefault(e);
 	$.ajax({
 
@@ -51,20 +54,25 @@ $('#paymentForm').on('submit',function(e){
 			window.open(window.location.origin+'/cien/public/admin/payment/pdf/'+payment);
 			location.reload();
 		},
-		error: function(){
-			location.reload();
+		error: function(data){
+			$('#result').html(data.statusText);
+			$('.alert_cli').show();
+			setTimeout(function() {
+				$(".alert_cli").fadeOut(600);
+			},5000);
+			/*location.reload();*/
 		}
-	})
+	});
 });
 $('.pdfbtn').click(function() {
 	$("#pdfModal iframe").attr('src',$(this).attr('href'));
 	$("#pdfModal .modal-title").html('RECIBO '+$(this).attr('code'));
 	$("#pdfModal").modal();
 	return false;
-})
+});
 $('#pdfModal').on('hidden.bs.modal', function () {
 	$("#pdfModal iframe").attr('src','');
-})
+});
 $.datepicker.regional['es'] = {
 	closeText: 'Cerrar',
 	prevText: '< Ant',
@@ -140,30 +148,29 @@ $(document).ready(function(){
 				/*var dateQQ = inscription[0].fecha_ingreso;
 				dateQQ = dateQQ.substring(0,10).split('-');
 				dateQQ = dateQQ[2] + '-' + dateQQ[1] + '-' + dateQQ[0];*/
-			$('#colegiatura').html(inscription[0].colegiatura);
-			cargarpagos(inscription[0].id);
-			for (var i = 0 ; i < inscription.length; i++) {
-				var date = inscription[i].fecha_inicio;
-				date = date.substring(0,10).split('-');
-				date = date[1] + '-' + date[2] + '-' + date[0];
-				
-				$('#payments_carrera').append(
-					"<option value='"+inscription[i].id
-					+"' colegiatura='"+inscription[i].colegiatura+"' >"+inscription[i].carrera
-					+" - ("+$.datepicker.formatDate('dd M yy', new Date(date))
-					+") - "+inscription[i].turno
-					+" - "+inscription[i].estado
-					+"</option>");
-			}
-		});
+				$('#colegiatura').html(inscription[0].colegiatura);
+				cargarpagos(inscription[0].id);
+				for (var i = 0 ; i < inscription.length; i++) {
+					var date = inscription[i].fecha_inicio;
+					date = date.substring(0,10).split('-');
+					date = date[1] + '-' + date[2] + '-' + date[0];
+
+					$('#payments_carrera').append(
+						"<option value='"+inscription[i].id
+						+"' colegiatura='"+inscription[i].colegiatura+"' >"+inscription[i].carrera
+						+" - ("+$.datepicker.formatDate('dd M yy', new Date(date))
+						+") - "+inscription[i].turno
+						+" - "+inscription[i].estado
+						+"</option>");
+				}
+			});
 	});
 	$('#payments_carrera').change(function(){
 		cargarpagos(event.target.value);
 		$('#colegiatura').html($(this).children('option:selected').attr('colegiatura'));
 	});
 	$('.date_ingresos').change(function(){
-
-		cargaringresos($('#date_ingresos_inicio').val(),$('#date_ingresos_fin').val());
+		cargaringresos();
 	});
 });
 $(function() {
@@ -220,7 +227,9 @@ function cargarpagos(inscription_id){
 		}
 	});
 }
-function cargaringresos(inicio,fin){
+function cargaringresos(){
+	var inicio = $('#date_ingresos_inicio').val();
+	var fin = $('#date_ingresos_fin').val();
 	$.get("/cien/public/admin/report/chart/"+inicio+"/"+fin+"",function(listaIngresos,response){
 		console.log(listaIngresos);
 		$("#ingresos").empty();
@@ -272,3 +281,9 @@ function justNumbers(e){
 	te = String.fromCharCode(key); 
 	return (patron.test(te) || key == 9 || key == 8 || key == 46 || key == 13);
 }
+$("#buscador").typeahead();
+$("#buscador").tagsinput({
+  typeahead: {
+    source: ["Amsterdam", "Washington", "Sydney", "Beijing", "Cairo"]
+  }
+});
