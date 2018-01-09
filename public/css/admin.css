@@ -7,3 +7,40 @@
 .required{
 	color: #FA3939;
 }
+#form_buscador{
+	position: relative;
+}
+#ebuscados.hide{
+	height: 0;
+	width: 0;
+	display: none;
+}
+#ebuscados{
+	position: absolute;
+	width: 300px;
+	z-index: 100;
+	max-height: 350px;
+	overflow-y: scroll;
+}
+#ebuscados>ul{
+	list-style-type: none;
+	margin: 0; padding: 0;
+}
+#ebuscados>ul>li{
+	list-style-type: none;
+	height: 34px;
+}
+#ebuscados>ul>li{
+	list-style-type: none;
+	height: 34px;
+	background-color: #EDEDED;
+}
+#ebuscados>ul>li:hover{
+	background-color: #BCBEDF;
+}
+#ebuscados>ul>li>a{
+	text-decoration: none;
+	color: #1A1A1A;
+	display: block;
+	padding: 7px;
+}

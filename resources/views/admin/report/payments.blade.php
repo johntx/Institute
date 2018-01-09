@@ -6,7 +6,7 @@
 		{!! Form::label('Fecha Inicio') !!}
 		{!! Form::text('fecha_pago',\Carbon\Carbon::now()->subMonths(2)->format('Y-m-d'),['class'=>'form-control datepicker date_ingresos','placeholder'=>'yyyy-mm-dd','id'=>'date_ingresos_inicio']) !!}
 	</div>
-	<div class=" col-xs-6">
+	<div class="col-xs-6">
 		{!! Form::label('Fecha Fin') !!}
 		{!! Form::text('fecha_pago',\Carbon\Carbon::now()->addMonth()->format('Y-m-d'),['class'=>'form-control datepicker date_ingresos','placeholder'=>'yyyy-mm-dd','id'=>'date_ingresos_fin']) !!}
 	</div>

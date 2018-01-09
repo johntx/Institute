@@ -45,7 +45,6 @@ $('#paymentForm').on('submit',function(e){
 	});
 	e.preventDefault(e);
 	$.ajax({
-
 		type:"POST",
 		url:window.location.origin+'/cien/public/admin/payment',
 		data:$(this).serialize(),
@@ -60,7 +59,6 @@ $('#paymentForm').on('submit',function(e){
 			setTimeout(function() {
 				$(".alert_cli").fadeOut(600);
 			},5000);
-			/*location.reload();*/
 		}
 	});
 });
@@ -135,26 +133,18 @@ $(document).ready(function(){
 			}
 		});
 		$('#monto').val($(this).children('option:selected').attr('costo'));
-
 		$('#meses').html($(this).children('option:selected').attr('duracion'));
 		change_total();
 	});
 	$('#payments_estudiante').change(function(){
 		$.get("/cien/public/admin/inscriptions/"+event.target.value+"",function(inscription,response){
-			/*console.log(inscription);*/
 			$("#payments_carrera").empty();
-			/*$('#payments_carrera').append(
-			"<option selected disabled> Elija una carrera </option>");*/
-				/*var dateQQ = inscription[0].fecha_ingreso;
-				dateQQ = dateQQ.substring(0,10).split('-');
-				dateQQ = dateQQ[2] + '-' + dateQQ[1] + '-' + dateQQ[0];*/
 				$('#colegiatura').html(inscription[0].colegiatura);
 				cargarpagos(inscription[0].id);
 				for (var i = 0 ; i < inscription.length; i++) {
 					var date = inscription[i].fecha_inicio;
 					date = date.substring(0,10).split('-');
 					date = date[1] + '-' + date[2] + '-' + date[0];
-
 					$('#payments_carrera').append(
 						"<option value='"+inscription[i].id
 						+"' colegiatura='"+inscription[i].colegiatura+"' >"+inscription[i].carrera
@@ -255,7 +245,6 @@ function cargaringresos(){
 				responsive: true
 			}    
 		});
-
 		for (var i = 0; i < Object.keys(listaIngresos).length; i++) {
 			$('#ingresos').append(
 				"<tr><td>"
@@ -281,9 +270,28 @@ function justNumbers(e){
 	te = String.fromCharCode(key); 
 	return (patron.test(te) || key == 9 || key == 8 || key == 46 || key == 13);
 }
-$("#buscador").typeahead();
-$("#buscador").tagsinput({
-  typeahead: {
-    source: ["Amsterdam", "Washington", "Sydney", "Beijing", "Cairo"]
-  }
+$('body').on('keyup','#buscador',function () {
+	if ($(this).val()!='' && $(this).val()!=' ' && $(this).val().length >1) {
+		$.get("/cien/public/admin/search/"+$(this).val()+"",function(peoples,response){
+			$("#ebuscados>ul").empty();
+			$('#ebuscados').removeClass('hide');
+			for (var i = 0 ; i < peoples.length; i++) {
+				$('#ebuscados>ul').append(
+					"<li><a href='"+window.location.origin+"/cien/public/admin/student/search/"+
+					+peoples[i].id
+					+"'>"
+					+peoples[i].fullname
+					+"</a></li>"
+					);
+			}
+		});
+	} else {
+		$("#ebuscados>ul").empty();
+	}
+});
+$('#buscador').focusin(function(){
+	$('#ebuscados').removeClass('hide');
+});
+$('#close_searcher').click(function(){
+	$('#ebuscados').addClass('hide');
 });

@@ -22,7 +22,7 @@ class StudentController extends Controller
   {
     $this->middleware('auth');
     $this->middleware('admin',['only' => ['index','create','edit','show']]);
-    $this->beforeFilter('@find',['only' => ['edit','update','destroy','show']]);
+    $this->beforeFilter('@find',['only' => ['edit','update','destroy','show','search']]);
   }
   public function find(Route $route)
   {
@@ -43,6 +43,21 @@ class StudentController extends Controller
       ->orderBy('users.id','DESC')
       ->paginate(20);
       return view('admin/student.index',compact('students'));
+    }
+
+    /*DB::raw('CONCAT(peoples.nombre, peoples.paterno) AS fullname')*/
+    public function getpeople(Request $request,$name)
+    {
+      if ($request->ajax()) {
+        $people = People::join('users','peoples.id','=','users.id')
+        ->join('roles','users.role_id','=','roles.id')
+        ->select('peoples.*',DB::raw('CONCAT(peoples.nombre, " ", peoples.paterno) AS fullname'))
+        ->where('roles.code','EST')
+        ->where(DB::raw('CONCAT(peoples.nombre, " ", peoples.paterno)'), 'like', '%'.$name.'%')
+        ->orWhere('peoples.paterno', 'like', '%'.$name.'%')
+        ->get();
+        return response()->json($people);
+      }
     }
 
     /**
@@ -211,6 +226,12 @@ class StudentController extends Controller
     public function show($id)
     {
       return view('admin/student.delete',['student'=>$this->student]);
+    }
+
+    public function search($id)
+    {
+      $student = People::find($id);
+      return view('admin/student.search',['student'=>$student]);
     }
 
     /**

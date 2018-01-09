@@ -20,18 +20,30 @@
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">
         <a class="navbar-brand">
-          <img alt="C1EN" src="{!!URL::to('icons/brand.svg')!!}" height="25px">
+          <img alt="C1EN" src="{!!URL::to('icons/brand.svg')!!}" height="18px">
         </a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Menu</span>
         </button>
         <a style="padding-left: 0" class="navbar-brand" href="{!!URL::to('admin')!!}">Admin Instituto C1EN</a>
       </div>
-      <!--form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-        <input type="text" id="buscador" class="form-control typeahead" placeholder="Buscar" data-provide="typeahead">
+      <form class="navbar-form navbar-left" id="form_buscador" role="search">
+        <div class="form-group input-group input-group-sm">
+          <span class="input-group-addon" id="sizing-addon1">
+            <i class="fa fa-search fa-fw"></i>
+          </span>
+          <input type="text" id="buscador" class="form-control focus" placeholder="Buscar..">
+          <span class="input-group-btn">
+          <button class="btn btn-default" id="close_searcher" type="button">
+            <i class="fa fa-close fa-fw"></i>
+          </button>
+          </span>
         </div>
-      </form-->
+        <div id="ebuscados" class="hide focus">
+          <ul>
+          </ul>
+        </div>
+      </form>
       <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{Auth::user()->user}} <b>/{{Auth::user()->role->name}}</b><i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
@@ -90,7 +102,6 @@
       {!!Html::script('js/bootstrap-select.js')!!}
       {!!Html::script('js/datatables.js')!!}
       {!!Html::script('js/mdb.js')!!}
-      {!!Html::script('js/bootstrap3.js')!!}
       @yield('adminjs')
     </body>
     </html>
