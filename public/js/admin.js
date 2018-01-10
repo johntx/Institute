@@ -10,13 +10,13 @@ $('document').ready(function(){
 	});
 	$('.tablaOrder').DataTable({
 		paging: false,
+		searching: false,
 		info: false
 	});
 	$('.tablaNoOrder').DataTable({
 		paging: false,
 		ordering: false
 	});
-	//cargaringresos($('#date_ingresos_inicio').val(),$('#date_ingresos_fin').val());
 });
 function close_alert() {
 	$('.alert_cli').fadeOut();
@@ -124,6 +124,7 @@ $('body').on('keyup','.duracion',function () {
 		$('.mes').val('');
 	}
 });
+/*payments*/
 $(document).ready(function(){
 	$('#career_select').change(function(){
 		$.get("/cien/public/admin/groups/"+event.target.value+"",function(group,response){
@@ -143,21 +144,25 @@ $(document).ready(function(){
 	$('#payments_estudiante').change(function(){
 		$.get("/cien/public/admin/inscriptions/"+event.target.value+"",function(inscription,response){
 			$("#payments_carrera").empty();
-				$('#colegiatura').html(inscription[0].colegiatura);
-				cargarpagos(inscription[0].id);
-				for (var i = 0 ; i < inscription.length; i++) {
-					var date = inscription[i].fecha_inicio;
-					date = date.substring(0,10).split('-');
-					date = date[1] + '-' + date[2] + '-' + date[0];
-					$('#payments_carrera').append(
-						"<option value='"+inscription[i].id
-						+"' colegiatura='"+inscription[i].colegiatura+"' >"+inscription[i].carrera
-						+" - ("+$.datepicker.formatDate('dd M yy', new Date(date))
-						+") - "+inscription[i].turno
-						+" - "+inscription[i].estado
-						+"</option>");
-				}
-			});
+			$('#colegiatura').html(inscription[0].colegiatura);
+				var fecha_ingreso = inscription[0].fecha_ingreso;
+				fecha_ingreso = fecha_ingreso.substring(0,10).split('-');
+				fecha_ingreso = fecha_ingreso[1] + '-' + fecha_ingreso[2] + '-' + fecha_ingreso[0];
+			$('#fecha_ingreso').html($.datepicker.formatDate('dd M yy', new Date(fecha_ingreso)));
+			cargarpagos(inscription[0].id);
+			for (var i = 0 ; i < inscription.length; i++) {
+				var date = inscription[i].fecha_inicio;
+				date = date.substring(0,10).split('-');
+				date = date[1] + '-' + date[2] + '-' + date[0];
+				$('#payments_carrera').append(
+					"<option value='"+inscription[i].id
+					+"' colegiatura='"+inscription[i].colegiatura+"' fecha_inicio='"+inscription[i].colegiatura+"' >"+inscription[i].carrera
+					+" - ("+$.datepicker.formatDate('dd M yy', new Date(date))
+					+") - "+inscription[i].turno
+					+" - "+inscription[i].estado
+					+"</option>");
+			}
+		});
 	});
 	$('#payments_carrera').change(function(){
 		cargarpagos(event.target.value);

@@ -31,10 +31,14 @@
 		</div>
 		{!! Form::submit('Registrar',['class'=>'btn btn-primary col-xs-2','style'=>'margin-top:23.5px;']) !!}
 		<div class=" col-xs-3" style="padding: 0;">
+			{!! Form::label('Fecha de Inscripcion') !!}
+			{!! Form::label('','',['class'=>'form-control','id'=>'fecha_ingreso']) !!}
+		</div>
+		<div class=" col-xs-2" style="padding-right: 0;">
 			{!! Form::label('Colegiatura Estado') !!}
 			{!! Form::label('','',['class'=>'form-control','id'=>'colegiatura']) !!}
 		</div>
-		<div class=" col-xs-9" style="padding-right: 0;">
+		<div class=" col-xs-7" style="padding-right: 0;">
 			{!! Form::label('Observaciones') !!}
 			{!! Form::text('observacion',null,['class'=>'form-control','placeholder'=>'Insert Observación', 'maxlength'=>255]) !!}
 		</div>
