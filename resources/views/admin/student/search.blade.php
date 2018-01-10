@@ -16,6 +16,8 @@
 <div class="panel panel-success">
 	<div class="panel-heading">DATOS DE INSCRIPCIÓN - CARRERA ({{$inscription->career->nombre}})</div>
 	<div class="panel-body">
+		<p class="col-sm-6"><b>Id:</b> {{$inscription->id }}</p>
+		<p class="col-sm-6">&nbsp;</p>
 		<p class="col-sm-6"><b>Estado:</b> {{$inscription->estado }}</p>
 		<p class="col-sm-6"><b>Pago por mes:</b> {{$inscription->monto }}</p>
 		<p class="col-sm-6"><b>Carrera:</b> {{$inscription->career->nombre }}</p>
