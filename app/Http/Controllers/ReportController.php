@@ -51,10 +51,11 @@ class ReportController extends Controller
 
     public function groups()
     {
-        $fecha_semana = date('Y-m-d',strtotime('+2 month', strtotime(\Carbon\Carbon::now()) ));
-        $fecha_mes = date('Y-m-d',strtotime('-1 month', strtotime(\Carbon\Carbon::now()) ));
+        /*$fecha_fin = date('Y-m-d',strtotime('+4 month', strtotime(\Carbon\Carbon::now()) ));
+        $fecha_inicio = date('Y-m-d',strtotime('-1 month', strtotime(\Carbon\Carbon::now()) ));
+        whereBetween('fecha_inicio',array( $fecha_inicio, $fecha_fin))*/
         $startclasses = \Institute\Startclass::
-        whereBetween('fecha_inicio',array( $fecha_mes, $fecha_semana))
+        where('estado','!=','Cerrado')
         ->get();
         return view('admin/report.groups',['startclasses'=>$startclasses]);
     }

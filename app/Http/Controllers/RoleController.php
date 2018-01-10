@@ -56,10 +56,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request['code']=strtoupper($request['code']);
+        //$request['code']=strtoupper($request['code']);
         $request['name']=strtoupper($request['name']);
         $validator = Validator::make($request->all(), [
-            'code' => 'required|unique:roles',
             'name' => 'required|unique:roles',
             ]);
 
