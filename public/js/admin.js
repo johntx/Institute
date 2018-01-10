@@ -8,6 +8,10 @@ $('document').ready(function(){
 		ordering: false,
 		info: false
 	});
+	$('.tablaOrder').DataTable({
+		paging: false,
+		info: false
+	});
 	$('.tablaNoOrder').DataTable({
 		paging: false,
 		ordering: false

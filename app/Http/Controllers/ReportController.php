@@ -55,7 +55,10 @@ class ReportController extends Controller
         $fecha_inicio = date('Y-m-d',strtotime('-1 month', strtotime(\Carbon\Carbon::now()) ));
         whereBetween('fecha_inicio',array( $fecha_inicio, $fecha_fin))*/
         $startclasses = \Institute\Startclass::
-        where('estado','!=','Cerrado')
+        join('careers','startclasses.career_id','=','careers.id')
+        ->select('startclasses.*')
+        ->where('startclasses.estado','!=','Cerrado')
+        ->orderBy('careers.nombre')
         ->get();
         return view('admin/report.groups',['startclasses'=>$startclasses]);
     }
@@ -63,7 +66,9 @@ class ReportController extends Controller
     public function debitByGroups()
     {
         $startclasses = \Institute\Startclass::
-        orderBy('startclasses.id','desc')
+        join('careers','startclasses.career_id','=','careers.id')
+        ->select('startclasses.*')
+        ->orderBy('careers.nombre')
         ->get();
         return view('admin/report.debitByGroups',['startclasses'=>$startclasses]);
     }

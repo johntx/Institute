@@ -21,16 +21,13 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading"><b>Grupo: </b>{{$group->turno}}</div>
 				<div class="panel-body">
-					<table class="tablab3 table table-condensed compact">
+					<table class="tablaOrder table table-condensed compact hover">
 						<thead>
 							<tr>
 								<th>Nº</th>
 								<th>Nombre</th>
+								<th>Esperado</th>
 								<th>Fch. Inicio</th>
-								<th>Fecha Pagar</th>
-								<th>Fch. Fin</th>
-								<th>Abono</th>
-								<th>Saldo</th>
 								<th>Telefono</th>
 							</tr>
 						</thead>
@@ -40,14 +37,11 @@
 								<td>{{++$key}}</td>
 								<td>{{$inscription->people->nombrecompleto()}}</td>
 								<td>
-									{{\Carbon\Carbon::parse($inscription->fechaInicioMes())->format('d/m/Y')}}
+									{{\Carbon\Carbon::parse($inscription->group->startclass->fecha_inicio)->format('d/m/Y')}}
 								</td>
-								<td><b>{{\Carbon\Carbon::parse($inscription->fecha_pagar)->format('d/m/Y')}}</b></td>
 								<td>
-									{{\Carbon\Carbon::parse($inscription->fechaFinMes())->format('d/m/Y')}}
+									{{\Carbon\Carbon::parse($inscription->fecha_ingreso)->format('d/m/Y')}}
 								</td>
-								<td>{{$inscription->monto-$inscription->debe}}</td>
-								<td>{{$inscription->debe}}</td>
 								<td>{{$inscription->people->telefono}}</td>
 							</tr>
 							@endforeach
