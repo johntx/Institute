@@ -38,9 +38,18 @@
 #ebuscados>ul>li:hover{
 	background-color: #BCBEDF;
 }
-#ebuscados>ul>li>a{
+#ebuscados>ul>li>a.atxt{
 	text-decoration: none;
 	color: #1A1A1A;
-	display: block;
+	padding: 7px;
+	width: calc(100% - 34px);
+	margin: 0;
+	float: left;
+}
+#ebuscados>ul>li>a.bedit{
+	width: 30px;
+	float: right;
+	height: 30px;
+	margin: 2px;
 	padding: 7px;
 }

@@ -53,8 +53,7 @@ class StudentController extends Controller
         ->join('roles','users.role_id','=','roles.id')
         ->select('peoples.*',DB::raw('CONCAT(peoples.nombre, " ", peoples.paterno) AS fullname'))
         ->where('roles.code','EST')
-        ->where(DB::raw('CONCAT(peoples.nombre, " ", peoples.paterno)'), 'like', '%'.$name.'%')
-        ->orWhere('peoples.paterno', 'like', '%'.$name.'%')
+        ->whereRaw('CONCAT(peoples.nombre," ", peoples.paterno) LIKE ?', ['%'.$name.'%'])
         ->get();
         return response()->json($people);
       }
@@ -83,7 +82,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
       if ($request->ajax()) {
-        if (Auth::user()->role->code=='ROOT' || Auth::user()->role->code=='ADM') {
+        if (Auth::user()->role->code=='ROOT') {
           Session::flash('message','Este usuario no puede realizar esta función');
           return Redirect::to('/admin/student');
         }
@@ -306,7 +305,15 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
+      $this->student->inscriptions->each(function($inscription)
+      {
+        $inscription->payments->each(function($payment){
+          $payment->delete();
+        });
+        $inscription->delete();
+      });
       $this->student->delete();
+      $this->student->user->delete();
       Session::flash('message','Estudiante borrado exitosamente');
       return Redirect::to('/admin/student');
     }

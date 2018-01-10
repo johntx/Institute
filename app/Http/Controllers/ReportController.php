@@ -51,9 +51,6 @@ class ReportController extends Controller
 
     public function groups()
     {
-        /*$fecha_fin = date('Y-m-d',strtotime('+4 month', strtotime(\Carbon\Carbon::now()) ));
-        $fecha_inicio = date('Y-m-d',strtotime('-1 month', strtotime(\Carbon\Carbon::now()) ));
-        whereBetween('fecha_inicio',array( $fecha_inicio, $fecha_fin))*/
         $startclasses = \Institute\Startclass::
         join('careers','startclasses.career_id','=','careers.id')
         ->select('startclasses.*')
@@ -187,7 +184,6 @@ class ReportController extends Controller
             $listaIngresos->pop();
             $listaIngresos->pop();
 
-            //return \Institute\Payment::select(DB::raw('sum(payments.abono) as suma'))->where('estado','Pagado al Contado')->whereBetween('fecha_pago',array( $inicio, $fin))->first();
             return response()->json($listaIngresos);
         }
     }

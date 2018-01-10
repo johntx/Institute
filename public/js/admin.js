@@ -288,9 +288,11 @@ $('body').on('keyup','#buscador',function () {
 				$('#ebuscados>ul').append(
 					"<li><a href='"+window.location.origin+"/cien/public/admin/student/search/"+
 					+peoples[i].id
-					+"'>"
+					+"' class='atxt'>"
 					+peoples[i].fullname
-					+"</a></li>"
+					+"</a><a href='"+window.location.origin+"/cien/public/admin/student/"
+					+peoples[i].id
+					+"/edit' class='btn bedit btn-warning'><i class='fa fa-edit fa-fw'></i></a></li>"
 					);
 			}
 		});
