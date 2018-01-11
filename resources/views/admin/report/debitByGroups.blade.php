@@ -6,7 +6,7 @@
 		<?php $n=0; ?>
 		@foreach ($startclasses as $startclass)
 		<li role="presentation" @if ($n==0) class="active" <?php $n=1; ?> @endif >
-			<a href="#{{$startclass->id}}" aria-controls="{{$startclass->id}}" role="tab" data-toggle="tab">{{$startclass->career->nombre}}<h6>{{\Carbon\Carbon::parse($startclass->fecha_inicio)->format('d/m/Y')}}</h6></a>
+			<a href="#{{$startclass->id}}" aria-controls="{{$startclass->id}}" role="tab" data-toggle="tab">{{$startclass->career->nombre}}<h6>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</h6></a>
 		</li>
 		@endforeach
 	</ul>
@@ -44,11 +44,11 @@
 								<td>{{++$key}}</td>
 								<td>{{$inscription->people->nombrecompleto()}}</td>
 								<td>
-									{{\Carbon\Carbon::parse($inscription->fechaInicioMes())->format('d/m/Y')}}
+									{{Jenssegers\Date\Date::parse($inscription->fechaInicioMes())->format('j M Y')}}
 								</td>
-								<td><b>{{\Carbon\Carbon::parse($inscription->fecha_pagar)->format('d/m/Y')}}</b></td>
+								<td><b>{{Jenssegers\Date\Date::parse($inscription->fecha_pagar)->format('j M Y')}}</b></td>
 								<td>
-									{{\Carbon\Carbon::parse($inscription->fechaFinMes())->format('d/m/Y')}}
+									{{Jenssegers\Date\Date::parse($inscription->fechaFinMes())->format('j M Y')}}
 								</td>
 								<td>{{$inscription->monto-$inscription->debe}}</td>
 								<td>{{$inscription->debe}}</td>

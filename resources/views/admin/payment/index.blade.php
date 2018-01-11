@@ -26,7 +26,7 @@
 			<td>{{$payment->id}}</td>
 			<td>{{$payment->inscription->people->nombrecompleto()}}</td>
 			<td>@if ($payment->fecha_pago)
-				{{\Carbon\Carbon::parse($payment->fecha_pago)->format('d/m/Y')}}
+				{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}
 				@endif
 			</td>
 			<!--td>{!{$payment->fecha_pagar}!}</td-->
@@ -57,7 +57,7 @@
 				<h4 class="modal-title" id="myModalLabel">RECIBO</h4>
 			</div>
 			<div style="text-align: center;">
-				<iframe src="" style="width:100%; height:540px;" frameborder="0"></iframe>
+				<iframe src="" style="width:100%; height:75%;" frameborder="0"></iframe>
 			</div>
 		</div>
 	</div>

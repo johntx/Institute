@@ -6,7 +6,7 @@
 	<ul class="nav nav-tabs" role="tablist">
 		@foreach ($startclasses as $key=>$startclass)
 		<li role="presentation" @if ($key==0) class="active" @endif >
-			<a href="#{{$startclass->id}}" aria-controls="{{$startclass->id}}" role="tab" data-toggle="tab">{{$startclass->career->nombre}}<h6>{{\Carbon\Carbon::parse($startclass->fecha_inicio)->format('d/m/Y')}}</h6></a>
+			<a href="#{{$startclass->id}}" aria-controls="{{$startclass->id}}" role="tab" data-toggle="tab">{{$startclass->career->nombre}}<h6>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</h6></a>
 		</li>
 		@endforeach
 	</ul>
@@ -35,10 +35,10 @@
 									<td>{{++$key}}</td>
 									<td>{{$inscription->people->nombrecompleto()}}</td>
 									<td>
-										{{\Carbon\Carbon::parse($inscription->group->startclass->fecha_inicio)->format('d/m/Y')}}
+										{{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}
 									</td>
 									<td>
-										{{\Carbon\Carbon::parse($inscription->fecha_ingreso)->format('d/m/Y')}}
+										{{Jenssegers\Date\Date::parse($inscription->fecha_ingreso)->format('j M Y')}}
 									</td>
 									<td>{{$inscription->people->telefono}}</td>
 								</tr>

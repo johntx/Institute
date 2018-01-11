@@ -68,6 +68,10 @@ class ComposerStaticInit91e3b5d7e7b3eb152b9c5f244c05d865
         array (
             'League\\Flysystem\\' => 17,
         ),
+        'J' => 
+        array (
+            'Jenssegers\\Date\\' => 16,
+        ),
         'I' => 
         array (
             'Institute\\' => 10,
@@ -202,6 +206,10 @@ class ComposerStaticInit91e3b5d7e7b3eb152b9c5f244c05d865
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
+        ),
+        'Jenssegers\\Date\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jenssegers/date/src',
         ),
         'Institute\\' => 
         array (
@@ -1559,6 +1567,7 @@ class ComposerStaticInit91e3b5d7e7b3eb152b9c5f244c05d865
         'Institute\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'Institute\\Menu' => __DIR__ . '/../..' . '/app/Menu.php',
         'Institute\\Notice' => __DIR__ . '/../..' . '/app/Notice.php',
+        'Institute\\Numeroaletras' => __DIR__ . '/../..' . '/app/Numeroaletras.php',
         'Institute\\Office' => __DIR__ . '/../..' . '/app/Office.php',
         'Institute\\Partial' => __DIR__ . '/../..' . '/app/Partial.php',
         'Institute\\Particular' => __DIR__ . '/../..' . '/app/Particular.php',
@@ -1577,6 +1586,8 @@ class ComposerStaticInit91e3b5d7e7b3eb152b9c5f244c05d865
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
+        'Jenssegers\\Date\\Date' => __DIR__ . '/..' . '/jenssegers/date/src/Date.php',
+        'Jenssegers\\Date\\DateServiceProvider' => __DIR__ . '/..' . '/jenssegers/date/src/DateServiceProvider.php',
         'League\\Flysystem\\AdapterInterface' => __DIR__ . '/..' . '/league/flysystem/src/AdapterInterface.php',
         'League\\Flysystem\\Adapter\\AbstractAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractAdapter.php',
         'League\\Flysystem\\Adapter\\AbstractFtpAdapter' => __DIR__ . '/..' . '/league/flysystem/src/Adapter/AbstractFtpAdapter.php',

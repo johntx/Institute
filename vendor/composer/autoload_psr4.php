@@ -32,6 +32,7 @@ return array(
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
+    'Jenssegers\\Date\\' => array($vendorDir . '/jenssegers/date/src'),
     'Institute\\' => array($baseDir . '/app'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
     'FontLib\\' => array($vendorDir . '/phenx/php-font-lib/src/FontLib'),

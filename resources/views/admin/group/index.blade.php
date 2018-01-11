@@ -14,7 +14,7 @@
 		@foreach($groups as $group)
 		<tbody>
 			<td>{{$group->id}}</td>
-			<td>{{$group->startclass->fecha_inicio}}</td>
+			<td>{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}</td>
 			<td>{{$group->startclass->career->nombre}}</td>
 			<td>{{$group->turno}}</td>
 			<td>({{$group->estado}})</td>

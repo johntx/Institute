@@ -21,9 +21,9 @@
 					@endif
 					<td>{{$payment->inscription->people->nombrecompleto()}}</td>
 					<td>{{$payment->inscription->group->startclass->career->nombre}}</td>
-					<td>{{ \Carbon\Carbon::parse($payment->inscription->group->startclass->fecha_inicio)->format('d/m/y')}}</td>
+					<td>{{ Jenssegers\Date\Date::parse($payment->inscription->group->startclass->fecha_inicio)->format('j M Y')}}</td>
 					<td>
-						<b>{{ \Carbon\Carbon::parse($payment->fecha_pagar)->format('d/m/y')}}</b>
+						<b>{{ Jenssegers\Date\Date::parse($payment->fecha_pagar)->format('j M Y')}}</b>
 					</td>
 					<td>{{$payment->saldo}}</td>
 					<td>{{$payment->inscription->people->telefono}}</td>
