@@ -8,7 +8,7 @@
 		<p class="col-sm-6"><b>Usuario:</b> {{$student->user->user }}</p>
 		<p class="col-sm-6"><b>CI:</b> {{$student->ci }}</p>
 		<p class="col-sm-6"><b>Nombre:</b> {{$student->nombrecompleto() }}</p>
-		<p class="col-sm-6"><b>Fecha de Nacimiento:</b> {{ \Carbon\Carbon::parse($student->fecha_nacimiento)->format('d-m-Y') }}</p>
+		<p class="col-sm-6"><b>Fecha de Nacimiento:</b> {{ Jenssegers\Date\Date::parse($student->fecha_nacimiento)->format('j M Y') }}</p>
 		<p class="col-sm-6"><b>Telefono:</b> {{$student->telefono }}</p>
 	</div>
 </div>
@@ -24,15 +24,15 @@
 		<p class="col-sm-6"><b>Total pagado:</b> {{$inscription->abono }}</p>
 		<p class="col-sm-6"><b>Grupo:</b> {{$inscription->group->turno }}</p>
 		<p class="col-sm-6"><b>Total a pagar:</b> {{$inscription->total }}</p>
-		<p class="col-sm-6"><b>Fecha Ingreso:</b> {{\Carbon\Carbon::parse($inscription->fecha_ingreso)->format('d-m-Y')}}</p>
+		<p class="col-sm-6"><b>Fecha Ingreso:</b> {{Jenssegers\Date\Date::parse($inscription->fecha_ingreso)->format('j M Y')}}</p>
 		<p class="col-sm-6">
 			@if ($inscription->fecha_retiro != null)
-			<b>Fecha Retiro:</b> {{\Carbon\Carbon::parse($inscription->fecha_retiro)->format('d-m-Y') }}
+			<b>Fecha Retiro:</b> {{Jenssegers\Date\Date::parse($inscription->fecha_retiro)->format('j M Y') }}
 			@endif
 			&nbsp;
 		</p>
-		<p class="col-sm-6"><b>Fecha inicio de clases:</b> {{\Carbon\Carbon::parse($inscription->group->startclass->fecha_inicio)->format('d-m-Y')}}</p>
-		<p class="col-sm-6"><b>Fecha fin de clases:</b> {{\Carbon\Carbon::parse($inscription->group->startclass->fecha_fin)->format('d-m-Y')}}</p>
+		<p class="col-sm-6"><b>Fecha inicio de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}</p>
+		<p class="col-sm-6"><b>Fecha fin de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_fin)->format('j M Y')}}</p>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-hover">
@@ -48,10 +48,10 @@
 			@foreach ($inscription->payments()->orderBy('id','DESC')->get() as $payment)
 			<tbody>
 				<td>{{$payment->id}}</td>
-				<td>{{\Carbon\Carbon::parse($payment->fecha_pagar)->format('d-m-Y')}}</td>
+				<td>{{Jenssegers\Date\Date::parse($payment->fecha_pagar)->format('j M Y')}}</td>
 				<td>
 					@if ($payment->fecha_pago != null)
-					{{\Carbon\Carbon::parse($payment->fecha_pago)->format('d-m-Y')}}
+					{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}
 					@endif
 				</td>
 				<td>

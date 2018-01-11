@@ -6,16 +6,12 @@
 	<thead>
 		<th>Id</th>
 		<th>Nombre</th>
-		<th>Duracion</th>
-		<th>Costo</th>
 		<th>Edit</th>
 	</thead>
 	@foreach($careers as $career)
 	<tbody>
 		<td>{{$career->id}}</td>
 		<td>{{$career->nombre}}</td>
-		<td>{{$career->duracion}} - {{$career->tipo}}/s</td>
-		<td>{{$career->costo}}</td>
 		@foreach(Auth::user()->role->functionalities as $func)
 		@if ($func->code=='ECAR')
 		<td>

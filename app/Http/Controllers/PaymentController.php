@@ -135,12 +135,10 @@ class PaymentController extends Controller
             ->where('estado','Pendiente')
             ->first();
             if ($request['abono'] > $lastpayment->saldo) {
-
                 header('HTTP/1.1 500 Monto superior al saldo');
                 header('Content-Type: application/json; charset=UTF-8');
                 die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
             }
-
             $PaymentSaldo = $lastpayment->saldo - $request['abono'];
             $lastpayment->fill([
                 'fecha_pago' => $request['fecha_pago'],
@@ -149,7 +147,6 @@ class PaymentController extends Controller
                 'abono' => $request['abono']
                 ]);
             $lastpayment->save();
-
             $Inscriptionestado = 'Debe';
             if ($inscription->abono + $request['abono'] == $inscription->total) {
                 $Inscriptionestado = 'Pagado';
@@ -159,7 +156,6 @@ class PaymentController extends Controller
                 'colegiatura' => $Inscriptionestado
                 ]);
             $inscription->save();
-
             if ($inscription->abono < $inscription->total) {
                 if ($PaymentSaldo == 0) {
                     $mes = $inscription->abono / $inscription->monto;
@@ -169,12 +165,15 @@ class PaymentController extends Controller
                     } else {
                         $fecha_pagar = date('Y-m-d',strtotime('+'.$mes.' month', strtotime($inscription->fecha_ingreso)));
                     }
-                    $saldo = $request['monto'];
+                    $saldo = $inscription->monto;
+                    if ($saldo > ($inscription->total - $inscription->abono)) {
+                        $saldo = $inscription->total - $inscription->abono;
+                    }
                     $payment->fill([
                         'fecha_pagar' => $fecha_pagar,
                         'estado' => 'Pendiente',
                         'abono' => 0,
-                        'saldo' => $inscription->monto,
+                        'saldo' => $saldo,
                         'inscription_id' => $request['inscription_id'],
                         'user_id' => Auth::user()->id
                         ]);

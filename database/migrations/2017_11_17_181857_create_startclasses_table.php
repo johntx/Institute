@@ -15,6 +15,9 @@ class CreateStartclassesTable extends Migration
     Schema::create('startclasses', function (Blueprint $table) {
       $table->increments('id');
       $table->string('estado',20)->nullable();
+      $table->integer('duracion')->nullable();
+      $table->integer('costo')->nullable();
+      $table->string('descripcion',50)->nullable();
       $table->date('fecha_inicio')->nullable();
       $table->date('fecha_fin')->nullable();
       $table->integer('office_id')->unsigned()->nullable();

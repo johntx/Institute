@@ -16,8 +16,11 @@
 			<th>Id</th>
 			<th>Fecha de Inicio</th>
 			<th>Fecha de Culminación</th>
+			<th>Duracion</th>
+			<th>Descripcion</th>
 			<th>Carrera</th>
 			<th>Estado</th>
+			<th>Costo</th>
 			<th>Sucursal</th>
 			<th>Edit</th>
 		</thead>
@@ -26,8 +29,11 @@
 			<td>{{$startclass->id}}</td>
 			<td>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</td>
 			<td>{{Jenssegers\Date\Date::parse($startclass->fecha_fin)->format('j M Y')}}</td>
+			<td>{{$startclass->duracion}} Mes/s</td>
+			<td>{{$startclass->descripcion}}</td>
 			<td>{{$startclass->career->nombre}}</td>
 			<td>{{$startclass->estado}}</td>
+			<td>{{$startclass->costo}}</td>
 			<td>{{$startclass->office->nombre}}</td>
 			@if ($editar)
 			<td>

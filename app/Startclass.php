@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Startclass extends Model
 {
 	protected $table = 'startclasses';
-	protected $fillable = ['fecha_inicio', 'fecha_fin', 'estado', 'career_id', 'office_id'];
+	protected $fillable = ['fecha_inicio', 'fecha_fin', 'estado', 'career_id', 'office_id', 'duracion', 'descripcion', 'costo'];
 
 	public $timestamps = false;
 

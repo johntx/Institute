@@ -53,7 +53,7 @@ class StartclassController extends Controller
      */
     public function create()
     {
-        $offices = \Institute\Office::lists('nombre', 'id');
+      $offices = \Institute\Office::lists('nombre', 'id');
       $careers = \Institute\Career::lists('nombre', 'id');
       return view('admin/startclass.create',['careers'=>$careers,'offices'=>$offices]);
     }
@@ -68,12 +68,7 @@ class StartclassController extends Controller
     {
       $fecha_actual = \Carbon\Carbon::now()->format('Y-m-d');
       $career = \Institute\Career::find($request['career_id']);
-      if ($career->tipo == 'Semana') {
-        $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' week', strtotime($request['fecha_inicio'])));
-      } 
-      if ($career->tipo == 'Mes') {
-        $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' month', strtotime($request['fecha_inicio'])));
-      }
+      $fecha_1 = date('Y-m-d',strtotime('+'.$request['duracion'].' month', strtotime($request['fecha_inicio'])));
       $fecha_fin = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
       $estado = '';
       if ($fecha_actual<$request['fecha_inicio']) {
@@ -88,6 +83,9 @@ class StartclassController extends Controller
         'fecha_inicio' => $request['fecha_inicio'],
         'fecha_fin' => $fecha_fin,
         'career_id' => $request['career_id'],
+        'duracion' => $request['duracion'],
+        'descripcion' => $request['descripcion'],
+        'costo' => $request['costo'],
         'office_id' => $request['office_id'],
         'estado' => $estado
         ]);
@@ -125,7 +123,7 @@ class StartclassController extends Controller
      */
     public function edit($id)
     {
-        $offices = \Institute\Office::lists('nombre', 'id');
+      $offices = \Institute\Office::lists('nombre', 'id');
       $careers = \Institute\Career::lists('nombre', 'id');
       return view('admin/startclass.edit',['startclass'=>$this->startclass, 'careers'=>$careers, 'offices'=>$offices]);
     }
@@ -141,12 +139,7 @@ class StartclassController extends Controller
     {
       $fecha_actual = \Carbon\Carbon::now()->format('Y-m-d');
       $career = \Institute\Career::find($request['career_id']);
-      if ($career->tipo == 'Semana') {
-        $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' week', strtotime($request['fecha_inicio'])));
-      }
-      if ($career->tipo == 'Mes') {
-        $fecha_1 = date('Y-m-d',strtotime('+'.$career->duracion.' month', strtotime($request['fecha_inicio'])));
-      }
+      $fecha_1 = date('Y-m-d',strtotime('+'.$request['duracion'].' month', strtotime($request['fecha_inicio'])));
       $fecha_fin = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
       $estado = '';
       if ($fecha_actual<$request['fecha_inicio']) {
@@ -159,6 +152,9 @@ class StartclassController extends Controller
       $this->startclass->fill([
         'fecha_inicio' => $request['fecha_inicio'],
         'fecha_fin' => $fecha_fin,
+        'duracion' => $request['duracion'],
+        'descripcion' => $request['descripcion'],
+        'costo' => $request['costo'],
         'career_id' => $request['career_id'],
         'office_id' => $request['office_id'],
         'estado' => $estado

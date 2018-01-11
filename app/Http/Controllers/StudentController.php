@@ -88,22 +88,12 @@ class StudentController extends Controller
           die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
         }
         $group=\Institute\Group::find($request['group_id']);
-        $total = 0;
-        if ($group->startclass->career->duracion > 0) {
-          $total = $request['monto']*$group->startclass->career->duracion;
-          if ($total != $request['total']) {
-            $total=$request['total'];
-            $request['monto']=$request['total'];
-          }
-        } else {
-          $total = $request['monto'];
-        }
-        if ($request['abono'] > $total) {
+        if ($request['abono'] > $request['total']) {
           header('HTTP/1.1 500 Monto superior al total');
           header('Content-Type: application/json; charset=UTF-8');
           die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
         }
-        if ($request['abono'] > $request['monto'] && $request['abono'] != $total) {
+        if ($request['abono'] > $request['monto'] && $request['abono'] != $request['total']) {
           header('HTTP/1.1 500 Monto superior al pago mensual');
           header('Content-Type: application/json; charset=UTF-8');
           die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
@@ -138,10 +128,10 @@ class StudentController extends Controller
           'office_id' => Auth::user()->people->office_id
           ]);
         $inscription = new Inscription;
-        if ($request['abono'] == $total) {
+        if ($request['abono'] == $request['total']) {
           $colegiatura = 'Pagado';
         }
-        if ($request['abono'] < $total) {
+        if ($request['abono'] < $request['total']) {
           $colegiatura = 'Debe';
         }
         $startclass = \Institute\Startclass::find($request['startclass_id']);
@@ -151,7 +141,7 @@ class StudentController extends Controller
           'people_id' => $user->id,
           'monto' => $request['monto'],
           'abono' => $request['abono'],
-          'total' => $total,
+          'total' => $request['total'],
           'colegiatura' => $colegiatura,
           'career_id' => $startclass->career->id,
           'group_id' => $request['group_id'],
@@ -161,14 +151,14 @@ class StudentController extends Controller
         $user->people()->save($people);
         $inscription->save();
 
-        if ($request['abono'] == $total) {
+        if ($request['abono'] == $request['total']) {
           $payment = new \Institute\Payment;
           $payment->fill([
-            'fecha_pagar' => $group->startclass->fecha_inicio,
-            'fecha_pago' => \Carbon\Carbon::now(),
+            'fecha_pagar' => $request['fecha_ingreso'],
+            'fecha_pago' => $request['fecha_ingreso'],
             'estado' => 'Pagado al Contado',
             'abono' => $request['abono'],
-            'saldo' => $total,
+            'saldo' => $request['monto'],
             'observacion' => 'Colegiatura completa pagada al contado',
             'inscription_id' => $inscription->id,
             'user_id' => Auth::user()->id
@@ -190,6 +180,9 @@ class StudentController extends Controller
           if ($request['abono'] == $request['monto']) {
             $fecha_pagar = date('Y-m-d',strtotime('+1 month', strtotime($fecha_inicio)));
             $saldo = $request['monto'];
+            if ($saldo > ($inscription->total - $inscription->abono)) {
+              $saldo = $inscription->total - $inscription->abono;
+            }
           }
           $payment = new \Institute\Payment;
           $payment->fill([

@@ -82,26 +82,21 @@ class InscriptionController extends Controller
           die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
         }
         $group=\Institute\Group::find($request['group_id']);
-        $total = 0;
-        if ($group->startclass->career->duracion > 0) {
-          $total = $request['monto']*$group->startclass->career->duracion;
-        } else {
-          $total = $request['monto'];
+        if ($request['abono'] > $request['total']) {
+          header('HTTP/1.1 500 Monto superior al total');
+          header('Content-Type: application/json; charset=UTF-8');
+          die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
         }
-        if ($request['abono'] > $total) {
-          return redirect('/admin/inscription/create')
-          ->withErrors('Monto superior al total');
-        }
-        if ($request['abono'] > $request['monto'] && $request['abono'] != $total) {
+        if ($request['abono'] > $request['monto'] && $request['abono'] != $request['total']) {
           header('HTTP/1.1 500 Monto superior al pago mensual');
           header('Content-Type: application/json; charset=UTF-8');
           die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
         }
         $inscription = new Inscription;
-        if ($request['abono'] == $total) {
+        if ($request['abono'] == $request['total']) {
           $colegiatura = 'Pagado';
         }
-        if ($request['abono'] < $total) {
+        if ($request['abono'] < $request['total']) {
           $colegiatura = 'Debe';
         }
         $people= People::find($request['user_id']);
@@ -112,7 +107,7 @@ class InscriptionController extends Controller
           'fecha_ingreso' => $request['fecha_ingreso'],
           'monto' => $request['monto'],
           'abono' => $request['abono'],
-          'total' => $total,
+          'total' => $request['total'],
           'colegiatura' => $colegiatura,
           'career_id' => $startclass->career->id,
           'group_id' => $request['group_id'],
@@ -120,13 +115,13 @@ class InscriptionController extends Controller
           ]);
         $inscription->save();
 
-        if ($request['abono'] == $total) {
+        if ($request['abono'] == $request['total']) {
           $payment = new \Institute\Payment;
           $payment->fill([
             'fecha_pagar' => $group->startclass->fecha_inicio,
             'estado' => 'Pagado',
             'abono' => $request['abono'],
-            'saldo' => $total,
+            'saldo' => $request['monto'],
             'inscription_id' => $inscription->id,
             'user_id' => Auth::user()->id
             ]);
@@ -144,7 +139,7 @@ class InscriptionController extends Controller
           $payment = new \Institute\Payment;
           $payment->fill([
             'fecha_pagar' => $group->startclass->fecha_inicio,
-            'fecha_pago' => \Carbon\Carbon::now(),
+            'fecha_pago' => $request['fecha_ingreso'],
             'estado' => 'Pagado',
             'abono' => $request['abono'],
             'saldo' => $request['monto'],

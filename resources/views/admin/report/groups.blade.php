@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 @include('alerts.succes')
-
 <div>
 	<ul class="nav nav-tabs" role="tablist">
 		@foreach ($startclasses as $key=>$startclass)
