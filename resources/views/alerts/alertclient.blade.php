@@ -1,6 +1,6 @@
 <div class="alert_cli">
 	<button type="button" onclick="close_alert()"><span aria-hidden="true">&times;</span></button>
-	<div id="result">Error</div>
+	<div class="result">Error</div>
 </div>
 <script type="text/javascript">
 </script>
@@ -36,7 +36,7 @@
 		top: -4px;
 		left: 4.5px;
 	}
-	#result{
+	.result{
 		font-size: 18px;
 		text-align: left;
 	}

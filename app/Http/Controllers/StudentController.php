@@ -83,8 +83,9 @@ class StudentController extends Controller
     {
       if ($request->ajax()) {
         if (Auth::user()->role->code=='ROOT') {
-          Session::flash('message','Este usuario no puede realizar esta función');
-          return Redirect::to('/admin/student');
+          header('HTTP/1.1 500 Este usuario no puede realizar esta función');
+          header('Content-Type: application/json; charset=UTF-8');
+          die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
         }
         $group=\Institute\Group::find($request['group_id']);
         $total = 0;
@@ -98,12 +99,14 @@ class StudentController extends Controller
           $total = $request['monto'];
         }
         if ($request['abono'] > $total) {
-          return redirect('/admin/student/create')
-          ->withErrors('Monto superior al total');
+          header('HTTP/1.1 500 Monto superior al total');
+          header('Content-Type: application/json; charset=UTF-8');
+          die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
         }
         if ($request['abono'] > $request['monto'] && $request['abono'] != $total) {
-          return redirect('/admin/student/create')
-          ->withErrors('Monto superior al pago mensual, realize un pago igual al monto mensual y realize un nuevo pago para cada mensualidad, o haga el pago total de la colegiatura');
+          header('HTTP/1.1 500 Monto superior al pago mensual');
+          header('Content-Type: application/json; charset=UTF-8');
+          die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
         }
         $request['nombre']=strtoupper($request['nombre']);
         $request['paterno']=strtoupper($request['paterno']);
@@ -245,12 +248,7 @@ class StudentController extends Controller
       where('startclasses.estado','!=','Cerrado')
       ->orderBy('startclasses.fecha_inicio','DESC')
       ->get();
-      $groups = \Institute\Group::leftjoin('inscriptions','groups.id','=','inscriptions.group_id')
-      ->select('groups.*', DB::raw('count(inscriptions.id) as inscritos'))
-      ->groupBy('groups.id')
-      ->where('startclass_id',$this->student->inscriptions[0]->group->startclass->id)
-      ->get();
-      return view('admin/student.edit',['student'=>$this->student, 'startclasses'=>$startclasses, 'groups'=>$groups]);
+      return view('admin/student.edit',['student'=>$this->student, 'startclasses'=>$startclasses]);
     }
 
     /**
@@ -279,20 +277,26 @@ class StudentController extends Controller
         'direccion' => $request['direccion'],
         'telefono' => $request['telefono']
         ]);
-      $inscription = Inscription::find($this->student->inscriptions[0]->id);
-      $startclass = \Institute\Startclass::find($request['startclass_id']);
-      $inscription->fill([
-        'estado' => $request['estado'],
-        'career_id' => $startclass->career->id,
-        'fecha_ingreso' => $request['fecha_ingreso'],
-        'group_id' => $request['group_id'],
-        'user_id' => Auth::user()->id
-        ]);
-      if ($request['estado']!='Inscrito') {
-        $inscription->fecha_retiro=\Carbon\Carbon::now();
+
+      $col = collect();
+      for ($i=0; $i < count($this->student->inscriptions); $i++) {
+        $inscription = new \Institute\Inscription;
+        $inscription->id = $request['inscription_id'][$i];
+        $inscription->group_id = $request['group_id'][$i];
+        $inscription->estado = $request['estado'][$i];
+        $inscription->fecha_ingreso = $request['fecha_ingreso'][$i];
+        $inscription->career_id = $request['career_id'][$i];
+        $inscription->monto = $request['monto'][$i];
+        $inscription->abono = $request['abono'][$i];
+        $inscription->total = $request['total'][$i];
+        $inscription->colegiatura = $request['colegiatura'][$i];
+        $inscription->user_id = Auth::user()->id;
+        $col->push($inscription);
       }
-      $inscription->save();
       $this->student->save();
+      $this->student->inscriptions()->delete();
+      $this->student->inscriptions()->saveMany($col);
+
       Session::flash('message','Estudiante editado exitosamente');
       return Redirect::to('/admin/student');
     }

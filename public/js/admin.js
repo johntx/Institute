@@ -38,8 +38,39 @@ $('#inscribir').on('submit',function(e){
 			$('#group_id option').empty();
 			window.open(window.location.origin+'/cien/public/admin/payment/pdf/'+payment);
 		},
-		error: function(){
-			location.reload();
+		error: function(data){
+			$('.result').html(data.statusText);
+			$('.alert_cli').show();
+			setTimeout(function() {
+				$(".alert_cli").fadeOut(600);
+			},5000);
+		}
+	});
+});
+$('#reinscribir').on('submit',function(e){
+	$.ajaxSetup({
+		header:$('meta[name="_token"]').attr('content')
+	});
+	e.preventDefault(e);
+	$.ajax({
+
+		type:"POST",
+		url:window.location.origin+'/cien/public/admin/inscription',
+		data:$(this).serialize(),
+		dataType: 'json',
+		success: function(payment){
+			document.getElementById("reinscribir").reset();
+			$('#student_select').selectpicker('refresh');
+			$('#career_select').selectpicker('refresh');
+			$('#group_id option').empty();
+			window.open(window.location.origin+'/cien/public/admin/payment/pdf/'+payment);
+		},
+		error: function(data){
+			$('.result').html(data.statusText);
+			$('.alert_cli').show();
+			setTimeout(function() {
+				$(".alert_cli").fadeOut(600);
+			},5000);
 		}
 	});
 });
@@ -58,7 +89,7 @@ $('#paymentForm').on('submit',function(e){
 			location.reload();
 		},
 		error: function(data){
-			$('#result').html(data.statusText);
+			$('.result').html(data.statusText);
 			$('.alert_cli').show();
 			setTimeout(function() {
 				$(".alert_cli").fadeOut(600);

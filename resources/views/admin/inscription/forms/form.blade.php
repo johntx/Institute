@@ -1,33 +1,46 @@
 <br>
-<div class="panel panel-default col-xs-6" style="padding: 0;">
-	<div class="panel-heading">Estudiante</div>
-	<div class="panel-body">
-		<div class="form-group required">
-			{!! Form::label('(CI) - Estudiante') !!}
-			<select name="user_id" class="form-control selectpicker" required data-live-search="true">
-				<option>Seleccione un estudiante</option>
-				@foreach ($students as $student)
-				<option 
-				value="{{$student->id}}">
-				({{$student->ci}}) - {{$student->nombrecompleto()}}
-			</option>
-			@endforeach
-		</select>
+<div class="col-xs-6" style="padding-left: 0;">
+	<div class="panel panel-default">
+		<div class="panel-heading">Estudiante</div>
+		<div class="panel-body">
+			<div class="form-group required">
+				{!! Form::label('(CI) - Estudiante') !!}
+				<select name="user_id" class="form-control selectpicker" required data-live-search="true" id="student_select">
+					<option disabled selected>Seleccione un estudiante</option>
+					@foreach ($students as $student)
+					<option 
+					value="{{$student->id}}">
+					({{$student->ci}}) - {{$student->nombrecompleto()}}</option>
+					@endforeach
+				</select>
+			</div>
+			<div class="form-group">
+				{!! Form::label('Fecha de Registro') !!}
+				{!! Form::text('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+			</div>
+		</div>
 	</div>
 </div>
-</div>
-<div class="panel panel-default col-xs-6" style="padding: 0;">
-	<div class="panel-heading">Seleccion de Carrera y Grupo</div>
-	<div class="panel-body">
-		<div class="form-group">
-			{!! Form::label('Carrera (Convocatorias)') !!}
-			<select name="startclass_id" id="career_select" class="form-control selectpicker" data-style="btn-info" required>
-				<option selected disabled>Seleccionar Carrera</option>
-				@foreach ($startclasses as $startclass)
-				<option value="{{$startclass->id}}" 
-					costo='{{$startclass->career->costo}}' 
-					duracion='{{$startclass->career->mes}}'
-					>{{$startclass->career->nombre}} - [{{date_format(date_create($startclass->fecha_inicio),'d-m-Y')}}] ({{$startclass->estado}}) [{{$startclass->career->costo}}bs]</option>
+<div class="col-xs-6" style="padding-right: 0;">
+	<div class="panel panel-default">
+		<div class="panel-heading">Seleccion de Carrera y Grupo</div>
+		<div class="panel-body">
+			<div class="form-group">
+				{!! Form::label('Carrera (Convocatorias)') !!}
+				<select name="startclass_id" id="career_select" class="form-control selectpicker" data-style="btn-info" required>
+					<option selected disabled>Seleccionar Carrera</option>
+					@foreach ($startclasses as $startclass)
+					<option value="{{$startclass->id}}" 
+						costo='{{$startclass->career->costo}}' 
+						duracion='
+						@if ($startclass->career->tipo == 'Semana')
+						1
+						@else
+						{{$startclass->career->duracion}}
+						@endif
+						'
+						>{{$startclass->career->nombre}} - [{{date_format(date_create($startclass->fecha_inicio),'d-m-Y')}}] ({{$startclass->estado}}) [{{$startclass->career->costo}}bs]
+					</option>
 					@endforeach
 				</select>
 			</div>
@@ -48,7 +61,7 @@
 				</div>
 				<div class="col-xs-4" style="padding-right: 0;">
 					{!! Form::label('Costo Total') !!}
-					{!! Form::label('',null,['class'=>'form-control total']) !!}
+					{!! Form::text('total',null,['class'=>'form-control total','placeholder'=>'Insert Total', 'onkeypress'=>"return justNumbers(event);"]) !!}
 				</div>
 			</div>
 			<br><br><br>
@@ -59,3 +72,4 @@
 			</div>
 		</div>
 	</div>
+</div>
