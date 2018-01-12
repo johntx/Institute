@@ -29,7 +29,7 @@
 						<span><b>La suma de:</b> {{$suma}} BOLIVIANOS 00/100</span>
 					</div>
 					<div>
-						<span><b>Por concepto de:</b> CURSO "{{$payment->inscription->career->nombre}}"</span>
+						<span><b>Por concepto de:</b> CURSO "{{$payment->inscription->group->startclass->career->nombre}} {{$payment->inscription->group->startclass->descripcion}}"</span>
 					</div>
 					<div>
 						<span class="turno"><b>Turno:</b> {{$payment->inscription->group->turno}}</span>
@@ -68,7 +68,7 @@
 						<span><b>La suma de:</b> {{$suma}} BOLIVIANOS 00/100</span>
 					</div>
 					<div>
-						<span><b>Por concepto de:</b> CURSO "{{$payment->inscription->career->nombre}}"</span>
+						<span><b>Por concepto de:</b> CURSO "{{$payment->inscription->group->startclass->career->nombre}} {{$payment->inscription->group->startclass->descripcion}}"</span>
 					</div>
 					<div>
 						<span class="turno"><b>Turno:</b> {{$payment->inscription->group->turno}}</span>

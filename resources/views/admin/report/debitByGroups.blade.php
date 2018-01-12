@@ -3,21 +3,19 @@
 @include('alerts.succes')
 <div>
 	<ul class="nav nav-tabs" role="tablist">
-		<?php $n=0; ?>
-		@foreach ($startclasses as $startclass)
-		<li role="presentation" @if ($n==0) class="active" <?php $n=1; ?> @endif >
+		@foreach ($startclasses as $key=>$startclass)
+		<li role="presentation" @if ($key==0) class="active" @endif >
 			<a href="#{{$startclass->id}}" aria-controls="{{$startclass->id}}" role="tab" data-toggle="tab">{{$startclass->career->nombre}}<h6>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</h6></a>
 		</li>
 		@endforeach
 	</ul>
 	<br>
 	<div class="tab-content">
-		<?php $n=0; ?>
-		@foreach ($startclasses as $startclass)
-		<div role="tabpanel" class="tab-pane  @if ($n==0) active <?php $n=1; ?> @endif" id="{{$startclass->id}}">
+		@foreach ($startclasses as $key=>$startclass)
+		<div role="tabpanel" class="tab-pane  @if ($key==0) active @endif" id="{{$startclass->id}}">
 			@foreach ($startclass->groups as $group)
 			<div class="panel panel-primary">
-				<div class="panel-heading"><b>Grupo:</b>{{$group->turno}}&nbsp;</div>
+				<div class="panel-heading"><b>Grupo: </b>{{$group->turno}}&nbsp;</div>
 				<div class="panel-body">
 					<table class="tablab3 table table-condensed compact">
 						<thead>
@@ -33,7 +31,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach (\Institute\Inscription::join('payments','inscriptions.id','=','payments.inscription_id')->select('inscriptions.*','payments.fecha_pagar','payments.saldo as debe')->where('payments.estado','Pendiente')->where('inscriptions.estado','Inscrito')->where('inscriptions.group_id',$group->id)->orderBy('payments.fecha_pagar','asc')->distinct()->get() as $key=>$inscription)
+							@foreach (\Institute\Inscription::
+							join('payments','inscriptions.id','=','payments.inscription_id')
+							->select('inscriptions.*','payments.fecha_pagar','payments.saldo as debe')
+							->where('payments.estado','Pendiente')
+							->where('inscriptions.estado','Inscrito')
+							->where('inscriptions.group_id',$group->id)
+							->orderBy('payments.fecha_pagar','asc')
+							->distinct()->get() as $key=>$inscription)
 							<tr @if ($inscription->debit())
 								style="background-color: rgba(255,0,0,0.25);" 
 								@elseif ($inscription->debitNext())

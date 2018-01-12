@@ -65,6 +65,7 @@ class ReportController extends Controller
         $startclasses = \Institute\Startclass::
         join('careers','startclasses.career_id','=','careers.id')
         ->select('startclasses.*')
+        ->where('startclasses.estado','!=','Cerrado')
         ->orderBy('careers.nombre')
         ->get();
         return view('admin/report.debitByGroups',['startclasses'=>$startclasses]);
@@ -79,7 +80,6 @@ class ReportController extends Controller
 
     public function getchartmensualdesc(Request $request,$inicio,$fin)
     {
-
         $fechaMesAntes = \Carbon\Carbon::parse($inicio);
         $fechaMesAntes->subMonth();
         $inidate = \Carbon\Carbon::parse($inicio);

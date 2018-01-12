@@ -4,6 +4,10 @@
 	{!! Form::text('fecha_inicio',null,['class'=>'form-control datepicker','placeholder'=>'AAAA-mm-dd']) !!}
 </div>
 <div class="form-group">
+	{!! Form::label('Fecha Fin') !!}
+	{!! Form::text('fecha_fin',null,['class'=>'form-control datepicker','placeholder'=>'AAAA-mm-dd']) !!}
+</div>
+<div class="form-group">
 	{!! Form::label('Duracion en meses') !!}
 	{!! Form::text('duracion',null,['class'=>'form-control','onkeypress'=>"return justNumbers(event);",'required']) !!}
 </div>

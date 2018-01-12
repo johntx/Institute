@@ -29,7 +29,7 @@
 @foreach ($student->inscriptions as $inscription)
 <div class="col-xs-6" style="padding-right: 0;">
 	<div class="panel panel-info">
-		<div class="panel-heading"><b>Inscripción:</b> {{$inscription->career->nombre}} {{$inscription->group->startclass->descripcion}} - [{{date_format(date_create($inscription->group->startclass->fecha_inicio),'d-m-Y')}}] ({{$inscription->group->startclass->estado}}) [{{$inscription->group->startclass->costo}}bs]</div>
+		<div class="panel-heading"><b>Inscripción:</b> {{$inscription->group->startclass->career->nombre}} {{$inscription->group->startclass->descripcion}} - [{{date_format(date_create($inscription->group->startclass->fecha_inicio),'d-m-Y')}}] ({{$inscription->group->startclass->estado}}) [{{$inscription->group->startclass->costo}}bs]</div>
 		<div class="panel-body">
 			{!! Form::hidden('career_id[]',$inscription->career_id,['class'=>'form-control']) !!}
 			{!! Form::hidden('inscription_id[]',$inscription->id,['class'=>'form-control']) !!}

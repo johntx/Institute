@@ -30,7 +30,7 @@
 				@endif
 			</td>
 			<!--td>{!{$payment->fecha_pagar}!}</td-->
-			<td>{{$payment->inscription->career->nombre}}</td>
+			<td>{{$payment->inscription->group->startclass->career->nombre}}</td>
 			<td>{{$payment->abono}}</td>
 			<td>{{$payment->saldo}}</td>
 			<td>{{$payment->observacion}}</td>

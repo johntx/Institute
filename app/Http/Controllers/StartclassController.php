@@ -67,7 +67,6 @@ class StartclassController extends Controller
     public function store(Request $request)
     {
       $fecha_actual = \Carbon\Carbon::now()->format('Y-m-d');
-      $career = \Institute\Career::find($request['career_id']);
       $fecha_1 = date('Y-m-d',strtotime('+'.$request['duracion'].' month', strtotime($request['fecha_inicio'])));
       $fecha_fin = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
       $estado = '';
@@ -137,21 +136,9 @@ class StartclassController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $fecha_actual = \Carbon\Carbon::now()->format('Y-m-d');
-      $career = \Institute\Career::find($request['career_id']);
-      $fecha_1 = date('Y-m-d',strtotime('+'.$request['duracion'].' month', strtotime($request['fecha_inicio'])));
-      $fecha_fin = date('Y-m-d',strtotime('-1 day', strtotime($fecha_1)));
-      $estado = '';
-      if ($fecha_actual<$request['fecha_inicio']) {
-        $estado = 'Espera';
-      } elseif($fecha_actual<$fecha_fin){
-        $estado = 'Iniciado';
-      } else {
-        $estado = 'Cerrado';
-      }
       $this->startclass->fill([
         'fecha_inicio' => $request['fecha_inicio'],
-        'fecha_fin' => $fecha_fin,
+        'fecha_fin' => $request['fecha_fin'],
         'duracion' => $request['duracion'],
         'descripcion' => $request['descripcion'],
         'costo' => $request['costo'],
