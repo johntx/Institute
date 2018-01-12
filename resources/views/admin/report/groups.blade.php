@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 @include('alerts.succes')
-<br>
-<div>
+<div style="padding-top: 5px;">
 	<ul class="nav nav-tabs" role="tablist">
 		@foreach ($startclasses as $key=>$startclass)
 		<li role="presentation" @if ($key==0) class="active" @endif >
@@ -19,7 +18,7 @@
 				<div class="panel-heading"><b>Grupo: </b>{{$group->turno}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> Convocatoria: </b>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</div>
 				<div class="panel-body">
 					<div class="table-responsive">
-						<table class="table table-condensed compact hover">
+						<table class="table table-condensed table-hover">
 							<thead>
 								<tr>
 									<th>Nº</th>

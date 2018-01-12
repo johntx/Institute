@@ -144,7 +144,7 @@ class StartclassController extends Controller
         'costo' => $request['costo'],
         'career_id' => $request['career_id'],
         'office_id' => $request['office_id'],
-        'estado' => $estado
+        'estado' => $request['estado']
         ]);
       $this->startclass->save();
       Session::flash('message','Inicio de Clases editado exitosamente');

@@ -8,6 +8,10 @@
 	{!! Form::text('fecha_fin',null,['class'=>'form-control datepicker','placeholder'=>'AAAA-mm-dd']) !!}
 </div>
 <div class="form-group">
+	{!! Form::label('Estado') !!}
+	{!! Form::select('estado',['Espera' => 'Espera','Iniciado' => 'Iniciado','Cerrado' => 'Cerrado'],null,['class'=>'form-control','maxlength'=>20]) !!}
+</div>
+<div class="form-group">
 	{!! Form::label('Duracion en meses') !!}
 	{!! Form::text('duracion',null,['class'=>'form-control','onkeypress'=>"return justNumbers(event);",'required']) !!}
 </div>
