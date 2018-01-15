@@ -56,7 +56,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //$request['code']=strtoupper($request['code']);
+        $request['code']=strtoupper($request['code']);
         $request['name']=strtoupper($request['name']);
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:roles',
@@ -109,10 +109,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //$request['code']=strtoupper($request['code']);
+        $request['code']=strtoupper($request['code']);
         $request['name']=ucwords(strtolower($request['name']));
         $validator = Validator::make($request->all(), [
-            /*'code' => 'required|unique:roles,code,'.$id.',id',*/
+            'code' => 'required|unique:roles,code,'.$id.',id',
             'name' => 'required|unique:roles,name,'.$id.',id'
             ]);
 
