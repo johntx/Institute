@@ -26,8 +26,8 @@
 									<th>Mes</th>
 									<th>M.Est.</th>
 									<th>M.Pagar</th>
-									<th>Esperado</th>
-									<th>Inició</th>
+									<th>Inicio <br>Esperado</th>
+									<th>Inicio <br>Real</th>
 									<th>Fch. Pagar</th>
 									<th>Abono</th>
 									<th>Saldo</th>

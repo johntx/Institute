@@ -62,7 +62,7 @@
               ->Join('menus', 'functionalities.menu_id', '=', 'menus.id')
               ->select('menus.*')
               ->where('roles.code',Auth::user()->role->code)
-              ->distinct()->get()
+              ->distinct()->orderBy('id','asc')->get()
               as $menu)
               <li>
                 <a href="#"><i class="fa fa-{{ $menu->icon }} fa-fw"></i> {{ $menu->label }}<span class="fa arrow"></span></a>
@@ -76,7 +76,7 @@
                     ->where('roles.code',Auth::user()->role->code)
                     ->where('functionalities.path','not like','%edit')
                     ->where('functionalities.path','not like','%delete')
-                    ->distinct()->get()
+                    ->distinct()->orderBy('id','asc')->get()
                     as $functionality)
                     <li>
                       <a href="{{URL::to($functionality->path)}}"><i class='fa fa-circle-o fa-fw'></i> {{ $functionality->label }}</a>

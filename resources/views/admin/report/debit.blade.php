@@ -6,7 +6,9 @@
 		<thead>
 			<th>Nombre</th>
 			<th>Carrera</th>
-			<th>Inicio</th>
+			<th>Duración</th>
+			<th>Inicio <br>Esperado</th>
+			<th>Inicio <br>Real</th>
 			<th>Fecha Pagar</th>
 			<th>Saldo</th>
 			<th>Telefono</th>
@@ -19,9 +21,18 @@
 				@else
 				<tr>
 					@endif
+
+					<?php
+					if($payment->inscription->fecha_ingreso > $payment->inscription->group->startclass->fecha_inicio)
+						$fecha_ingreso=$payment->inscription->fecha_ingreso;
+					else
+						$fecha_ingreso=$payment->inscription->group->startclass->fecha_inicio;
+					?>
 					<td>{{$payment->inscription->people->nombrecompleto()}}</td>
 					<td>{{$payment->inscription->group->startclass->career->nombre}}</td>
+					<td>{{$payment->inscription->group->startclass->duracion}} mes/es</td>
 					<td>{{ Jenssegers\Date\Date::parse($payment->inscription->group->startclass->fecha_inicio)->format('j M Y')}}</td>
+					<td>{{ Jenssegers\Date\Date::parse($fecha_ingreso)->format('j M Y')}}</td>
 					<td>
 						<b>{{ Jenssegers\Date\Date::parse($payment->fecha_pagar)->format('j M Y')}}</b>
 					</td>
