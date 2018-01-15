@@ -13,7 +13,7 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('Descripcion') !!}
-				{!! Form::text('descripcion',null,['class'=>'form-control','required']) !!}
+				{!! Form::text('descripcion',null,['class'=>'form-control']) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('Carrera') !!}
