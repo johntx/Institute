@@ -87,7 +87,7 @@ class PaymentController extends Controller
     {
         $payments = Payment::join('users','payments.user_id','=','users.id')
         ->select('payments.*','users.user')
-        ->where('payments.estado','Pagado')
+        ->where('payments.estado', 'LIKE','Pagado%')
         ->orderBy('payments.id','DESC')->paginate(20);
         return view('admin/payment.index',compact('payments'));
     }
