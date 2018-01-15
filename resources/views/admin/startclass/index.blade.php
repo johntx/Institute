@@ -35,6 +35,9 @@
 			<td>{{$startclass->estado}}</td>
 			<td>{{$startclass->costo}}</td>
 			<td>{{$startclass->office->nombre}}</td>
+			<td>
+				{!!link_to_action('ReportController@group', $title = 'Grupos', $parameters = $startclass->id, $attributes = ['class'=>'btn btn-info'])!!}
+			</td>
 			@if ($editar)
 			<td>
 				{!!link_to_route('admin.startclass.edit', $title = 'Editar', $parameters = $startclass->id, $attributes = ['class'=>'btn btn-primary'])!!}

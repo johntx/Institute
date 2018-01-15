@@ -59,6 +59,11 @@ class ReportController extends Controller
         ->get();
         return view('admin/report.groups',['startclasses'=>$startclasses]);
     }
+    public function group($id)
+    {
+        $startclass = \Institute\Startclass::find($id);
+        return view('admin/report.group',['startclass'=>$startclass]);
+    }
 
     public function debitByGroups()
     {

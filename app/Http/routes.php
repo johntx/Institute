@@ -43,6 +43,7 @@ Route::get('admin/report/debitbygroups','ReportController@debitByGroups');
 Route::get('admin/report/income','ReportController@payments');
 Route::get('logout','LogController@logout');
 Route::get('admin/groups/{id}','StartclassController@getgroups');
+Route::get('admin/report/group/{id}','ReportController@group');
 Route::get('admin/report/chart/{inicio}/{fin}','ReportController@getchartmensual');
 Route::get('admin/payments/{id}','PaymentController@getpayments');
 Route::get('admin/search/{name}','StudentController@getpeople');
