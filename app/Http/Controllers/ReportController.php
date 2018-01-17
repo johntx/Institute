@@ -170,7 +170,7 @@ class ReportController extends Controller
                     $sumaSiguiente += $ingresoSiguienteMes;
                 }
 
-                $payment = \Institute\Payment::select(DB::raw('sum(payments.abono) as suma'))->where('estado','Pagado al Contado')->whereBetween('fecha_pago',array( $fecha_inicio, $fecha_fin))->first();
+                $payment = \Institute\Payment::select(DB::raw('sum(payments.abono) as suma'))->where('observacion','Pagado al Contado')->whereBetween('fecha_pago',array( $fecha_inicio, $fecha_fin))->first();
                 if ($payment) {
                     $suma +=$payment->suma;
                 }

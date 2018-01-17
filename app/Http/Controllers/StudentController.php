@@ -156,7 +156,8 @@ class StudentController extends Controller
           $payment->fill([
             'fecha_pagar' => $request['fecha_ingreso'],
             'fecha_pago' => $request['fecha_ingreso'],
-            'estado' => 'Pagado al Contado',
+            'estado' => 'Pagado',
+            'observacion' => 'Pagado al Contado',
             'abono' => $request['abono'],
             'saldo' => $request['monto'],
             'observacion' => 'Colegiatura completa pagada al contado',
