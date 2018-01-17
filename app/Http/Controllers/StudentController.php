@@ -159,7 +159,7 @@ class StudentController extends Controller
             'estado' => 'Pagado',
             'observacion' => 'Pagado al Contado',
             'abono' => $request['abono'],
-            'saldo' => $request['monto'],
+            'saldo' => $request['abono'],
             'observacion' => 'Colegiatura completa pagada al contado',
             'inscription_id' => $inscription->id,
             'user_id' => Auth::user()->id
