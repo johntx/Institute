@@ -19,7 +19,7 @@
 	{!! Form::label($payment->abono,null,['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
-	{!! Form::label('Saldo') !!}
+	{!! Form::label('Total') !!}
 	{!! Form::label($payment->saldo,null,['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
@@ -28,7 +28,7 @@
 </div>
 <div class="form-group">
 	{!! Form::label('Usuario') !!}
-	{!! Form::label($payment->user_id,null,['class'=>'form-control']) !!}
+	{!! Form::label(\Institute\People::find($payment->user_id)->nombrecompleto(),null,['class'=>'form-control']) !!}
 </div>
 {!! Form::close() !!}
 <div class="col-md-10"></div>

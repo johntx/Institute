@@ -266,6 +266,7 @@ class PaymentController extends Controller
                     'abono' => 0,
                     'saldo' => $inscription->monto,
                     'estado' => 'Pendiente',
+                    'observacion' => null,
                     'fecha_pago' => null
                     ]);
                 $inscription->abono = 0;

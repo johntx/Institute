@@ -8,7 +8,7 @@
 @endif
 @endforeach
 <div class="table-responsive">
-	<table class="table table-hover">
+	<table class="table table-hover table-condensed">
 		<thead>
 			<th>Id</th>
 			<th>Cliente</th>
@@ -17,7 +17,7 @@
 			<th>Carrera</th>
 			<th>Abono</th>
 			<th>Saldo</th>
-			<th>Observacion</th>
+			<th>Total</th>
 			<th>Usuario</th>
 			<th>Option</th>
 		</thead>
@@ -32,8 +32,8 @@
 			<!--td>{!{$payment->fecha_pagar}!}</td-->
 			<td>{{$payment->inscription->group->startclass->career->nombre}}</td>
 			<td>{{$payment->abono}}</td>
+			<td>{{$payment->saldo-$payment->abono}}</td>
 			<td>{{$payment->saldo}}</td>
-			<td>{{$payment->observacion}}</td>
 			<td>{{$payment->user}}</td>
 			@if ($payment->abono != 0)
 			@if ($eliminar)
@@ -57,7 +57,7 @@
 				<h4 class="modal-title" id="myModalLabel">RECIBO</h4>
 			</div>
 			<div style="text-align: center;">
-				<iframe src="" style="width:100%; height:75%;" frameborder="0"></iframe>
+				<iframe src="" style="width:100%; height:80%;" frameborder="0"></iframe>
 			</div>
 		</div>
 	</div>
