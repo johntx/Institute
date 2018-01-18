@@ -18,7 +18,9 @@
 			<th>Abono</th>
 			<th>Saldo</th>
 			<th>Total</th>
+			@if (Auth::user()->role->id <= 2)
 			<th>Usuario</th>
+			@endif
 			<th>Option</th>
 		</thead>
 		@foreach($payments as $payment)
@@ -34,7 +36,9 @@
 			<td>{{$payment->abono}}</td>
 			<td>{{$payment->saldo-$payment->abono}}</td>
 			<td>{{$payment->saldo}}</td>
+			@if (Auth::user()->role->id <= 2)
 			<td>{{$payment->user}}</td>
+			@endif
 			@if ($payment->abono != 0)
 			@if ($eliminar)
 			<td>

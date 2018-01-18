@@ -29,7 +29,7 @@
 		<p class="col-sm-6"><b>Carrera:</b> {{$inscription->group->startclass->career->nombre }}</p>
 		<p class="col-sm-6"><b>Total pagado:</b> {{$inscription->abono }}</p>
 		<p class="col-sm-6"><b>Grupo:</b> {{$inscription->group->turno }}</p>
-		<p class="col-sm-6"><b>Total a pagar:</b> {{$inscription->total }}</p>
+		<p class="col-sm-6"><b>Total a cancelar:</b> {{$inscription->total }}</p>
 		<p class="col-sm-6"><b>Fecha Ingreso:</b> {{Jenssegers\Date\Date::parse($inscription->fecha_ingreso)->format('j M Y')}}</p>
 		<p class="col-sm-6">
 			@if ($inscription->fecha_retiro != null)
@@ -48,6 +48,7 @@
 				<th>Pagó</th>
 				<th>Abono</th>
 				<th>Saldo</th>
+				<th>Total</th>
 				<th>Estado</th>
 				<th>Observaciones</th>
 				<th>Opción</th>
@@ -64,6 +65,11 @@
 				<td>
 					@if ($payment->abono != 0)
 					{{$payment->abono}}
+					@endif
+				</td>
+				<td>
+					@if ($payment->abono != 0)
+					{{$payment->saldo-$payment->abono}}
 					@endif
 				</td>
 				<td>{{$payment->saldo}}</td>

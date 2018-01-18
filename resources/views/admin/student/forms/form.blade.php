@@ -24,10 +24,16 @@
 				{!! Form::label('Telefonos') !!}
 				{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Insert Telefono', 'maxlength'=>100]) !!}
 			</div>
+		@if (Auth::user()->role->code == 'ADM' || Auth::user()->role->code == 'REG')
 			<div class="form-group">
 				{!! Form::label('Fecha de Ingreso') !!}
 				{!! Form::text('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
 			</div>
+		@else
+			<div class="form-group">
+				{!! Form::hidden('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+			</div>
+		@endif
 		</div>
 	</div>
 </div>
