@@ -50,3 +50,5 @@ Route::get('admin/search/{name}','StudentController@getpeople');
 Route::get('admin/inscriptions/{id}','PaymentController@getinscriptions');
 Route::get('admin/payment/pdf/{id?}','PaymentController@pdf');
 Route::get('admin/student/search/{id}','StudentController@search');
+Route::post('pass/changePassword','UserController@changePassword');
+Route::get('pass/changePasswordForm','UserController@changePasswordForm');

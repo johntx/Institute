@@ -16,6 +16,7 @@
   @yield('admincss')
 </head>
 <body>
+@include('alerts.succes')
   <div id="wrapper">
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">
@@ -34,9 +35,9 @@
           </span>
           <input type="text" id="buscador" class="form-control focus" placeholder="Buscar..">
           <span class="input-group-btn">
-          <button class="btn btn-default" id="close_searcher" type="button">
-            <i class="fa fa-close fa-fw"></i>
-          </button>
+            <button class="btn btn-default" id="close_searcher" type="button">
+              <i class="fa fa-close fa-fw"></i>
+            </button>
           </span>
         </div>
         <div id="ebuscados" class="hide focus">
@@ -49,7 +50,9 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{Auth::user()->user}} <b>/{{Auth::user()->role->name}}</b><i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
           </a>
           <ul class="dropdown-menu dropdown-user">
-            <li><a href="{!!URL::to('logout')!!}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+            <li><a href="{!!URL::to('logout')!!}"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
+            </li>
+            <li><a href="{!!URL::to('pass/changePasswordForm')!!}"><i class="fa fa-edit fa-fw"></i> Cambiar Contraseña</a>
             </li>
           </ul>
         </li>

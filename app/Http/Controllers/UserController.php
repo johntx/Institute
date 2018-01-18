@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Institute\Http\Requests\UserCreateRequest;
 use Validator;
+use Auth;
+use Hash;
 use Illuminate\Routing\Route;
 
 class UserController extends Controller
@@ -45,6 +47,37 @@ class UserController extends Controller
     {
         $roles = \Institute\Role::lists('name', 'id');
         return view('user.create',['roles'=>$roles]);
+    }
+    public function changePassword(Request $request)
+    {
+        if (Auth::user()) {
+            if (Hash::check($request['passwordold'], Auth::user()->password) && $request['password'] == $request['password_confirmation']) {
+                $user = Auth::user();
+                $user->password = $request['password'];
+                $user->save();
+                Session::flash('message','Contraseña camniada exitosamente');
+                return redirect()->to('admin');
+            } else {
+                return redirect('pass/changePasswordForm')
+                ->withErrors('Contraseña Incorrecta')
+                ->withInput();
+            }
+        } else {
+            return redirect()->to('/');
+        }
+
+        Session::flash('request','Usuario registrado exitosamente');
+        return redirect('admin')
+        ->withErrors('Contraseña Cambiada Correctamente')
+        ->withInput();
+    }
+    public function changePasswordForm(Request $request)
+    {
+        if (Auth::user()) {
+            return view('auth.changePassword');
+        } else {
+            return redirect()->to('/');
+        }
     }
 
     /**
