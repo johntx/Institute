@@ -23,6 +23,9 @@ class People extends Model
         return $this->belongsTo('Institute\Office');
     }
     public function nombrecompleto(){
-    	return $this->nombre.' '.$this->paterno;
+        return $this->nombre.' '.$this->paterno;
+    }
+    public function iniciales(){
+    	return substr($this->nombre, 0, 1).' '.substr($this->paterno, 0, 1);
     }
 }

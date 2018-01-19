@@ -52,6 +52,7 @@ else
 				</div>
 			</div>
 		</div>
+		<span class="user">{{\Institute\User::find($payment->user_id)->people->iniciales()}}</span>
 	</div>
 	<div id="separador"></div>
 	<div class="recivo copia">
@@ -91,6 +92,7 @@ else
 				</div>
 			</div>
 		</div>
+		<span class="user2">{{\Institute\User::find($payment->user_id)->people->iniciales()}}</span>
 	</div>
 </body>
 </html>

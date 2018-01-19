@@ -23,7 +23,7 @@
 	<div class="panel-heading">DATOS DE INSCRIPCIÓN - CARRERA ({{$inscription->group->startclass->career->nombre}})</div>
 	<div class="panel-body">
 		<p class="col-sm-6"><b>Id:</b> {{$inscription->id }}</p>
-		<p class="col-sm-6">&nbsp;</p>
+		<p class="col-sm-6"><em><b>Usuario:</b> ({{$inscription->user->user }}) {{$inscription->user->people->nombrecompleto() }}</em></p>
 		<p class="col-sm-6"><b>Estado:</b> {{$inscription->estado }}</p>
 		<p class="col-sm-6"><b>Pago por mes:</b> {{$inscription->monto }}</p>
 		<p class="col-sm-6"><b>Carrera:</b> {{$inscription->group->startclass->career->nombre }}</p>
@@ -46,14 +46,15 @@
 				<th>Id</th>
 				<th>Fecha Pagar</th>
 				<th>Pagó</th>
-			@if (Auth::user()->role->code == 'ADM')
-			<th>Registro</th>
-			@endif
+				@if (Auth::user()->role->code == 'ADM')
+				<th>Registro</th>
+				@endif
 				<th>Abono</th>
 				<th>Saldo</th>
 				<th>Total</th>
 				<th>Estado</th>
-				<th>Observaciones</th>
+				<th>Obser.</th>
+				<th><em>Usuario</em></th>
 				<th>Opción</th>
 			</thead>
 			@foreach ($inscription->payments()->orderBy('id','DESC')->get() as $payment)
@@ -65,11 +66,11 @@
 					{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}
 					@endif
 				</td>
-			<td>
-			@if (Auth::user()->role->code == 'ADM' && $payment->abono != 0)
-			{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}
-			@endif
-			</td>
+				@if (Auth::user()->role->code == 'ADM' && $payment->abono != 0)
+				<td>
+					{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}
+				</td>
+				@endif
 				<td>
 					@if ($payment->abono != 0)
 					{{$payment->abono}}
@@ -83,11 +84,16 @@
 				<td>{{$payment->saldo}}</td>
 				<td>{{$payment->estado}}</td>
 				<td>{{$payment->observacion}}</td>
+				<td>
+					@if ($payment->abono != 0)
+					<em>{{\Institute\User::find($payment->user_id)->user}}</em>
+					@endif
+				</td>
 				@if ($payment->abono != 0)
 				<td>
-				@if ($eliminar)
+					@if ($eliminar)
 					{!!link_to_route('admin.payment.show', $title = 'Borrar', $parameters = $payment->id, $attributes = ['class'=>'btn btn-danger'])!!}
-				@endif
+					@endif
 					{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
 				</td>
 				@endif

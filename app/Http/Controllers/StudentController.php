@@ -202,8 +202,7 @@ class StudentController extends Controller
             'estado' => 'Pendiente',
             'abono' => 0,
             'saldo' => $saldo,
-            'inscription_id' => $inscription->id,
-            'user_id' => Auth::user()->id
+            'inscription_id' => $inscription->id
             ]);
           $payment2->save();
         }

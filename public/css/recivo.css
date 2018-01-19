@@ -106,3 +106,15 @@ body{
 .recivo>div>.mid>div>div:last-child{
 	margin-top: 50px;
 }
+.recivo>.user{
+	position: absolute;
+	right: 70px;
+	bottom: 573px;
+	font-size: 14px;
+}
+.recivo>.user2{
+	position: absolute;
+	right: 70px;
+	bottom: 45px;
+	font-size: 14px;
+}

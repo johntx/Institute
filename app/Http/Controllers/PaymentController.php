@@ -121,7 +121,8 @@ class PaymentController extends Controller
                 'estado' => 'Pagado',
                 'created_at' => \Carbon\Carbon::now(),
                 'observacion' => $request['observacion'],
-                'abono' => $request['abono']
+                'abono' => $request['abono'],
+                'user_id' => Auth::user()->id
                 ]);
             $lastpayment->save();
             $Inscriptionestado = 'Debe';
@@ -151,8 +152,7 @@ class PaymentController extends Controller
                         'estado' => 'Pendiente',
                         'abono' => 0,
                         'saldo' => $saldo,
-                        'inscription_id' => $request['inscription_id'],
-                        'user_id' => Auth::user()->id
+                        'inscription_id' => $request['inscription_id']
                         ]);
                     $payment->save();
                 } else {
@@ -166,8 +166,7 @@ class PaymentController extends Controller
                         'estado' => 'Pendiente',
                         'abono' => 0,
                         'saldo' => $PaymentSaldo,
-                        'inscription_id' => $request['inscription_id'],
-                        'user_id' => Auth::user()->id
+                        'inscription_id' => $request['inscription_id']
                         ]);
                     $payment->save();
                 }
