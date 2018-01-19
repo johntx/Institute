@@ -52,4 +52,8 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasOne('Institute\People','id');
     }
+    public function payments()
+    {
+        return $this->hasMany('Institute\Payment');
+    }
 }

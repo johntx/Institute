@@ -47,37 +47,13 @@ class PaymentController extends Controller
     public function pdf($id)
     {
         $payment = Payment::find($id);
-        if ($payment->inscription->group->startclass->fecha_inicio < $payment->inscription->fecha_ingreso) {
-            $fecha_inicio = $this->getMes(\Carbon\Carbon::parse($payment->inscription->group->startclass->fecha_inicio));
-        } else {
-            $fecha_inicio = $this->getMes(\Carbon\Carbon::parse($payment->inscription->fecha_ingreso));
-        }
-        $fecha_actual = $this->getMes(\Carbon\Carbon::now());
         $suma = Numeroaletras::convertir($payment->abono);
-        $view =  view('pdf/PDFRecivo', ['payment'=>$payment, 'fecha_inicio'=>$fecha_inicio, 'fecha_actual'=>$fecha_actual, 'suma'=>$suma])->render();
+        $view =  view('pdf/PDFRecivo', ['payment'=>$payment, 'suma'=>$suma])->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('recivo '.$payment->inscription->people->nombrecompleto().'.pdf');
     }
-    public function getMes($mes)
-    {
-        $dia = $mes->day;
-        $anyo = $mes->year;
-        $mes = $mes->format("F");
-        if ($mes=="January") $mes="Enero";
-        if ($mes=="February") $mes="Febrero";
-        if ($mes=="March") $mes="Marzo";
-        if ($mes=="April") $mes="Abril";
-        if ($mes=="May") $mes="Mayo";
-        if ($mes=="June") $mes="Junio";
-        if ($mes=="July") $mes="Julio";
-        if ($mes=="August") $mes="Agosto";
-        if ($mes=="September") $mes="Setiembre";
-        if ($mes=="October") $mes="Octubre";
-        if ($mes=="November") $mes="Noviembre";
-        if ($mes=="December") $mes="Diciembre";
-        return $dia.' de '.$mes.' de '.$anyo;
-    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -143,6 +119,7 @@ class PaymentController extends Controller
             $lastpayment->fill([
                 'fecha_pago' => $request['fecha_pago'],
                 'estado' => 'Pagado',
+                'created_at' => \Carbon\Carbon::now(),
                 'observacion' => $request['observacion'],
                 'abono' => $request['abono']
                 ]);

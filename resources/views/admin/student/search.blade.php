@@ -46,6 +46,9 @@
 				<th>Id</th>
 				<th>Fecha Pagar</th>
 				<th>Pagó</th>
+			@if (Auth::user()->role->code == 'ADM')
+			<th>Registro</th>
+			@endif
 				<th>Abono</th>
 				<th>Saldo</th>
 				<th>Total</th>
@@ -62,6 +65,11 @@
 					{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}
 					@endif
 				</td>
+			<td>
+			@if (Auth::user()->role->code == 'ADM' && $payment->abono != 0)
+			{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}
+			@endif
+			</td>
 				<td>
 					@if ($payment->abono != 0)
 					{{$payment->abono}}

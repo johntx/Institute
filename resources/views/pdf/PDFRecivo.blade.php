@@ -8,6 +8,12 @@
 	<link rel="icon" type="image/png" href="{!!URL::to('icons/logomin.png')!!}" />
 	{!! Html::style('css/recivo.css') !!}
 </head>
+<?php
+if($payment->inscription->fecha_ingreso > $payment->inscription->group->startclass->fecha_inicio)
+	$fecha_ingreso=$payment->inscription->fecha_ingreso;
+else
+	$fecha_ingreso=$payment->inscription->group->startclass->fecha_inicio;
+?>
 <body>
 	<div class="recivo original">
 		<div>
@@ -16,7 +22,7 @@
 				<img src="{!!URL::to('icons/c1en.svg')!!}">
 				<h1>RECIBO</h1>
 				<div>
-					<span><b>Nº</b> {{$payment->id}}</span>
+					<span> <em> <b>Nº</b> {{$payment->id}}</em></span>
 					<span class="abono"><b>Bs.</b> {{$payment->abono}}</span>
 				</div>
 			</div>
@@ -33,7 +39,7 @@
 					</div>
 					<div>
 						<span class="turno"><b>Turno:</b> {{$payment->inscription->group->turno}}</span>
-						<span class="inicio"><b>Inicio:</b> {{$fecha_inicio}}</span>
+						<span class="inicio"><b>Inicio:</b> {{Jenssegers\Date\Date::parse($fecha_ingreso)->format('j \d\e F \d\e Y')}}</span>
 					</div>
 					<div>
 						<span class="total"><b>Total:</b> {{$payment->saldo}}</span>
@@ -41,7 +47,7 @@
 						<span class="saldo"><b>Saldo:</b> {{$payment->saldo-$payment->abono}}</span>
 					</div>
 					<div>
-						<span class="ciudad"><b>Cochabamba</b> {{$fecha_actual}}</span>
+						<span class="ciudad"><b>Cochabamba</b> {{Jenssegers\Date\Date::now()->format('j \d\e F \d\e Y')}}</span>
 					</div>
 				</div>
 			</div>
@@ -55,7 +61,7 @@
 				<img src="{!!URL::to('icons/c1en.svg')!!}">
 				<h1>RECIBO</h1>
 				<div>
-					<span><b>Nº</b> {{$payment->id}}</span>
+					<span><em><b>Nº</b> {{$payment->id}}</em></span>
 					<span class="abono"><b>Bs.</b> {{$payment->abono}}</span>
 				</div>
 			</div>
@@ -72,7 +78,7 @@
 					</div>
 					<div>
 						<span class="turno"><b>Turno:</b> {{$payment->inscription->group->turno}}</span>
-						<span class="inicio"><b>Inicio:</b> {{$fecha_inicio}}</span>
+						<span class="inicio"><b>Inicio:</b> {{Jenssegers\Date\Date::parse($fecha_ingreso)->format('j \d\e F \d\e Y')}}</span>
 					</div>
 					<div>
 						<span class="total"><b>Total:</b> {{$payment->saldo}}</span>
@@ -80,7 +86,7 @@
 						<span class="saldo"><b>Saldo:</b> {{$payment->saldo-$payment->abono}}</span>
 					</div>
 					<div>
-						<span class="ciudad"><b>Cochabamba</b> {{$fecha_actual}}</span>
+						<span class="ciudad"><b>Cochabamba</b> {{Jenssegers\Date\Date::now()->format('j \d\e F \d\e Y')}}</span>
 					</div>
 				</div>
 			</div>

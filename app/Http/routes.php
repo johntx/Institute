@@ -41,6 +41,7 @@ Route::get('admin/report/debit','ReportController@debit');
 Route::get('admin/report/groups','ReportController@groups');
 Route::get('admin/report/debitbygroups','ReportController@debitByGroups');
 Route::get('admin/report/income','ReportController@payments');
+Route::get('admin/report/incomeByEmployee/{fecha_inicio?}/{fecha_fin?}','ReportController@incomeByEmployee');
 Route::get('logout','LogController@logout');
 Route::get('admin/groups/{id}','StartclassController@getgroups');
 Route::get('admin/report/group/{id}','ReportController@group');

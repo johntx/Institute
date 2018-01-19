@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use Institute\People;
 use Illuminate\Routing\Route;
 use DB;
+use Carbon\Carbon;
+use Institute\Payment;
 
 class ReportController extends Controller
 {
@@ -37,9 +39,9 @@ class ReportController extends Controller
 
     public function debit()
     {
-        $fecha_semana = date('Y-m-d',strtotime('-1 month', strtotime(\Carbon\Carbon::now()) ));
-        $fecha_mes = date('Y-m-d',strtotime('+1 week', strtotime(\Carbon\Carbon::now()) ));
-        $payments = \Institute\Payment::
+        $fecha_semana = date('Y-m-d',strtotime('-1 month', strtotime(Carbon::now()) ));
+        $fecha_mes = date('Y-m-d',strtotime('+1 week', strtotime(Carbon::now()) ));
+        $payments = Payment::
         join('inscriptions','payments.inscription_id','=','inscriptions.id')
         ->where('payments.estado','Pendiente')
         ->where('inscriptions.estado','Inscrito')
@@ -82,29 +84,45 @@ class ReportController extends Controller
         ->get();
         return view('admin/report.payments',['startclasses'=>$startclasses]);
     }
+    public function incomeByEmployee($fecha_inicio = '', $fecha_fin = '')
+    {
+        if ($fecha_inicio == '') {
+            $fecha_inicio = Carbon::now()->format('Y-m-d');
+        }
+        if ($fecha_fin == '') {
+            $fecha_fin = Carbon::now()->format('Y-m-d');
+        }
+        $users = \Institute\User::
+        join('payments','payments.user_id','=','users.id')
+        ->select('users.*')
+        ->where('payments.estado','Pagado')
+        ->distinct()
+        ->get();
+        return view('admin/report.incomeByEmployee',['users'=>$users, 'fecha_inicio'=>$fecha_inicio, 'fecha_fin'=>$fecha_fin]);
+    }
 
     public function getchartmensualdesc(Request $request,$inicio,$fin)
     {
-        $fechaMesAntes = \Carbon\Carbon::parse($inicio);
+        $fechaMesAntes = Carbon::parse($inicio);
         $fechaMesAntes->subMonth();
-        $inidate = \Carbon\Carbon::parse($inicio);
-        $findate = \Carbon\Carbon::parse($fin)->addMonth();
-        $fecha_inicio = \Carbon\Carbon::parse($inicio)->subMonth();
+        $inidate = Carbon::parse($inicio);
+        $findate = Carbon::parse($fin)->addMonth();
+        $fecha_inicio = Carbon::parse($inicio)->subMonth();
         $fecha_inicio->day(1);
         $listaIngresos = collect([$this->getMes($fecha_inicio)=>0]);
 
         for ($i=0; $i <= $fechaMesAntes->diffInMonths($findate); $i++) {
             $suma = 0;
             $sumaSiguiente = 0;
-            $fecha_fin = \Carbon\Carbon::parse($fecha_inicio)->addMonth();
+            $fecha_fin = Carbon::parse($fecha_inicio)->addMonth();
             $fecha_fin->day(1);
             $fecha_fin->subDay();
-            foreach (\Institute\Payment::where('estado','Pagado')->whereBetween('fecha_pago',array( $fecha_inicio, $fecha_fin))->get() as $key=>$payment) {
-                $fecha_pago = \Carbon\Carbon::parse($payment->fecha_pago);
-                $fecha_siguiente = \Carbon\Carbon::parse($fecha_pago);
+            foreach (Payment::where('estado','Pagado')->whereBetween('fecha_pago',array( $fecha_inicio, $fecha_fin))->get() as $key=>$payment) {
+                $fecha_pago = Carbon::parse($payment->fecha_pago);
+                $fecha_siguiente = Carbon::parse($fecha_pago);
                 $fecha_siguiente->addMonth();
 
-                $fecha_fin_mes = \Carbon\Carbon::parse($fecha_pago);
+                $fecha_fin_mes = Carbon::parse($fecha_pago);
                 $fecha_fin_mes->addMonth();
                 $fecha_fin_mes->day(1);
                 $fecha_fin_mes->subDay();
@@ -121,7 +139,7 @@ class ReportController extends Controller
             }
 
             $mes = $this->getMes($fecha_inicio);
-            $mesmasuno = \Carbon\Carbon::parse($fecha_inicio)->addMonth();
+            $mesmasuno = Carbon::parse($fecha_inicio)->addMonth();
             $nomNextMes=$this->getMes($mesmasuno);
             $array = array('mes'=>$mes,'ingreso'=>$suma);
             $array2 = array('mes'=>$nomNextMes,'ingreso'=>$sumaSiguiente);
@@ -138,23 +156,23 @@ class ReportController extends Controller
     public function getchartmensual(Request $request,$inicio,$fin)
     {
         if ($request->ajax()) {
-            $fechaMesAntes = \Carbon\Carbon::parse($inicio)->day(1)->subMonth();
-            $findate = \Carbon\Carbon::parse($fin)->day(1)->addMonth();
-            $fecha_inicio = \Carbon\Carbon::parse($inicio)->day(1)->subMonth();
+            $fechaMesAntes = Carbon::parse($inicio)->day(1)->subMonth();
+            $findate = Carbon::parse($fin)->day(1)->addMonth();
+            $fecha_inicio = Carbon::parse($inicio)->day(1)->subMonth();
             $listaIngresos = collect([$this->getMes($fecha_inicio)=>0]);
 
             for ($i=0; $i <= $fechaMesAntes->diffInMonths($findate); $i++) {
                 $suma = 0;
                 $sumaSiguiente = 0;
-                $fecha_fin = \Carbon\Carbon::parse($fecha_inicio)->addMonth();
+                $fecha_fin = Carbon::parse($fecha_inicio)->addMonth();
                 $fecha_fin->day(1);
                 $fecha_fin->subDay();
-                foreach (\Institute\Payment::where('estado','Pagado')->whereBetween('fecha_pago',array( $fecha_inicio, $fecha_fin))->get() as $key=>$payment) {
-                    $fecha_pago = \Carbon\Carbon::parse($payment->fecha_pago);
-                    $fecha_siguiente = \Carbon\Carbon::parse($fecha_pago);
+                foreach (Payment::where('estado','Pagado')->whereBetween('fecha_pago',array( $fecha_inicio, $fecha_fin))->get() as $key=>$payment) {
+                    $fecha_pago = Carbon::parse($payment->fecha_pago);
+                    $fecha_siguiente = Carbon::parse($fecha_pago);
                     $fecha_siguiente->addMonth();
 
-                    $fecha_fin_mes = \Carbon\Carbon::parse($fecha_pago);
+                    $fecha_fin_mes = Carbon::parse($fecha_pago);
                     $fecha_fin_mes->addMonth();
                     $fecha_fin_mes->day(1);
                     $fecha_fin_mes->subDay();
@@ -170,13 +188,13 @@ class ReportController extends Controller
                     $sumaSiguiente += $ingresoSiguienteMes;
                 }
 
-                $payment = \Institute\Payment::select(DB::raw('sum(payments.abono) as suma'))->where('observacion','Pagado al Contado')->whereBetween('fecha_pago',array( $fecha_inicio, $fecha_fin))->first();
+                $payment = Payment::select(DB::raw('sum(payments.abono) as suma'))->where('observacion','Pagado al Contado')->whereBetween('fecha_pago',array( $fecha_inicio, $fecha_fin))->first();
                 if ($payment) {
                     $suma +=$payment->suma;
                 }
 
                 $mes = $this->getMes($fecha_inicio);
-                $mesmasuno = \Carbon\Carbon::parse($fecha_inicio)->addMonth();
+                $mesmasuno = Carbon::parse($fecha_inicio)->addMonth();
                 $nomNextMes=$this->getMes($mesmasuno);
                 $array = array('mes'=>$mes,'ingreso'=>$suma);
                 $array2 = array('mes'=>$nomNextMes,'ingreso'=>$sumaSiguiente);
