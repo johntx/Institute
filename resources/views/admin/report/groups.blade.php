@@ -13,7 +13,7 @@
 	<div class="tab-content">
 		@foreach ($startclasses as $key=>$startclass)
 		<div role="tabpanel" class="tab-pane  @if ($key==0) active @endif" id="{{$startclass->id}}">
-			@foreach ($startclass->groups as $group)
+			@foreach ($startclass->groups()->orderBy('turno','asc')->get() as $group)
 			<div class="panel panel-primary">
 				<div class="panel-heading"><b>Grupo: </b>{{$group->turno}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> Convocatoria: </b>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</div>
 				<div class="panel-body">

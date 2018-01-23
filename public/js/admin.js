@@ -337,3 +337,6 @@ $('#buscador').focusin(function(){
 $('#close_searcher').click(function(){
 	$('#ebuscados').addClass('hide');
 });
+$('body').on('click','.space_destroy',function () {
+	$(this).parent().parent().parent().remove();
+});

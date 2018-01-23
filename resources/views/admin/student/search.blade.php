@@ -16,6 +16,8 @@
 		<p class="col-sm-6"><b>Nombre:</b> {{$student->nombrecompleto() }}</p>
 		<p class="col-sm-6"><b>Fecha de Nacimiento:</b> {{ Jenssegers\Date\Date::parse($student->fecha_nacimiento)->format('j M Y') }}</p>
 		<p class="col-sm-6"><b>Telefono:</b> {{$student->telefono }}</p>
+		<p class="col-sm-6">{!!link_to_route('admin.student.edit', $title = 'Editar', $parameters = $student->id, $attributes = ['class'=>'btn btn-primary'])!!}</p>
+		
 	</div>
 </div>
 @foreach ($student->inscriptions as $inscription)

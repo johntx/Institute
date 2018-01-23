@@ -272,7 +272,7 @@ class StudentController extends Controller
         ]);
 
       $col = collect();
-      for ($i=0; $i < count($this->student->inscriptions); $i++) {
+      for ($i=0; $i < count($request['inscription_id']); $i++) {
         $inscription = new \Institute\Inscription;
         $inscription->id = $request['inscription_id'][$i];
         $inscription->group_id = $request['group_id'][$i];

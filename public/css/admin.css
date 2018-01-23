@@ -53,3 +53,8 @@
 	margin: 2px;
 	padding: 7px;
 }
+.space_destroy{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
