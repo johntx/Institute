@@ -37,6 +37,7 @@ class StudentController extends Controller
     {
       $students = People::join('users','peoples.id','=','users.id')
       ->join('roles','users.role_id','=','roles.id')
+      ->leftjoin('inscriptions','users.id','=','inscriptions.user_id')
       ->select('peoples.*')
       ->where('roles.code','EST')
       ->where('peoples.office_id',Auth::user()->people->office_id)
@@ -67,7 +68,9 @@ class StudentController extends Controller
     public function create()
     {
       $startclasses = \Institute\Startclass::
-      where('startclasses.estado','!=','Cerrado')
+      select('startclasses.*')
+      ->join('careers','startclasses.career_id','=','careers.id')
+      ->where('startclasses.estado','!=','Cerrado')
       ->orderBy('startclasses.fecha_inicio','DESC')
       ->get();
       return view('admin/student.create',['startclasses'=>$startclasses]);
@@ -157,7 +160,6 @@ class StudentController extends Controller
             'fecha_pagar' => $request['fecha_ingreso'],
             'fecha_pago' => $request['fecha_ingreso'],
             'estado' => 'Pagado',
-            'observacion' => 'Pagado al Contado',
             'abono' => $request['abono'],
             'saldo' => $request['abono'],
             'observacion' => 'Colegiatura completa pagada al contado',

@@ -18,6 +18,7 @@ $('document').ready(function(){
 		ordering: false
 	});
 });
+
 function close_alert() {
 	$('.alert_cli').fadeOut();
 }
@@ -118,7 +119,7 @@ $.datepicker.regional['es'] = {
 	dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
 	weekHeader: 'Sm',
 	dateFormat: 'dd/mm/yy',
-	yearRange: '1995:'+(new Date).getFullYear(),
+	yearRange: '1990:'+(new Date).getFullYear(),
 	firstDay: 1,
 	isRTL: false,
 	showMonthAfterYear: false,
@@ -176,9 +177,9 @@ $(document).ready(function(){
 		$.get("/cien/public/admin/inscriptions/"+event.target.value+"",function(inscription,response){
 			$("#payments_carrera").empty();
 			$('#colegiatura').html(inscription[0].colegiatura);
-				var fecha_ingreso = inscription[0].fecha_ingreso;
-				fecha_ingreso = fecha_ingreso.substring(0,10).split('-');
-				fecha_ingreso = fecha_ingreso[1] + '-' + fecha_ingreso[2] + '-' + fecha_ingreso[0];
+			var fecha_ingreso = inscription[0].fecha_ingreso;
+			fecha_ingreso = fecha_ingreso.substring(0,10).split('-');
+			fecha_ingreso = fecha_ingreso[1] + '-' + fecha_ingreso[2] + '-' + fecha_ingreso[0];
 			$('#fecha_ingreso').html($.datepicker.formatDate('dd M yy', new Date(fecha_ingreso)));
 			cargarpagos(inscription[0].id);
 			for (var i = 0 ; i < inscription.length; i++) {
@@ -339,4 +340,27 @@ $('#close_searcher').click(function(){
 });
 $('body').on('click','.space_destroy',function () {
 	$(this).parent().parent().parent().remove();
+});
+$('body').on('click','.btn_quitar_subject',function () {
+	$(this).parent().remove();
+});
+$('body').on('click','.add_subject_form_career',function () {
+	$('#list_subject_form_career').append(
+		"<li class='list-group-item list-group-item-success'>"
+		+$(this).attr('name_subject')
+		+"<button class='btn btn-danger btn_quitar_subject' type='button'><i class='fa fa-close fa-fw'></i></button><input type='hidden' name='subjects[]' value='"
+		+$(this).attr('id_subject')
+		+"' ></li>"
+		);
+});
+$('.btn_expand').click(function(){
+	var convocatoria = $(this).attr('convocatoria');
+	var active = $('#'+convocatoria).attr('active');
+	if (active == 'no') {
+		$('#'+convocatoria).attr('active','active');
+		$(this).html('-');
+	} else {
+		$('#'+convocatoria).attr('active','no');
+		$(this).html('+');
+	}
 });

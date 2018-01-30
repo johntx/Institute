@@ -42,7 +42,10 @@ class StartclassController extends Controller
      */
     public function index()
     {
-      $startclasses = Startclass::orderBy('id','DESC')->paginate(20);
+      $startclasses = Startclass::
+      join('careers','startclasses.career_id','=','careers.id')
+      ->select('startclasses.*')
+      ->orderBy('id','DESC')->paginate(20);
       return view('admin/startclass.index',compact('startclasses'));
     }
 

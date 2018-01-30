@@ -41,7 +41,6 @@ class Authenticate
                 return redirect()->guest('log');
             }
         }
-
         return $next($request);
     }
 }

@@ -3,7 +3,7 @@
 	<select name="startclass_id" class="form-control selectpicker">
 		@foreach ($startclasses as $startclass)
 		<option value="{{ $startclass->id }}"
-			>{{ $startclass->career->nombre }} - [{{ $startclass->fecha_inicio }}] - ({{ $startclass->estado }})
+			>{{ $startclass->career['nombre'] }} - [{{ $startclass->fecha_inicio }}] - ({{ $startclass->estado }})
 		</option>
 		@endforeach
 	</select>

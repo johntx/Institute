@@ -15,9 +15,8 @@ class CreateCareersTable extends Migration
         Schema::create('careers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre',50);
-            $table->integer('duracion')->nullable();
-            $table->string('tipo',20)->nullable();
-            $table->integer('costo')->nullable();
+            $table->string('color',20)->nullable();
+            $table->string('texto',20)->nullable();
         });
     }
 

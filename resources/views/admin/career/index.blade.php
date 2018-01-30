@@ -6,12 +6,20 @@
 		<thead>
 			<th>Id</th>
 			<th>Nombre</th>
+			<th>Color</th>
+			<th>Asignaturas</th>
 			<th>Edit</th>
 		</thead>
 		@foreach($careers as $career)
 		<tbody>
 			<td>{{$career->id}}</td>
 			<td>{{$career->nombre}}</td>
+			<td><div class="btn-group"><button type="button" class="btn" style="background-color: {{$career->color}}; color: {{$career->texto}};">color</button></div></td>
+			<td>
+				@foreach($career->subjects()->orderBy('nombre','asc')->get() as $subject)
+				[{{$subject->nombre}}] - 
+				@endforeach
+			</td>
 			@foreach(Auth::user()->role->functionalities as $func)
 			@if ($func->code=='ECAR')
 			<td>

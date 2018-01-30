@@ -6,7 +6,7 @@
 			@if ($startclass->id == $group->startclass_id)
 			selected 
 			@endif
-			>{{ $startclass->career->nombre }} - [{{ $startclass->fecha_inicio }}] - ({{ $startclass->estado }})</option>
+			>{{ $startclass->career['nombre'] }} - [{{ $startclass->fecha_inicio }}] - ({{ $startclass->estado }})</option>
 			@endforeach
 		</select>
 	</div>

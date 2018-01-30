@@ -36,7 +36,7 @@
 			@if (Auth::user()->role->code == 'ADM')
 			<td>{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}</td>
 			@endif
-			<td>{{$payment->inscription->group->startclass->career->nombre}}</td>
+			<td>{{$payment->inscription->group->startclass->career['nombre']}}</td>
 			<td>{{$payment->abono}}</td>
 			<td>{{$payment->saldo-$payment->abono}}</td>
 			<td>{{$payment->saldo}}</td>

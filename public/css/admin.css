@@ -58,3 +58,105 @@
 	top: 5px;
 	right: 5px;
 }
+.btn_quitar_subject{
+	position: absolute;
+	top: 6px;
+	right: 6px;
+}
+.schedule{
+	font-size: 12px;
+	padding: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.schedule tr{
+}
+.schedule th{
+	text-align: center;
+	background-color: black;
+	color: white;
+}
+.schedule td{
+	text-align: center;
+	color: transparent;
+}
+.schedule>tbody>tr>td{
+	font-size: 10px;
+	width: 60px;
+	padding:0; margin:0;
+}
+.schedule>tbody>tr>td:first-child{
+	background-color: #DADADA;
+	color: black;
+}
+.schedule td.p3{
+	background-color: #E6E6E6;
+}
+.schedule tr.tarde{
+	background-color: #D1BFF6;
+}
+.schedule>tbody>tr>th:last-child{
+	background-color: #080067;
+}
+.schedule>tbody>tr>td:last-child{
+	background-color: #B6B0FF;
+}
+
+.droppable{
+}
+.hour{
+	height: 23px;
+	cursor: move;
+}
+li.droppable{
+	list-style-type: none;
+	height: 25px;
+	border: 1px solid black;
+	font-size: 10px;
+}
+button.btn_expand{
+	background-color: #253A54;
+	color: white !important;
+	float: right;
+}
+.body_expandible{
+	padding: 5px;
+	height: 0;
+	display: none;
+}
+div[active='active']{
+	height: auto;
+	display: block;
+}
+td[horario='horario']{
+	border-top: 2px solid black;
+}
+td[horario='horario'], td[medio='medio']{
+	width: 45px;
+	height: 22px;
+	position: relative;
+}
+td[mini='mini']{
+	height: 12px;
+	position: relative;
+}
+td[horario='horario']>div{
+	font-size: 13px;
+	position: absolute;
+	width: 40px;
+	height: 15px;
+	color: white;
+	background-color: #272727;
+	border-radius: 3px;
+	top: -8.5px;
+	left: 5px;
+}
+td[medio='medio']>div,td[mini='mini']>div{
+	background-color: #DADADA;
+	position: absolute;
+	width: 30px;
+	height: 12px;
+	border-radius: 3px;
+	top: -7px;
+	right: 5px;
+}

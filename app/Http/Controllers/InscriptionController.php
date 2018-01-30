@@ -56,7 +56,9 @@ class InscriptionController extends Controller
       ->distinct()
       ->get();
       $startclasses = \Institute\Startclass::
-      where('startclasses.estado','!=','Cerrado')
+      join('careers','startclasses.career_id','=','careers.id')
+      ->select('startclasses.*')
+      ->where('startclasses.estado','!=','Cerrado')
       ->orderBy('startclasses.fecha_inicio','DESC')
       ->get();
       return view('admin/inscription.create',['startclasses'=>$startclasses,'students'=>$students]);
@@ -118,23 +120,35 @@ class InscriptionController extends Controller
         if ($request['abono'] == $request['total']) {
           $payment = new \Institute\Payment;
           $payment->fill([
-            'fecha_pagar' => $group->startclass->fecha_inicio,
+            'fecha_pagar' => $request['fecha_ingreso'],
+            'fecha_pago' => $request['fecha_ingreso'],
             'estado' => 'Pagado',
+            'observacion' => 'Pagado al Contado',
             'abono' => $request['abono'],
-            'saldo' => $request['monto'],
+            'saldo' => $request['abono'],
             'inscription_id' => $inscription->id,
             'user_id' => Auth::user()->id
             ]);
           $payment->save();
         } else {
           $saldo = 0;
+          $fecha_insert = $request['fecha_ingreso'];
+          $fecha_start_class = new \Carbon\Carbon($group->startclass->fecha_inicio);
+          if($fecha_insert > $fecha_start_class){
+            $fecha_inicio = $fecha_insert;
+          }else{
+            $fecha_inicio = $group->startclass->fecha_inicio;
+          }
           if ($request['abono'] < $request['monto']) {
             $saldo = $request['monto']-$request['abono'];
-            $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($group->startclass->fecha_inicio)));
+            $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($fecha_inicio)));
           }
           if ($request['abono'] == $request['monto']) {
-            $fecha_pagar = date('Y-m-d',strtotime('+1 month', strtotime($group->startclass->fecha_inicio)));
+            $fecha_pagar = date('Y-m-d',strtotime('+1 month', strtotime($fecha_inicio)));
             $saldo = $request['monto'];
+            if ($saldo > ($inscription->total - $inscription->abono)) {
+              $saldo = $inscription->total - $inscription->abono;
+            }
           }
           $payment = new \Institute\Payment;
           $payment->fill([
@@ -153,8 +167,7 @@ class InscriptionController extends Controller
             'estado' => 'Pendiente',
             'abono' => 0,
             'saldo' => $saldo,
-            'inscription_id' => $inscription->id,
-            'user_id' => Auth::user()->id
+            'inscription_id' => $inscription->id
             ]);
           $payment2->save();
         }

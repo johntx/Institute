@@ -6,5 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    //
+	protected $table = 'schedules';
+
+	protected $fillable = ['descripcion','activo','fecha'];
+
+	public $timestamps = false;
+	
+	public function hours()
+	{
+		return $this->hasMany('Institute\Hour');
+	}
 }

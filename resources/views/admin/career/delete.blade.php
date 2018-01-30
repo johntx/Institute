@@ -6,14 +6,6 @@
 	{!! Form::label('Nombre*') !!}
 	{!! Form::label($career->nombre,null,['class'=>'form-control']) !!}
 </div>
-<div class="form-group">
-	{!! Form::label('Duracion*') !!}
-	{!! Form::label($career->duracion,null,['class'=>'form-control']) !!}
-</div>
-<div class="form-group">
-	{!! Form::label('Sucursal*') !!}
-	{!! Form::select('office_id', $offices, null, ['class'=>'form-control','disabled']) !!}
-</div>
 {!! Form::close() !!}
 <div class="col-md-10"></div>
 <div class="col-md-1">

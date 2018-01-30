@@ -5,7 +5,7 @@
 	<ul class="nav nav-tabs" role="tablist">
 		@foreach ($startclasses as $key=>$startclass)
 		<li role="presentation" @if ($key==0) class="active" @endif >
-			<a href="#{{$startclass->id}}" aria-controls="{{$startclass->id}}" role="tab" data-toggle="tab">{{$startclass->career->nombre}}<h6>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</h6></a>
+			<a href="#{{$startclass->id}}" aria-controls="{{$startclass->id}}" role="tab" data-toggle="tab">{{$startclass->career['nombre']}}<h6>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</h6></a>
 		</li>
 		@endforeach
 	</ul>

@@ -27,7 +27,7 @@
 			<td>{{$student->ci}}</td>
 			<td>{{$student->nombrecompleto()}}</td>
 			<td>{{Jenssegers\Date\Date::parse($student->inscriptions[0]->fecha_ingreso)->format('j M Y')}}</td>
-			<td>{{$student->inscriptions[0]->group->startclass->career->nombre}}</td>
+			<td>{{$student->inscriptions[0]->group->startclass->career['nombre']}}</td>
 			<td>{{$student->inscriptions[0]->estado}}</td>
 			@if ($editar)
 			<td>

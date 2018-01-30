@@ -48,8 +48,9 @@ class TeacherController extends Controller
      */
     public function create()
     {
+        $subjects = \Institute\Subject::orderBy('nombre','asc')->get();
         $offices = \Institute\Office::lists('nombre', 'id');
-        return view('admin/teacher.create',['offices'=>$offices]);
+        return view('admin/teacher.create',['offices'=>$offices, 'subjects'=>$subjects, 'teacher'=>null]);
     }
 
     /**
@@ -86,15 +87,14 @@ class TeacherController extends Controller
             'materno' => $request['materno'],
             'fecha_ingreso' => $request['fecha_ingreso'],
             'fecha_nacimiento' => $request['fecha_nacimiento'],
-            'nacionalidad' => $request['nacionalidad'],
-            'direccion' => $request['direccion'],
             'telefono' => $request['telefono'],
             'office_id' => $request['office_id']
             ]);
         $user->save();
         $user->people()->save($people);
-
-        People::create($request->all());
+        if (!empty($request['subjects'])){
+            $people->subjects()->attach($request['subjects']);
+        }
         Session::flash('message','Docente registrado exitosamente');
         return Redirect::to('/admin/teacher');
     }
@@ -118,8 +118,9 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
+        $subjects = \Institute\Subject::orderBy('nombre','asc')->get();
         $offices = \Institute\Office::lists('nombre', 'id');
-        return view('admin/teacher.edit',['teacher'=>$this->teacher,'offices'=>$offices]);
+        return view('admin/teacher.edit',['teacher'=>$this->teacher,'offices'=>$offices,'subjects'=>$subjects]);
     }
 
     /**
@@ -133,6 +134,10 @@ class TeacherController extends Controller
     {
         $this->teacher->fill($request->all());
         $this->teacher->save();
+        $this->teacher->subjects()->detach();
+        if (!empty($request['subjects'])){
+            $this->teacher->subjects()->attach($request['subjects']);
+        }
         Session::flash('message','Docente editado exitosamente');
         return Redirect::to('/admin/teacher');
     }
@@ -145,6 +150,7 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
+        $this->teacher->subjects()->detach();
         $this->teacher->delete();
         Session::flash('message','Docente borrado exitosamente');
         return Redirect::to('/admin/teacher');

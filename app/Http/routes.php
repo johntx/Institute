@@ -36,6 +36,8 @@ Route::resource('admin/group','GroupController');
 Route::resource('admin/inscription','InscriptionController');
 Route::resource('admin/payment','PaymentController');
 Route::resource('admin/backup','BackupController');
+Route::resource('admin/schedule','ScheduleController');
+Route::resource('admin/hour','HourController');
 Route::resource('log','LogController');
 Route::get('admin/report/debit','ReportController@debit');
 Route::get('admin/report/groups','ReportController@groups');

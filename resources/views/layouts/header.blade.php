@@ -28,8 +28,8 @@
 <body>
 	@yield('body')
 </body>
-{!!Html::script('js/jquery.js')!!}
-{!!Html::script('js/jquery-ui.min.js')!!}
-{!!Html::script('js/header.js')!!}
-@yield('js')
+	{!!Html::script('js/jquery.js')!!}
+	{!!Html::script('js/jquery-ui.min.js')!!}
+	{!!Html::script('js/header.js')!!}
+	@yield('js')
 </html>

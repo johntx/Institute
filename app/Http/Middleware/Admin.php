@@ -23,6 +23,9 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
+        if (!Auth::user()) {
+            return redirect()->to('/');
+        }
         $functionalities = \Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')
         ->Join('roles', 'privileges.role_id', '=', 'roles.id')
         ->Join('menus', 'functionalities.menu_id', '=', 'menus.id')

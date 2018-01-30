@@ -42,7 +42,8 @@ class CareerController extends Controller
      */
     public function create()
     {
-        return view('admin/career.create');
+        $subjects = \Institute\Subject::orderBy('nombre','asc')->get();
+        return view('admin/career.create',['subjects'=>$subjects, 'career'=>null]);
     }
 
     /**
@@ -53,7 +54,10 @@ class CareerController extends Controller
      */
     public function store(Request $request)
     {
-        Career::create($request->all());
+        $career = Career::create($request->all());
+        if (!empty($request['subjects'])){
+            $career->subjects()->attach($request['subjects']);
+        }
         Session::flash('message','Carrera registrada exitosamente');
         return Redirect::to('/admin/career');
     }
@@ -77,7 +81,8 @@ class CareerController extends Controller
      */
     public function edit($id)
     {
-        return view('admin/career.edit',['career'=>$this->career]);
+        $subjects = \Institute\Subject::orderBy('nombre','asc')->get();
+        return view('admin/career.edit',['career'=>$this->career,'subjects'=>$subjects]);
     }
 
     /**
@@ -91,6 +96,10 @@ class CareerController extends Controller
     {
         $this->career->fill($request->all());
         $this->career->save();
+        $this->career->subjects()->detach();
+        if (!empty($request['subjects'])){
+            $this->career->subjects()->attach($request['subjects']);
+        }
         Session::flash('message','Carrera editada exitosamente');
         return Redirect::to('/admin/career');
     }

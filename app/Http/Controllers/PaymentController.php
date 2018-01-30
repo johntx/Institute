@@ -62,6 +62,7 @@ class PaymentController extends Controller
     public function index()
     {
         $payments = Payment::join('users','payments.user_id','=','users.id')
+        ->join('inscriptions','payments.inscription_id','=','inscriptions.id')
         ->select('payments.*','users.user')
         ->where('payments.estado', 'LIKE','Pagado%')
         ->orderBy('payments.id','DESC')->paginate(20);
