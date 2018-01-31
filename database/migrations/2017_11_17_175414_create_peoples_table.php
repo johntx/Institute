@@ -26,8 +26,8 @@ class CreatePeoplesTable extends Migration
       $table->string('direccion',255)->nullable();
       $table->string('telefono',100)->nullable();
       $table->string('genero',10)->nullable();
-      $table->string('tipo_sanguineo',10)->nullable();
-      $table->string('email',100)->nullable();
+      $table->string('carrera',50)->nullable();
+      $table->string('telefono2',200)->nullable();
       $table->integer('office_id')->unsigned()->nullable();
       $table->foreign('office_id')->references('id')->on('offices')->onDelete('set null');
     });

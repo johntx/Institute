@@ -37,7 +37,7 @@ class StudentController extends Controller
     {
       $students = People::join('users','peoples.id','=','users.id')
       ->join('roles','users.role_id','=','roles.id')
-      ->leftjoin('inscriptions','users.id','=','inscriptions.user_id')
+      ->join('inscriptions','peoples.id','=','inscriptions.people_id')
       ->select('peoples.*')
       ->where('roles.code','EST')
       ->where('peoples.office_id',Auth::user()->people->office_id)
@@ -55,6 +55,7 @@ class StudentController extends Controller
         ->select('peoples.*',DB::raw('CONCAT(peoples.nombre, " ", peoples.paterno) AS fullname'))
         ->where('roles.code','EST')
         ->whereRaw('CONCAT(peoples.nombre," ", peoples.paterno) LIKE ?', ['%'.$name.'%'])
+        ->orWhere('peoples.telefono','like',$name.'%')
         ->get();
         return response()->json($people);
       }
@@ -128,6 +129,8 @@ class StudentController extends Controller
           'fecha_nacimiento' => $request['fecha_nacimiento'],
           'direccion' => $request['direccion'],
           'telefono' => $request['telefono'],
+          'telefono2' => $request['telefono2'],
+          'carrera' => $request['carrera'],
           'office_id' => Auth::user()->people->office_id
           ]);
         $inscription = new Inscription;
@@ -178,7 +181,11 @@ class StudentController extends Controller
           }
           if ($request['abono'] < $request['monto']) {
             $saldo = $request['monto']-$request['abono'];
-            $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($fecha_inicio)));
+            $monto = $inscription->monto;
+            $abono = $request['abono'];
+            $dias = $abono*30/$monto;
+            $dias = round($dias);
+            $fecha_pagar = date('Y-m-d',strtotime('+'.$dias.' day', strtotime($fecha_inicio)));
           }
           if ($request['abono'] == $request['monto']) {
             $fecha_pagar = date('Y-m-d',strtotime('+1 month', strtotime($fecha_inicio)));
@@ -270,6 +277,8 @@ class StudentController extends Controller
         'paterno' => $request['paterno'],
         'fecha_nacimiento' => $request['fecha_nacimiento'],
         'direccion' => $request['direccion'],
+        'telefono2' => $request['telefono2'],
+        'carrera' => $request['carrera'],
         'telefono' => $request['telefono']
         ]);
 
@@ -289,8 +298,10 @@ class StudentController extends Controller
         $col->push($inscription);
       }
       $this->student->save();
-      $this->student->inscriptions()->delete();
-      $this->student->inscriptions()->saveMany($col);
+      if (sizeof($col)>0) {
+        $this->student->inscriptions()->delete();
+        $this->student->inscriptions()->saveMany($col);
+      }
 
       Session::flash('message','Estudiante editado exitosamente');
       return Redirect::to('/admin/student');

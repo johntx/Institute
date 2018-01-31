@@ -86,7 +86,7 @@ class ReportController extends Controller
     }
     public function incomeByEmployee($fecha_inicio = '', $fecha_fin = '')
     {
-        if ($fecha_inicio == '') {
+        if ($fecha_inicio == '' || $fecha_inicio == 'fecha') {
             $fecha_inicio = Carbon::now()->format('Y-m-d');
         }
         if ($fecha_fin == '') {

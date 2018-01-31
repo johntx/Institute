@@ -20,7 +20,7 @@ class Group extends Model
 		return Group::leftjoin('inscriptions','groups.id','=','inscriptions.group_id')
 		->join('startclasses','groups.startclass_id','=','startclasses.id')
 		->join('careers','startclasses.career_id','=','careers.id')
-		->select('groups.*','careers.nombre','careers.costo', DB::raw('count(inscriptions.id) as inscritos'))
+		->select('groups.*','careers.nombre', DB::raw('count(inscriptions.id) as inscritos'))
 		->groupBy('groups.id')
 		->where('startclass_id',$id)
 		->get();

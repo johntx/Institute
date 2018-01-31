@@ -19,7 +19,7 @@ class CreateFamiliesTable extends Migration
       $table->string('telefono',100)->nullable();
       $table->string('parentezco',20)->nullable();
       $table->integer('people_id')->unsigned()->nullable();
-      $table->foreign('people_id')->references('id')->on('peoples')->onDelete('set null');
+      $table->foreign('people_id')->references('id')->on('peoples')->onDelete('cascade');
     });
   }
 

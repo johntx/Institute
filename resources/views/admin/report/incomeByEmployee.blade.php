@@ -2,9 +2,24 @@
 @section('content')
 @include('alerts.succes')
 <br>
+
+<div class="form-group">
+	{!! Form::label('Fecha de Reporte') !!}
+	<div class="col-xs-12" style="padding: 0;">
+		<div class="col-xs-6" style="padding-left: 0;">
+			{!! Form::text('fecha_inicio',$fecha_inicio,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd','id'=>'selec_fecha_income']) !!}
+		</div>
+		<div class="col-xs-6">
+			{!!link_to_action('ReportController@incomeByEmployee', $title = 'Cambiar Fecha', $parameters = 'fecha', $attributes = ['class'=>'btn btn-success','id'=>'boton_fecha_income'])!!}
+		</div>
+	</div>
+</div>
+
+<br>
+<br>
 <?php $total = 0; $total2 = 0; ?>
 @foreach($users as $user)
-<div class="panel @if (sizeof($user->payments()->where('estado','Pagado')->where('fecha_pago',\Carbon\Carbon::now()->format('Y-m-d'))->get()) > 0 )
+<div class="panel @if (sizeof($user->payments()->where('estado','Pagado')->where('fecha_pago',\Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d'))->get()) > 0 )
 	panel-primary
 	@else
 	panel-info
@@ -26,7 +41,7 @@
 				</thead>
 				<?php $subtotal = 0; $subtotal2 = 0; ?>
 				<tbody>
-					@foreach($user->payments()->where('estado','Pagado')->where('fecha_pago',\Carbon\Carbon::now()->format('Y-m-d'))->get() as $key => $payment)
+					@foreach($user->payments()->where('estado','Pagado')->where('fecha_pago',\Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d'))->get() as $key => $payment)
 					<tr>
 						<td>{{++$key}}</td>
 						<td>{{$payment->id}}</td>
@@ -41,7 +56,7 @@
 					<?php $subtotal += $payment->abono; ?>
 					<?php $total += $payment->abono; ?>
 					@endforeach
-					@foreach($user->payments()->where('estado','Pagado')->whereBetween('created_at',array(\Carbon\Carbon::now()->format('Y-m-d 00:00:00'), \Carbon\Carbon::now()->format('Y-m-d 23:59:59')))->where('fecha_pago','!=',\Carbon\Carbon::now()->format('Y-m-d'))->get() as $key => $payment)
+					@foreach($user->payments()->where('estado','Pagado')->whereBetween('created_at',array(\Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d 00:00:00'), \Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d 23:59:59')))->where('fecha_pago','!=',\Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d'))->get() as $key => $payment)
 					<tr style="background-color: rgba(255,120,0,0.4);">
 						<td>{{++$key}}</td>
 						<td>{{$payment->id}}</td>
@@ -72,9 +87,9 @@
 <div class="panel panel-primary">
 	<div class="panel-heading">Suma de Totales</div>
 	<div class="panel-body">
-	<h3>Total: {{$total}}</h3>
-	<br>
-	@if ($total2>0)
+		<h3>Total: {{$total}}</h3>
+		<br>
+		@if ($total2>0)
 		<h4>Total: {{$total2}} (registros de otras fechas)</h4>
 		@endif
 	</div>

@@ -8,6 +8,7 @@
 			<th>Fecha de Inicio</th>
 			<th>Carrera</th>
 			<th>Turno</th>
+			<th>Inscritos</th>
 			<th>Estado</th>
 			<th>Edit</th>
 		</thead>
@@ -17,14 +18,15 @@
 			<td>{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}</td>
 			<td>{{$group->startclass->career->nombre}}</td>
 			<td>{{$group->turno}}</td>
+			<td>{{sizeof($group->inscriptions)}}</td>
 			<td>({{$group->estado}})</td>
 			@foreach(Auth::user()->role->functionalities as $func)
-			@if ($func->code=='ESTA')
+			@if ($func->code=='EGRO')
 			<td>
 				{!!link_to_route('admin.group.edit', $title = 'Editar', $parameters = $group->id, $attributes = ['class'=>'btn btn-primary'])!!}
 			</td>
 			@endif
-			@if ($func->code=='DSTA')
+			@if ($func->code=='DGRO' && sizeof($group->inscriptions)==0)
 			<td>
 				{!!link_to_route('admin.group.show', $title = 'Borrar', $parameters = $group->id, $attributes = ['class'=>'btn btn-danger'])!!}
 			</td>

@@ -157,10 +157,11 @@ class PaymentController extends Controller
                         ]);
                     $payment->save();
                 } else {
-                    $fecha_pagar = $lastpayment->fecha_pagar;
-                    if ($lastpayment->saldo == $inscription->monto) {
-                        $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($lastpayment->fecha_pagar)));
-                    }
+                    $monto = $inscription->monto;
+                    $abono = $request['abono'];
+                    $dias = $abono*30/$monto;
+                    $dias = round($dias);
+                    $fecha_pagar = date('Y-m-d',strtotime('+'.$dias.' day', strtotime($lastpayment->fecha_pagar)));
                     $payment = new \Institute\Payment;
                     $payment->fill([
                         'fecha_pagar' => $fecha_pagar,

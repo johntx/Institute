@@ -124,23 +124,30 @@ button.btn_expand{
 	height: 0;
 	display: none;
 }
+table.schedule td{
+	border-left: 1px solid #C1C1C1;
+	border-right: 1px solid #C1C1C1;
+}
+table.schedule tr[borde="si"]{
+	border-bottom: 1px solid #C1C1C1;
+}
 div[active='active']{
 	height: auto;
 	display: block;
 }
-td[horario='horario']{
+table.schedule td[turno='manana'],table.schedule td[turno='tarde']{
 	border-top: 2px solid black;
 }
-td[horario='horario'], td[medio='medio']{
+table.schedule td[tamano='grande']{
 	width: 45px;
 	height: 22px;
 	position: relative;
 }
-td[mini='mini']{
+table.schedule td[turno='medio'],table.schedule td[turno='noche']{
 	height: 12px;
 	position: relative;
 }
-td[horario='horario']>div{
+table.schedule td[turno='manana']>div,table.schedule td[turno='tarde']>div{
 	font-size: 13px;
 	position: absolute;
 	width: 40px;
@@ -149,14 +156,18 @@ td[horario='horario']>div{
 	background-color: #272727;
 	border-radius: 3px;
 	top: -8.5px;
-	left: 5px;
+	right: 5px;
 }
-td[medio='medio']>div,td[mini='mini']>div{
+table.schedule td[turno='tar']>div,table.schedule td[turno='man']>div,table.schedule td[turno='medio']>div,table.schedule td[turno='noche']>div{
 	background-color: #DADADA;
 	position: absolute;
 	width: 30px;
 	height: 12px;
 	border-radius: 3px;
 	top: -7px;
-	right: 5px;
+	left: 5px;
+}
+table.schedule td.ocupado{
+	border-left: 2px solid black;
+	border-right: 2px solid black;
 }

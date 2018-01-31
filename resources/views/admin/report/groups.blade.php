@@ -15,7 +15,7 @@
 		<div role="tabpanel" class="tab-pane  @if ($key==0) active @endif" id="{{$startclass->id}}">
 			@foreach ($startclass->groups()->orderBy('turno','asc')->get() as $group)
 			<div class="panel panel-primary">
-				<div class="panel-heading"><b>Grupo: </b>{{$group->turno}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> Convocatoria: </b>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</div>
+				<div class="panel-heading"><b>Grupo: </b>{{$group->turno}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> Convocatoria: </b>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>Duración: {{$group->startclass->duracion}}</b> mes/es</div>
 				<div class="panel-body">
 					<div class="table-responsive">
 						<table class="table table-condensed table-hover">

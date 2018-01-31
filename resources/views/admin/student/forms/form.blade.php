@@ -24,16 +24,24 @@
 				{!! Form::label('Telefonos') !!}
 				{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Insert Telefono', 'maxlength'=>100]) !!}
 			</div>
-		@if (Auth::user()->role->code == 'ADM' || Auth::user()->role->code == 'REG')
+			<div class="form-group">
+				{!! Form::label('Telefonos Padres') !!}
+				{!! Form::text('telefono2',null,['class'=>'form-control','placeholder'=>'Inserte Telefono', 'maxlength'=>200]) !!}
+			</div>
+			<div class="form-group">
+				{!! Form::label('Carrera') !!}
+				{!! Form::text('carrera',null,['class'=>'form-control','placeholder'=>'Inserte Carrera a la que postula', 'maxlength'=>50]) !!}
+			</div>
+			@if (Auth::user()->role->code == 'ADM' || Auth::user()->role->code == 'REG')
 			<div class="form-group">
 				{!! Form::label('Fecha de Ingreso') !!}
 				{!! Form::text('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
 			</div>
-		@else
+			@else
 			<div class="form-group">
 				{!! Form::hidden('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
 			</div>
-		@endif
+			@endif
 		</div>
 	</div>
 </div>

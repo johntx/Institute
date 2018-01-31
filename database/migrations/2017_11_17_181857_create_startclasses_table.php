@@ -23,7 +23,7 @@ class CreateStartclassesTable extends Migration
       $table->integer('office_id')->unsigned()->nullable();
       $table->foreign('office_id')->references('id')->on('offices')->onDelete('set null');
       $table->integer('career_id')->unsigned()->nullable();
-      $table->foreign('career_id')->references('id')->on('careers')->onDelete('set null');
+      $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
     });
   }
 

@@ -18,11 +18,11 @@ class CreateDocumentsTable extends Migration
             $table->string('ruta',255)->nullable();
             $table->date('fecha')->nullable();
             $table->integer('people_id')->unsigned()->nullable();
-            $table->foreign('people_id')->references('id')->on('peoples')->onDelete('set null');
+            $table->foreign('people_id')->references('id')->on('peoples')->onDelete('cascade');
             $table->integer('career_id')->unsigned()->nullable();
-            $table->foreign('career_id')->references('id')->on('careers')->onDelete('set null');
+            $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
             $table->integer('subject_id')->unsigned()->nullable();
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('set null');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
     }
 

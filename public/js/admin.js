@@ -17,6 +17,12 @@ $('document').ready(function(){
 		paging: false,
 		ordering: false
 	});
+	$('#boton_fecha_income').click(function() {
+		var href = $('#boton_fecha_income').attr('href');
+		var fecha = $('#selec_fecha_income').val();
+		var string = href.split("fecha").join(fecha);  
+		$("#boton_fecha_income").attr('href',string);
+	});
 });
 
 function close_alert() {

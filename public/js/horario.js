@@ -42,12 +42,13 @@ function colorear(element){
 	for (var i = y; i < sum; i++) {
 		var td = $('div#'+dia+' tr[y='+i+']'+'>td[x='+x+']');
 		$(td).addClass('ocupado');
-		$(td).css({'background-color':color,'border':'1px solid '+color,'color':texto});
+		$(td).css({'background-color':color,'border-top':'1px solid '+color,'color':texto});
 		$(td).empty();
 		if (cont == 1) {
 			$('div#'+dia+' tr[y='+i+']'+'>td[x='+x+'] div').html(carrera);
 			$(element).clone().appendTo(td);
 			$(select).clone().appendTo(element);
+			$(td).css({'border-top':'2px solid black'});
 		}
 		if (cont == 2) {
 			var date = fecha;
@@ -58,11 +59,13 @@ function colorear(element){
 		if (cont == 3) {
 			$(td).html('<b>'+carrera+'</b>');
 		}
-		if (cont == 4) {
+		if (i == sum-1) {
 			var h2 = $(td).parent().attr('h2');
 			$(select).clone().appendTo(td);
 			$(td).children('select').removeAttr('disabled');
 			$(td).children('select').removeAttr('hidden');
+			$(td).css({'border-bottom':'2px solid black'});
+			$(td).css({'border-top':'1px solid black'});
 			$(td).append(
 				"<input type='hidden' name='aula[]' value='"+a+"' >"
 				+"<input type='hidden' name='piso[]' value='"+p+"' >"
@@ -83,7 +86,7 @@ function limpiar() {
 	$('div.active td>select').remove();
 	$('div.active td>b').remove();
 	$('div.active td input').remove();
-	$('.ocupado').removeClass('ocupado');
+	$('div.active .ocupado').removeClass('ocupado');
 }
 function recolor(){
 	limpiar();

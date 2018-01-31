@@ -22,9 +22,9 @@ class CreateParticularsTable extends Migration
       $table->string('hora_inicio',20)->nullable();
       $table->string('hora_fin',20)->nullable();
       $table->integer('people_id')->unsigned()->nullable();
-      $table->foreign('people_id')->references('id')->on('peoples')->onDelete('set null');
+      $table->foreign('people_id')->references('id')->on('peoples')->onDelete('cascade');
       $table->integer('career_id')->unsigned()->nullable();
-      $table->foreign('career_id')->references('id')->on('careers')->onDelete('set null');
+      $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
     });
   }
 

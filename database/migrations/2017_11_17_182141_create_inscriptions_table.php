@@ -24,9 +24,9 @@ class CreateInscriptionsTable extends Migration
       $table->integer('people_id')->unsigned()->nullable();
       $table->foreign('people_id')->references('id')->on('peoples')->onDelete('set null');
       $table->integer('career_id')->unsigned()->nullable();
-      $table->foreign('career_id')->references('id')->on('careers')->onDelete('set null');
+      $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
       $table->integer('group_id')->unsigned()->nullable();
-      $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
+      $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
       $table->integer('particular_id')->unsigned()->nullable();
       $table->foreign('particular_id')->references('id')->on('particulars')->onDelete('set null');
       $table->integer('user_id')->unsigned()->nullable();

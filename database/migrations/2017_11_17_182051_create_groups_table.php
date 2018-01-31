@@ -18,7 +18,7 @@ class CreateGroupsTable extends Migration
             $table->string('turno',30)->nullable();
             $table->string('estado',20)->nullable();
             $table->integer('startclass_id')->unsigned()->nullable();
-            $table->foreign('startclass_id')->references('id')->on('startclasses')->onDelete('set null');
+            $table->foreign('startclass_id')->references('id')->on('startclasses')->onDelete('cascade');
         });
     }
 

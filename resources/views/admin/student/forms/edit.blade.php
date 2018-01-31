@@ -5,15 +5,15 @@
 		<div class="panel-body">
 			<div class="form-group required">
 				{!! Form::label('Nombres*') !!}
-				{!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Insert Nombre','required', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
+				{!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Inserte Nombre','required', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
 			</div>
 			<div class="form-group required">
 				{!! Form::label('Apellidos*') !!}
-				{!! Form::text('paterno',null,['class'=>'form-control','placeholder'=>'Insert Apellido','required', 'maxlength'=>100,'style'=>'text-transform: uppercase;']) !!}
+				{!! Form::text('paterno',null,['class'=>'form-control','placeholder'=>'Inserte Apellido','required', 'maxlength'=>100,'style'=>'text-transform: uppercase;']) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('CI') !!}
-				{!! Form::text('ci',null,['class'=>'form-control','placeholder'=>'Insert CI', 'maxlength'=>20,'onkeypress'=>"return justNumbers(event);"]) !!}
+				{!! Form::text('ci',null,['class'=>'form-control','placeholder'=>'Inserte CI', 'maxlength'=>20,'onkeypress'=>"return justNumbers(event);"]) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('Fecha de Nacimiento') !!}
@@ -21,7 +21,15 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('Telefonos') !!}
-				{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Insert Telefono', 'maxlength'=>100]) !!}
+				{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Inserte Telefono', 'maxlength'=>100]) !!}
+			</div>
+			<div class="form-group">
+				{!! Form::label('Telefonos Padres') !!}
+				{!! Form::text('telefono2',null,['class'=>'form-control','placeholder'=>'Inserte Telefono', 'maxlength'=>200]) !!}
+			</div>
+			<div class="form-group">
+				{!! Form::label('Carrera') !!}
+				{!! Form::text('carrera',null,['class'=>'form-control','placeholder'=>'Inserte Carrera a la que postula', 'maxlength'=>50]) !!}
 			</div>
 		</div>
 	</div>
@@ -30,9 +38,8 @@
 <div class="col-xs-6" style="padding-right: 0;">
 	<div class="panel panel-info">
 		<div class="panel-heading"><b>Inscripción:</b> {{$inscription->group->startclass->career->nombre}} {{$inscription->group->startclass->descripcion}} - [{{date_format(date_create($inscription->group->startclass->fecha_inicio),'d-m-Y')}}] ({{$inscription->group->startclass->estado}}) [{{$inscription->group->startclass->costo}}bs]
-		@if (Auth::user()->role->code == 'ADM')
 			<div class="space_destroy"><div class="destroy btn btn-danger"><i class="fa fa-times fa-fw"></i></div></div>
-		@endif
+	
 		</div>
 		<div class="panel-body">
 			{!! Form::hidden('career_id[]',$inscription->career_id,['class'=>'form-control']) !!}
