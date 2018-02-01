@@ -156,7 +156,7 @@ table.schedule td[turno='manana']>div,table.schedule td[turno='tarde']>div{
 	background-color: #272727;
 	border-radius: 3px;
 	top: -8.5px;
-	right: 5px;
+	left: 9px;
 }
 table.schedule td[turno='tar']>div,table.schedule td[turno='man']>div,table.schedule td[turno='medio']>div,table.schedule td[turno='noche']>div{
 	background-color: #DADADA;
@@ -165,9 +165,79 @@ table.schedule td[turno='tar']>div,table.schedule td[turno='man']>div,table.sche
 	height: 12px;
 	border-radius: 3px;
 	top: -7px;
-	left: 5px;
+	left: 15px;
+}
+table.schedule td select{
+	border: 0;
 }
 table.schedule td.ocupado{
-	border-left: 2px solid black;
-	border-right: 2px solid black;
+	border-left: 3px solid black;
+	border-right: 3px solid black;
+}
+table[tabla="ver"].schedule *{
+	font-size: 12px !important;
+}
+table[tabla="ver"].schedule td{
+	min-width: 85px; 
+}
+table[tabla="ver"].schedule td:first-child div{
+	font-size: 14px !important;
+	height: 18;
+}
+table[tabla="ver"].schedule div{
+	min-width: 50px; 
+}
+
+table.sch{
+	background-color: #F5F5F5;
+}
+table.sch *{
+	text-align: center;
+}
+table.sch tr{
+	height: 10px;
+}
+table.sch th{
+	padding: 10px;
+}
+table.sch th[dia="dia"]{
+	background-color: #5D5D5D;
+	color: white;
+}
+table.sch td[x="0"]{
+	position: relative;
+	font-size: 10px;
+}
+table.sch tr[hmas="hmas"] td[x="0"]{
+	height: 25px;
+	font-size: 14px;
+}
+table.sch td[x="0"]>div{
+	height: 20px;
+	width: 50px;
+	position: absolute;
+	padding: 2px;
+	top: -10px;
+	border-radius: 5px;
+	left: 5px;
+}
+table.sch tr[hmas="hmas"] td[x="0"]{
+	border-top: 3px solid black;
+}
+table.sch td[x="0"]{
+	border-right: 3px solid black;
+}
+table.sch tr[hmas="hmas"] td[x="0"]>div{
+	height: 20px;
+	width: 50px;
+	position: absolute;
+	color: white;
+	background-color: black;
+	padding: 2px;
+	top: -10px;
+	border-radius: 5px;
+	left: 5px;
+}
+table.sch tr[mid="mid"]{
+	background-color: #B0E7E9;
 }

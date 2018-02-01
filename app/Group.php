@@ -29,4 +29,8 @@ class Group extends Model
 	{
 		return $this->hasMany('Institute\Inscription');
 	}
+    public function hours()
+    {
+        return $this->hasMany('Institute\Hour');
+    }
 }

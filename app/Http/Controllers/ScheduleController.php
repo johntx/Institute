@@ -19,7 +19,7 @@ class ScheduleController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin',['only' => ['index','create','edit','show']]);
-        $this->beforeFilter('@find',['only' => ['edit','update','destroy','show']]);
+        $this->beforeFilter('@find',['only' => ['edit','update','destroy','show','ver']]);
     }
     public function find(Route $route)
     {
@@ -62,10 +62,18 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request['vigente']=='si') {
+            $schedules = Schedule::where('vigente','si')->get();
+            $schedules->each(function($sche)
+            {
+                $sche->vigente = 'no';
+                $sche->save();
+            });
+        }
         $schedule = new Schedule();
         $schedule->fill([
             'descripcion' => $request['descripcion'],
-            'activo' => $request['activo'],
+            'vigente' => $request['vigente'],
             'fecha' => \Carbon\Carbon::now()
             ]);
         $col = collect();
@@ -77,6 +85,7 @@ class ScheduleController extends Controller
                 $hour->piso = $request['piso'][$i];
                 $hour->hora_inicio = $request['hora_inicio'][$i];
                 $hour->hora_fin = $request['hora_fin'][$i];
+                $hour->periodos = $request['periodos'][$i];
                 $hour->dia = $request['dia'][$i];
                 $hour->group_id = $request['group_id'][$i];
                 $hour->career_id = $request['career_id'][$i];
@@ -119,6 +128,13 @@ class ScheduleController extends Controller
         return view('admin/schedule.edit',['schedule'=>$this->schedule, 'startclasses'=>$startclasses,'semana'=>$semana,'horario'=>$horario]);
     }
 
+    public function ver($id)
+    {
+        $semana = collect(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]);
+        $horario = collect(['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
+        return view('admin/schedule.show',['schedule'=>$this->schedule,'semana'=>$semana,'horario'=>$horario]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -128,9 +144,17 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ($request['vigente']=='si') {
+            $schedules = Schedule::where('vigente','si')->where('id','!=',$this->schedule->id)->get();
+            $schedules->each(function($sche)
+            {
+                $sche->vigente = 'no';
+                $sche->save();
+            });
+        }
         $this->schedule->fill([
             'descripcion' => $request['descripcion'],
-            'activo' => $request['activo'],
+            'vigente' => $request['vigente'],
             'fecha' => \Carbon\Carbon::now()
             ]);
         $this->schedule->hours->each(function($hour)
@@ -146,6 +170,7 @@ class ScheduleController extends Controller
                 $hour->piso = $request['piso'][$i];
                 $hour->hora_inicio = $request['hora_inicio'][$i];
                 $hour->hora_fin = $request['hora_fin'][$i];
+                $hour->periodos = $request['periodos'][$i];
                 $hour->dia = $request['dia'][$i];
                 $hour->group_id = $request['group_id'][$i];
                 $hour->career_id = $request['career_id'][$i];

@@ -18,7 +18,7 @@ class GroupController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin',['only' => ['index','create','edit','show']]);
-        $this->beforeFilter('@find',['only' => ['edit','update','destroy','show']]);
+        $this->beforeFilter('@find',['only' => ['edit','update','destroy','show','horario']]);
     }
     public function find(Route $route)
     {
@@ -84,6 +84,13 @@ class GroupController extends Controller
     public function show($id)
     {
         return view('admin/group.delete',['group'=>$this->group]);
+    }
+
+    public function horario($id)
+    {
+        $semana = array("hora","lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
+        $horario = array('08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
+        return view('admin/group.horario',['group'=>$this->group,'semana'=>$semana,'horario'=>$horario]);
     }
 
     /**

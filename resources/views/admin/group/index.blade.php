@@ -10,6 +10,7 @@
 			<th>Turno</th>
 			<th>Inscritos</th>
 			<th>Estado</th>
+			<th>Horario</th>
 			<th>Edit</th>
 		</thead>
 		@foreach($groups as $group)
@@ -20,6 +21,9 @@
 			<td>{{$group->turno}}</td>
 			<td>{{sizeof($group->inscriptions)}}</td>
 			<td>({{$group->estado}})</td>
+			<td>
+				{!!link_to_action('GroupController@horario', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-success'])!!}
+			</td>
 			@foreach(Auth::user()->role->functionalities as $func)
 			@if ($func->code=='EGRO')
 			<td>

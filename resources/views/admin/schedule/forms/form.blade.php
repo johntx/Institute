@@ -54,8 +54,8 @@
 		{!! Form::text('descripcion',null,['class'=>'form-control','placeholder'=>'Inserte una descripcion', 'maxlength'=>250]) !!}
 	</div>
 	<div class="form-group">
-		{!! Form::label('Activo') !!}
-		{!! Form::select('activo',['activo' => 'activo','no' => 'no'],null,['class'=>'form-control','maxlength'=>10]) !!}
+		{!! Form::label('Vigente') !!}
+		{!! Form::select('vigente',['no' => 'no','si' => 'si'],null,['class'=>'form-control','maxlength'=>10]) !!}
 	</div>
 </div>
 </div>

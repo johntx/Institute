@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin Instituto C1EN</title>
   <link rel="icon" type="image/png" href="{!!URL::to('icons/logomin.png')!!}" />
-  {!!Html::style('css/bootstrap.css')!!}
+  {!!Html::style('css/bootstrap.min.css')!!}
   {!!Html::style('css/jquery-ui.min.css')!!}
   {!!Html::style('css/metisMenu.min.css')!!}
   {!!Html::style('css/sb-admin-2.css')!!}
@@ -105,6 +105,7 @@
       {!!Html::script('js/bootstrap-select.js')!!}
       {!!Html::script('js/datatables.js')!!}
       {!!Html::script('js/mdb.js')!!}
+      {!!Html::script('js/html2canvas.js')!!}
       @yield('adminjs')
     </body>
     </html>

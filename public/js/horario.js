@@ -18,6 +18,9 @@ $('document').ready(function(){
 	});
 	$('.droppable').sortable();
 	refresh();
+	$.each($('div.sch_hour'), function( key, value ) {
+		colorear_sch(value);
+	});
 });
 function colorear(element){
 	$(element).removeAttr('style');
@@ -48,7 +51,7 @@ function colorear(element){
 			$('div#'+dia+' tr[y='+i+']'+'>td[x='+x+'] div').html(carrera);
 			$(element).clone().appendTo(td);
 			$(select).clone().appendTo(element);
-			$(td).css({'border-top':'2px solid black'});
+			$(td).css({'border-top':'3px solid black'});
 		}
 		if (cont == 2) {
 			var date = fecha;
@@ -64,7 +67,7 @@ function colorear(element){
 			$(select).clone().appendTo(td);
 			$(td).children('select').removeAttr('disabled');
 			$(td).children('select').removeAttr('hidden');
-			$(td).css({'border-bottom':'2px solid black'});
+			$(td).css({'border-bottom':'3px solid black'});
 			$(td).css({'border-top':'1px solid black'});
 			$(td).append(
 				"<input type='hidden' name='aula[]' value='"+a+"' >"
@@ -75,6 +78,7 @@ function colorear(element){
 				+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
 				+"<input type='hidden' name='career_id[]' value='"+career_id+"' >"
 				+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
+				+"<input type='hidden' name='periodos[]' value='4' >"
 				);
 		}
 		cont++;
@@ -111,4 +115,35 @@ function refresh(){
 		var texto = $(value).attr('texto');
 		$(value).css({'background-color':color,'color':texto});
 	});
+}
+function colorear_sch(element) {
+	var hora = $(element).attr('hora');
+	var size = $(element).attr('size');
+	var carrera = $(element).attr('carrera');
+	var fecha = $(element).attr('fecha');
+	var asignatura = $(element).attr('asignatura');
+	var aula = $(element).attr('aula');
+	var h = $(element).parent().parent().attr('h');
+	var x = $(element).parent().attr('x');
+	var sum = parseInt(size)+parseInt(h);
+	var cont = 1;
+	for (var i = h; i < sum; i++) {
+		var td = $('tr[h='+i+']'+'>td[x='+x+']');
+		td.css({'border-left':'3px solid black','border-right':'3px solid black'});
+		if (cont == 1) {
+			$('tr[h='+i+']'+'>td[x='+x+'] div').html(carrera);
+			$(td).css({'border-top':'3px solid black'});
+		}
+		if (cont == 2) {
+			$(td).html(fecha);
+		}
+		if (cont == 3) {
+			$(td).html('<span style="padding:10px;">'+asignatura+'</span>');
+		}
+		if (i == sum-1) {
+			$(td).html(aula);
+			$(td).css({'border-bottom':'3px solid black'});
+		}
+		cont++;
+	}
 }

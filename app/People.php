@@ -31,4 +31,8 @@ class People extends Model
     public function subjects() {
         return $this->belongsToMany('Institute\Subject','teaches');
     }
+    public function hours()
+    {
+        return $this->hasMany('Institute\Hour');
+    }
 }

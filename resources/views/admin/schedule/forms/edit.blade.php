@@ -35,7 +35,7 @@
 						<td x="{{$i}}" p="P4" a="A{{$i}}" class="droppable">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P4' && $hora->aula=='A'.$i)
-							<div class="hour" size="4" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->subject->nombre}}
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->subject->nombre}}
 								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 9px;">
 									@if (sizeof($hora->subject->peoples)==0)
 									<option value="null">Nadie</option>
@@ -72,8 +72,8 @@
 		{!! Form::text('descripcion',null,['class'=>'form-control','placeholder'=>'Inserte una descripcion', 'maxlength'=>250]) !!}
 	</div>
 	<div class="form-group">
-		{!! Form::label('Activo') !!}
-		{!! Form::select('activo',['activo' => 'activo','no' => 'no'],null,['class'=>'form-control','maxlength'=>10]) !!}
+		{!! Form::label('Vigente') !!}
+		{!! Form::select('vigente',['no' => 'no','si' => 'si'],null,['class'=>'form-control','maxlength'=>10]) !!}
 	</div>
 </div>
 </div>

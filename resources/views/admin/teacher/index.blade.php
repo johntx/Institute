@@ -8,6 +8,7 @@
 			<th>CI</th>
 			<th>Nombre</th>
 			<th>Telefono</th>
+			<th>Horario</th>
 			<th>Asignaturas</th>
 			<th>Edit</th>
 		</thead>
@@ -17,6 +18,9 @@
 			<td>{{$teacher->ci}}</td>
 			<td>{{$teacher->nombrecompleto()}}</td>
 			<td>{{$teacher->telefono}}</td>
+			<td>
+				{!!link_to_action('TeacherController@horario', $title = 'Horario', $parameters = $teacher->id, $attributes = ['class'=>'btn btn-success'])!!}
+			</td>
 			<td>
 				@foreach($teacher->subjects()->orderBy('nombre','asc')->get() as $subject)
 				[{{$subject->nombre}}] - 

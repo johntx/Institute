@@ -8,7 +8,7 @@ class Schedule extends Model
 {
 	protected $table = 'schedules';
 
-	protected $fillable = ['descripcion','activo','fecha'];
+	protected $fillable = ['descripcion','vigente','fecha'];
 
 	public $timestamps = false;
 	
