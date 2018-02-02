@@ -80,7 +80,6 @@
 									@if (sizeof($subject->peoples)==0)
 									<option value="null">Nadie</option>
 									@endif
-									<option value="null">Seleccione </option>
 									@foreach ($subject->peoples as $people)
 									<option value="{{$people->id}}">{{$people->nombre}}</option>
 									@endforeach

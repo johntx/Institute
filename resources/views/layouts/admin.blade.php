@@ -105,7 +105,6 @@
       {!!Html::script('js/bootstrap-select.js')!!}
       {!!Html::script('js/datatables.js')!!}
       {!!Html::script('js/mdb.js')!!}
-      {!!Html::script('js/html2canvas.js')!!}
       @yield('adminjs')
     </body>
     </html>

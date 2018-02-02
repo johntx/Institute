@@ -170,6 +170,23 @@ table.schedule td[turno='tar']>div,table.schedule td[turno='man']>div,table.sche
 table.schedule td select{
 	border: 0;
 }
+table.schedule td:hover div.periodo select{
+	display: block;
+}
+table.schedule td div.periodo{
+	position: relative;
+	background-color: red;
+}
+table.schedule td div.periodo select{
+	position: absolute;
+	right: -32px;
+	top: -14px;
+	border: 2px solid black;
+	display: none;
+}
+table.schedule td div.periodo select:hover{
+	display: block;
+}
 table.schedule td.ocupado{
 	border-left: 3px solid black;
 	border-right: 3px solid black;

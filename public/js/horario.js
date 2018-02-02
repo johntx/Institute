@@ -21,6 +21,14 @@ $('document').ready(function(){
 	$.each($('div.sch_hour'), function( key, value ) {
 		colorear_sch(value);
 	});
+	$('body').on('change','.periodo>select',function() {
+		var s = $(this).parent().attr('pos');
+		var x = $(this).parent().parent().attr('x');
+		var y = $(this).parent().parent().parent().attr('y');
+		y = y-s+1;
+		$("div[x='"+x+"'][y='"+y+"']").attr('size',$(this).val());
+		recolor();
+	});
 });
 function colorear(element){
 	$(element).removeAttr('style');
@@ -41,6 +49,8 @@ function colorear(element){
 	var h1 = $(element).parent().parent().attr('h1');
 	var dia = $(element).parent().parent().parent().parent().parent().attr('id');
 	var sum = parseInt(size)+parseInt(y);
+	$(element).attr('x',x);
+	$(element).attr('y',y);
 	var cont = 1;
 	for (var i = y; i < sum; i++) {
 		var td = $('div#'+dia+' tr[y='+i+']'+'>td[x='+x+']');
@@ -69,6 +79,14 @@ function colorear(element){
 			$(td).children('select').removeAttr('hidden');
 			$(td).css({'border-bottom':'3px solid black'});
 			$(td).css({'border-top':'1px solid black'});
+			var options = '';
+			for (var k = 1; k <= 8; k++) {
+				if (size==k) {
+					options = options+"<option selected value='"+k+"'>"+k+"</option>"
+				} else {
+					options = options+"<option value='"+k+"'>"+k+"</option>"
+				}
+			}
 			$(td).append(
 				"<input type='hidden' name='aula[]' value='"+a+"' >"
 				+"<input type='hidden' name='piso[]' value='"+p+"' >"
@@ -78,7 +96,7 @@ function colorear(element){
 				+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
 				+"<input type='hidden' name='career_id[]' value='"+career_id+"' >"
 				+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
-				+"<input type='hidden' name='periodos[]' value='4' >"
+				+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
 				);
 		}
 		cont++;

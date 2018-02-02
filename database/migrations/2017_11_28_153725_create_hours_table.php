@@ -18,6 +18,7 @@ class CreateHoursTable extends Migration
             $table->string('piso',20)->nullable();
             $table->string('hora_inicio',20)->nullable();
             $table->string('hora_fin',20)->nullable();
+            $table->integer('periodos')->nullable();
             $table->string('dia',20)->nullable();
             $table->integer('group_id')->unsigned()->nullable();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
