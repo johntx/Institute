@@ -13,10 +13,8 @@
 
 Route::get('/','FrontController@index');
 Route::get('admin','FrontController@admin');
-
 Route::get('password/email','Auth\PasswordController@getEmail');
 Route::post('password/email','Auth\PasswordController@postEmail');
-
 Route::get('password/reset/{token}','Auth\PasswordController@getReset');
 Route::post('password/reset','Auth\PasswordController@postReset');
 
@@ -53,6 +51,7 @@ Route::get('admin/search/{name}','StudentController@getpeople');
 Route::get('admin/inscriptions/{id}','PaymentController@getinscriptions');
 Route::get('admin/payment/pdf/{id?}','PaymentController@pdf');
 Route::get('admin/schedule/ver/{schedule?}','ScheduleController@ver');
+Route::get('admin/schedule/clonar/{schedule?}','ScheduleController@clonar');
 Route::get('admin/teacher/horario/{teacher?}','TeacherController@horario');
 Route::get('admin/group/horario/{group?}','GroupController@horario');
 Route::get('admin/student/search/{id}','StudentController@search');

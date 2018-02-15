@@ -19,7 +19,7 @@ class ScheduleController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin',['only' => ['index','create','edit','show']]);
-        $this->beforeFilter('@find',['only' => ['edit','update','destroy','show','ver']]);
+        $this->beforeFilter('@find',['only' => ['edit','update','destroy','show','ver','clonar']]);
     }
     public function find(Route $route)
     {
@@ -133,6 +133,35 @@ class ScheduleController extends Controller
         $semana = collect(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]);
         $horario = collect(['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
         return view('admin/schedule.show',['schedule'=>$this->schedule,'semana'=>$semana,'horario'=>$horario]);
+    }
+
+    public function clonar($id)
+    {
+        $horario = new Schedule();
+        $horario->vigente='no';
+        $horario->descripcion=$this->schedule->descripcion.' (clon)';
+        $horario->fecha=\Carbon\Carbon::now();
+        $horario->save();
+        $col = collect();
+        if (sizeof($this->schedule->hours)>0) {
+            foreach ($this->schedule->hours as $hour2) {
+                $hour = new Hour;
+                $hour->people_id = $hour2->people_id;
+                $hour->aula = $hour2->aula;
+                $hour->piso = $hour2->piso;
+                $hour->hora_inicio = $hour2->hora_inicio;
+                $hour->hora_fin = $hour2->hora_fin;
+                $hour->periodos = $hour2->periodos;
+                $hour->dia = $hour2->dia;
+                $hour->group_id = $hour2->group_id;
+                $hour->career_id = $hour2->career_id;
+                $hour->subject_id = $hour2->subject_id;
+                $col->push($hour);
+            }
+        }
+        $horario->hours()->saveMany($col);
+        Session::flash('message','Horario clonado exitosamente');
+        return Redirect::to('/admin/schedule');
     }
 
     /**

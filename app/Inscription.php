@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Inscription extends Model
 {
 	protected $table = 'inscriptions';
-	protected $fillable = ['estado', 'fecha_ingreso', 'fecha_retiro', 'monto', 'abono', 'total', 'colegiatura', 'people_id', 'group_id', 'career_id', 'particular_id', 'user_id'];
+	protected $fillable = ['estado', 'fecha_ingreso', 'fecha_retiro', 'monto', 'abono', 'total', 'colegiatura', 'people_id', 'group_id', 'particular_id', 'user_id'];
 
     public function people()
     {

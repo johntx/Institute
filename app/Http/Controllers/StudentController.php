@@ -104,6 +104,7 @@ class StudentController extends Controller
         }
         $request['nombre']=strtoupper($request['nombre']);
         $request['paterno']=strtoupper($request['paterno']);
+        $request['carrera']=strtoupper($request['carrera']);
         $user = new User;
         if ($request['ci'] != null) {
           $user->fill([
@@ -149,7 +150,6 @@ class StudentController extends Controller
           'abono' => $request['abono'],
           'total' => $request['total'],
           'colegiatura' => $colegiatura,
-          'career_id' => $startclass->career->id,
           'group_id' => $request['group_id'],
           'user_id' => Auth::user()->id
           ]);
@@ -271,6 +271,7 @@ class StudentController extends Controller
       }
       $request['nombre']=strtoupper($request['nombre']);
       $request['paterno']=strtoupper($request['paterno']);
+      $request['carrera']=strtoupper($request['carrera']);
       $this->student->fill([
         'ci' => $request['ci'],
         'nombre' => $request['nombre'],
@@ -281,30 +282,38 @@ class StudentController extends Controller
         'carrera' => $request['carrera'],
         'telefono' => $request['telefono']
         ]);
-
-      $col = collect();
-      for ($i=0; $i < count($request['inscription_id']); $i++) {
-        $inscription = new \Institute\Inscription;
-        $inscription->id = $request['inscription_id'][$i];
-        $inscription->group_id = $request['group_id'][$i];
-        $inscription->estado = $request['estado'][$i];
-        $inscription->fecha_ingreso = $request['fecha_ingreso'][$i];
-        $inscription->career_id = $request['career_id'][$i];
-        $inscription->monto = $request['monto'][$i];
-        $inscription->abono = $request['abono'][$i];
-        $inscription->total = $request['total'][$i];
-        $inscription->colegiatura = $request['colegiatura'][$i];
-        $inscription->user_id = Auth::user()->id;
-        $col->push($inscription);
-      }
       $this->student->save();
-      if (sizeof($col)>0) {
-        $this->student->inscriptions()->delete();
-        $this->student->inscriptions()->saveMany($col);
+      for ($i=0; $i < count($request['inscription_id']); $i++) {
+        $inscription = Inscription::find($request['inscription_id'][$i]);
+        if ($request['total'][$i] < $inscription->abono) {
+          $request['total'][$i]=$inscription->total;
+        }
+        if ($inscription->abono == $inscription->total && $inscription->colegiatura=='Pagado') {
+          if ($request['total'][$i] > $inscription->abono) {
+            $payment = new \Institute\Payment;
+            $payment->fill([
+              'fecha_pagar' => \Carbon\Carbon::now(),
+              'estado' => 'Pendiente',
+              'abono' => 0,
+              'saldo' => $request['total'][$i]-$inscription->abono,
+              'inscription_id' => $inscription->id
+              ]);
+            $payment->save();
+          }
+        }
+        $inscription->fill([
+          'group_id' => $request['group_id'][$i],
+          'estado' => $request['estado'][$i],
+          'fecha_ingreso' => $request['fecha_ingreso'][$i],
+          'monto' => $request['monto'][$i],
+          'total' => $request['total'][$i],
+          'colegiatura' => $request['colegiatura'][$i],
+          'user_id' => Auth::user()->id
+          ]);
+        $inscription->save();
       }
-
       Session::flash('message','Estudiante editado exitosamente');
-      return Redirect::to('/admin/student');
+      return Redirect::to('/admin/student/search/'.$this->student->id);
     }
 
     /**
@@ -315,8 +324,7 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-      $this->student->inscriptions->each(function($inscription)
-      {
+      $this->student->inscriptions->each(function($inscription){
         $inscription->payments->each(function($payment){
           $payment->delete();
         });

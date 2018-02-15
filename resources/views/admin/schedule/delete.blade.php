@@ -3,12 +3,16 @@
 @include('alerts.request')
 {!! Form::model($schedule) !!}
 <div class="form-group">
-	{!! Form::label('Code*') !!}
+	{!! Form::label('Id') !!}
+	{!! Form::label($schedule->id,null,['class'=>'form-control']) !!}
+</div>
+<div class="form-group">
+	{!! Form::label('Descripción') !!}
 	{!! Form::label($schedule->descripcion,null,['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
-	{!! Form::label('Name*') !!}
-	{!! Form::label($schedule->activo,null,['class'=>'form-control']) !!}
+	{!! Form::label('Vigente') !!}
+	{!! Form::label($schedule->vigente,null,['class'=>'form-control']) !!}
 </div>
 
 {!! Form::close() !!}

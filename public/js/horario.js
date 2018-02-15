@@ -2,7 +2,12 @@ $('document').ready(function(){
 	$(".droppable").droppable({
 		drop: function( evento, ui ) {
 			if (!$(this).hasClass('ocupado')) {
+				$(this).empty();
 				$(this).addClass('ocupado');
+				$(evento.toElement).clone().appendTo(this);
+				$(this).children().removeAttr('style');
+				$(evento.toElement).remove();
+			} else if($(this).hasClass('header')) {
 				$(evento.toElement).clone().appendTo(this);
 				$(this).children().removeAttr('style');
 				$(evento.toElement).remove();
@@ -22,9 +27,10 @@ $('document').ready(function(){
 		colorear_sch(value);
 	});
 	$('body').on('change','.periodo>select',function() {
+		console.log('cambio');
 		var s = $(this).parent().attr('pos');
-		var x = $(this).parent().parent().attr('x');
-		var y = $(this).parent().parent().parent().attr('y');
+		var x = $(this).parent().parent().parent().attr('x');
+		var y = $(this).parent().parent().parent().parent().attr('y');
 		y = y-s+1;
 		$("div[x='"+x+"'][y='"+y+"']").attr('size',$(this).val());
 		recolor();
@@ -53,62 +59,117 @@ function colorear(element){
 	$(element).attr('y',y);
 	var cont = 1;
 	for (var i = y; i < sum; i++) {
-		var td = $('div#'+dia+' tr[y='+i+']'+'>td[x='+x+']');
-		$(td).addClass('ocupado');
-		$(td).css({'background-color':color,'border-top':'1px solid '+color,'color':texto});
-		$(td).empty();
+		var td = $('div#'+dia+' tr[y='+i+']'+'>td[x='+x+']');		//$(td).empty();
 		if (cont == 1) {
-			$('div#'+dia+' tr[y='+i+']'+'>td[x='+x+'] div').html(carrera);
-			$(element).clone().appendTo(td);
-			$(select).clone().appendTo(element);
+			$(td).addClass('header');
+			//$('div#'+dia+' tr[y='+i+']'+'>td[x='+x+'] div').html(carrera);
+			//$(element).clone().appendTo(td);
+			//$(select).clone().appendTo(element);
 			$(td).css({'border-top':'3px solid black'});
+			/*$(element).css({'border':'1px solid '+color});
+			$(td).children('div').css({'border':'1px solid '+color});*/
 		}
 		if (cont == 2) {
 			var date = fecha;
 			date = date.substring(0,10).split('-');
 			date = date[1] + '-' + date[2] + '-' + date[0];
-			$(td).html($.datepicker.formatDate('dd M yy', new Date(date)));
+			if ($(td).hasClass('ocupado')) {
+				$(td).children('div').append("<div style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div>");
+			} else {
+				$(td).empty();
+				$(td).html("<div><div style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div></div>");
+			}
+			$(td).css({'border-top':'1px solid '+color});
 		}
 		if (cont == 3) {
-			$(td).html('<b>'+carrera+'</b>');
+			if ($(td).hasClass('ocupado')) {
+				$(td).children('div').append("<div style='padding:5px; background-color:"+color+";'><b>"+carrera+'</b></div>');
+			} else {
+				$(td).empty();
+				$(td).html("<div><div style='padding:5px; background-color:"+color+";'><b>"+carrera+'</b></div></div>');
+			}
+			$(td).css({'border-top':'1px solid '+color});
 		}
 		if (i == sum-1) {
-			var h2 = $(td).parent().attr('h2');
-			$(select).clone().appendTo(td);
-			$(td).children('select').removeAttr('disabled');
-			$(td).children('select').removeAttr('hidden');
-			$(td).css({'border-bottom':'3px solid black'});
-			$(td).css({'border-top':'1px solid black'});
-			var options = '';
-			for (var k = 1; k <= 8; k++) {
-				if (size==k) {
-					options = options+"<option selected value='"+k+"'>"+k+"</option>"
-				} else {
-					options = options+"<option value='"+k+"'>"+k+"</option>"
+			if ($(td).hasClass('ocupado')) {
+				var h2 = $(td).parent().attr('h2');
+				$(select).clone().appendTo(td.children('div'));
+				$(td).children('div').children('select').removeAttr('disabled');
+				$(td).children('div').children('select').removeAttr('hidden');
+				$(td).css({'border-bottom':'3px solid black'});
+				$(td).css({'border-top':'1px solid black'});
+				var options = '';
+				for (var k = 1; k <= 8; k++) {
+					if (size==k) {
+						options = options+"<option selected value='"+k+"'>"+k+"</option>"
+					} else {
+						options = options+"<option value='"+k+"'>"+k+"</option>"
+					}
 				}
+				$(td).children('div').append(
+					"<input type='hidden' name='aula[]' value='"+a+"' >"
+					+"<input type='hidden' name='piso[]' value='"+p+"' >"
+					+"<input type='hidden' name='hora_inicio[]' value='"+h1+"' >"
+					+"<input type='hidden' name='hora_fin[]' value='"+h2+"' >"
+					+"<input type='hidden' name='dia[]' value='"+dia+"' >"
+					+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
+					+"<input type='hidden' name='career_id[]' value='"+career_id+"' >"
+					+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
+					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
+					);
+			} else {
+				$(td).empty();
+				$(td).append("<div></div>");
+				var h2 = $(td).parent().attr('h2');
+				$(select).clone().appendTo(td.children('div'));
+				$(td).children('div').children('select').removeAttr('disabled');
+				$(td).children('div').children('select').removeAttr('hidden');
+				$(td).css({'border-bottom':'3px solid black'});
+				$(td).css({'border-top':'1px solid black'});
+				var options = '';
+				for (var k = 1; k <= 8; k++) {
+					if (size==k) {
+						options = options+"<option selected value='"+k+"'>"+k+"</option>"
+					} else {
+						options = options+"<option value='"+k+"'>"+k+"</option>"
+					}
+				}
+				$(td).children('div').append(
+					"<input type='hidden' name='aula[]' value='"+a+"' >"
+					+"<input type='hidden' name='piso[]' value='"+p+"' >"
+					+"<input type='hidden' name='hora_inicio[]' value='"+h1+"' >"
+					+"<input type='hidden' name='hora_fin[]' value='"+h2+"' >"
+					+"<input type='hidden' name='dia[]' value='"+dia+"' >"
+					+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
+					+"<input type='hidden' name='career_id[]' value='"+career_id+"' >"
+					+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
+					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
+					);
 			}
-			$(td).append(
-				"<input type='hidden' name='aula[]' value='"+a+"' >"
-				+"<input type='hidden' name='piso[]' value='"+p+"' >"
-				+"<input type='hidden' name='hora_inicio[]' value='"+h1+"' >"
-				+"<input type='hidden' name='hora_fin[]' value='"+h2+"' >"
-				+"<input type='hidden' name='dia[]' value='"+dia+"' >"
-				+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
-				+"<input type='hidden' name='career_id[]' value='"+career_id+"' >"
-				+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
-				+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
-				);
 		}
+		$(td).children('div').children('div').last().css({color,'color':texto});
+		$(td).css({'background-color':color});
 		cont++;
+		$(td).addClass('ocupado');
 	}
+	$.each($('td.header.ocupado'), function( key, value ) {
+		if ($(value).children('div').length==1) {
+			$(value).children('div').addClass('solo');
+		} else {
+			$(value).children('div').removeClass('solo');
+		}
+	});
+	
 }
 
 function limpiar() {
 	$('div.active td').removeAttr('style');
 	$('div.active td>select').remove();
+	$('div.active td>div.periodo>select').remove();
 	$('div.active td>b').remove();
 	$('div.active td input').remove();
 	$('div.active .ocupado').removeClass('ocupado');
+	$('div.active .header').removeClass('header');
 }
 function recolor(){
 	limpiar();
@@ -120,6 +181,7 @@ function recolor(){
 		var texto = $(value).attr('texto');
 		$(value).css({'background-color':color,'color':texto});
 	});
+	$('div.active td.droppable:not(.ocupado)>div').remove();
 }
 function refresh(){
 	limpiar();

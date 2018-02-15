@@ -35,14 +35,20 @@
 		<div class="panel-heading">Habrir Grupos</div>
 		<div class="panel-body">
 			<div class="form-group">
-				{!! Form::checkbox('turno[]','Mañana',false,['id'=>'mañana']) !!}
-				{!! Form::label('mañana','Turno Mañana') !!}
+				{!! Form::checkbox('turno[]','Mañana 08:00 a 10:00',false,['id'=>'Mañana 08:00 a 10:00']) !!}
+				{!! Form::label('Mañana 08:00 a 10:00','Mañana 08:00 a 10:00') !!}
 				<br>
-				{!! Form::checkbox('turno[]','Tarde',false,['id'=>'tarde']) !!}
-				{!! Form::label('tarde','Turno Tarde') !!}
+				{!! Form::checkbox('turno[]','Mañana 10:00 a 12:00',false,['id'=>'Mañana 10:00 a 12:00']) !!}
+				{!! Form::label('Mañana 10:00 a 12:00','Mañana 10:00 a 12:00') !!}
 				<br>
-				{!! Form::checkbox('turno[]','Noche',false,['id'=>'noche']) !!}
-				{!! Form::label('noche','Turno Noche') !!}
+				{!! Form::checkbox('turno[]','Tarde 14:30 a 16:30',false,['id'=>'Tarde 14:30 a 16:30']) !!}
+				{!! Form::label('Tarde 14:30 a 16:30','Tarde 14:30 a 16:30') !!}
+				<br>
+				{!! Form::checkbox('turno[]','Tarde 16:30 a 18:30',false,['id'=>'Tarde 16:30 a 18:30']) !!}
+				{!! Form::label('Tarde 16:30 a 18:30','Tarde 16:30 a 18:30') !!}
+			</div>
+			<div class="form-group">
+				{!! Form::text('otro', null, ['class'=>'form-control','placeholder'=>'Otro Turno..']) !!}
 			</div>
 		</div>
 	</div>

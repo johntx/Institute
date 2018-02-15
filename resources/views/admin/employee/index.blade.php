@@ -6,7 +6,7 @@
 	<thead>
 		<th>CI</th>
 		<th>Nombre</th>
-		<th>Direccion</th>
+		<th>Rol</th>
 		<th>Telefono</th>
 		<th>Fecha Nacimiento</th>
 		<th>Edit</th>
@@ -15,7 +15,7 @@
 	<tbody>
 		<td>{{$employee->ci}}</td>
 		<td>{{$employee->nombrecompleto()}}</td>
-		<td>{{$employee->direccion}}</td>
+		<td>{{$employee->user->role->name}}</td>
 		<td>{{$employee->telefono}}</td>
 		<td>{{$employee->fecha_nacimiento}}</td>
 		@foreach(Auth::user()->role->functionalities as $func)

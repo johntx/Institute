@@ -1,3 +1,12 @@
+nav.navbar{
+	position: fixed !important;
+	top: 0;
+	width: 100%;
+}
+div#page-wrapper{
+	margin-top: 51px;
+	padding: 5px 0 0 15px;
+}
 .alert {
     position: absolute;
     top: 20px;
@@ -95,24 +104,35 @@
 .schedule tr.tarde{
 	background-color: #D1BFF6;
 }
-.schedule>tbody>tr>th:last-child{
+.schedule>tbody>tr>th.blue{
 	background-color: #080067;
 }
-.schedule>tbody>tr>td:last-child{
+.schedule>tbody>tr>td.blue{
 	background-color: #B6B0FF;
 }
 
 .droppable{
 }
-.hour{
-	height: 23px;
+div.hour{
+	height: 22px;
 	cursor: move;
+    vertical-align: middle;
+    text-align: center;
+	cursor: move;
+	display: table-cell !important;
+	width: 100%;
 }
 li.droppable{
 	list-style-type: none;
 	height: 25px;
 	border: 1px solid black;
 	font-size: 10px;
+}
+li.droppable>div{
+	width: 100% !important;
+	height: 100% !important;
+	display: block !important;
+	vertical-align: middle;
 }
 button.btn_expand{
 	background-color: #253A54;
@@ -127,6 +147,12 @@ button.btn_expand{
 table.schedule td{
 	border-left: 1px solid #C1C1C1;
 	border-right: 1px solid #C1C1C1;
+}
+table.schedule *{
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none; 
 }
 table.schedule tr[borde="si"]{
 	border-bottom: 1px solid #C1C1C1;
@@ -176,11 +202,12 @@ table.schedule td:hover div.periodo select{
 table.schedule td div.periodo{
 	position: relative;
 	background-color: red;
+	width: 0 !important;
 }
 table.schedule td div.periodo select{
 	position: absolute;
 	right: -32px;
-	top: -14px;
+	top: 0;
 	border: 2px solid black;
 	display: none;
 }
@@ -191,18 +218,32 @@ table.schedule td.ocupado{
 	border-left: 3px solid black;
 	border-right: 3px solid black;
 }
+table.schedule td.ocupado>div:not(.periodo){
+	display: flex;
+	width: auto;
+}
+table.schedule td.ocupado>div>*:not(.periodo){
+	flex: 1;
+	flex-direction: row;
+	width: 100%;
+}
+table.schedule td.ocupado>select:not(.periodo){
+	flex: 1;
+	flex-direction: row;
+	height: 22px;
+}
 table[tabla="ver"].schedule *{
 	font-size: 12px !important;
 }
 table[tabla="ver"].schedule td{
-	min-width: 85px; 
+	min-width: 75px; 
 }
 table[tabla="ver"].schedule td:first-child div{
 	font-size: 14px !important;
-	height: 18;
+	height: 18px;
 }
 table[tabla="ver"].schedule div{
-	min-width: 50px; 
+	min-width: 45px; 
 }
 
 table.sch{
@@ -257,4 +298,18 @@ table.sch tr[hmas="hmas"] td[x="0"]>div{
 }
 table.sch tr[mid="mid"]{
 	background-color: #B0E7E9;
+}
+.hour.show{
+	cursor: default;
+}
+table.schedule td.ocupado *{
+	min-height: 22px;
+}
+table.schedule.show div.periodo{
+	width: 0 !important;
+	min-width: 0 !important;
+}
+div.hour.solo{
+	display: block !important;
+	width: 100%;
 }

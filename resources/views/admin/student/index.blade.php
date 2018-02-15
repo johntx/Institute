@@ -29,6 +29,9 @@
 			<td>{{Jenssegers\Date\Date::parse($student->inscriptions[0]->fecha_ingreso)->format('j M Y')}}</td>
 			<td>{{$student->inscriptions[0]->group->startclass->career['nombre']}}</td>
 			<td>{{$student->inscriptions[0]->estado}}</td>
+			<td>
+				{!!link_to_action('StudentController@search', $title = 'Ver', $parameters = $student->id, $attributes = ['class'=>'btn btn-success'])!!}
+			</td>
 			@if ($editar)
 			<td>
 				{!!link_to_route('admin.student.edit', $title = 'Editar', $parameters = $student->id, $attributes = ['class'=>'btn btn-primary'])!!}
@@ -36,7 +39,7 @@
 			@endif
 			@if ($eliminar)
 			<td>
-				{!!link_to_route('admin.student.show', $title = 'Borrar', $parameters = $student->id, $attributes = ['class'=>'btn btn-danger'])!!}
+				{!!link_to_route('admin.student.show', $title = 'Eliminar', $parameters = $student->id, $attributes = ['class'=>'btn btn-danger'])!!}
 			</td>
 			@endif
 		</tbody>

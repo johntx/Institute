@@ -100,6 +100,12 @@ class StartclassController extends Controller
           $col->push($group);
         }
       }
+      if ($request['otro']!='') {
+          $group = new Group;
+          $group->turno = $request['otro'];
+          $group->estado = 'Vigente';
+          $col->push($group);
+      }
       $startclass->save();
       $startclass->groups()->saveMany($col);
       Session::flash('message','Inicio de Clases registrado exitosamente');

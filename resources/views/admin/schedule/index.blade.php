@@ -22,6 +22,9 @@
 			<td>
 				{!!link_to_route('admin.schedule.edit', $title = 'Editar', $parameters = $schedule->id, $attributes = ['class'=>'btn btn-primary'])!!}
 			</td>
+			<td>
+				{!!link_to_action('ScheduleController@clonar', $title = 'Clonar', $parameters = $schedule->id, $attributes = ['class'=>'btn btn-info'])!!}
+			</td>
 			@endif
 			@if ($func->code=='DSCH')
 			<td>

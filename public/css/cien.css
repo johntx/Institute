@@ -1,0 +1,83 @@
+/*verde:49a947*/
+/*naranja:f26e01*/
+/*azul:002c47*/
+nav.navbar-shrink a.navbar-brand img{
+	/*background-color: rgba(255,255,255,1);
+	border: 2px solid #f26e01;*/
+}
+a.navbar-brand{
+	height: 52.66px;
+	padding: 0;
+	margin: 0;
+	width: 107px;
+	border-radius: 7px;
+}
+a.navbar-brand img{
+	border-radius: 7px;
+	padding: 0 5px 0 5px;
+	-webkit-transition: all 0.4s ease;
+	-moz-transition: all 0.4s ease;
+	-o-transition: all 0.4s ease;
+	transition: all 0.4s ease;
+}
+a.navbar-brand>img{
+	height: 52.66px;
+}
+.log{
+	cursor: pointer;
+}
+#logmodal.modal{
+	display: block;
+}
+#logmodal{
+	width: 400px;
+	height: 300px;
+	position: fixed;
+	left: calc(50% - 200px);
+	top: calc(50% - 200px);
+	background-color: #A0BCB6;
+	padding: 20px;
+	border-radius: 30px;
+	z-index: 100;
+	display: none;
+}
+#logmodal>img{
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	right: 15px;
+	top: 15px;
+}
+#logmodal>p{
+	font-size: 30px;
+	margin: 10px;
+	text-align: center;
+}
+#logmodal>form{
+	width: 100%;
+}
+#logmodal>form>input{
+	width: 100%;
+	height: 40px;
+	padding: 10px;
+	border: none;
+	background-color: #F7F7F7;
+	font-size: 26px;
+	color: #484848;
+	margin-bottom: 20px;
+}
+#logmodal>form>a{
+	display: block;
+	font-size: 18px;
+	margin: 10px 0px 0 0;
+	float: right;
+	color: white;
+}
+#logmodal>form>input[type="submit"]{
+	width: 150px;
+	height: 60px;
+	margin: 0 0 0 105px;
+	border-radius: 50px;
+	cursor: pointer;
+}

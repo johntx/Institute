@@ -111,7 +111,6 @@ class InscriptionController extends Controller
           'abono' => $request['abono'],
           'total' => $request['total'],
           'colegiatura' => $colegiatura,
-          'career_id' => $startclass->career->id,
           'group_id' => $request['group_id'],
           'user_id' => Auth::user()->id
           ]);
@@ -185,7 +184,7 @@ class InscriptionController extends Controller
      */
     public function show($id)
     {
-        //
+      return view('admin/inscription.delete',['inscription'=>$this->inscription]);
     }
 
     /**
@@ -219,9 +218,16 @@ class InscriptionController extends Controller
      */
     public function destroy($id)
     {
-      $this->inscription->estado='Retirado';
-      $this->inscription->save();
-      Session::flash('message','Estudiante Retirado exitosamente');
-      return Redirect::to('/admin/report/debit');
+      $people = \Institute\People::find($this->inscription->people_id);
+      if (count($people->inscriptions)>1) {
+        $this->inscription->payments->each(function($payment){
+          $payment->delete();
+        });
+        $this->inscription->delete();
+        Session::flash('message','Inscripción Eliminada exitosamente');
+      } else {
+        Session::flash('message','No se puede eliminar la inscripción de este estudiante');
+      }
+      return Redirect::to('/admin/student/'.$this->inscription->people_id.'/edit');
     }
   }

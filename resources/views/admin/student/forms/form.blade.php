@@ -30,7 +30,7 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('Carrera') !!}
-				{!! Form::text('carrera',null,['class'=>'form-control','placeholder'=>'Inserte Carrera a la que postula', 'maxlength'=>50]) !!}
+				{!! Form::text('carrera',null,['class'=>'form-control','placeholder'=>'Inserte Carrera a la que postula', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
 			</div>
 			@if (Auth::user()->role->code == 'ADM' || Auth::user()->role->code == 'REG')
 			<div class="form-group">

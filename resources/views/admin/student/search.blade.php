@@ -16,7 +16,8 @@
 		<p class="col-sm-6"><b>Nombre:</b> {{$student->nombrecompleto() }}</p>
 		<p class="col-sm-6"><b>Fecha de Nacimiento:</b> {{ Jenssegers\Date\Date::parse($student->fecha_nacimiento)->format('j M Y') }}</p>
 		<p class="col-sm-6"><b>Telefono:</b> {{$student->telefono }}</p>
-		<p class="col-sm-6">{!!link_to_route('admin.student.edit', $title = 'Editar', $parameters = $student->id, $attributes = ['class'=>'btn btn-primary'])!!}</p>
+		<p class="col-sm-6"><b>Telefono Padres:</b> {{$student->telefono2 }}</p>
+		<p class="col-sm-6">{!!link_to_route('admin.student.edit', $title = 'Editar Estudiante', $parameters = $student->id, $attributes = ['class'=>'btn btn-primary'])!!}</p>
 		
 	</div>
 </div>
@@ -27,8 +28,10 @@
 		<p class="col-sm-6"><b>Id:</b> {{$inscription->id }}</p>
 		<p class="col-sm-6"><em><b>Usuario:</b> ({{$inscription->user->user }}) {{$inscription->user->people->nombrecompleto() }}</em></p>
 		<p class="col-sm-6"><b>Estado:</b> {{$inscription->estado }}</p>
-		<p class="col-sm-6"><b>Pago por mes:</b> {{$inscription->monto }}</p>
+		<p class="col-sm-6">&nbsp;</p>
 		<p class="col-sm-6"><b>Carrera:</b> {{$inscription->group->startclass->career->nombre }}</p>
+		<p class="col-sm-6"><b>Pago por mes:</b> {{$inscription->monto }}</p>
+		<p class="col-sm-6"><b>Carrera que postula:</b> {{$inscription->people->carrera }}</p>
 		<p class="col-sm-6"><b>Total pagado:</b> {{$inscription->abono }}</p>
 		<p class="col-sm-6"><b>Grupo:</b> {{$inscription->group->turno }}</p>
 		<p class="col-sm-6"><b>Total a cancelar:</b> {{$inscription->total }}</p>

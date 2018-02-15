@@ -21,9 +21,9 @@ class CreatePaymentsTable extends Migration
       $table->integer('abono')->nullable();
       $table->integer('saldo')->nullable();
       $table->integer('inscription_id')->unsigned()->nullable();
-      $table->foreign('inscription_id')->references('id')->on('inscriptions')->onDelete('cascade');
+      $table->foreign('inscription_id')->references('id')->on('inscriptions');
       $table->integer('user_id')->unsigned()->nullable();
-      $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+      $table->foreign('user_id')->references('id')->on('users');
       $table->timestamps();
     });
   }

@@ -23,8 +23,6 @@ class CreateInscriptionsTable extends Migration
       $table->string('colegiatura',20)->nullable();
       $table->integer('people_id')->unsigned()->nullable();
       $table->foreign('people_id')->references('id')->on('peoples')->onDelete('set null');
-      $table->integer('career_id')->unsigned()->nullable();
-      $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
       $table->integer('group_id')->unsigned()->nullable();
       $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
       $table->integer('particular_id')->unsigned()->nullable();

@@ -29,8 +29,11 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('Carrera') !!}
-				{!! Form::text('carrera',null,['class'=>'form-control','placeholder'=>'Inserte Carrera a la que postula', 'maxlength'=>50]) !!}
+				{!! Form::text('carrera',null,['class'=>'form-control','placeholder'=>'Inserte Carrera a la que postula', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
 			</div>
+			@if (!empty(Auth::user()->role->functionalities()->select('functionalities.*')->where('code','DEST')->first()))
+			{!!link_to_route('admin.student.show', $title = 'Eliminar Estudiante', $parameters = $student->id, $attributes = ['class'=>'btn btn-danger'])!!}
+			@endif
 		</div>
 	</div>
 </div>
@@ -38,11 +41,8 @@
 <div class="col-xs-6" style="padding-right: 0;">
 	<div class="panel panel-info">
 		<div class="panel-heading"><b>Inscripción:</b> {{$inscription->group->startclass->career->nombre}} {{$inscription->group->startclass->descripcion}} - [{{date_format(date_create($inscription->group->startclass->fecha_inicio),'d-m-Y')}}] ({{$inscription->group->startclass->estado}}) [{{$inscription->group->startclass->costo}}bs]
-			<div class="space_destroy"><div class="destroy btn btn-danger"><i class="fa fa-times fa-fw"></i></div></div>
-	
 		</div>
 		<div class="panel-body">
-			{!! Form::hidden('career_id[]',$inscription->career_id,['class'=>'form-control']) !!}
 			{!! Form::hidden('inscription_id[]',$inscription->id,['class'=>'form-control']) !!}
 			<div class="form-group">
 				{!! Form::label('Grupos') !!}
@@ -76,7 +76,7 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('Abono total') !!}
-				{!! Form::text('abono[]',$inscription->abono,['class'=>'form-control','onkeypress'=>"return justNumbers(event);",'required']) !!}
+				{!! Form::label($inscription->abono,null,['class'=>'form-control','onkeypress'=>"return justNumbers(event);",'required']) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('Total a pagar') !!}
@@ -86,6 +86,9 @@
 				{!! Form::label('Estado de pagos') !!}
 				{!! Form::select('colegiatura[]',['Debe' => 'Debe','Pagado' => 'Pagado'],$inscription->colegiatura,['class'=>'form-control','maxlength'=>20]) !!}
 			</div>
+			@if (!empty(Auth::user()->role->functionalities()->select('functionalities.*')->where('code','DINS')->first()))
+			{!!link_to_route('admin.inscription.show', $title = 'Eliminar Inscripción', $parameters = $inscription->id, $attributes = ['class'=>'btn btn-warning'])!!}
+			@endif
 		</div>
 	</div>
 </div>

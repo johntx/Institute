@@ -1,0 +1,290 @@
+.alert {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 5000;
+}
+.required{
+	color: #FA3939;
+}
+#form_buscador{
+	position: relative;
+}
+#ebuscados.hide{
+	height: 0;
+	width: 0;
+	display: none;
+}
+#ebuscados{
+	position: absolute;
+	width: 400px;
+	z-index: 100;
+	max-height: 350px;
+	overflow-y: scroll;
+}
+#ebuscados>ul{
+	list-style-type: none;
+	margin: 0; padding: 0;
+}
+#ebuscados>ul>li{
+	list-style-type: none;
+	height: 34px;
+}
+#ebuscados>ul>li{
+	list-style-type: none;
+	height: 34px;
+	background-color: #EDEDED;
+}
+#ebuscados>ul>li:hover{
+	background-color: #BCBEDF;
+}
+#ebuscados>ul>li>a.atxt{
+	text-decoration: none;
+	color: #1A1A1A;
+	padding: 7px;
+	width: calc(100% - 34px);
+	margin: 0;
+	float: left;
+}
+#ebuscados>ul>li>a.bedit{
+	width: 30px;
+	float: right;
+	height: 30px;
+	margin: 2px;
+	padding: 7px;
+}
+.space_destroy{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+.btn_quitar_subject{
+	position: absolute;
+	top: 6px;
+	right: 6px;
+}
+.schedule{
+	font-size: 12px;
+	padding: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.schedule tr{
+}
+.schedule th{
+	text-align: center;
+	background-color: black;
+	color: white;
+}
+.schedule td{
+	text-align: center;
+	color: transparent;
+}
+.schedule>tbody>tr>td{
+	font-size: 10px;
+	width: 60px;
+	padding:0; margin:0;
+}
+.schedule>tbody>tr>td:first-child{
+	background-color: #DADADA;
+	color: black;
+}
+.schedule td.p3{
+	background-color: #E6E6E6;
+}
+.schedule tr.tarde{
+	background-color: #D1BFF6;
+}
+.schedule>tbody>tr>th:last-child{
+	background-color: #080067;
+}
+.schedule>tbody>tr>td:last-child{
+	background-color: #B6B0FF;
+}
+
+.droppable{
+}
+div.hour{
+	height: 23px;
+	cursor: move;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+li.droppable{
+	list-style-type: none;
+	height: 25px;
+	border: 1px solid black;
+	font-size: 10px;
+}
+button.btn_expand{
+	background-color: #253A54;
+	color: white !important;
+	float: right;
+}
+.body_expandible{
+	padding: 5px;
+	height: 0;
+	display: none;
+}
+table.schedule td{
+	border-left: 1px solid #C1C1C1;
+	border-right: 1px solid #C1C1C1;
+}
+table.schedule *{
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none; 
+}
+table.schedule tr[borde="si"]{
+	border-bottom: 1px solid #C1C1C1;
+}
+div[active='active']{
+	height: auto;
+	display: block;
+}
+table.schedule td[turno='manana'],table.schedule td[turno='tarde']{
+	border-top: 2px solid black;
+}
+table.schedule td[tamano='grande']{
+	width: 45px;
+	height: 22px;
+	position: relative;
+}
+table.schedule td[turno='medio'],table.schedule td[turno='noche']{
+	height: 12px;
+	position: relative;
+}
+table.schedule td[turno='manana']>div,table.schedule td[turno='tarde']>div{
+	font-size: 13px;
+	position: absolute;
+	width: 40px;
+	height: 15px;
+	color: white;
+	background-color: #272727;
+	border-radius: 3px;
+	top: -8.5px;
+	left: 9px;
+}
+table.schedule td[turno='tar']>div,table.schedule td[turno='man']>div,table.schedule td[turno='medio']>div,table.schedule td[turno='noche']>div{
+	background-color: #DADADA;
+	position: absolute;
+	width: 30px;
+	height: 12px;
+	border-radius: 3px;
+	top: -7px;
+	left: 15px;
+}
+table.schedule td select{
+	border: 0;
+}
+table.schedule td:hover div.periodo select{
+	display: block;
+}
+table.schedule td div.periodo{
+	position: relative;
+	background-color: red;
+	width: 0 !important;
+}
+table.schedule td div.periodo select{
+	position: absolute;
+	right: -32px;
+	top: 0;
+	border: 2px solid black;
+	display: none;
+}
+table.schedule td div.periodo select:hover{
+	display: block;
+}
+table.schedule td.ocupado{
+	border-left: 3px solid black;
+	border-right: 3px solid black;
+}
+table.schedule td.ocupado>div:not(.periodo){
+	display: flex;
+	width: auto;
+}
+table.schedule td.ocupado>div>*:not(.periodo){
+	flex: 1;
+	flex-direction: row;
+	width: 100%;
+}
+table.schedule td.ocupado>select:not(.periodo){
+	flex: 1;
+	flex-direction: row;
+	height: 22px;
+}
+table[tabla="ver"].schedule *{
+	font-size: 12px !important;
+}
+table[tabla="ver"].schedule td{
+	min-width: 85px; 
+}
+table[tabla="ver"].schedule td:first-child div{
+	font-size: 14px !important;
+	height: 18px;
+}
+table[tabla="ver"].schedule div{
+	min-width: 50px; 
+}
+
+table.sch{
+	background-color: #F5F5F5;
+}
+table.sch *{
+	text-align: center;
+}
+table.sch tr{
+	height: 10px;
+}
+table.sch th{
+	padding: 10px;
+}
+table.sch th[dia="dia"]{
+	background-color: #5D5D5D;
+	color: white;
+}
+table.sch td[x="0"]{
+	position: relative;
+	font-size: 10px;
+}
+table.sch tr[hmas="hmas"] td[x="0"]{
+	height: 25px;
+	font-size: 14px;
+}
+table.sch td[x="0"]>div{
+	height: 20px;
+	width: 50px;
+	position: absolute;
+	padding: 2px;
+	top: -10px;
+	border-radius: 5px;
+	left: 5px;
+}
+table.sch tr[hmas="hmas"] td[x="0"]{
+	border-top: 3px solid black;
+}
+table.sch td[x="0"]{
+	border-right: 3px solid black;
+}
+table.sch tr[hmas="hmas"] td[x="0"]>div{
+	height: 20px;
+	width: 50px;
+	position: absolute;
+	color: white;
+	background-color: black;
+	padding: 2px;
+	top: -10px;
+	border-radius: 5px;
+	left: 5px;
+}
+table.sch tr[mid="mid"]{
+	background-color: #B0E7E9;
+}
+.hour.show{
+	cursor: default;
+}
+table.schedule td.ocupado *{
+	min-height: 22px;
+}
