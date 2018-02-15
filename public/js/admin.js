@@ -182,7 +182,13 @@ $(document).ready(function(){
 	$('#payments_estudiante').change(function(){
 		$.get("/cien/public/admin/inscriptions/"+event.target.value+"",function(inscription,response){
 			$("#payments_carrera").empty();
-			$('#colegiatura').html(inscription[0].colegiatura);
+			var deuda = inscription[0].total-inscription[0].abono;
+			if (deuda==0) {
+				deuda=' ';
+			} else {
+				deuda=': '+deuda;
+			}
+			$('#colegiatura').html(inscription[0].colegiatura+deuda);
 			var fecha_ingreso = inscription[0].fecha_ingreso;
 			fecha_ingreso = fecha_ingreso.substring(0,10).split('-');
 			fecha_ingreso = fecha_ingreso[1] + '-' + fecha_ingreso[2] + '-' + fecha_ingreso[0];
@@ -192,9 +198,15 @@ $(document).ready(function(){
 				var date = inscription[i].fecha_inicio;
 				date = date.substring(0,10).split('-');
 				date = date[1] + '-' + date[2] + '-' + date[0];
+				var deuda2 = inscription[i].total-inscription[i].abono;
+				if (deuda2==0) {
+					deuda2=' ';
+				} else {
+					deuda2=': '+deuda2;
+				}
 				$('#payments_carrera').append(
 					"<option value='"+inscription[i].id
-					+"' colegiatura='"+inscription[i].colegiatura+"' fecha_inicio='"+inscription[i].colegiatura+"' >"+inscription[i].carrera
+					+"' colegiatura='"+inscription[i].colegiatura+deuda2+"' fecha_inicio='"+inscription[i].colegiatura+"' >"+inscription[i].carrera
 					+" - ("+$.datepicker.formatDate('dd M yy', new Date(date))
 					+") - "+inscription[i].turno
 					+" - "+inscription[i].estado

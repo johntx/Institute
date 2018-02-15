@@ -29,15 +29,20 @@ a.navbar-brand>img{
 #logmodal.modal{
 	display: block;
 }
+#logmodal *{
+	font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 #logmodal{
 	width: 400px;
 	height: 300px;
 	position: fixed;
 	left: calc(50% - 200px);
-	top: calc(50% - 200px);
-	background-color: #A0BCB6;
+	top: calc(50% - 150px);
+	background-color: rgba(242,110,1,0.7);
 	padding: 20px;
 	border-radius: 30px;
+	color: #FFF;
 	z-index: 100;
 	display: none;
 }
@@ -48,6 +53,7 @@ a.navbar-brand>img{
 	position: absolute;
 	right: 15px;
 	top: 15px;
+	cursor: pointer;
 }
 #logmodal>p{
 	font-size: 30px;
@@ -62,9 +68,9 @@ a.navbar-brand>img{
 	height: 40px;
 	padding: 10px;
 	border: none;
-	background-color: #F7F7F7;
+	background-color: white;
 	font-size: 26px;
-	color: #484848;
+	color: #FFFFFF;
 	margin-bottom: 20px;
 }
 #logmodal>form>a{
@@ -80,4 +86,5 @@ a.navbar-brand>img{
 	margin: 0 0 0 105px;
 	border-radius: 50px;
 	cursor: pointer;
+	background-color: #3CDF39;
 }
