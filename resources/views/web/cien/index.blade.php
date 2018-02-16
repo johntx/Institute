@@ -66,7 +66,11 @@
             <a class="nav-link js-scroll-trigger" href="#team">Nosotros</a>
           </li>
           <li class="nav-item">
+            @if(!Auth::user())
             <div class="nav-link log">Log In</div>
+            @else
+            <a class="nav-link" href="admin">{{ Auth::user()->user }}</a>
+            @endif
           </li>
         </ul>
       </div>

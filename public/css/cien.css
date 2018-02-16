@@ -70,7 +70,7 @@ a.navbar-brand>img{
 	border: none;
 	background-color: white;
 	font-size: 26px;
-	color: #FFFFFF;
+	color: #5D5D5D;
 	margin-bottom: 20px;
 }
 #logmodal>form>a{
@@ -87,4 +87,5 @@ a.navbar-brand>img{
 	border-radius: 50px;
 	cursor: pointer;
 	background-color: #3CDF39;
+	color: white;
 }

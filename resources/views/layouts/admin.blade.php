@@ -25,6 +25,9 @@
         </a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Menu</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
         </button>
         <a style="padding-left: 0" class="navbar-brand" href="{!!URL::to('admin')!!}">Admin Instituto C1EN</a>
       </div>
