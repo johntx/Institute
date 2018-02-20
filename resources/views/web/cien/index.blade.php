@@ -69,6 +69,9 @@
             <a class="nav-link js-scroll-trigger" href="#team">Nosotros</a>
           </li-->
           <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Contacto</a>
+          </li>
+          <li class="nav-item">
             @if(!Auth::user())
             <div class="nav-link log">Log In</div>
             @else
@@ -512,7 +515,7 @@
           <div class="col-md-4">
             <ul class="list-inline quicklinks">
               <li class="list-inline-item">
-                <div>(4) 4646464</div>
+                <div>(4) 4028383</div>
               </li>
               <li class="list-inline-item">
                 <div>(+591) 76989899</div>
