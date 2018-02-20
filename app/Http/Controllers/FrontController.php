@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 
 use Institute\Http\Requests;
 use Institute\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 use Institute\Startclass;
 use Carbon\Carbon;
+use Mail;
 
 class FrontController extends Controller
 {
@@ -107,6 +110,20 @@ class FrontController extends Controller
   public function store(Request $request)
   {
       //
+  }
+
+  public function mail(Request $request)
+  {
+    Mail::send('emails.msg_send', ['msg' => $request], function($message) use ($request) {
+      $message->from($request['email'], $request['name']);
+      $message->to('informacion@institutocien.com', 'Instituto CIEN')->subject('Envío de Mensaje');
+    });
+    Mail::send('emails.msg_response', ['user' => $request], function($message) use ($request) {
+      $message->from('informacion@institutocien.com', 'Instituto CIEN');
+      $message->to($request['email'], $request['name'])->subject('Respuesta automática');
+    });
+    Session::flash('success','Mensaje enviado con éxito');
+    return Redirect::to('/');
   }
 
   /**

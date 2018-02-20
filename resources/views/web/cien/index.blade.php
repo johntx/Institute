@@ -54,17 +54,20 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav text-uppercase ml-auto">
           <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#page-top">Inicio</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#services">Servicios</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#portfolio">Carreras</a>
           </li>
-          <li class="nav-item">
+          <!--li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#about">Convocatorias</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#team">Nosotros</a>
-          </li>
+          </li-->
           <li class="nav-item">
             @if(!Auth::user())
             <div class="nav-link log">Log In</div>
@@ -83,7 +86,7 @@
       <div class="intro-text">
         <div class="intro-lead-in">Asegura tu ingreso!</div>
         <div class="intro-heading text-uppercase">INSTITUTO C1EN</div>
-        <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Saber más</a>
+        <!--a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Saber más</a-->
       </div>
     </div>
   </header>
@@ -94,7 +97,7 @@
       <div class="row">
         <div class="col-lg-12 text-center">
           <h2 class="section-heading text-uppercase">Servicios</h2>
-          <h3 class="section-subheading text-muted">Conoce nuestros cursos y modalidades de enseñanza</h3>
+          <h3 class="section-subheading text-muted">Conoce nuestros cursos y modalidades de enseñanza.</h3>
         </div>
       </div>
       <div class="row text-center">
@@ -146,8 +149,8 @@
             <img class="img-fluid" src="{!!URL::to('cien/img/portfolio/01-thumbnail.jpg')!!}" alt="">
           </a>
           <div class="portfolio-caption">
-            <h4>Tecnología</h4>
-            <p class="text-muted">Ingeniería</p>
+            <h4>Cs. y Tecnología</h4>
+            <p class="text-muted">Electrónica, Sistemas,..</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 portfolio-item">
@@ -160,8 +163,8 @@
             <img class="img-fluid" src="{!!URL::to('cien/img/portfolio/02-thumbnail.jpg')!!}" alt="">
           </a>
           <div class="portfolio-caption">
-            <h4>Policial - Militar</h4>
-            <p class="text-muted">Ejército</p>
+            <h4>Policias - Militares</h4>
+            <p class="text-muted">Esbapol, Politécnico,..</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 portfolio-item">
@@ -174,8 +177,8 @@
             <img class="img-fluid" src="{!!URL::to('cien/img/portfolio/03-thumbnail.jpg')!!}" alt="">
           </a>
           <div class="portfolio-caption">
-            <h4>Enfermería</h4>
-            <p class="text-muted">Medicina</p>
+            <h4>Cs. de la Salud</h4>
+            <p class="text-muted">Medicina, Enfermería,..</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 portfolio-item">
@@ -188,8 +191,8 @@
             <img class="img-fluid" src="{!!URL::to('cien/img/portfolio/04-thumbnail.jpg')!!}" alt="">
           </a>
           <div class="portfolio-caption">
-            <h4>Cs. Econímicas</h4>
-            <p class="text-muted">Licenciatura</p>
+            <h4>Cs. Económicas</h4>
+            <p class="text-muted">Comercial, Contaduría,..</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 portfolio-item">
@@ -203,7 +206,7 @@
           </a>
           <div class="portfolio-caption">
             <h4>Normalistas</h4>
-            <p class="text-muted">Educación</p>
+            <p class="text-muted">Maestros</p>
           </div>
         </div>
         <div class="col-md-4 col-sm-6 portfolio-item">
@@ -216,8 +219,8 @@
             <img class="img-fluid" src="{!!URL::to('cien/img/portfolio/06-thumbnail.jpg')!!}" alt="">
           </a>
           <div class="portfolio-caption">
-            <h4>Derecho</h4>
-            <p class="text-muted">Leyes</p>
+            <h4>Cs. Jurídicas y Políticas</h4>
+            <p class="text-muted">Derecho, Politología,..</p>
           </div>
         </div>
       </div>
@@ -225,7 +228,7 @@
   </section>
 
   <!-- Convocatorias -->
-  <section id="about">
+  <!--section id="about">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -297,17 +300,18 @@
               <div class="timeline-image">
                 <h4>Se parte
                   <br>De la
-                  <br>Historia!</h4>
-                </div>
-              </li>
-            </ul>
-          </div>
+                  <br>Historia!
+                </h4>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
+    </div>
+  </section-->
 
-    <!-- Nosotros -->
-    <section class="bg-light" id="team">
+  <!-- Nosotros -->
+    <!--section class="bg-light" id="team">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
@@ -395,29 +399,29 @@
           </div>
         </div>
       </div>
-    </section>
+    </section-->
 
     <!-- Clients -->
     <section class="py-5">
       <div class="container">
         <div class="row">
           <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="http://www.umss.edu.bo" target="_blank">
               <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/umss.jpg')!!}" alt="">
             </a>
           </div>
           <div class="col-md-3 col-sm-6">
-            <a href="#">
-              <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/policia.jpg')!!}" alt="">
+            <a href="http://www.ejercito.mil.bo/articulos/la_institucion/colmil.html" target="_blank">
+              <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/colmil.jpg')!!}" alt="">
             </a>
           </div>
           <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="http://www.unipol.edu.bo/index.php/esbapol" target="_blank">
               <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/esbapol.jpg')!!}" alt="">
             </a>
           </div>
           <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="http://cefomb.blogspot.com/" target="_blank">
               <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/cefom-b.jpg')!!}" alt="">
             </a>
           </div>
@@ -426,49 +430,53 @@
     </section>
 
     <!-- Contáctanos -->
-    <!--section id="contact">
+    <section id="contact">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
             <h2 class="section-heading text-uppercase">Contáctanos</h2>
-            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            <h3 class="section-subheading text-muted">Escríbenos por correo o a travez de nuestras redes.</h3>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-12">
-            <form id="contactForm" name="sentMessage" novalidate>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input class="form-control" id="name" type="text" placeholder="Your Name *" required data-validation-required-message="Please enter your name.">
-                    <p class="help-block text-danger"></p>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" id="email" type="email" placeholder="Your Email *" required data-validation-required-message="Please enter your email address.">
-                    <p class="help-block text-danger"></p>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" required data-validation-required-message="Please enter your phone number.">
-                    <p class="help-block text-danger"></p>
-                  </div>
+            {!! Form::open(['url' => 'mail','method'=>'post']) !!}
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  {!! Form::text('name',null,['placeholder'=>'Nombre Completo *','required', 'maxlength'=>150,'class'=>'col-md-12']) !!}
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <textarea class="form-control" id="message" placeholder="Your Message *" required data-validation-required-message="Please enter a message."></textarea>
-                    <p class="help-block text-danger"></p>
-                  </div>
+                <div class="form-group">
+                  {!! Form::email('email',null,['placeholder'=>'Ingrese Email *','required', 'maxlength'=>100,'class'=>'col-md-12']) !!}
                 </div>
-                <div class="clearfix"></div>
+                <div class="form-group">
+                  {!! Form::text('phone',null,['placeholder'=>'Ingrese Teléfono *','required', 'maxlength'=>30,'onkeypress'=>"return justNumbers(event);",'class'=>'col-md-12']) !!}
+                </div>
+                <div class="form-group">
+                  {!! Form::textarea('message',null,['placeholder'=>'Mensaje *','required', 'maxlength'=>255,'class'=>'col-md-12']) !!}
+                </div>
                 <div class="col-lg-12 text-center">
                   <div id="success"></div>
-                  <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
+                  <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Enviar</button>
                 </div>
+                <br>
               </div>
-            </form>
+              <div class="col-md-6">
+                <div class="fb-page" data-href="https://www.facebook.com/instituto100/" data-tabs="timeline" data-width="400" data-height="560" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/instituto100/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/instituto100/">Instituto CIEN</a></blockquote></div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-lg-12 text-center">
+                <!-- aqui estaba el boton -->
+              </div>
+            </div>
+            {!! Form::close() !!}
           </div>
         </div>
       </div>
-    </section-->
+    </section>
+    <div id="fb-root"></div>
+
+
 
     <!-- Footer -->
     <footer>
@@ -479,18 +487,23 @@
           </div>
           <div class="col-md-4">
             <ul class="list-inline social-buttons">
-              <li class="list-inline-item">
+              <!--li class="list-inline-item">
                 <a href="#">
                   <i class="fa fa-twitter"></i>
                 </a>
-              </li>
+              </li-->
+              <!--li class="list-inline-item">
+                <a href="fb://page/462521267252802">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li-->
               <li class="list-inline-item">
-                <a href="#">
+              <a href="https://www.facebook.com/instituto100/" target="_blank">
                   <i class="fa fa-facebook"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="#">
+                <a href="https://api.whatsapp.com/send?phone=59176989899" target="_blank">
                   <i class="fa fa-whatsapp"></i>
                 </a>
               </li>
@@ -499,10 +512,10 @@
           <div class="col-md-4">
             <ul class="list-inline quicklinks">
               <li class="list-inline-item">
-                <a href="#">Privacy Policy</a>
+                <div>(4) 4646464</div>
               </li>
               <li class="list-inline-item">
-                <a href="#">Terms of Use</a>
+                <div>(+591) 76989899</div>
               </li>
             </ul>
           </div>
@@ -724,6 +737,7 @@
   </div>
 </div>
 @include('modal.login')
+@include('alerts.succes')
 
 <!-- Bootstrap core JavaScript -->
 <!--script src="vendor/jquery/jquery.min.js"></script-->

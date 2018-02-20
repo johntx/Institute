@@ -56,4 +56,5 @@ Route::get('admin/teacher/horario/{teacher?}','TeacherController@horario');
 Route::get('admin/group/horario/{group?}','GroupController@horario');
 Route::get('admin/student/search/{id}','StudentController@search');
 Route::post('pass/changePassword','UserController@changePassword');
+Route::post('mail','FrontController@mail');
 Route::get('pass/changePasswordForm','UserController@changePasswordForm');
