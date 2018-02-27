@@ -13,6 +13,7 @@ use Illuminate\Routing\Route;
 use DB;
 use Carbon\Carbon;
 use Institute\Payment;
+use Auth;
 
 class ReportController extends Controller
 {
@@ -83,6 +84,27 @@ class ReportController extends Controller
         orderBy('startclasses.id','desc')
         ->get();
         return view('admin/report.payments',['startclasses'=>$startclasses]);
+    }
+    public function students()
+    {
+        $students = People::join('users','peoples.id','=','users.id')
+        ->join('roles','users.role_id','=','roles.id')
+        ->join('inscriptions','peoples.id','=','inscriptions.people_id')
+        ->join('groups','inscriptions.group_id','=','groups.id')
+        ->join('startclasses','groups.startclass_id','=','startclasses.id')
+        ->join('careers','startclasses.career_id','=','careers.id')
+        ->select('peoples.*','careers.nombre as carrera')
+        ->where('roles.code','EST')
+        ->where('peoples.office_id',Auth::user()->people->office_id)
+        ->orderBy('careers.id','DESC')->get();
+        $careers = \Institute\Career::
+        select('careers.*')
+        ->join('startclasses','careers.id','=','startclasses.career_id')
+        ->join('groups','startclasses.id','=','groups.startclass_id')
+        ->join('inscriptions','groups.id','=','inscriptions.group_id')
+        ->where('inscriptions.estado','Inscrito')
+        ->distinct('careers.id')->get();
+        return view('admin/report.students',['students'=>$students, 'careers'=>$careers]);
     }
     public function incomeByEmployee($fecha_inicio = '', $fecha_fin = '')
     {

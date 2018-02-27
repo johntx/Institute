@@ -56,7 +56,7 @@
 					@foreach ($startclasses as $startclass)
 					<option value="{{$startclass->id}}" 
 						costo='{{$startclass->costo}}' 
-						duracion='{{$startclass->duracion}}'
+						duracion='{{$startclass->duracion}}' carrera='{{$startclass->career->nombre}}'
 						>{{$startclass->career->nombre}} {{$startclass->descripcion}} - [{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}] ({{$startclass->estado}})
 					</option>
 					@endforeach
@@ -82,8 +82,20 @@
 					{!! Form::text('total',null,['class'=>'form-control total','placeholder'=>'Insert Total', 'onkeypress'=>"return justNumbers(event);"]) !!}
 				</div>
 			</div>
-			<br><br><br>
-			<br><br><br>
+			<br><br>
+			<br><br>
+			<!--div class="form-group">
+				{!! Form::checkbox('combo',null,null,['class'=>'combo']) !!}
+				{!! Form::label('COMBO') !!}
+			</div-->
+			<div id="div_extra" style="display: none;">
+				@foreach($extras as $extra)
+				<div class="form-group">
+					{!! Form::checkbox('extras[]',$extra->id,null,[ 'class'=>'extra','id'=>$extra->nombre, 'precio'=>$extra->precio]) !!}
+					{!! Form::label($extra->nombre,$extra->nombre.' ($'.$extra->precio.')') !!}
+				</div>
+				@endforeach
+			</div>
 			<div class="form-group">
 				{!! Form::label('Pago Inicial') !!}
 				{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required']) !!}

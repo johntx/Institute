@@ -186,13 +186,9 @@ class ScheduleController extends Controller
             'vigente' => $request['vigente'],
             'fecha' => \Carbon\Carbon::now()
             ]);
-        $this->schedule->hours->each(function($hour)
-        {
-            $hour->delete();
-        });
         $col = collect();
-        if (count($request['people_id'])>0) {
-            for ($i=0; $i < count($request['people_id']); $i++) {
+        if (count($request['subject_id'])>0) {
+            for ($i=0; $i < count($request['subject_id']); $i++) {
                 $hour = new Hour;
                 $hour->people_id = $request['people_id'][$i];
                 $hour->aula = $request['aula'][$i];
@@ -208,6 +204,10 @@ class ScheduleController extends Controller
             }
         }
         $this->schedule->save();
+        $this->schedule->hours->each(function($hour)
+        {
+            $hour->delete();
+        });
         $this->schedule->hours()->saveMany($col);
         Session::flash('message','Horario editado exitosamente');
         return Redirect::to('/admin/schedule');

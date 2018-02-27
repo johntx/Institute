@@ -68,13 +68,14 @@ class StudentController extends Controller
    */
   public function create()
   {
+    $extras = \Institute\Extra::get();
     $startclasses = \Institute\Startclass::
     select('startclasses.*')
     ->join('careers','startclasses.career_id','=','careers.id')
     ->where('startclasses.estado','!=','Cerrado')
     ->orderBy('startclasses.fecha_inicio','DESC')
     ->get();
-    return view('admin/student.create',['startclasses'=>$startclasses]);
+    return view('admin/student.create',['startclasses'=>$startclasses,'extras'=>$extras]);
   }
 
   /**
@@ -156,6 +157,9 @@ class StudentController extends Controller
       $user->save();
       $user->people()->save($people);
       $inscription->save();
+      if (!empty($request['extras'])){
+        $inscription->extras()->attach($request['extras']);
+      }
 
       if ($request['abono'] == $request['total']) {
         $payment = new \Institute\Payment;
@@ -246,11 +250,12 @@ class StudentController extends Controller
    */
   public function edit($id)
   {
+    $extras = \Institute\Extra::all();
     $startclasses = \Institute\Startclass::
     where('startclasses.estado','!=','Cerrado')
     ->orderBy('startclasses.fecha_inicio','DESC')
     ->get();
-    return view('admin/student.edit',['student'=>$this->student, 'startclasses'=>$startclasses]);
+    return view('admin/student.edit',['student'=>$this->student, 'startclasses'=>$startclasses, 'extras'=>$extras]);
   }
 
   /**
@@ -301,6 +306,15 @@ class StudentController extends Controller
           $payment->save();
         }
       }
+      if ($inscription->colegiatura == 'Debe') {
+        $lastpayment = \Institute\Payment::where('inscription_id',$inscription->id)
+        ->where('estado','Pendiente')
+        ->first();
+        if ($request['monto'][$i]!=$inscription->monto && $lastpayment->saldo==$inscription->monto) {
+          $lastpayment->saldo = $request['monto'][$i];
+          $lastpayment->save();
+        }
+      }
       $inscription->fill([
         'group_id' => $request['group_id'][$i],
         'estado' => $request['estado'][$i],
@@ -311,6 +325,10 @@ class StudentController extends Controller
         'user_id' => Auth::user()->id
         ]);
       $inscription->save();
+      $inscription->extras()->detach();
+      if (!empty($request['extras'])){
+        $inscription->extras()->attach($request['extras']);
+      }
     }
     Session::flash('message','Estudiante editado exitosamente');
     return Redirect::to('/admin/student/search/'.$this->student->id);

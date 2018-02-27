@@ -29,6 +29,10 @@ class Inscription extends Model
     {
         return $this->hasMany('Institute\Payment');
     }
+    public function extras()
+    {
+        return $this->belongsToMany('Institute\Extra','inscriptions_extras');
+    }
     public static function inscriptions($id){
         return Inscription::join('groups','inscriptions.group_id','=','groups.id')
         ->join('startclasses','groups.startclass_id','=','startclasses.id')

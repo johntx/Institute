@@ -125,7 +125,7 @@
             <i class="fa fa-circle fa-stack-2x text-primary"></i>
             <i class="fa fa-suitcase fa-stack-1x fa-inverse"></i>
           </span>
-          <h4 class="service-heading">Clases Privadas</h4>
+          <h4 class="service-heading">Clases Particulares</h4>
           <p class="text-muted">Te preparamos en el área o asignaturas que necesites reforzar y mejorar con docentes capacitados y flexibilidad de horarios.</p>
         </div>
       </div>
@@ -133,7 +133,7 @@
   </section>
 
   <!-- Carreras Grid -->
-  <section class="bg-light" id="portfolio">
+  <section class="bg-light" id="portfolio" style="padding: 50px 0 50px 0;">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -314,423 +314,271 @@
   </section-->
 
   <!-- Nosotros -->
-    <!--section class="bg-light" id="team">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">Sobre Nosotros</h2>
-            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="{!!URL::to('cien/img/team/1.jpg')!!}" alt="">
-              <h4>Kay Garland</h4>
-              <p class="text-muted">Lead Designer</p>
-              <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-facebook"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-whatsapp"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="{!!URL::to('cien/img/team/2.jpg')!!}" alt="">
-              <h4>Larry Parker</h4>
-              <p class="text-muted">Lead Marketer</p>
-              <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-facebook"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-whatsapp"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="{!!URL::to('cien/img/team/3.jpg')!!}" alt="">
-              <h4>Diana Pertersen</h4>
-              <p class="text-muted">Lead Developer</p>
-              <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-facebook"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="#">
-                    <i class="fa fa-whatsapp"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center">
-            <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-          </div>
+  <!--section class="bg-light" id="team">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Sobre Nosotros</h2>
+          <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
         </div>
       </div>
-    </section-->
-
-    <!-- Clients -->
-    <section class="py-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3 col-sm-6">
-            <a href="http://www.umss.edu.bo" target="_blank">
-              <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/umss.jpg')!!}" alt="">
-            </a>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <a href="http://www.ejercito.mil.bo/articulos/la_institucion/colmil.html" target="_blank">
-              <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/colmil.jpg')!!}" alt="">
-            </a>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <a href="http://www.unipol.edu.bo/index.php/esbapol" target="_blank">
-              <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/esbapol.jpg')!!}" alt="">
-            </a>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <a href="http://cefomb.blogspot.com/" target="_blank">
-              <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/cefom-b.jpg')!!}" alt="">
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contáctanos -->
-    <section id="contact">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">Contáctanos</h2>
-            <h3 class="section-subheading text-muted">Escríbenos por correo o a travez de nuestras redes.</h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            {!! Form::open(['url' => 'mail','method'=>'post']) !!}
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  {!! Form::text('name',null,['placeholder'=>'Nombre Completo *','required', 'maxlength'=>150,'class'=>'col-md-12']) !!}
-                </div>
-                <div class="form-group">
-                  {!! Form::email('email',null,['placeholder'=>'Ingrese Email *','required', 'maxlength'=>100,'class'=>'col-md-12']) !!}
-                </div>
-                <div class="form-group">
-                  {!! Form::text('phone',null,['placeholder'=>'Ingrese Teléfono *','required', 'maxlength'=>30,'onkeypress'=>"return justNumbers(event);",'class'=>'col-md-12']) !!}
-                </div>
-                <div class="form-group">
-                  {!! Form::textarea('message',null,['placeholder'=>'Mensaje *','required', 'maxlength'=>255,'class'=>'col-md-12']) !!}
-                </div>
-                <div class="col-lg-12 text-center">
-                  <div id="success"></div>
-                  <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Enviar</button>
-                </div>
-                <br>
-              </div>
-              <div class="col-md-6">
-                <div class="fb-page" data-href="https://www.facebook.com/instituto100/" data-tabs="timeline" data-width="400" data-height="560" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/instituto100/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/instituto100/">Instituto CIEN</a></blockquote></div>
-              </div>
-              <div class="clearfix"></div>
-              <div class="col-lg-12 text-center">
-                <!-- aqui estaba el boton -->
-              </div>
-            </div>
-            {!! Form::close() !!}
-          </div>
-        </div>
-      </div>
-    </section>
-    <div id="fb-root"></div>
-
-
-
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <span class="copyright">Copyright &copy; www.institutocien.com 2018</span>
-          </div>
-          <div class="col-md-4">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="team-member">
+            <img class="mx-auto rounded-circle" src="{!!URL::to('cien/img/team/1.jpg')!!}" alt="">
+            <h4>Kay Garland</h4>
+            <p class="text-muted">Lead Designer</p>
             <ul class="list-inline social-buttons">
-              <!--li class="list-inline-item">
+              <li class="list-inline-item">
                 <a href="#">
                   <i class="fa fa-twitter"></i>
                 </a>
-              </li-->
-              <!--li class="list-inline-item">
-                <a href="fb://page/462521267252802">
-                  <i class="fa fa-facebook"></i>
-                </a>
-              </li-->
+              </li>
               <li class="list-inline-item">
-              <a href="https://www.facebook.com/instituto100/" target="_blank">
+                <a href="#">
                   <i class="fa fa-facebook"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="https://api.whatsapp.com/send?phone=59176989899" target="_blank">
+                <a href="#">
                   <i class="fa fa-whatsapp"></i>
                 </a>
               </li>
             </ul>
           </div>
-          <div class="col-md-4">
-            <ul class="list-inline quicklinks">
+        </div>
+        <div class="col-sm-4">
+          <div class="team-member">
+            <img class="mx-auto rounded-circle" src="{!!URL::to('cien/img/team/2.jpg')!!}" alt="">
+            <h4>Larry Parker</h4>
+            <p class="text-muted">Lead Marketer</p>
+            <ul class="list-inline social-buttons">
               <li class="list-inline-item">
-                <div>(4) 4028383</div>
+                <a href="#">
+                  <i class="fa fa-twitter"></i>
+                </a>
               </li>
               <li class="list-inline-item">
-                <div>(+591) 76989899</div>
+                <a href="#">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-whatsapp"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="team-member">
+            <img class="mx-auto rounded-circle" src="{!!URL::to('cien/img/team/3.jpg')!!}" alt="">
+            <h4>Diana Pertersen</h4>
+            <p class="text-muted">Lead Developer</p>
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-whatsapp"></i>
+                </a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-    </footer>
-
-    <!-- Carreras Modals -->
-
-    <!-- Modal 1 -->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="close-modal" data-dismiss="modal">
-            <div class="lr">
-              <div class="rl"></div>
-            </div>
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-8 mx-auto">
-                <div class="modal-body">
-                  <!-- Project Details Go Here -->
-                  <h2 class="text-uppercase">Facultad de Tecnología</h2>
-                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                  <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/01-full.jpg')!!}" alt="">
-                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                  <ul class="list-inline">
-                    <li>Fecha: Noviembre</li>
-                    <li>Área: Tecnología</li>
-                    <li>Categoría: Universidad</li>
-                  </ul>
-                  <button class="btn btn-primary" data-dismiss="modal" type="button">
-                    <i class="fa fa-times"></i>
-                    Cerrar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
         </div>
       </div>
+    </div>
+  </section-->
+  <!-- Clients -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-sm-6">
+          <a href="http://www.umss.edu.bo" target="_blank">
+            <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/umss.jpg')!!}" alt="">
+          </a>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <a href="http://www.ejercito.mil.bo/articulos/la_institucion/colmil.html" target="_blank">
+            <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/colmil.jpg')!!}" alt="">
+          </a>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <a href="http://www.unipol.edu.bo/index.php/esbapol" target="_blank">
+            <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/esbapol.jpg')!!}" alt="">
+          </a>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <a href="http://cefomb.blogspot.com/" target="_blank">
+            <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/logos/cefom-b.jpg')!!}" alt="">
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <!-- Modal 2 -->
-      <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-              <div class="lr">
-                <div class="rl"></div>
+  <!-- Contáctanos -->
+  <section id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Contáctanos</h2>
+          <h3 class="section-subheading text-muted" style="margin-bottom: 50px">Escríbenos por correo o a travez de nuestras redes.</h3>
+        </div>
+        <div class="col-lg-12 text-center redes">
+          <a href="https://api.whatsapp.com/send?phone=59176989899" target="_blank">
+            <span>76989899</span><img src="{!!URL::to('icons/whats.svg')!!}" alt="">
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          {!! Form::open(['url' => 'mail','method'=>'post']) !!}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                {!! Form::text('name',null,['placeholder'=>'Nombre Completo *','required', 'maxlength'=>150,'class'=>'col-md-12']) !!}
               </div>
-            </div>
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-8 mx-auto">
-                  <div class="modal-body">
-                    <!-- Project Details Go Here -->
-                    <h2 class="text-uppercase">Project Name</h2>
-                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                    <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/02-full.jpg')!!}" alt="">
-                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                    <ul class="list-inline">
-                      <li>Date: January 2017</li>
-                      <li>Client: Explore</li>
-                      <li>Category: Graphic Design</li>
-                    </ul>
-                    <button class="btn btn-primary" data-dismiss="modal" type="button">
-                      <i class="fa fa-times"></i>
-                      Close Project</button>
-                    </div>
-                  </div>
-                </div>
+              <div class="form-group">
+                {!! Form::email('email',null,['placeholder'=>'Ingrese Email *','required', 'maxlength'=>100,'class'=>'col-md-12']) !!}
               </div>
+              <div class="form-group">
+                {!! Form::text('phone',null,['placeholder'=>'Ingrese Teléfono *','required', 'maxlength'=>30,'onkeypress'=>"return justNumbers(event);",'class'=>'col-md-12']) !!}
+              </div>
+              <div class="form-group">
+                {!! Form::textarea('message',null,['placeholder'=>'Mensaje *','required', 'maxlength'=>255,'class'=>'col-md-12']) !!}
+              </div>
+              <div class="col-lg-12 text-center">
+                <div id="success"></div>
+                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Enviar</button>
+              </div>
+              <br>
             </div>
+            <div class="col-md-6">
+              <div class="fb-page" data-href="https://www.facebook.com/instituto100/" data-tabs="timeline" data-width="400" data-height="560" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/instituto100/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/instituto100/">Instituto CIEN</a></blockquote></div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-lg-12 text-center">
+              <!-- aqui estaba el boton -->
+            </div>
+          </div>
+          {!! Form::close() !!}
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="fb-root"></div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <span class="copyright">Copyright &copy; www.institutocien.com 2018</span>
+        </div>
+        <div class="col-md-4">
+          <ul class="list-inline social-buttons">
+            <!--li class="list-inline-item">
+              <a href="#">
+                <i class="fa fa-twitter"></i>
+              </a>
+            </li-->
+            <!--li class="list-inline-item">
+              <a href="fb://page/462521267252802">
+                <i class="fa fa-facebook"></i>
+              </a>
+            </li-->
+            <li class="list-inline-item">
+              <a href="https://www.facebook.com/instituto100/" target="_blank">
+                <i class="fa fa-facebook"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="https://api.whatsapp.com/send?phone=59176989899" target="_blank">
+                <i class="fa fa-whatsapp"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <ul class="list-inline quicklinks">
+            <li class="list-inline-item">
+              <div>(4) 4028383</div>
+            </li>
+            <li class="list-inline-item">
+              <div>(+591) 76989899</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Carreras Modals -->
+
+  <!-- Modal 1 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
           </div>
         </div>
-
-        <!-- Modal 3 -->
-        <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                  <div class="rl"></div>
-                </div>
-              </div>
-              <div class="container">
-                <div class="row">
-                  <div class="col-lg-8 mx-auto">
-                    <div class="modal-body">
-                      <!-- Project Details Go Here -->
-                      <h2 class="text-uppercase">Project Name</h2>
-                      <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                      <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/03-full.jpg')!!}" alt="">
-                      <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                      <ul class="list-inline">
-                        <li>Date: January 2017</li>
-                        <li>Client: Finish</li>
-                        <li>Category: Identity</li>
-                      </ul>
-                      <button class="btn btn-primary" data-dismiss="modal" type="button">
-                        <i class="fa fa-times"></i>
-                        Close Project</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Modal 4 -->
-          <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                  <div class="lr">
-                    <div class="rl"></div>
-                  </div>
-                </div>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                      <div class="modal-body">
-                        <!-- Project Details Go Here -->
-                        <h2 class="text-uppercase">Project Name</h2>
-                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                        <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/04-full.jpg')!!}" alt="">
-                        <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                        <ul class="list-inline">
-                          <li>Date: January 2017</li>
-                          <li>Client: Lines</li>
-                          <li>Category: Branding</li>
-                        </ul>
-                        <button class="btn btn-primary" data-dismiss="modal" type="button">
-                          <i class="fa fa-times"></i>
-                          Close Project</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Modal 5 -->
-            <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                      <div class="rl"></div>
-                    </div>
-                  </div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-lg-8 mx-auto">
-                        <div class="modal-body">
-                          <!-- Project Details Go Here -->
-                          <h2 class="text-uppercase">Project Name</h2>
-                          <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                          <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/05-full.jpg')!!}" alt="">
-                          <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                          <ul class="list-inline">
-                            <li>Date: January 2017</li>
-                            <li>Client: Southwest</li>
-                            <li>Category: Website Design</li>
-                          </ul>
-                          <button class="btn btn-primary" data-dismiss="modal" type="button">
-                            <i class="fa fa-times"></i>
-                            Close Project</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Modal 6 -->
-              <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="close-modal" data-dismiss="modal">
-                      <div class="lr">
-                        <div class="rl"></div>
-                      </div>
-                    </div>
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-lg-8 mx-auto">
-                          <div class="modal-body">
-                            <!-- Project Details Go Here -->
-                            <h2 class="text-uppercase">Project Name</h2>
-                            <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                            <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/06-full.jpg')!!}" alt="">
-                            <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                            <ul class="list-inline">
-                              <li>Date: January 2017</li>
-                              <li>Client: Window</li>
-                              <li>Category: Photography</li>
-                            </ul>
-                            <button class="btn btn-primary" data-dismiss="modal" type="button">
-                              <i class="fa fa-times"></i>
-                              Close Project</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <div class="modal-body">
+                <!-- Project Details Go Here -->
+                <h2 class="text-uppercase">Facultad de Tecnología</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/01-full.jpg')!!}" alt="">
+                <p><b>La facultad de Ciencias y Tecnología está compuesta por las carreras siguientes:</b></p>
+                <ul class="list-inline">
+                  <li>Ingeniería Civil</li>
+                  <li>Ingeniería de Alimentos</li>
+                  <li>Ingeniería de Sistemas</li>
+                  <li>Ingeniería Eléctrica</li>
+                  <li>Ingeniería Electrónica</li>
+                  <li>Ingeniería Electromecánica</li>
+                  <li>Ingeniería Industrial</li>
+                  <li>Ingeniería en Informática</li>
+                  <li>Ingeniería Matemática</li>
+                  <li>Ingeniería Mecánica</li>
+                  <li>Ingeniería Química</li>
+                  <li>Licenciatura en Biología</li>
+                  <li>Licenciatura en Didáctica de la Física</li>
+                  <li>Licenciatura en Didáctica de la Matemática</li>
+                  <li>Licenciatura en Física</li>
+                  <li>Licenciatura en Matemáticas</li>
+                  <li>Licenciatura en Química</li>
+                </ul>
+                <p><b>Prepárate para el examen de ingreso en cualquiera de las carreras anteriores con nuestro curso Pre-universitario compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Aritmética-Álgebra</li>
+                  <li>Geometría-Trigonometría</li>
+                  <li>Física</li>
+                  <li>Química</li>
+                  <li>Biología</li>
+                </ul>
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                  <i class="fa fa-times"></i>
+                  Cerrar
+                </button>
               </div>
             </div>
           </div>
@@ -738,30 +586,313 @@
       </div>
     </div>
   </div>
-</div>
-@include('modal.login')
-@include('alerts.succes')
 
-<!-- Bootstrap core JavaScript -->
-<!--script src="vendor/jquery/jquery.min.js"></script-->
-{!!Html::script('cien/vendor/jquery/jquery.min.js')!!}
-<!--script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script-->
-{!!Html::script('cien/vendor/bootstrap/js/bootstrap.bundle.min.js')!!}
+  <!-- Modal 2 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <div class="modal-body">
+                <!-- Project Details Go Here -->
+                <h2 class="text-uppercase">Facultad de Licenciatura en Ciencias Policiales</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/02-full.jpg')!!}" alt="">
 
-<!-- Plugin JavaScript -->
-<!--script src="vendor/jquery-easing/jquery.easing.min.js"></script-->
-{!!Html::script('cien/vendor/jquery-easing/jquery.easing.min.js')!!}
+                <p><b>Unidades académicas:</b></p>
+                <ul class="list-inline">
+                  <li>ANAPOL</li>
+                  <li>ESBAPOL</li>
+                  <li>ESBAPOLMUS</li>
+                </ul>
+                <br><br>
+                <h2 class="text-uppercase">Ejército de Bolivia</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/021-full.jpg')!!}" alt="">
 
-<!-- Contáctanos form JavaScript -->
-<!--script src="js/jqBootstrapValidation.js"></script-->
-{!!Html::script('cien/js/jqBootstrapValidation.js')!!}
-<!--script src="js/contact_me.js"></script-->
-{!!Html::script('cien/js/contact_me.js')!!}
+                <p><b>Unidades académicas:</b></p>
+                <ul class="list-inline">
+                  <li>COLMIL</li>
+                  <li>EMSSE</li>
+                  <li>EMTE</li>
+                  <li>EMME</li>
+                  <li>COLMILAV</li>
+                  <li>POLMILAE</li>
+                  <li>EMMFAB</li>
+                  <li>ESA</li>
+                  <li>ESNAMIL</li>
+                </ul>
+                <p><b>Prepárate para el examen de ingreso en cualquiera de las carreras anteriores con nuestro curso Pre-universitario compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Revisión Médica</li>
+                  <li>Test Psicotécnico - Psicológico</li>
+                  <li>Matemáticas</li>
+                  <li>Fisica</li>
+                  <li>Química</li>
+                  <li>Lenguaje Literatura</li>
+                  <li>Historia - Cívica - Geografía</li>
+                  <li>Psicología - Filosofía</li>
+                  <li>Bliología</li>
+                  <li>Instrucción Física</li>
+                  <li>Natación</li>
+                </ul>
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                  <i class="fa fa-times"></i>
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- Custom scripts for this template -->
-<!--script src="js/agency.min.js"></script-->
-{!!Html::script('cien/js/agency.min.js')!!}
-{!!Html::script('js/cien.js')!!}
+  <!-- Modal 3 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <div class="modal-body">
+                <!-- Project Details Go Here -->
+                <h2 class="text-uppercase">Medicina</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/03-full.jpg')!!}" alt="">
+                <p><b>Nuestro curso Pre-universitario está compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Morfofunción I y II</li>
+                  <li>Biología Celular</li>
+                  <li>Educación para la Salud</li>
+                </ul>
+                <br><br><br>
+                <h2 class="text-uppercase">Fisioterápia</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <p><b>Nuestro curso Pre-universitario está compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Morfofunción</li>
+                  <li>Física Básica</li>
+                </ul>
+                <br><br><br>
+                <h2 class="text-uppercase">Nutrición</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <p><b>Nuestro curso Pre-universitario está compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Anatomía y Fisiología</li>
+                  <li>Biología y Genética</li>
+                  <li>Aritmétiga - Lógica</li>
+                  <li>Química General</li>
+                  <li>Conocimientos y Conceptos Generales</li>
+                </ul>
+                <br><br><br>
+                <h2 class="text-uppercase">Odontología</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <p><b>Nuestro curso Pre-universitario está compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Biología</li>
+                  <li>Química</li>
+                  <li>Técnicas de Estudio</li>
+                  <li>Soporte Básico de Vida</li>
+                </ul>
+                <br><br><br>
+                <h2 class="text-uppercase">Bioquímica</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <p><b>Nuestro curso Pre-universitario está compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Matemáticas</li>
+                  <li>Física</li>
+                  <li>Química</li>
+                  <li>Biología</li>
+                </ul>
+                <br><br><br>
+                <h2 class="text-uppercase">Enfermería</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <p><b>Nuestro curso Pre-universitario está compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Biología</li>
+                  <li>Salud Pública</li>
+                  <li>Química</li>
+                  <li>Enfermería Clinica</li>
+                  <li>Técnicas de Estudio</li>
+                  <li>Expresión Oral y Escrita</li>
+                </ul>
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                  <i class="fa fa-times"></i>
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <div class="modal-body">
+                <!-- Project Details Go Here -->
+                <h2 class="text-uppercase">FACULTAD DE CIENCIAS ECONÓMICAS</h2>
+                <p class="item-intro text-muted"><!--Lorem ipsum dolor sit amet consectetur.--></p>
+                <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/04-full.jpg')!!}" alt="">
+                <p><b>La facultad de Ciencias Económicas está compuesta por las carreras siguientes:</b></p>
+                <ul class="list-inline">
+                  <li>Licenciatura en Contaduría Publica</li>
+                  <li>Licenciatura en Administración de Empresas</li>
+                  <li>Licenciatura en Economía</li>
+                  <li>Licenciatura en Ingeniería Financiera</li>
+                  <li>Licenciatura en Ingeniería Comercial</li>
+                </ul>
+                <p><b>Prepárate para el examen de ingreso en cualquiera de las carreras anteriores con nuestro curso Pre-universitario compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Aritmética</li>
+                  <li>Álgebra</li>
+                  <li>Historia</li>
+                  <li>Lenguaje</li>
+                </ul>
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                  <i class="fa fa-times"></i>
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <div class="modal-body">
+                <!-- Project Details Go Here -->
+                <h2 class="text-uppercase">NORMALISTAS</h2>
+                <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/05-full.jpg')!!}" alt="">
+                <p><b>Carreras Disponíbles:</b></p>
+                <ul class="list-inline">
+                  <li>EDUCACIÓN INICIAL</li>
+                  <li>CIENCIAS NATURALES</li>
+                  <li>CIENCIAS SOCIALES</li>
+                  <li>EDUCACIÓN MUSICAL</li>
+                  <li>ARTES PLÁSTICAS Y VISUALES</li>
+                  <li>VALORES ESPIRITUALES Y RELIGIOSOS</li>
+                  <li>COSMOVISIÓN PSICOLOGÍA Y FILOSOFÍA</li>
+                  <li></li>
+                </ul>
+                <p><b>Prepárate para el examen de ingreso en cualquiera de las carreras anteriores con nuestro curso Pre-universitario compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Conocimientos de Materias</li>
+                  <li>Conocimnientos de la Especialidad</li>
+                  <li>Razonamiento Lógico - Matemático</li>
+                  <li>Comprensión Lectora y Razonamiento Verbal</li>
+                </ul>
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                  <i class="fa fa-times"></i>
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 6 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <div class="modal-body">
+                <!-- Project Details Go Here -->
+                <h2 class="text-uppercase">FACULTAD DE CIENCIAS JURÍDICAS Y POLÍTICAS</h2>
+                <img class="img-fluid d-block mx-auto" src="{!!URL::to('cien/img/portfolio/06-full.jpg')!!}" alt="">
+                <p><b>La facultad de Ciencias Jurídicas y Políticas está compuesta por las carreras siguientes:</b></p>
+                <ul class="list-inline">
+                  <li>CIENCIAS JURÍDICAS</li>
+                  <li>CIENCIAS POLÍTICAS</li>
+                </ul>
+                <p><b>Prepárate para el examen de ingreso en cualquiera de las carreras anteriores con nuestro curso Pre-universitario compuesto por las siguientes materias:</b></p>
+                <ul class="list-inline">
+                  <li>Historia Crítica Boliviana</li>
+                  <li>Geografía Univ. y Bol.</li>
+                  <li>Cívica</li>
+                  <li>Normativa Inst. U.</li>
+                  <li>Lenguaje y Redacción</li>
+                </ul>
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                  <i class="fa fa-times"></i>
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  @include('modal.login')
+  @include('alerts.succes')
+
+  <!-- Bootstrap core JavaScript -->
+  <!--script src="vendor/jquery/jquery.min.js"></script-->
+  {!!Html::script('cien/vendor/jquery/jquery.min.js')!!}
+  <!--script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script-->
+  {!!Html::script('cien/vendor/bootstrap/js/bootstrap.bundle.min.js')!!}
+
+  <!-- Plugin JavaScript -->
+  <!--script src="vendor/jquery-easing/jquery.easing.min.js"></script-->
+  {!!Html::script('cien/vendor/jquery-easing/jquery.easing.min.js')!!}
+
+  <!-- Contáctanos form JavaScript -->
+  <!--script src="js/jqBootstrapValidation.js"></script-->
+  {!!Html::script('cien/js/jqBootstrapValidation.js')!!}
+  <!--script src="js/contact_me.js"></script-->
+  {!!Html::script('cien/js/contact_me.js')!!}
+
+  <!-- Custom scripts for this template -->
+  <!--script src="js/agency.min.js"></script-->
+  {!!Html::script('cien/js/agency.min.js')!!}
+  {!!Html::script('js/cien.js')!!}
 
 </body>
 

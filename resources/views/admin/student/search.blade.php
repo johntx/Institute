@@ -18,7 +18,6 @@
 		<p class="col-sm-6"><b>Telefono:</b> {{$student->telefono }}</p>
 		<p class="col-sm-6"><b>Telefono Padres:</b> {{$student->telefono2 }}</p>
 		<p class="col-sm-6">{!!link_to_route('admin.student.edit', $title = 'Editar Estudiante', $parameters = $student->id, $attributes = ['class'=>'btn btn-primary'])!!}</p>
-		
 	</div>
 </div>
 @foreach ($student->inscriptions as $inscription)
@@ -44,6 +43,10 @@
 		</p>
 		<p class="col-sm-6"><b>Fecha inicio de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}</p>
 		<p class="col-sm-6"><b>Fecha fin de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_fin)->format('j M Y')}}</p>
+		<p class="col-sm-6"><b>Cursos extras:</b>
+		@foreach ($inscription->extras as $extra)
+			{{$extra->nombre}}, 
+		@endforeach</p>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-hover">

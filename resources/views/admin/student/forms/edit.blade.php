@@ -72,20 +72,31 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('Pagos por mes') !!}
-				{!! Form::text('monto[]',$inscription->monto,['class'=>'form-control','onkeypress'=>"return justNumbers(event);",'required']) !!}
+				{!! Form::text('monto[]',$inscription->monto,['class'=>'form-control','id'=>'monto','onkeypress'=>"return justNumbers(event);",'required']) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('Abono total') !!}
-				{!! Form::label($inscription->abono,null,['class'=>'form-control','onkeypress'=>"return justNumbers(event);",'required']) !!}
+				{!! Form::label($inscription->abono,null,['class'=>'form-control','abono'=>$inscription->abono,'id'=>'abon','onkeypress'=>"return justNumbers(event);",'required']) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('Total a pagar') !!}
-				{!! Form::text('total[]',$inscription->total,['class'=>'form-control','onkeypress'=>"return justNumbers(event);",'required']) !!}
+				{!! Form::text('total[]',$inscription->total,['class'=>'form-control','id'=>'totl','onkeypress'=>"return justNumbers(event);",'required']) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('Estado de pagos') !!}
 				{!! Form::select('colegiatura[]',['Debe' => 'Debe','Pagado' => 'Pagado'],$inscription->colegiatura,['class'=>'form-control','maxlength'=>20]) !!}
 			</div>
+			<?php $iextras = $inscription->extras; ?>
+			@foreach($extras as $extra)
+			<div class="form-group">
+				@if ($iextras->contains($extra->id))
+				{!! Form::checkbox('extras[]',$extra->id,$extra->id,[ 'class'=>'extra2','id'=>$extra->nombre, 'precio'=>$extra->precio]) !!}
+				@else
+				{!! Form::checkbox('extras[]',$extra->id,null,[ 'class'=>'extra2','id'=>$extra->nombre, 'precio'=>$extra->precio]) !!}
+				@endif
+				{!! Form::label($extra->nombre,$extra->nombre.' ($'.$extra->precio.')') !!}
+			</div>
+			@endforeach
 			@if (!empty(Auth::user()->role->functionalities()->select('functionalities.*')->where('code','DINS')->first()))
 			{!!link_to_route('admin.inscription.show', $title = 'Eliminar Inscripción', $parameters = $inscription->id, $attributes = ['class'=>'btn btn-warning'])!!}
 			@endif

@@ -166,7 +166,6 @@ $('body').on('keyup','.duracion',function () {
 $(document).ready(function(){
 	$('#career_select').change(function(){
 		$.get("/cien/public/admin/groups/"+event.target.value+"",function(group,response){
-			/*console.log(group);*/
 			$("#group_id").empty();
 			for (var i = 0 ; i < group.length; i++) {
 				$('#group_id').append("<option value='"
@@ -178,6 +177,12 @@ $(document).ready(function(){
 		$('#monto').val($(this).children('option:selected').attr('costo'));
 		$('#meses').html($(this).children('option:selected').attr('duracion'));
 		change_total();
+		var career = $(this).children('option:selected').attr('carrera');
+		if (career=='MILITARES' || career=='POLICIAS') {
+			$('#div_extra').css('display','block')
+		} else {
+			$('#div_extra').css('display','none')
+		}
 	});
 	$('#payments_estudiante').change(function(){
 		$.get("/cien/public/admin/inscriptions/"+event.target.value+"",function(inscription,response){
@@ -224,14 +229,13 @@ $(document).ready(function(){
 });
 $(function() {
 	$('.dropdown-menu a').click(function() {
-		console.log($(this).attr('data-value'));
 		$(this).closest('.dropdown').find('input.turno')
 		.val($(this).attr('data-value'));
 	});
 });
 function cargarpagos(inscription_id){
 	$.get("/cien/public/admin/payments/"+inscription_id+"",function(payments,response){
-		/*console.log(payments);*/
+		
 		$("#payments_pagos").empty();
 		for (var i = 0 ; i < payments.length; i++) {
 			if (payments[i].fecha_pago == null) {
@@ -280,7 +284,7 @@ function cargaringresos(){
 	var inicio = $('#date_ingresos_inicio').val();
 	var fin = $('#date_ingresos_fin').val();
 	$.get("/cien/public/admin/report/chart/"+inicio+"/"+fin+"",function(listaIngresos,response){
-		console.log(listaIngresos);
+		
 		$("#ingresos").empty();
 		var ctxL = document.getElementById("lineChart").getContext('2d');
 		var myLineChart = new Chart(ctxL, {
@@ -322,6 +326,39 @@ function change_total(){
 }
 $('body').on('keyup','#monto',function () {
 	change_total();
+});
+$('body').on('click','.extra',function () {
+	extra_simple(this);
+});
+function extra_simple(element) {
+	var precio = $(element).attr('precio');
+	if ($(element).prop('checked')){
+		var suma = parseInt(precio)+parseInt($('#monto').val());
+		$('#monto').val(suma);
+	} else {
+		var resta = parseInt($('#monto').val())-parseInt(precio);
+		$('#monto').val(resta);
+	}
+	change_total();
+}
+$('body').on('click','.extra2',function () {
+	var total = parseInt($('#totl').val())-parseInt($('#abon').attr('abono'));
+	var mesrestante = parseInt(total / $('#monto').val());
+	var precio = $(this).attr('precio');
+	if ($(this).prop('checked')){
+		var suma = parseInt(precio)+parseInt($('#monto').val());
+		$('#monto').val(suma);
+		var asumar = mesrestante*$(this).attr('precio');
+		var suma_total = parseInt(asumar)+parseInt($('#totl').val());
+		$('#totl').val(suma_total);
+	} else {
+		var resta = parseInt($('#monto').val())-parseInt(precio);
+		$('#monto').val(resta);
+		var arestar = mesrestante*$(this).attr('precio');
+		var resta_total = parseInt($('#totl').val())-parseInt(arestar);
+		$('#totl').val(resta_total);
+	}
+	$('#totl').val();
 });
 function justNumbers(e){
 	var key = e.which || e.keyCode; 

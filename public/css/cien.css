@@ -89,3 +89,11 @@ a.navbar-brand>img{
 	background-color: #3CDF39;
 	color: white;
 }
+.redes a img{
+	width: 50px;
+	margin: 0 0 30px 20px;
+}
+.redes a span{
+	color: white;
+	font-size: 40px;
+}

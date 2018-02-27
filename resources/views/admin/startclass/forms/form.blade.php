@@ -32,7 +32,7 @@
 </div>
 <div class="col-xs-6" style="padding-right: 0;">
 	<div class="panel panel-default">
-		<div class="panel-heading">Habrir Grupos</div>
+		<div class="panel-heading">Abrir Grupos</div>
 		<div class="panel-body">
 			<div class="form-group">
 				{!! Form::checkbox('turno[]','Mañana 08:00 a 10:00',false,['id'=>'Mañana 08:00 a 10:00']) !!}
