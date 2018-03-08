@@ -24,7 +24,6 @@ $('document').ready(function(){
 		$("#boton_fecha_income").attr('href',string);
 	});
 });
-
 function close_alert() {
 	$('.alert_cli').fadeOut();
 }
@@ -33,8 +32,8 @@ $('#inscribir').on('submit',function(e){
 		header:$('meta[name="_token"]').attr('content')
 	});
 	e.preventDefault(e);
+	$('#inscribir input[type=submit]').attr("disabled", true);
 	$.ajax({
-
 		type:"POST",
 		url:window.location.origin+'/cien/public/admin/student',
 		data:$(this).serialize(),
@@ -59,8 +58,8 @@ $('#reinscribir').on('submit',function(e){
 		header:$('meta[name="_token"]').attr('content')
 	});
 	e.preventDefault(e);
+	$('#reinscribir input[type=submit]').attr("disabled", true);
 	$.ajax({
-
 		type:"POST",
 		url:window.location.origin+'/cien/public/admin/inscription',
 		data:$(this).serialize(),
@@ -86,6 +85,7 @@ $('#paymentForm').on('submit',function(e){
 		header:$('meta[name="_token"]').attr('content')
 	});
 	e.preventDefault(e);
+	$('#paymentForm input[type=submit]').attr("disabled", true);
 	$.ajax({
 		type:"POST",
 		url:window.location.origin+'/cien/public/admin/payment',

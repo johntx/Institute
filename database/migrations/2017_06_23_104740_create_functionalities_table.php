@@ -18,7 +18,7 @@ class CreateFunctionalitiesTable extends Migration
             $table->string('label',20);
             $table->string('path',50)->unique();
             $table->integer('menu_id')->unsigned()->nullable();
-            $table->foreign('menu_id')->references('id')->on('menus')->onDelete('set null');
+            $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
         });
     }
 

@@ -21,7 +21,7 @@ class CreateHoursTable extends Migration
             $table->integer('periodos')->nullable();
             $table->string('dia',20)->nullable();
             $table->integer('group_id')->unsigned()->nullable();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->integer('career_id')->unsigned()->nullable();
             $table->foreign('career_id')->references('id')->on('careers')->onDelete('cascade');
             $table->integer('subject_id')->unsigned()->nullable();
@@ -29,7 +29,7 @@ class CreateHoursTable extends Migration
             $table->integer('schedule_id')->unsigned()->nullable();
             $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
             $table->integer('people_id')->unsigned()->nullable();
-            $table->foreign('people_id')->references('id')->on('peoples')->onDelete('set null');
+            $table->foreign('people_id')->references('id')->on('peoples')->onDelete('cascade');
         });
     }
 

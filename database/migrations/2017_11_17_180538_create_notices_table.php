@@ -20,7 +20,7 @@ class CreateNoticesTable extends Migration
       $table->text('texto')->nullable();
       $table->string('foto',255)->nullable();
       $table->integer('user_id')->unsigned()->nullable();
-      $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+      $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
     });
   }
 

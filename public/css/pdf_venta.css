@@ -1,0 +1,129 @@
+*{
+	font-family: arial;
+}
+html, body{
+	margin: 0; padding: 0;
+}
+body{
+	position: relative;
+}
+#separador{
+	width: 100%;
+	height: 0;
+	max-height: 0;
+	display: block;
+	background-color: rgba(54,48,112,0.3);
+	position: absolute;
+	top: 50%;
+}
+.agua{
+	position: absolute;
+	width: 350px;
+	left: 230px;
+	top: 150px;
+}
+.recivo{
+	position: absolute;
+	width: 100%;
+	height: 50%;
+	display: block;
+}
+.recivo.copia{
+	top: 50%;
+}
+.recivo>div{
+	height: 445px;
+	width: 100%;
+	margin: 40px;
+	border: 1px solid #363070;
+	border-radius: 20px;
+}
+.recivo>div>.top{
+	height: 100px;
+	display: block;
+	color: #363070;
+}
+.recivo>div>.top>*{
+	float: left;
+}
+.recivo>div>.top>img{
+	height: 100px;
+}
+.recivo>div>.top>h1{
+	padding-left: 80px;
+	font-size: 50px;
+	margin-top: 20px;
+}
+.recivo>div>.top>div{
+	float: right;
+	width: 140px;
+	height: 100px;
+	margin-right: 20px;
+}
+.recivo>div>.top>div>span{
+	display: block;
+	padding: 25px 10px 10px 10px;
+	font-size: 35px;
+}
+.recivo>div>.mid{
+	width: 100%;
+	height: 325px;
+	padding: 15px 15px 0 15px;
+	position: relative;
+}
+.recivo>div>.mid>div{
+	width: 100%;
+	height: 315px;
+}
+.recivo>div>.mid>div>div{
+	display: block;
+	margin: 5px 0 0 0;
+}
+.recivo>div>.mid>div>div:first-child{
+	padding: 5px 0 5px 0;
+}
+.recivo>div>.mid>div>div>table{
+	padding: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+.recivo>div>.mid>div>div>table>tbody th{
+	border: 1px solid #363070;
+}
+.recivo>div>.mid>div>div>table>tbody td{
+	border: 1px solid #363070;
+	padding: 2px;
+	margin: 0;
+}
+.recivo>div>.mid>div>div>table>tbody>tr>*{
+	text-align: center;
+}
+.recivo>div>.mid>div>div>table>tbody>tr>th{
+	color: #363070;
+}
+.recivo>div>.mid>div>div>table>tbody>tr>td.nombre_item{
+	text-align: left;
+}
+.recivo>div>.mid>div>div.city{
+	position: absolute;
+	bottom: 520px;
+	left: 260px;
+}
+.recivo>div>.mid>div>div.city2{
+	position: absolute;
+	bottom: 0px;
+	left: 260px;
+}
+.recivo>.user{
+	position: absolute;
+	right: 70px;
+	bottom: 573px;
+	font-size: 14px;
+}
+.recivo>.user2{
+	position: absolute;
+	right: 70px;
+	bottom: 45px;
+	font-size: 14px;
+}

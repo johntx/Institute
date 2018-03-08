@@ -31,7 +31,7 @@
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P4' && $hora->aula=='A'.$i)
 							<div class="hour show" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 9px;">
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 9px; font-style: italic;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else

@@ -16,11 +16,11 @@ class CreateAssistancesTable extends Migration
       $table->increments('id');
       $table->date('fecha')->nullable();
       $table->integer('inscription_id')->unsigned()->nullable();
-      $table->foreign('inscription_id')->references('id')->on('inscriptions')->onDelete('set null');
+      $table->foreign('inscription_id')->references('id')->on('inscriptions')->onDelete('cascade');
       $table->integer('people_id')->unsigned()->nullable();
-      $table->foreign('people_id')->references('id')->on('peoples')->onDelete('set null');
+      $table->foreign('people_id')->references('id')->on('peoples')->onDelete('cascade');
       $table->integer('subject_id')->unsigned()->nullable();
-      $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('set null');
+      $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
       $table->timestamps();
     });
   }

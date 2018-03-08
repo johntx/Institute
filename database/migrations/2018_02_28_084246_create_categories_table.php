@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClassroomsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,9 @@ class CreateClassroomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('classrooms', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre',100);
-            $table->integer('office_id')->unsigned()->nullable();
-            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
+            $table->string('nombre',50);
         });
     }
 
@@ -27,6 +25,6 @@ class CreateClassroomsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('classrooms');
+        Schema::drop('categories');
     }
 }

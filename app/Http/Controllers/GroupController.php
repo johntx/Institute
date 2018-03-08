@@ -139,6 +139,10 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
+        $hours = \Institute\Hour::where('group_id',$this->group->id)->get();
+        foreach ($hours as $hour) {
+            $hour->delete();
+        }
         $this->group->delete();
         Session::flash('message','Grupo borrado exitosamente');
         return Redirect::to('/admin/group');

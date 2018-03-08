@@ -80,7 +80,7 @@
 					<div class="col-xs-6" style="padding: 3;">
 						<li class=" droppable">
 							<div class="hour matematica" size="4" texto="{{$group->startclass->career->texto}}" asignatura="{{$subject->nombre}}" carrera="{{$group->startclass->career->nombre}}" fecha="{{$group->startclass->fecha_inicio}}" color="{{$group->startclass->career->color}}" group_id="{{$group->id}}" career_id="{{$group->startclass->career->id}}" subject_id="{{$subject->id}}" style="background-color: {{$group->startclass->career->color}}; color: {{$group->startclass->career->texto}}; ">{{$subject->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$group->startclass->career->color}}; color: {{$group->startclass->career->texto}}; font-size: 9px;">
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$group->startclass->career->color}}; color: {{$group->startclass->career->texto}}; font-size: 9px; font-style: italic;">
 									@if (sizeof($subject->peoples)==0)
 									<option value="null">Nadie</option>
 									@endif
