@@ -8,7 +8,7 @@ class Income extends Model
 {
 	protected $table = 'incomes';
 
-	protected $fillable = ['fecha','detalle','descuento','user_id','office_id'];
+	protected $fillable = ['fecha','detalle','total','user_id','office_id'];
 
 	public $timestamps = false;
 	public function incomelists()

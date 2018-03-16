@@ -40,7 +40,7 @@
 				<span class="price"></span><span> Bs.</span>
 			</td>
 			<td class="quantity">
-				<input name="cantidad[]" min="1" max="100" type="number" class="form-control col-xs-1 quant" value="1" disabled required>
+				<input name="cantidad[]" min="0" max="100" type="number" class="form-control col-xs-1 quant" value="1" disabled required>
 			</td>
 			<td>
 				<span class="subtotal"></span><span> Bs.</span>
@@ -73,7 +73,7 @@
 				<span class="price"></span><span> Bs.</span>
 			</td>
 			<td class="quantity">
-				<input name="cantidad[]" min="1" max="100" type="number" class="form-control col-xs-1 quant" value="1" disabled required>
+				<input name="cantidad[]" min="0" max="100" type="number" class="form-control col-xs-1 quant" value="1" disabled required>
 			</td>
 			<td>
 				<span class="subtotal"></span> <span> Bs.</span>

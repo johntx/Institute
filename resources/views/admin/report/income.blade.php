@@ -18,6 +18,8 @@
 					<tr>
 						<th>MES</th>
 						<th>INGRESOS</th>
+						<th>EGRESOS</th>
+						<th>TOTAL</th>
 					</tr>
 				</thead>
 				<tbody id="ingresos">
@@ -26,6 +28,24 @@
 		</div>
 	</div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 @endsection
 @section('adminjs')
 <script>$('document').ready(function(){

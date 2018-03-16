@@ -64,21 +64,23 @@ class IncomeController extends Controller
     {
         if ($request->ajax()) {
             $col = collect();
-            
+            $sub=0;
             for ($i=0; $i < count($request['item']); $i++) {
                 $itm = \Institute\Item::find($request['item'][$i]);
                 $list = new \Institute\Incomelist;
                 $list->cantidad = $request['cantidad'][$i];
                 $list->item_id = $request['item'][$i];
                 $col->push($list);
-                
+                $suma = ($itm->costo*$request['cantidad'][$i]);
+                $sub+=$suma;
                 $itm->stock+=$request['cantidad'][$i];
                 $itm->save();
             }
             $income = new Income;
             $income->fill([
-                '`fecha' => \Carbon\Carbon::now(),
+                'fecha' => \Carbon\Carbon::now(),
                 'detalle' => $request['detalle'],
+                'total' => $sub,
                 'user_id' => Auth::user()->id
                 ]);
             $income->save();

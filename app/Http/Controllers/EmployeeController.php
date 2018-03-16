@@ -39,6 +39,7 @@ class EmployeeController extends Controller
         ->select('peoples.*')
         ->where('roles.code','!=','EST')
         ->where('roles.code','!=','DOC')
+        ->where('roles.code','!=','ROOT')
         ->orderBy('users.id','DESC')
         ->paginate(20);
         return view('admin/employee.index',compact('employees'));

@@ -286,37 +286,60 @@ function cargaringresos(){
 	$.get("/cien/public/admin/report/chart/"+inicio+"/"+fin+"",function(listaIngresos,response){
 		
 		$("#ingresos").empty();
+		var total = []; 
+		var egreso = []; 
+		var ingreso = []; 
+		var meses = []; 
+		for (var i = 0; i < Object.keys(listaIngresos).length; i++) {
+			$('#ingresos').append(
+				"<tr><td>"
+				+$.datepicker.formatDate('MM', new Date(listaIngresos[i]['fecha']+"T11:22:33+0000"))
+				+"</td><td>"
+				+listaIngresos[i]['ingreso'].toFixed(2)
+				+"</td><td>"
+				+listaIngresos[i]['egreso'].toFixed(2)
+				+"</td><td>"
+				+listaIngresos[i]['total'].toFixed(2)
+				+"</td></tr>"
+				);
+			egreso.push(listaIngresos[i]['egreso'].toFixed(2));
+			total.push(listaIngresos[i]['total'].toFixed(2));
+			ingreso.push(listaIngresos[i]['ingreso'].toFixed(2));
+			meses.push($.datepicker.formatDate('MM', new Date(listaIngresos[i]['fecha']+"T11:22:33+0000")));
+		}
 		var ctxL = document.getElementById("lineChart").getContext('2d');
 		var myLineChart = new Chart(ctxL, {
 			type: 'line',
 			data: {
-				labels: Object.keys(listaIngresos),
-				datasets: [
+				labels: meses,
+				datasets: [{
+					label: "Totales",
+					borderColor: "#1FDD00",
+					fillColor: "rgba(0,0,255,0.2)",
+					data: total
+				},
 				{
-					label: "Ingresos por mes",
-					fillColor: "rgba(220,220,220,0.2)",
-					strokeColor: "rgba(220,220,220,1)",
-					pointColor: "rgba(220,220,220,1)",
-					pointStrokeColor: "#fff",
-					pointHighlightFill: "#fff",
-					pointHighlightStroke: "rgba(220,220,220,1)",
-					data: Object.values(listaIngresos)
+					label: "Ingresos",
+					borderColor: "#93C4BF",
+					fillColor: "rgba(139,231,221,0.3)",
+					data: ingreso
+				},
+				{
+					label: "Egresos",
+					borderColor: "#B63838",
+					fillColor: "rgba(182,56,56,0.2)",
+					data: egreso
 				}
 				]
 			},
 			options: {
-				responsive: true
+				responsive: true,
+				title: {
+					display: true,
+					text: 'Ingresos y Egresos económicos globales'
+				}
 			}    
 		});
-		for (var i = 0; i < Object.keys(listaIngresos).length; i++) {
-			$('#ingresos').append(
-				"<tr><td>"
-				+Object.keys(listaIngresos)[i]
-				+"</td><td>"
-				+Object.values(listaIngresos)[i].toFixed(2)
-				+"</td></tr>"
-				);
-		}
 	});
 }
 function change_total(){

@@ -9,6 +9,9 @@ use Institute\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Institute\People;
+use Institute\Ingreso;
+use Institute\Income;
+use Institute\Egress;
 use Illuminate\Routing\Route;
 use DB;
 use Carbon\Carbon;
@@ -78,12 +81,12 @@ class ReportController extends Controller
         ->get();
         return view('admin/report.debitByGroups',['startclasses'=>$startclasses]);
     }
-    public function payments()
+    public function income()
     {
         $startclasses = \Institute\Startclass::
         orderBy('startclasses.id','desc')
         ->get();
-        return view('admin/report.payments',['startclasses'=>$startclasses]);
+        return view('admin/report.income',['startclasses'=>$startclasses]);
     }
     public function students()
     {
@@ -123,66 +126,13 @@ class ReportController extends Controller
         return view('admin/report.incomeByEmployee',['users'=>$users, 'fecha_inicio'=>$fecha_inicio, 'fecha_fin'=>$fecha_fin]);
     }
 
-    public function getchartmensualdesc(Request $request,$inicio,$fin)
-    {
-        $fechaMesAntes = Carbon::parse($inicio);
-        $fechaMesAntes->subMonth();
-        $inidate = Carbon::parse($inicio);
-        $findate = Carbon::parse($fin)->addMonth();
-        $fecha_inicio = Carbon::parse($inicio)->subMonth();
-        $fecha_inicio->day(1);
-        $listaIngresos = collect([$this->getMes($fecha_inicio)=>0]);
-
-        for ($i=0; $i <= $fechaMesAntes->diffInMonths($findate); $i++) {
-            $suma = 0;
-            $sumaSiguiente = 0;
-            $fecha_fin = Carbon::parse($fecha_inicio)->addMonth();
-            $fecha_fin->day(1);
-            $fecha_fin->subDay();
-            foreach (Payment::where('estado','Pagado')->whereBetween('fecha_pago',array( $fecha_inicio, $fecha_fin))->get() as $key=>$payment) {
-                $fecha_pago = Carbon::parse($payment->fecha_pago);
-                $fecha_siguiente = Carbon::parse($fecha_pago);
-                $fecha_siguiente->addMonth();
-
-                $fecha_fin_mes = Carbon::parse($fecha_pago);
-                $fecha_fin_mes->addMonth();
-                $fecha_fin_mes->day(1);
-                $fecha_fin_mes->subDay();
-
-                $diffTodoElMes = $fecha_pago->diffInDays($fecha_siguiente);
-                $diffDias = $fecha_pago->diffInDays($fecha_fin_mes);
-                $diffDiasSigMes =  $diffTodoElMes-$diffDias;
-                $abono=$payment->abono;
-                $abonopordia = $abono/$diffTodoElMes;
-                $ingresoEsteMes = $abonopordia*$diffDias;
-                $ingresoSiguienteMes = $abono-$ingresoEsteMes;
-                $suma += $ingresoEsteMes;
-                $sumaSiguiente += $ingresoSiguienteMes;
-            }
-
-            $mes = $this->getMes($fecha_inicio);
-            $mesmasuno = Carbon::parse($fecha_inicio)->addMonth();
-            $nomNextMes=$this->getMes($mesmasuno);
-            $array = array('mes'=>$mes,'ingreso'=>$suma);
-            $array2 = array('mes'=>$nomNextMes,'ingreso'=>$sumaSiguiente);
-
-            $listaIngresos[$mes] = $listaIngresos[$mes] + $suma;
-            $listaIngresos->put($nomNextMes,$sumaSiguiente);
-            $fecha_inicio->addMonth();
-        }
-        $listaIngresos->shift();
-        $listaIngresos->pop();
-        return $listaIngresos;
-    }
-
-    public function getchartmensual(Request $request,$inicio,$fin)
+    public function chart(Request $request,$inicio,$fin)
     {
         if ($request->ajax()) {
             $fechaMesAntes = Carbon::parse($inicio)->day(1)->subMonth();
             $findate = Carbon::parse($fin)->day(1)->addMonth();
             $fecha_inicio = Carbon::parse($inicio)->day(1)->subMonth();
-            $listaIngresos = collect([$this->getMes($fecha_inicio)=>0]);
-
+            $col = collect();
             for ($i=0; $i <= $fechaMesAntes->diffInMonths($findate); $i++) {
                 $suma = 0;
                 $sumaSiguiente = 0;
@@ -198,7 +148,6 @@ class ReportController extends Controller
                     $fecha_fin_mes->addMonth();
                     $fecha_fin_mes->day(1);
                     $fecha_fin_mes->subDay();
-
                     $diffTodoElMes = $fecha_pago->diffInDays($fecha_siguiente);
                     $diffDias = $fecha_pago->diffInDays($fecha_fin_mes);
                     $diffDiasSigMes =  $diffTodoElMes-$diffDias;
@@ -215,38 +164,47 @@ class ReportController extends Controller
                     $suma +=$payment->suma;
                 }
 
-                $mes = $this->getMes($fecha_inicio);
                 $mesmasuno = Carbon::parse($fecha_inicio)->addMonth();
-                $nomNextMes=$this->getMes($mesmasuno);
-                $array = array('mes'=>$mes,'ingreso'=>$suma);
-                $array2 = array('mes'=>$nomNextMes,'ingreso'=>$sumaSiguiente);
-
-                $listaIngresos[$mes] = $listaIngresos[$mes] + $suma;
-                $listaIngresos->put($nomNextMes,$sumaSiguiente);
+                
+                if (sizeof($col)!=0) {
+                    $ingreso = new Ingreso;
+                    $ingreso->ingreso = $suma;
+                    $col->push($ingreso);
+                }
+                $ingreso = new Ingreso;
+                $ingreso->ingreso = $sumaSiguiente;
+                $col->push($ingreso);
                 $fecha_inicio->addMonth();
             }
-            $listaIngresos->shift();
-            $listaIngresos->pop();
-            $listaIngresos->pop();
-
-            return response()->json($listaIngresos);
+            $col2 = collect();
+            $fecha = Carbon::parse($inicio)->day(1);
+            for ($j=0; $j < sizeof($col)/2 +1; $j++){
+                $col[$j]['ingreso']=$col[$j]['ingreso']+$col[$j+1]['ingreso'];
+                $ingreso = new Ingreso;
+                $ingreso->ingreso = $col[$j]['ingreso'];
+                $ingreso = $this->egresos($ingreso,$fecha->format('Y-m-d'));
+                $fecha->addMonth();
+                $col2->push($ingreso);
+                $j++;
+            }
+            return $col2;
         }
     }
-    public function getMes($mes)
+
+    public function egresos($ingreso,$fecha)
     {
-        $mes = $mes->format("F");
-        if ($mes=="January") $mes="Enero";
-        if ($mes=="February") $mes="Febrero";
-        if ($mes=="March") $mes="Marzo";
-        if ($mes=="April") $mes="Abril";
-        if ($mes=="May") $mes="Mayo";
-        if ($mes=="June") $mes="Junio";
-        if ($mes=="July") $mes="Julio";
-        if ($mes=="August") $mes="Agosto";
-        if ($mes=="September") $mes="Setiembre";
-        if ($mes=="October") $mes="Octubre";
-        if ($mes=="November") $mes="Noviembre";
-        if ($mes=="December") $mes="Diciembre";
-        return $mes;
+        $fin = Carbon::parse($fecha)->addMonth()->subDay()->format("Y-m-d");
+        $suma=0;
+        foreach (Income::whereBetween('fecha',array( $fecha, $fin))->get() as $income) {
+            $suma+=$income->total;
+        }
+        foreach (Egress::whereBetween('fecha',array( $fecha, $fin))->get() as $egress) {
+            $suma+=$egress->monto;
+        }
+        $ingreso->egreso = $suma;
+        $ingreso->fecha = $fecha;
+        $ingreso->fin = $fin;
+        $ingreso->total = $ingreso->ingreso -$ingreso->egreso;
+        return $ingreso;
     }
 }

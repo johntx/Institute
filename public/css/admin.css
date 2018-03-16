@@ -321,3 +321,6 @@ div.hour.solo{
 	display: block !important;
 	width: 100%;
 }
+table.schedule select.teacher_select{
+	font-size: 8px !important;
+}

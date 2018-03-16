@@ -13,6 +13,7 @@ return array(
     'CreateCategoriesTable' => $baseDir . '/database/migrations/2018_02_28_084246_create_categories_table.php',
     'CreateClassroomsTable' => $baseDir . '/database/migrations/2017_11_28_153607_create_classrooms_table.php',
     'CreateDocumentsTable' => $baseDir . '/database/migrations/2017_11_17_182002_create_documents_table.php',
+    'CreateEgressesTable' => $baseDir . '/database/migrations/2018_03_14_084451_create_egresses_table.php',
     'CreateExtrasTable' => $baseDir . '/database/migrations/2017_11_17_182130_create_extras_table.php',
     'CreateFamiliesTable' => $baseDir . '/database/migrations/2017_11_17_180730_create_families_table.php',
     'CreateFunctionalitiesTable' => $baseDir . '/database/migrations/2017_06_23_104740_create_functionalities_table.php',

@@ -3,16 +3,12 @@
 @include('alerts.request')
 {!! Form::model($office) !!}
 <div class="form-group">
-	{!! Form::label('Code*') !!}
-	{!! Form::label($office->code,null,['class'=>'form-control']) !!}
+	{!! Form::label('nombre*') !!}
+	{!! Form::label($office->nombre,$office->nombre,['class'=>'form-control']) !!}
 </div>
 <div class="form-group">
-	{!! Form::label('Label*') !!}
-	{!! Form::label($office->label,null,['class'=>'form-control']) !!}
-</div>
-<div class="form-group">
-	{!! Form::label('Icon*') !!}
-	{!! Form::label($office->icon,null,['class'=>'form-control']) !!}
+	{!! Form::label('direccion*') !!}
+	{!! Form::label($office->direccion,$office->direccion,['class'=>'form-control']) !!}
 </div>
 {!! Form::close() !!}
 <div class="col-md-10"></div>
