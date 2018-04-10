@@ -30,8 +30,8 @@
 						<td x="{{$i}}" p="P4" a="A{{$i}}">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P4' && $hora->aula=='A'.$i)
-							<div class="hour show" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px; font-style: italic;">
+							<div class="hour show" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px; font-style: italic;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else
@@ -47,8 +47,8 @@
 						<td x="{{$i}}" p="P3" a="A1" class="droppable p3">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P3' && $hora->aula=='A1')
-							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px;">
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else
@@ -64,8 +64,8 @@
 						<td x="{{$i}}" p="P3" a="A6" class="droppable p3">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P3' && $hora->aula=='A6')
-							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px;">
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else
@@ -81,8 +81,8 @@
 						<td x="{{$i}}" p="B2" a="B2" class="droppable">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='B2' && $hora->aula=='B2')
-							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px;">
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else
@@ -98,8 +98,8 @@
 						<td x="{{$i}}" p="ext" a="ext" class="droppable">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='ext' && $hora->aula=='ext')
-							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px;">
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else

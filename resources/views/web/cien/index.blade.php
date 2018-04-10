@@ -71,7 +71,7 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#contact">Contacto</a>
           </li>
-          <li class="nav-item login">
+          <li class="nav-item login" id="logbot">
             @if(!Auth::user())
             <div class="nav-link log">Log In</div>
             @else

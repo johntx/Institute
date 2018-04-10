@@ -1,5 +1,7 @@
 $('.log').click(function() {
 	$('#logmodal').addClass('modal');
+	$(".navbar-toggler" ).click();
+	console.log('click');
 });
 $('#close_logmodal').click(function() {
 	$('#logmodal').removeClass('modal');

@@ -31,9 +31,22 @@ $('document').ready(function(){
 		var s = $(this).parent().attr('pos');
 		var x = $(this).parent().parent().parent().attr('x');
 		var y = $(this).parent().parent().parent().parent().attr('y');
+		var deleter = $(this).parent().parent();
 		y = y-s+1;
-		$("div[x='"+x+"'][y='"+y+"']").attr('size',$(this).val());
+		var div = $("div[x='"+x+"'][y='"+y+"']");
+		div.attr('size',$(this).val());
+		deleter.remove();
 		recolor();
+	});
+	$('body').on('change','select.teacher_select',function() {
+		var s = $(this).parent().children('div.periodo').children('select').children('option:selected').attr('value');
+		var x = $(this).parent().parent().attr('x');
+		var y = $(this).parent().parent().parent().attr('y');
+		y = y-s+1;
+		var div = $("div[x='"+x+"'][y='"+y+"']");
+		var value = $(this).children('option:selected').attr('value');
+		div.children('select').children('option[selected="selected"]').removeAttr('selected');
+		div.children('select').children('option[value="'+value+'"]').attr('selected','selected');
 	});
 });
 function colorear(element){
@@ -46,7 +59,6 @@ function colorear(element){
 	var asignatura = $(element).attr('asignatura');
 	var fecha = $(element).attr('fecha');
 	var group_id = $(element).attr('group_id');
-	var career_id = $(element).attr('career_id');
 	var subject_id = $(element).attr('subject_id');
 	var x = $(element).parent().attr('x');
 	var y = $(element).parent().parent().attr('y');
@@ -110,10 +122,8 @@ function colorear(element){
 					"<input type='hidden' name='aula[]' value='"+a+"' >"
 					+"<input type='hidden' name='piso[]' value='"+p+"' >"
 					+"<input type='hidden' name='hora_inicio[]' value='"+h1+"' >"
-					+"<input type='hidden' name='hora_fin[]' value='"+h2+"' >"
 					+"<input type='hidden' name='dia[]' value='"+dia+"' >"
 					+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
-					+"<input type='hidden' name='career_id[]' value='"+career_id+"' >"
 					+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
 					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
 					);
@@ -138,10 +148,8 @@ function colorear(element){
 					"<input type='hidden' name='aula[]' value='"+a+"' >"
 					+"<input type='hidden' name='piso[]' value='"+p+"' >"
 					+"<input type='hidden' name='hora_inicio[]' value='"+h1+"' >"
-					+"<input type='hidden' name='hora_fin[]' value='"+h2+"' >"
 					+"<input type='hidden' name='dia[]' value='"+dia+"' >"
 					+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
-					+"<input type='hidden' name='career_id[]' value='"+career_id+"' >"
 					+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
 					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
 					);

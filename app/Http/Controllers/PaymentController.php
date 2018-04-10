@@ -48,10 +48,10 @@ class PaymentController extends Controller
   {
     $payment = Payment::find($id);
     $suma = Numeroaletras::convertir($payment->abono);
-    $view =  view('pdf/PDFRecivo', ['payment'=>$payment, 'suma'=>$suma])->render();
+    $view =  view('pdf/PDFRecibo', ['payment'=>$payment, 'suma'=>$suma])->render();
     $pdf = \App::make('dompdf.wrapper');
     $pdf->loadHTML($view);
-    return $pdf->stream('recivo '.$payment->inscription->people->nombrecompleto().'.pdf');
+    return $pdf->stream('Recibo '.$payment->inscription->people->nombrecompleto().'.pdf');
   }
 
   /**

@@ -68,7 +68,7 @@
 									</td>
 									<td>{{$inscription->monto-$inscription->debe}}</td>
 									<td>{{$inscription->debe}}</td>
-									<td>{{$inscription->people->telefono}}</td>
+									<td><a href="https://api.whatsapp.com/send?phone=591{{$inscription->people->telefono}}" target="_blank">{{$inscription->people->telefono}}</a></td>
 								</tr>
 								@endforeach
 								@foreach (\Institute\Inscription::join('payments','inscriptions.id','=','payments.inscription_id')->select('inscriptions.*','payments.fecha_pagar','payments.saldo as debe')->where('inscriptions.colegiatura','Pagado')->where('inscriptions.estado','Inscrito')->where('inscriptions.group_id',$group->id)->groupBy('inscriptions.id')->distinct()->get() as $inscription)

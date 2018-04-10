@@ -10,6 +10,7 @@
 			<th>Telefono</th>
 			<th>Asignaturas</th>
 			<th>Horario</th>
+			<th>Tickeos</th>
 			<th>Edit</th>
 		</thead>
 		@foreach($teachers as $teacher)
@@ -25,6 +26,11 @@
 			</td>
 			<td>
 				{!!link_to_action('TeacherController@horario', $title = 'Horario', $parameters = $teacher->id, $attributes = ['class'=>'btn btn-success'])!!}
+			</td>
+			<td>
+			@if ($teacher->code != null)
+				{!!link_to_action('TickeoController@tickeo', $title = 'Tickeos', $parameters = $teacher->code, $attributes = ['class'=>'btn btn-warning'])!!}
+			@endif
 			</td>
 			@foreach(Auth::user()->role->functionalities as $func)
 			@if ($func->code=='EDOC')

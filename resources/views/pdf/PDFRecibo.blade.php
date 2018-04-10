@@ -2,7 +2,7 @@
 <html lang="es" ondragstart="return false">
 <!-- oncontextmenu="return false"  onselectstart="return false" -->
 <head>
-	<title>Recivo #{{$payment->id}}</title>
+	<title>Recibo #{{$payment->id}}</title>
 	<meta charset="utf-8">
 	<meta name = "format-detection" content = "telephone=no" />
 	<link rel="icon" type="image/png" href="{!!URL::to('icons/logomin.png')!!}" />
@@ -28,6 +28,9 @@ else
 			</div>
 			<div class="mid">
 				<div>
+					<div>
+						<span><b>Usuario:</b> {{$payment->inscription->people->user->user}}</span>
+					</div>
 					<div>
 						<span><b>Recibí de:</b> {{$payment->inscription->people->nombrecompleto()}}</span>
 					</div>
@@ -68,6 +71,9 @@ else
 			</div>
 			<div class="mid">
 				<div>
+					<div>
+						<span><b>Usuario:</b> {{$payment->inscription->people->user->user}}</span>
+					</div>
 					<div>
 						<span><b>Recibí de:</b> {{$payment->inscription->people->nombrecompleto()}}</span>
 					</div>

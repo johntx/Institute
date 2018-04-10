@@ -58,7 +58,7 @@
 	</div>
 	<div class="form-group">
 		{!! Form::label('Vigente') !!}
-		{!! Form::select('vigente',['no' => 'no','si' => 'si'],null,['class'=>'form-control','maxlength'=>10]) !!}
+		{!! Form::select('vigente',['no' => 'no','si' => 'si','anticipado' => 'anticipado'],null,['class'=>'form-control','maxlength'=>10]) !!}
 	</div>
 	{!! Form::submit('Registar',['class'=>'btn btn-success']) !!}
 </div>

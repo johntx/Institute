@@ -7,4 +7,5 @@
 @endsection
 @section('adminjs')
 {!!Html::script('js/horario.js')!!}
+{!!Html::script('js/touch.js')!!}
 @endsection

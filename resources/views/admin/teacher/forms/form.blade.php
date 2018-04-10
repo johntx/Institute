@@ -22,6 +22,10 @@
 	{!! Form::label('Fecha de Ingreso') !!}
 	{!! Form::text('fecha_ingreso',Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
 </div>
+<div class="form-group">
+{!! Form::label('ID Biometrico') !!}
+	{!! Form::select('code', $biometrics, null, ['class'=>'form-control selectpicker']) !!}
+</div>
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="col-xs-6">

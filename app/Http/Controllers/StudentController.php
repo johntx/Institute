@@ -121,7 +121,7 @@ class StudentController extends Controller
           ]);
       }
       $user->save();
-      $cien = 'CIEN-'.$user->id;
+      $cien = 'CIEN'.$user->id;
       $user->user = $cien;
       $people = new People;
       $people->fill([

@@ -22,8 +22,14 @@
 			<td>{{sizeof($group->inscriptions)}}</td>
 			<td>({{$group->estado}})</td>
 			<td>
-				{!!link_to_action('GroupController@horario', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-success'])!!}
+				{!!link_to_action('GroupController@pdf', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$group->id])!!}
 			</td>
+			<td>
+				{!!link_to_action('GroupController@pdfanticipado', $title = 'Anticipado', $parameters = $group->id, $attributes = ['class'=>'btn btn-success pdfbtn','code'=>$group->id])!!}
+			</td>
+			<!--td>
+				{!!link_to_action('GroupController@horario', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-success'])!!}
+			</td-->
 			@foreach(Auth::user()->role->functionalities as $func)
 			@if ($func->code=='EGRO')
 			<td>
@@ -39,6 +45,19 @@
 		</tbody>
 		@endforeach
 	</table>
+</div>
+<div class="modal fade" id="pdfModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document" style="z-index: 2000">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">HORARIO</h4>
+			</div>
+			<div style="text-align: center;">
+				<iframe src="" style="width:100%; height:80%;" frameborder="0"></iframe>
+			</div>
+		</div>
+	</div>
 </div>
 {!!$groups->render()!!}
 @endsection

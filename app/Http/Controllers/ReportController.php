@@ -49,7 +49,7 @@ class ReportController extends Controller
         join('inscriptions','payments.inscription_id','=','inscriptions.id')
         ->where('payments.estado','Pendiente')
         ->where('inscriptions.estado','Inscrito')
-        ->whereBetween('fecha_pagar', array( $fecha_semana, $fecha_mes))
+        ->whereBetween('fecha_pagar', array($fecha_semana, $fecha_mes))
         ->orderBy('fecha_pagar','ASC')
         ->get();
         return view('admin/report.debit',['payments'=>$payments]);
@@ -71,16 +71,6 @@ class ReportController extends Controller
         return view('admin/report.group',['startclass'=>$startclass]);
     }
 
-    public function debitByGroups()
-    {
-        $startclasses = \Institute\Startclass::
-        join('careers','startclasses.career_id','=','careers.id')
-        ->select('startclasses.*')
-        ->where('startclasses.estado','!=','Cerrado')
-        ->orderBy('careers.nombre')
-        ->get();
-        return view('admin/report.debitByGroups',['startclasses'=>$startclasses]);
-    }
     public function income()
     {
         $startclasses = \Institute\Startclass::
@@ -119,8 +109,11 @@ class ReportController extends Controller
         }
         $users = \Institute\User::
         join('payments','payments.user_id','=','users.id')
+        ->join('roles','users.role_id','=','roles.id')
         ->select('users.*')
         ->where('payments.estado','Pagado')
+        ->where('roles.code','!=','DIS')
+        ->where('roles.code','!=','OBS')
         ->distinct()
         ->get();
         return view('admin/report.incomeByEmployee',['users'=>$users, 'fecha_inicio'=>$fecha_inicio, 'fecha_fin'=>$fecha_fin]);

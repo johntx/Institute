@@ -39,7 +39,7 @@ return [
 
     'monday'    => 'lunes',
     'tuesday'   => 'martes',
-    'wednesday' => 'miércoles',
+    'wednesday' => 'miercoles',
     'thursday'  => 'jueves',
     'friday'    => 'viernes',
     'saturday'  => 'sábado',

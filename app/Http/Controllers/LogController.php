@@ -41,6 +41,9 @@ class LogController extends Controller
                     ->where('roles.code',Auth::user()->role->code)
                     ->distinct()->get();
                     if (count($functionalities)>0){
+                        if (Auth::user()->role->code == 'EST') {
+                            return Redirect::to('admin/evaluation/create');
+                        }
                         return Redirect::to('admin');
                     }else {
                         Session::flash('message','Usuario sin Privilegios.');

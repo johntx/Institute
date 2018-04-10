@@ -35,7 +35,7 @@ class GroupController extends Controller
         $groups = Group::join('startclasses','groups.startclass_id','=','startclasses.id')
         ->join('careers','careers.id','=','startclasses.career_id')
         ->select('groups.*')
-        ->orderBy('id','DESC')->paginate(20);
+        ->orderBy('startclasses.fecha_inicio','DESC')->paginate(20);
         return view('admin/group.index',compact('groups'));
     }
 
@@ -73,6 +73,28 @@ class GroupController extends Controller
         Group::create($request->all());
         Session::flash('message','Grupo registrado exitosamente');
         return Redirect::to('/admin/group');
+    }
+
+    public function pdf($id)
+    {
+        $semana = array("hora","lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
+        $horario = array('08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00');
+        $group = Group::find($id);
+        $view =  view('pdf/PDFHorarioGrupo', ['group'=>$group,'semana'=>$semana,'horario'=>$horario])->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('Horario '.$group->turno.'.pdf');
+    }
+
+    public function pdfanticipado($id)
+    {
+        $semana = array("hora","lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
+        $horario = array('08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00');
+        $group = Group::find($id);
+        $view =  view('pdf/PDFHorarioGrupoAnticipado', ['group'=>$group,'semana'=>$semana,'horario'=>$horario])->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('Horario '.$group->turno.'.pdf');
     }
 
     /**

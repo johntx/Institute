@@ -22,6 +22,10 @@
 	{!! Form::label('Direccion') !!}
 	{!! Form::text('direccion',null,['class'=>'form-control','placeholder'=>'Insert Direccion','maxlength'=>255]) !!}
 </div>
+<div class="form-group">
+{!! Form::label('ID Biometrico') !!}
+	{!! Form::select('code', $biometrics, null, ['class'=>'form-control selectpicker']) !!}
+</div>
 
 <br><br>
 <b>DATOS DE USUARIO</b>

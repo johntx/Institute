@@ -2,7 +2,7 @@
 <html lang="es" ondragstart="return false">
 <!-- oncontextmenu="return false"  onselectstart="return false" -->
 <head>
-	<title>Recivo Venta #{{$order->id}}</title>
+	<title>Recibo Venta #{{$order->id}}</title>
 	<meta charset="utf-8">
 	<meta name = "format-detection" content = "telephone=no" />
 	<link rel="icon" type="image/png" href="{!!URL::to('icons/logomin.png')!!}" />

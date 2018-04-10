@@ -52,13 +52,14 @@ class EmployeeController extends Controller
      */
     public function create()
     {
+        $biometrics = \Institute\Biometric::lists('nombre', 'id');
         $roles = \Institute\Role::where('roles.code','!=','ROOT')
         ->where('roles.code','!=','ADM')
         ->where('roles.code','!=','EST')
         ->where('roles.code','!=','DOC')
         ->lists('name', 'id');
         $offices = \Institute\Office::lists('nombre', 'id');
-        return view('admin/employee.create',['roles'=>$roles, 'offices'=>$offices]);
+        return view('admin/employee.create',['biometrics'=>$biometrics, 'roles'=>$roles, 'offices'=>$offices]);
     }
 
     /**
@@ -123,12 +124,13 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
+        $biometrics = \Institute\Biometric::lists('nombre', 'id');
         $roles = \Institute\Role::where('roles.code','!=','ROOT')
         ->where('roles.code','!=','EST')
         ->where('roles.code','!=','DOC')
         ->lists('name', 'id');
         $offices = \Institute\Office::lists('nombre', 'id');
-        return view('admin/employee.edit',['employee'=>$this->employee, 'roles'=>$roles, 'offices'=>$offices]);
+        return view('admin/employee.edit',['biometrics'=>$biometrics, 'employee'=>$this->employee, 'roles'=>$roles, 'offices'=>$offices]);
     }
 
     /**

@@ -106,7 +106,7 @@ $('#paymentForm').on('submit',function(e){
 });
 $('.pdfbtn').click(function() {
 	$("#pdfModal iframe").attr('src',$(this).attr('href'));
-	$("#pdfModal .modal-title").html('RECIBO '+$(this).attr('code'));
+	$("#pdfModal .modal-title").html('PDF ID: '+$(this).attr('code'));
 	$("#pdfModal").modal();
 	return false;
 });
@@ -441,4 +441,7 @@ $('.btn_expand').click(function(){
 		$('#'+convocatoria).attr('active','no');
 		$(this).html('+');
 	}
+});
+$('#get_tickeos').click(function() {
+	
 });

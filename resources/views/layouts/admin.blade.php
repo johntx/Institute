@@ -16,7 +16,7 @@
   @yield('admincss')
 </head>
 <body>
-@include('alerts.succes')
+  @include('alerts.succes')
   <div id="wrapper">
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
       <div class="navbar-header">
@@ -31,6 +31,7 @@
         </button>
         <a style="padding-left: 0" class="navbar-brand" href="{!!URL::to('admin')!!}">Admin Instituto C1EN</a>
       </div>
+      @if (Auth::user()->role->code != 'EST' && Auth::user()->role->code != 'DOC')
       <form class="navbar-form navbar-left" id="form_buscador" role="search">
         <div class="form-group input-group input-group-sm">
           <span class="input-group-addon" id="sizing-addon1">
@@ -48,15 +49,18 @@
           </ul>
         </div>
       </form>
+      @endif
       <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{Auth::user()->user}} <b>/{{Auth::user()->role->name}}</b><i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{Auth::user()->user}} ({{Auth::user()->people->nombre}}) <b>/{{Auth::user()->role->name}}</b><i class="fa fa-user fa-fw"></i><i class="fa fa-caret-down"></i>
           </a>
           <ul class="dropdown-menu dropdown-user">
             <li><a href="{!!URL::to('logout')!!}"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
             </li>
+            @if (Auth::user()->role->code != 'EST' && Auth::user()->role->code != 'DOC')
             <li><a href="{!!URL::to('pass/changePasswordForm')!!}"><i class="fa fa-edit fa-fw"></i> Cambiar Contraseña</a>
             </li>
+            @endif
           </ul>
         </li>
       </ul>

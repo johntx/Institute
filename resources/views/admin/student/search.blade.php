@@ -15,7 +15,7 @@
 		<p class="col-sm-6"><b>CI:</b> {{$student->ci }}</p>
 		<p class="col-sm-6"><b>Nombre:</b> {{$student->nombrecompleto() }}</p>
 		<p class="col-sm-6"><b>Fecha de Nacimiento:</b> {{ Jenssegers\Date\Date::parse($student->fecha_nacimiento)->format('j M Y') }}</p>
-		<p class="col-sm-6"><b>Telefono:</b> {{$student->telefono }}</p>
+		<p class="col-sm-6"><b>Telefono:</b> <a href="https://api.whatsapp.com/send?phone=591{{$student->telefono}}" target="_blank">{{$student->telefono}}</a></p>
 		<p class="col-sm-6"><b>Telefono Padres:</b> {{$student->telefono2 }}</p>
 		<p class="col-sm-6">{!!link_to_route('admin.student.edit', $title = 'Editar Estudiante', $parameters = $student->id, $attributes = ['class'=>'btn btn-primary'])!!}</p>
 	</div>

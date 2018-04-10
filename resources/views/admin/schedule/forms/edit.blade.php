@@ -9,7 +9,7 @@
 		</ul>
 		<div class="tab-content">
 			@foreach ($semana as $key=>$dia)
-			<div role="tabpanel" class="tab-pane @if ($key==0) active @endif" id="{{$dia}}">
+			<div role="tabpanel" class="tab-pane table-responsive @if ($key==0) active @endif" id="{{$dia}}">
 				<table class="schedule">
 					<tbody>
 						<tr>
@@ -22,21 +22,15 @@
 						<?php
 						$horas = $schedule->hours()->where('dia',$dia)->where('hora_inicio',$horario[$h])->get();
 						?>
-						<tr y="{{$h+1}}" @if ($h%2!=0 && $h<8)
-						borde="si"
-						@elseif ($h%2==0 && $h>12)
-						borde="si"
-						@elseif($h>20 || $h>7 && $h<13)
-						borde="si"
-						@endif h1="{{$horario[$h]}}" h2="{{$horario[$h+1]}}" @if ($h>7 && $h<12) class="h tarde" @endif>
-						<td @if ($h<8) tamano="grande" @if ($h%2 == 0) turno="manana" @else turno="man" @endif @elseif ($h<12) turno="medio" @elseif ($h<21)	tamano="grande" @if ($h%2 == 0) turno="tar" @else turno="tarde" @endif @else turno="noche" @endif><div>{{$horario[$h]}}</div></td>
+						<tr y="{{$h+1}}" @if ($h%2!=0 && $h<8) borde="si" @elseif ($h%2==0 && $h>12) borde="si" @elseif($h>20 || $h>7 && $h<13) borde="si" @endif h1="{{$horario[$h]}}" h2="{{$horario[$h+1]}}" @if ($h>7 && $h<12) class="h tarde" @endif>
+						<td @if ($h<8) tamano="grande" @if ($h%2 == 0) turno="manana" @else turno="man" @endif @elseif ($h<12) turno="medio" @elseif ($h<21) tamano="grande" @if ($h%2 == 0) turno="tar" @else turno="tarde" @endif @else turno="noche" @endif><div>{{$horario[$h]}}</div></td>
 						@for ($i = 1; $i <= 12; $i++)
 						@if ($i<=8)
 						<td x="{{$i}}" p="P4" a="A{{$i}}" class="droppable">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P4' && $hora->aula=='A'.$i)
-							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->subject->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px; font-style: italic;">
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->group->startclass->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->subject->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px; font-style: italic;">
 									@if (sizeof($hora->subject->peoples)==0)
 									<option value="null">Nadie</option>
 									@endif
@@ -53,8 +47,8 @@
 						<td x="{{$i}}" p="P3" a="A1" class="droppable p3">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P3' && $hora->aula=='A1')
-							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->subject->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px;">
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->group->startclass->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->subject->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if (sizeof($hora->subject->peoples)==0)
 									<option value="null">Nadie</option>
 									@endif
@@ -71,8 +65,8 @@
 						<td x="{{$i}}" p="P3" a="A6" class="droppable p3">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P3' && $hora->aula=='A6')
-							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->subject->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px;">
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->group->startclass->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->subject->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if (sizeof($hora->subject->peoples)==0)
 									<option value="null">Nadie</option>
 									@endif
@@ -89,8 +83,8 @@
 						<td x="{{$i}}" p="B2" a="B2" class="droppable">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='B2' && $hora->aula=='B2')
-							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->subject->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px;">
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->group->startclass->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->subject->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if (sizeof($hora->subject->peoples)==0)
 									<option value="null">Nadie</option>
 									@endif
@@ -107,8 +101,8 @@
 						<td x="{{$i}}" p="ext" a="ext" class="droppable">
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='ext' && $hora->aula=='ext')
-							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; ">{{$hora->subject->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->career->color}}; color: {{$hora->career->texto}}; font-size: 8px;">
+							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->group->startclass->career->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->subject->nombre}}
+								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if (sizeof($hora->subject->peoples)==0)
 									<option value="null">Nadie</option>
 									@endif
@@ -136,7 +130,7 @@
 	</div>
 	<div class="form-group">
 		{!! Form::label('Vigente') !!}
-		{!! Form::select('vigente',['no' => 'no','si' => 'si'],null,['class'=>'form-control','maxlength'=>10]) !!}
+		{!! Form::select('vigente',['no' => 'no','si' => 'si','anticipado' => 'anticipado'],null,['class'=>'form-control','maxlength'=>10]) !!}
 	</div>
 	{!! Form::submit('Guardar',['class'=>'btn btn-success']) !!}
 </div>

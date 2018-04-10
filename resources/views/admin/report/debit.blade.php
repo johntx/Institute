@@ -35,7 +35,7 @@
 					<b>{{ Jenssegers\Date\Date::parse($payment->fecha_pagar)->format('j M Y')}}</b>
 				</td>
 				<td>{{$payment->saldo}}</td>
-				<td>{{$payment->inscription->people->telefono}}</td>
+				<td><a href="https://api.whatsapp.com/send?phone=591{{$payment->inscription->people->telefono}}" target="_blank">{{$payment->inscription->people->telefono}}</a></td>
 				<td>
 					{!! Form::open(['route' => ['admin.inscription.destroy',$payment->inscription->id],'method'=>'delete']) !!}
 					{!! Form::submit('Retirar',['class'=>'btn btn-danger']) !!}
