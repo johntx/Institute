@@ -99,7 +99,7 @@
 			</tr>
 			@foreach ($horario as $key=>$hora)
 			<?php $h=$key+1; ?>
-			<tr h="{{$h}}" @if ($key%2==0 && $key<10) hmas="hmas" @elseif ($key%2!=0 && $key>12 && $key<22) hmas="hmas" @endif @if ($key>7 && $key<13 || $key>20)  mid="mid" @endif>
+			<tr h="{{$key+1}}" @if ($key%2!=0 && $key<11) hmas="hmas" @elseif ($key%2==0 && $key>13 && $key<23) hmas="hmas" @endif @if ($key>8 && $key<14 || $key>21)  mid="mid" @endif>
 				@foreach ($semana as $x=>$dia)
 				@if ($dia == 'hora')
 				<td x="{{$x}}"><div>{{$hora}}</div></td>
@@ -137,7 +137,7 @@
 			</tr>
 			@foreach ($horario as $key=>$hora)
 			<?php $h=$key+1; ?>
-			<tr h="{{$h}}" @if ($key%2==0 && $key<10) hmas="hmas" @elseif ($key%2!=0 && $key>12 && $key<22) hmas="hmas" @endif @if ($key>7 && $key<13 || $key>20)  mid="mid" @endif>
+			<tr h="{{$key+1}}" @if ($key%2!=0 && $key<11) hmas="hmas" @elseif ($key%2==0 && $key>13 && $key<23) hmas="hmas" @endif @if ($key>8 && $key<14 || $key>21)  mid="mid" @endif>
 				@foreach ($semana as $x=>$dia)
 				@if ($dia == 'hora')
 				<td x="{{$x}}"><div>{{$hora}}</div></td>

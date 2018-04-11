@@ -119,12 +119,7 @@ function colorear(element){
 					}
 				}
 				$(td).children('div').append(
-					"<input type='hidden' name='aula[]' value='"+a+"' >"
-					+"<input type='hidden' name='piso[]' value='"+p+"' >"
-					+"<input type='hidden' name='hora_inicio[]' value='"+h1+"' >"
-					+"<input type='hidden' name='dia[]' value='"+dia+"' >"
-					+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
-					+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
+					"<input type='hidden' name='datos[]' value='"+a+"-"+p+"-"+h1+"-"+h2+"-"+dia+"-"+group_id+"-"+subject_id+"' >"
 					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
 					);
 			} else {
@@ -145,12 +140,7 @@ function colorear(element){
 					}
 				}
 				$(td).children('div').append(
-					"<input type='hidden' name='aula[]' value='"+a+"' >"
-					+"<input type='hidden' name='piso[]' value='"+p+"' >"
-					+"<input type='hidden' name='hora_inicio[]' value='"+h1+"' >"
-					+"<input type='hidden' name='dia[]' value='"+dia+"' >"
-					+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
-					+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
+					"<input type='hidden' name='datos[]' value='"+a+"-"+p+"-"+h1+"-"+h2+"-"+dia+"-"+group_id+"-"+subject_id+"' >"
 					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
 					);
 			}

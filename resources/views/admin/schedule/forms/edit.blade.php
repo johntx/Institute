@@ -18,12 +18,12 @@
 						<tr>
 							<th></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th class="p3">1</th><th class="p3">6</th><th class="blue">2</th><th class="blue"></th>
 						</tr>
-						@for ($h = 0; $h < 24; $h++)
+						@for ($h = 0; $h < 25; $h++)
 						<?php
 						$horas = $schedule->hours()->where('dia',$dia)->where('hora_inicio',$horario[$h])->get();
 						?>
-						<tr y="{{$h+1}}" @if ($h%2!=0 && $h<8) borde="si" @elseif ($h%2==0 && $h>12) borde="si" @elseif($h>20 || $h>7 && $h<13) borde="si" @endif h1="{{$horario[$h]}}" h2="{{$horario[$h+1]}}" @if ($h>7 && $h<12) class="h tarde" @endif>
-						<td @if ($h<8) tamano="grande" @if ($h%2 == 0) turno="manana" @else turno="man" @endif @elseif ($h<12) turno="medio" @elseif ($h<21) tamano="grande" @if ($h%2 == 0) turno="tar" @else turno="tarde" @endif @else turno="noche" @endif><div>{{$horario[$h]}}</div></td>
+						<tr y="{{$h+1}}" @if ($h%2==0 && $h<9) borde="si" @elseif ($h%2!=0 && $h>13) borde="si" @elseif($h>21 || $h>8 && $h<14) borde="si" @endif h1="{{$horario[$h]}}" h2="{{$horario[$h+1]}}" @if ($h>8 && $h<13) class="h tarde" @endif>
+						<td @if ($h<10) tamano="grande" @if ($h%2 != 0) turno="manana" @else turno="man" @endif @elseif ($h<13) turno="medio" @elseif ($h<22) tamano="grande" @if ($h%2 != 0) turno="tar" @else turno="tarde" @endif @else turno="noche" @endif><div>{{$horario[$h]}}</div></td>
 						@for ($i = 1; $i <= 12; $i++)
 						@if ($i<=8)
 						<td x="{{$i}}" p="P4" a="A{{$i}}" class="droppable">

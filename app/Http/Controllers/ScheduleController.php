@@ -46,7 +46,7 @@ class ScheduleController extends Controller
     public function create()
     {
         $semana = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
-        $horario = array('08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
+        $horario = array('07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
         $startclasses = Startclass::
         join('careers','startclasses.career_id','=','careers.id')
         ->where('estado','!=','Cerrado')
@@ -78,17 +78,19 @@ class ScheduleController extends Controller
             'fecha' => \Carbon\Carbon::now()
             ]);
         $col = collect();
-        if (count($request['people_id'])>0) {
-            for ($i=0; $i < count($request['people_id']); $i++) {
+        if (count($request['datos'])>0) {
+            for ($i=0; $i < count($request['datos']); $i++) {
+                $datos = explode("-", $request['datos'][$i]);
                 $hour = new Hour;
                 $hour->people_id = $request['people_id'][$i];
-                $hour->aula = $request['aula'][$i];
-                $hour->piso = $request['piso'][$i];
-                $hour->hora_inicio = $request['hora_inicio'][$i];
+                $hour->aula = $datos[0];
+                $hour->piso = $datos[1];
+                $hour->hora_inicio = $datos[2];
+                $hour->hora_fin = $datos[3];
+                $hour->dia = $datos[4];
+                $hour->group_id = $datos[5];
+                $hour->subject_id = $datos[6];
                 $hour->periodos = $request['periodos'][$i];
-                $hour->dia = $request['dia'][$i];
-                $hour->group_id = $request['group_id'][$i];
-                $hour->subject_id = $request['subject_id'][$i];
                 $col->push($hour);
             }
         }
@@ -118,7 +120,7 @@ class ScheduleController extends Controller
     public function edit($id)
     {
         $semana = collect(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]);
-        $horario = collect(['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
+        $horario = collect(['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
         $startclasses = Startclass::
         join('careers','startclasses.career_id','=','careers.id')
         ->where('estado','!=','Cerrado')
@@ -130,7 +132,7 @@ class ScheduleController extends Controller
     public function ver($id)
     {
         $semana = collect(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]);
-        $horario = collect(['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
+        $horario = collect(['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
         return view('admin/schedule.show',['schedule'=>$this->schedule,'semana'=>$semana,'horario'=>$horario]);
     }
 
@@ -192,17 +194,19 @@ class ScheduleController extends Controller
             'fecha' => \Carbon\Carbon::now()
             ]);
         $col = collect();
-        if (count($request['subject_id'])>0) {
-            for ($i=0; $i < count($request['subject_id']); $i++) {
+        if (count($request['datos'])>0) {
+            for ($i=0; $i < count($request['datos']); $i++) {
+                $datos = explode("-", $request['datos'][$i]);
                 $hour = new Hour;
                 $hour->people_id = $request['people_id'][$i];
-                $hour->aula = $request['aula'][$i];
-                $hour->piso = $request['piso'][$i];
-                $hour->hora_inicio = $request['hora_inicio'][$i];
+                $hour->aula = $datos[0];
+                $hour->piso = $datos[1];
+                $hour->hora_inicio = $datos[2];
+                $hour->hora_fin = $datos[3];
+                $hour->dia = $datos[4];
+                $hour->group_id = $datos[5];
+                $hour->subject_id = $datos[6];
                 $hour->periodos = $request['periodos'][$i];
-                $hour->dia = $request['dia'][$i];
-                $hour->group_id = $request['group_id'][$i];
-                $hour->subject_id = $request['subject_id'][$i];
                 $col->push($hour);
             }
         }
@@ -238,7 +242,7 @@ class ScheduleController extends Controller
         $user = Auth::user();
         $inscriptions = $user->people->inscriptions;
         $semana = array("hora","lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
-        $horario = array('08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
+        $horario = array('07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
         return view('admin/schedule.myschedule',['inscriptions'=>$inscriptions,'semana'=>$semana,'horario'=>$horario]);
     }
 
@@ -246,7 +250,7 @@ class ScheduleController extends Controller
     {
         $user = Auth::user();
         $semana = array("hora","lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
-        $horario = array('08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
+        $horario = array('07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
         return view('admin/schedule.teacherMe',['user'=>$user,'semana'=>$semana,'horario'=>$horario]);
     }
 }
