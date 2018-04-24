@@ -23,8 +23,15 @@
 	{!! Form::text('fecha_ingreso',Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
 </div>
 <div class="form-group">
-{!! Form::label('ID Biometrico') !!}
-	{!! Form::select('code', $biometrics, null, ['class'=>'form-control selectpicker']) !!}
+	{!! Form::label('ID Biometrico') !!}
+	<select name="code" id="" class="form-control selectpicker">
+		<option value="">--Seleccione--</option>
+		@foreach ($biometrics as $bio)
+		<option @if ($bio->id==$teacher->code)
+			selected
+		@endif value="{{$bio->id}}">{{$bio->nombre}}</option>
+		@endforeach
+	</select>
 </div>
 <div class="panel panel-default">
 	<div class="panel-body">
@@ -53,7 +60,7 @@
 					<ul class="list-group">
 						@foreach ($subjects as $subject)
 						<div class="col-xs-6">
-							<div class="list-group-item list-group-item-warning add_subject_form_career" id_subject="{{$subject->id}}" name_subject="{{$subject->nombre}}">{{$subject->nombre}}</div>
+							<div class="list-group-item list-group-item-warning add_subject_form_career" id_subject="{{$subject->id}}" name_subject="{{$subject->nombre}}" style="padding: 5px 5px 5px 15px;">{{$subject->nombre}}</div>
 						</div>
 						@endforeach
 					</ul>

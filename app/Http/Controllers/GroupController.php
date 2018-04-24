@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Institute\Group;
 use Illuminate\Routing\Route;
 use Validator;
+use Auth;
 
 class GroupController extends Controller
 {
@@ -37,6 +38,20 @@ class GroupController extends Controller
         ->select('groups.*')
         ->orderBy('startclasses.fecha_inicio','DESC')->paginate(20);
         return view('admin/group.index',compact('groups'));
+    }
+    public function myGroup()
+    {
+        $groups = \Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')
+        ->join('subjects','hours.subject_id','=','subjects.id')
+        ->join('groups','hours.group_id','=','groups.id')
+        ->join('startclasses','groups.startclass_id','=','startclasses.id')
+        ->join('careers','startclasses.career_id','=','careers.id')
+        ->select('groups.*','careers.nombre as carrera','startclasses.fecha_inicio as fecha_inicio','subjects.nombre as materia','subjects.id as materia_id')
+        ->where('people_id',Auth::user()->id)
+        ->where('schedules.vigente','si')
+        ->distinct()
+        ->get();
+        return view('admin/group.myGroup',['groups'=>$groups]);
     }
 
     /**

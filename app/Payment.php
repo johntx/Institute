@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
 	protected $table = 'payments';
-	protected $fillable = ['fecha_pagar', 'fecha_pago', 'observacion', 'estado', 'abono', 'saldo', 'inscription_id', 'user_id','created_at'];
+	protected $fillable = ['fecha_pagar', 'fecha_pago', 'observacion', 'estado', 'abono', 'descuento', 'saldo', 'inscription_id', 'user_id','created_at'];
 
 	public function user() {
 		return $this->belongsTo('Institute\User','id');

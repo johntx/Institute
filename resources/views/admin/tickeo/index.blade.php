@@ -1,26 +1,14 @@
 @extends('layouts.admin')
 @section('content')
 @include('alerts.succes')
-<div class="table-responsive">
-<table class="table table-hover table-condensed">
-	<thead>
-		<!--th>Id</th-->
-		<th>Nombre</th>
-		<th>Fecha</th>
-		<th>tipo</th>
-		<th>Detalles</th>
-		<th>Edit</th>
-	</thead>
-	@foreach($tickeos as $tickeo)
-	<tbody>
-		<!--td>{{$tickeo->id}}</td-->
-		<td>{{$tickeo->biometric->nombre}}</td>
-		<td>{{$tickeo->fecha}}</td>
-		<td>@if ($tickeo->tipo == 0) entrada @else salida @endif</td>
-		<td>{{$tickeo->detalle}}</td>
-	</tbody>
-	@endforeach
-</table>
+<div>
+	<div class="form-group">
+		{!! Form::label('Desde') !!}
+		{!! Form::text('fecha',Carbon\Carbon::now()->subMonth()->format('Y-m-d'),['class'=>'form-control datepicker','id'=>'fecha_tickeos','placeholder'=>'yyyy-mm-dd']) !!}
+	</div>
+	{!!link_to_action('TickeoController@tickeoEmpleado', $title = 'Obtener Tickeos', $parameters = $people_id.'/'.Carbon\Carbon::now()->subMonth()->format('Y-m-d'), $attributes = ['class'=>'btn btn-info tickeos_btn_pdf','code'=>$people_id])!!}
+	<br>
+	<br>
+	{!!link_to_action('TickeoController@MiLogTickeo', $title = 'Log Tickeos', $parameters = $people_id.'/'.Carbon\Carbon::now()->subMonth()->format('Y-m-d'), $attributes = ['class'=>'btn btn-warning tickeos_btn_pdf','code'=>$people_id])!!}
 </div>
-{!!$tickeos->render()!!}
 @endsection

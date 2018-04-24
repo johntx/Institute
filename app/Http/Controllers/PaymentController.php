@@ -95,6 +95,10 @@ class PaymentController extends Controller
   public function store(Request $request)
   {
     if ($request->ajax()) {
+      $descuento=0;
+      if ($request['descuento']!=null) {
+        $descuento=$request['descuento'];
+      }
       if ($request['user_id']==null) {
         header('HTTP/1.1 500 Seleccione un estudiante');
         header('Content-Type: application/json; charset=UTF-8');
@@ -119,6 +123,7 @@ class PaymentController extends Controller
           'created_at' => \Carbon\Carbon::now(),
           'observacion' => $request['observacion'],
           'abono' => $request['abono'],
+          'descuento' => $descuento,
           'saldo' => $request['abono'],
           'user_id' => Auth::user()->id
           ]);
@@ -130,27 +135,28 @@ class PaymentController extends Controller
         $inscription->save();
         Session::flash('message','Pago registrado exitosamente');
         return $lastpayment->id;
-      } elseif ($request['abono'] > $lastpayment->saldo) {
+      } elseif ($request['abono']+$descuento > $lastpayment->saldo) {
         header('HTTP/1.1 500 Monto superior al saldo');
         header('Content-Type: application/json; charset=UTF-8');
         die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
       } else {
-        $PaymentSaldo = $lastpayment->saldo - $request['abono'];
+        $PaymentSaldo = $lastpayment->saldo - $request['abono'] - $descuento;
         $lastpayment->fill([
           'fecha_pago' => $request['fecha_pago'],
           'estado' => 'Pagado',
           'created_at' => \Carbon\Carbon::now(),
           'observacion' => $request['observacion'],
           'abono' => $request['abono'],
+          'descuento' => $descuento,
           'user_id' => Auth::user()->id
           ]);
         $lastpayment->save();
         $Inscriptionestado = 'Debe';
-        if ($inscription->abono + $request['abono'] == $inscription->total) {
+        if ($inscription->abono + $request['abono'] + $descuento == $inscription->total) {
           $Inscriptionestado = 'Pagado';
         }
         $inscription->fill([
-          'abono' => $inscription->abono + $request['abono'],
+          'abono' => $inscription->abono + $request['abono'] + $descuento,
           'colegiatura' => $Inscriptionestado
           ]);
         $inscription->save();

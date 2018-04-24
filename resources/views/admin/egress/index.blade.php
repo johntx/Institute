@@ -17,6 +17,7 @@
 			<th>Glosa</th>
 			<th>Monto</th>
 			<th>Tipo</th>
+			<th>Fecha</th>
 			<th>Edit</th>
 		</thead>
 		@foreach($egresses as $egress)
@@ -25,6 +26,7 @@
 			<td>{{$egress->glosa}}</td>
 			<td>{{$egress->monto}}</td>
 			<td>{{$egress->tipo}}</td>
+			<td>{{Jenssegers\Date\Date::parse($egress->fecha)->format('j M Y')}}</td>
 			@if ($editar)
 			<td>
 				{!!link_to_route('admin.egress.edit', $title = 'Editar', $parameters = $egress->id, $attributes = ['class'=>'btn btn-primary'])!!}

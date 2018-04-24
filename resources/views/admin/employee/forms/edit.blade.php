@@ -24,7 +24,14 @@
 </div>
 <div class="form-group">
 {!! Form::label('ID Biometrico') !!}
-	{!! Form::select('code', $biometrics, null, ['class'=>'form-control selectpicker']) !!}
+	<select name="code" id="" class="form-control selectpicker">
+		<option value="">--Seleccione--</option>
+		@foreach ($biometrics as $bio)
+		<option @if ($bio->id==$employee->code)
+			selected
+		@endif value="{{$bio->id}}">{{$bio->nombre}}</option>
+		@endforeach
+	</select>
 </div>
 
 <br><br>

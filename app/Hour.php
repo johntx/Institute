@@ -27,4 +27,8 @@ class Hour extends Model
     {
         return $this->belongsTo('Institute\Group');
     }
+    public function schedule()
+    {
+        return $this->belongsTo('Institute\Schedule');
+    }
 }

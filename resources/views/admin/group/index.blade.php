@@ -42,6 +42,13 @@
 			</td>
 			@endif
 			@endforeach
+			<td>
+				{!!Form::open(['url'=>'assistance/ver'])!!}
+				<input type="hidden" name="group_id" value="{{$group->id}}" id="">
+				<input type="hidden" name="materia_id" value="{{$group->materia_id}}" id="">
+				{!! Form::submit('Asistencias',['class'=>'btn btn-default']) !!}
+				{!! Form::close() !!}
+			</td>
 		</tbody>
 		@endforeach
 	</table>

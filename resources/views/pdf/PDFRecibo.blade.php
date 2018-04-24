@@ -47,7 +47,7 @@ else
 					<div>
 						<span class="total"><b>Total:</b> {{$payment->saldo}}</span>
 						<span class="acuenta"><b>A cuenta:</b> {{$payment->abono}}</span>
-						<span class="saldo"><b>Saldo:</b> {{$payment->saldo-$payment->abono}}</span>
+						<span class="saldo"><b>Saldo:</b> {{$payment->saldo-$payment->abono-$payment->descuento}}</span>
 					</div>
 					<div>
 						<span class="ciudad"><b>Cochabamba</b> {{Jenssegers\Date\Date::now()->format('j \d\e F \d\e Y')}}</span>
@@ -90,7 +90,7 @@ else
 					<div>
 						<span class="total"><b>Total:</b> {{$payment->saldo}}</span>
 						<span class="acuenta"><b>A cuenta:</b> {{$payment->abono}}</span>
-						<span class="saldo"><b>Saldo:</b> {{$payment->saldo-$payment->abono}}</span>
+						<span class="saldo"><b>Saldo:</b> {{$payment->saldo-$payment->abono-$payment->descuento}}</span>
 					</div>
 					<div>
 						<span class="ciudad"><b>Cochabamba</b> {{Jenssegers\Date\Date::now()->format('j \d\e F \d\e Y')}}</span>

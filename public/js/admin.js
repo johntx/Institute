@@ -17,6 +17,10 @@ $('document').ready(function(){
 		paging: false,
 		ordering: false
 	});
+	$('.tablaSearch').DataTable({
+		searching: true,
+		ordering: true
+	});
 	$('#boton_fecha_income').click(function() {
 		var href = $('#boton_fecha_income').attr('href');
 		var fecha = $('#selec_fecha_income').val();
@@ -85,7 +89,7 @@ $('#paymentForm').on('submit',function(e){
 		header:$('meta[name="_token"]').attr('content')
 	});
 	e.preventDefault(e);
-	$('#paymentForm input[type=submit]').attr("disabled", true);
+	//$('#paymentForm input[type=submit]').attr("disabled", true);
 	$.ajax({
 		type:"POST",
 		url:window.location.origin+'/cien/public/admin/payment',
@@ -442,6 +446,17 @@ $('.btn_expand').click(function(){
 		$(this).html('+');
 	}
 });
-$('#get_tickeos').click(function() {
-	
+$('.tickeos_btn_pdf').click(function() {
+	var str = $(this).attr('href');
+	str = str.substr(0, str.length-10) + $('#fecha_tickeos').val();
+	console.log(str);
+	$(this).attr('href',str);
+});
+$('body').on('change','#fecha_tickeos',function () {
+	$.each($('.tickeos_btn_pdf'), function( key, tickeo ) {
+		var str = $(tickeo).attr('href');
+		str = str.substr(0, str.length-10) + $('#fecha_tickeos').val();
+		console.log(str);
+		$(tickeo).attr('href',str);
+	});
 });

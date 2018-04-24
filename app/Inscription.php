@@ -29,6 +29,35 @@ class Inscription extends Model
     {
         return $this->hasMany('Institute\Payment');
     }
+    public function assistances()
+    {
+        return $this->hasMany('Institute\Assistance');
+    }
+    public function asistencia($group_id,$subject_id,$people_id,$fecha)
+    {
+        $assistances = \Institute\Assistance::where('fecha',$fecha)
+        ->where('asistencia',1)
+        ->where('group_id',$group_id)
+        ->where('subject_id',$subject_id)
+        ->where('people_id',$people_id)
+        ->where('inscription_id',$this->id)
+        ->get();
+        if (count($assistances)>0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function asisCont($group_id,$subject_id,$people_id)
+    {
+        $assistances = \Institute\Assistance::where('asistencia',1)
+        ->where('group_id',$group_id)
+        ->where('subject_id',$subject_id)
+        ->where('people_id',$people_id)
+        ->where('inscription_id',$this->id)
+        ->get();
+        return count($assistances);
+    }
     public function extras()
     {
         return $this->belongsToMany('Institute\Extra','inscriptions_extras');

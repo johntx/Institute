@@ -17,6 +17,7 @@
 			<th>Fecha</th>
 			<th>Cliente</th>
 			<th>Observaciones</th>
+			<th>Telefono</th>
 			<th>Subtotal</th>
 			<th>Total</th>
 			<th>Opción</th>
@@ -31,15 +32,16 @@
 			<td>{{Jenssegers\Date\Date::parse($order->fecha_compra)->format('j M Y')}}</td>
 			<td>{{$order->nombre}}</td>
 			<td>{{$order->detalle}}</td>
+			<td>{{$order->telefono}}</td>
 			<td>Bs. {{number_format($order->subtotal, 2,'.','')}}</td>
 			<td>Bs. {{number_format($order->total, 2,'.','')}}</td>
 			<td>
 				{!!link_to_action('OrderController@pdf', $title = 'Imprimir', $parameters = $order->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$order->id])!!}
 			</td>
 			@if ($editar)
-			<!--td>
+			<td>
 				{!!link_to_route('admin.order.edit', $title = 'Editar', $parameters = $order->id, $attributes = ['class'=>'btn btn-primary'])!!}
-			</td-->
+			</td>
 			@endif
 			@if ($eliminar)
 			<td>

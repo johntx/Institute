@@ -37,8 +37,8 @@ class TeacherController extends Controller
         ->select('peoples.*')
         ->where('roles.code','DOC')
         ->orderBy('users.id','DESC')
-        ->paginate(20);
-        return view('admin/teacher.index',compact('teachers'));
+        ->get();
+        return view('admin/teacher.index',['teachers'=>$teachers]);
     }
 
     /**
@@ -48,7 +48,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        $biometrics = \Institute\Biometric::lists('nombre', 'id');
+        $biometrics = \Institute\Biometric::get();
         $subjects = \Institute\Subject::orderBy('nombre','asc')->get();
         $offices = \Institute\Office::lists('nombre', 'id');
         return view('admin/teacher.create',['biometrics'=>$biometrics, 'offices'=>$offices, 'subjects'=>$subjects, 'teacher'=>null]);
@@ -126,7 +126,7 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        $biometrics = \Institute\Biometric::lists('nombre', 'id');
+        $biometrics = \Institute\Biometric::get();
         $subjects = \Institute\Subject::orderBy('nombre','asc')->get();
         $offices = \Institute\Office::lists('nombre', 'id');
         return view('admin/teacher.edit',['teacher'=>$this->teacher,'offices'=>$offices,'biometrics'=>$biometrics,'subjects'=>$subjects]);
@@ -141,6 +141,13 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ($request['ci'] != $this->teacher->ci) {
+            $user = User::find($this->teacher->id);
+            $user->fill([
+                'password' => $request['ci']
+                ]);
+            $user->save();
+        }
         $this->teacher->fill($request->all());
         $this->teacher->save();
         $this->teacher->subjects()->detach();

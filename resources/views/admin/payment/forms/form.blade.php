@@ -31,7 +31,11 @@
 			{!! Form::hidden('fecha_pago',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
 		</div>
 		@endif
-		<div class=" col-xs-5" style="padding: 0;">
+		<div class=" col-xs-3" style="padding: 0;">
+		</div>
+		<div class=" col-xs-2" style="padding-right: 0;">
+			{!! Form::label('Descuento') !!}
+			{!! Form::text('descuento',null,['class'=>'form-control','placeholder'=>'Descuento','onkeypress'=>"return justNumbers(event);"]) !!}
 		</div>
 		<div class=" col-xs-3">
 			{!! Form::label('Abono') !!}

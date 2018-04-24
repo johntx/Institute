@@ -42,7 +42,7 @@ return [
     'wednesday' => 'miercoles',
     'thursday'  => 'jueves',
     'friday'    => 'viernes',
-    'saturday'  => 'sábado',
+    'saturday'  => 'sabado',
     'sunday'    => 'domingo',
 
 ];

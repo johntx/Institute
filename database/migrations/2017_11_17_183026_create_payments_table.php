@@ -18,6 +18,7 @@ class CreatePaymentsTable extends Migration
       $table->date('fecha_pago')->nullable();
       $table->string('observacion',255)->nullable();
       $table->string('estado',20)->nullable();
+      $table->integer('descuento')->nullable();
       $table->integer('abono')->nullable();
       $table->integer('saldo')->nullable();
       $table->integer('inscription_id')->unsigned()->nullable();

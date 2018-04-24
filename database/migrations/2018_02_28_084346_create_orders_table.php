@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->string('nombre',200);
             $table->date('fecha_compra')->nullable();
             $table->string('detalle',255)->nullable();
+            $table->string('telefono',100)->nullable();
             $table->decimal('subtotal',11,2)->nullable();
             $table->decimal('total',11,2)->nullable();
             $table->decimal('descuento',11,2)->nullable();

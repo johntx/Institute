@@ -21,7 +21,7 @@
 			<td>{{$employee->fecha_nacimiento}}</td>
 			<td>
 				@if ($employee->code != null)
-				{!!link_to_action('TickeoController@tickeo', $title = 'Tickeos', $parameters = $employee->code, $attributes = ['class'=>'btn btn-warning'])!!}
+				{!!link_to_action('TickeoController@tickeo', $title = 'Tickeos', $parameters = $employee->id, $attributes = ['class'=>'btn btn-warning'])!!}
 				@endif
 			</td>
 			@foreach(Auth::user()->role->functionalities as $func)
