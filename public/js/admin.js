@@ -460,3 +460,22 @@ $('body').on('change','#fecha_tickeos',function () {
 		$(tickeo).attr('href',str);
 	});
 });
+$('.check_asistencia').click(function() {
+	var data = $(this).parent().parent().serialize();
+	var url = $(this).parent().parent().attr("action");
+	$.ajaxSetup({
+		header:$('meta[name="_token"]').attr('content')
+	});
+	$.ajax({
+		type:"POST",
+		url:url,
+		data:data,
+		dataType: 'json',
+		success: function(payment){
+			console.log('guardado');
+		},
+		error: function(ret){
+			console.log('error: '+data);
+		}
+	});
+});

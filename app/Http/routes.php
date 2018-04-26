@@ -20,6 +20,7 @@ Route::post('password/reset','Auth\PasswordController@postReset');
 Route::get('admin/egress/employees','EgressController@employees');
 Route::post('assistance/register','AssistanceController@register');
 Route::post('assistance/ver','AssistanceController@ver');
+Route::post('assistance/assistance_ajax','AssistanceController@assistance_ajax');
 
 Route::resource('user','UserController');
 Route::resource('admin/role','RoleController');

@@ -38,11 +38,17 @@
 				{!! Form::checkbox('turno[]','Mañana 08:00 a 10:00',false,['id'=>'Mañana 08:00 a 10:00']) !!}
 				{!! Form::label('Mañana 08:00 a 10:00','Mañana 08:00 a 10:00') !!}
 				<br>
+				{!! Form::checkbox('turno[]','Mañana 08:00 a 11:00',false,['id'=>'Mañana 08:00 a 11:00']) !!}
+				{!! Form::label('Mañana 08:00 a 11:00','Mañana 08:00 a 11:00') !!}
+				<br>
 				{!! Form::checkbox('turno[]','Mañana 10:00 a 12:00',false,['id'=>'Mañana 10:00 a 12:00']) !!}
 				{!! Form::label('Mañana 10:00 a 12:00','Mañana 10:00 a 12:00') !!}
 				<br>
 				{!! Form::checkbox('turno[]','Tarde 14:30 a 16:30',false,['id'=>'Tarde 14:30 a 16:30']) !!}
 				{!! Form::label('Tarde 14:30 a 16:30','Tarde 14:30 a 16:30') !!}
+				<br>
+				{!! Form::checkbox('turno[]','Tarde 15:00 a 18:00',false,['id'=>'Tarde 15:00 a 18:00']) !!}
+				{!! Form::label('Tarde 15:00 a 18:00','Tarde 15:00 a 18:00') !!}
 				<br>
 				{!! Form::checkbox('turno[]','Tarde 16:30 a 18:30',false,['id'=>'Tarde 16:30 a 18:30']) !!}
 				{!! Form::label('Tarde 16:30 a 18:30','Tarde 16:30 a 18:30') !!}

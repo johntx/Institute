@@ -164,6 +164,45 @@ class AssistanceController extends Controller
         return Redirect::to('admin/group/my/group');
     }
 
+    public function assistance_ajax(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request['asistencia']==$request['inscription_id']) {
+                $Dassistance = \Institute\Assistance::where('fecha',\Carbon\Carbon::now()->format('Y-m-d'))
+                ->where('asistencia',1)
+                ->where('group_id',$request['group_id'])
+                ->where('subject_id',$request['materia_id'])
+                ->where('inscription_id',$request['inscription_id'])
+                ->where('people_id',Auth::user()->id)
+                ->first();
+                if (count($Dassistance)>0) {
+                    $Dassistance->delete();
+                } else {
+                    $assistance = new Assistance();
+                    $assistance->fill([
+                        'fecha' => \Carbon\Carbon::now(),
+                        'asistencia' => 1,
+                        'inscription_id' => $request['inscription_id'],
+                        'people_id' => Auth::user()->id,
+                        'group_id' => $request['group_id'],
+                        'subject_id' => $request['materia_id']
+                        ]);
+                    $assistance->save();
+                }
+            } else {
+                $Dassistance = \Institute\Assistance::where('fecha',\Carbon\Carbon::now()->format('Y-m-d'))
+                ->where('asistencia',1)
+                ->where('group_id',$request['group_id'])
+                ->where('subject_id',$request['materia_id'])
+                ->where('inscription_id',$request['inscription_id'])
+                ->where('people_id',Auth::user()->id)
+                ->first();
+                $Dassistance->delete();
+            }
+        }
+        return false;
+    }
+
     /**
      * Remove the specified resource from storage.
      *

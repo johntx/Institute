@@ -1,8 +1,8 @@
 <div class="panel panel-primary">
-<div class="panel-heading">DOCENTE: {{$teacher->nombrecompleto()}} {{$teacher->id}}</div>
+	<div class="panel-heading">DOCENTE: {{$teacher->nombrecompleto()}} {{$teacher->id}}</div>
 	<div class="panel-body">
 		<div class="form-group">
-			{!! Form::label('¿Inicia sus clases con puntualidad?') !!}&emsp;
+			{!! Form::label('¿Inicia sus clases con puntualidad?') !!}<br>
 			1: {!! Form::radio('p1','1',false,['required']) !!}&ensp;
 			2: {!! Form::radio('p1','2',false,['required']) !!}&ensp;
 			3: {!! Form::radio('p1','3',false,['required']) !!}&ensp;
@@ -10,7 +10,7 @@
 			5: {!! Form::radio('p1','5',false,['required']) !!}&ensp;
 		</div>
 		<div class="form-group">
-			{!! Form::label('¿Describe y explica los temas de forma ordenada y entendible?') !!}&emsp;
+			{!! Form::label('¿Describe y explica los temas de forma ordenada y entendible?') !!}<br>
 			1: {!! Form::radio('p2','1',false,['required']) !!}&ensp;
 			2: {!! Form::radio('p2','2',false,['required']) !!}&ensp;
 			3: {!! Form::radio('p2','3',false,['required']) !!}&ensp;
@@ -18,7 +18,7 @@
 			5: {!! Form::radio('p2','5',false,['required']) !!}&ensp;
 		</div>
 		<div class="form-group">
-			{!! Form::label('¿Escucha y responde con amabilidad las preguntas o dudas?') !!}&emsp;
+			{!! Form::label('¿Escucha y responde con amabilidad las preguntas o dudas?') !!}<br>
 			1: {!! Form::radio('p3','1',false,['required']) !!}&ensp;
 			2: {!! Form::radio('p3','2',false,['required']) !!}&ensp;
 			3: {!! Form::radio('p3','3',false,['required']) !!}&ensp;
@@ -26,7 +26,7 @@
 			5: {!! Form::radio('p3','5',false,['required']) !!}&ensp;
 		</div>
 		<div class="form-group">
-			{!! Form::label('¿Estumila tus respuestas correctas en clases?') !!}&emsp;
+			{!! Form::label('¿Estumila tus respuestas correctas en clases?') !!}<br>
 			1: {!! Form::radio('p4','1',false,['required']) !!}&ensp;
 			2: {!! Form::radio('p4','2',false,['required']) !!}&ensp;
 			3: {!! Form::radio('p4','3',false,['required']) !!}&ensp;
@@ -37,7 +37,7 @@
 		{!! Form::label('C1EN:') !!}
 		<br>
 		<div class="form-group">
-			{!! Form::label('¿Cuál es su satisfacción con C1EN?') !!}&emsp;
+			{!! Form::label('¿Cuál es su satisfacción con C1EN?') !!}<br>
 			1: {!! Form::radio('p5','1',false,['required']) !!}&ensp;
 			2: {!! Form::radio('p5','2',false,['required']) !!}&ensp;
 			3: {!! Form::radio('p5','3',false,['required']) !!}&ensp;

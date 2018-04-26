@@ -34,7 +34,7 @@ class TickeoController extends Controller
      */
     public function index()
     {
-        return view('admin/tickeo.index',['people_id'=>Auth::user()->id]);
+        return view('admin/tickeo.Myindex',['people_id'=>Auth::user()->id]);
     }
 
     public function tickeo($id)
