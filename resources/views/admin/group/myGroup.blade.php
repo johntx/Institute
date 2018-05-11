@@ -19,11 +19,7 @@
 			<td>{{$group->materia}}</td>
 			<td>{{sizeof(\Institute\Group::find($group->id)->inscriptions)}}</td>
 			<td>
-				{!!Form::open(['url'=>'assistance/register'])!!}
-				<input type="hidden" name="group_id" value="{{$group->id}}" id="">
-				<input type="hidden" name="materia_id" value="{{$group->materia_id}}" id="">
-				{!! Form::submit('Asistencias',['class'=>'btn btn-xs btn-success']) !!}
-				{!! Form::close() !!}
+				{!!link_to_action('AssistanceController@register', $title = 'Asistencias', $parameters = $group->id.'/'.$group->materia_id, $attributes = ['class'=>'btn btn-success'])!!}
 			</td>
 		</tbody>
 		@endforeach

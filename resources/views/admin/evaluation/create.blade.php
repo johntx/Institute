@@ -3,7 +3,7 @@
 @include('alerts.request')
 {!! Form::open(['route' => 'admin.evaluation.store','method'=>'post']) !!}
 @include('admin.evaluation.forms.form')
-{!! Form::submit('Registar',['class'=>'btn btn-primary']) !!}
+{!! Form::submit('Registrar',['class'=>'btn btn-primary']) !!}
 {!! Form::close() !!}
 @endsection
 @section('adminjs')

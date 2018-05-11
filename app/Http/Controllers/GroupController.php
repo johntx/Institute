@@ -36,8 +36,9 @@ class GroupController extends Controller
         $groups = Group::join('startclasses','groups.startclass_id','=','startclasses.id')
         ->join('careers','careers.id','=','startclasses.career_id')
         ->select('groups.*')
-        ->orderBy('startclasses.fecha_inicio','DESC')->paginate(20);
-        return view('admin/group.index',compact('groups'));
+        ->where('startclasses.estado','!=','Cerrado')
+        ->orderBy('startclasses.fecha_inicio','DESC')->get();
+        return view('admin/group.index',['groups'=>$groups]);
     }
     public function myGroup()
     {

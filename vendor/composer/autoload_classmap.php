@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
     'CreateAssistancesTable' => $baseDir . '/database/migrations/2017_11_17_182303_create_assistances_table.php',
+    'CreateAvailablesTable' => $baseDir . '/database/migrations/2018_05_09_101404_create_availables_table.php',
     'CreateBiometricsTable' => $baseDir . '/database/migrations/2018_03_29_093930_create_biometrics_table.php',
     'CreateBuylistsTable' => $baseDir . '/database/migrations/2018_02_28_084355_create_buylists_table.php',
     'CreateCareersTable' => $baseDir . '/database/migrations/2017_11_17_175744_create_careers_table.php',

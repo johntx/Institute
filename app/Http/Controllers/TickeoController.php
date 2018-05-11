@@ -20,8 +20,8 @@ class TickeoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin',['only' => ['index','create','edit','show']]);
-        $this->beforeFilter('@find',['only' => ['edit','update','destroy','show']]);
+        $this->middleware('admin',['only' => ['index','create','edit']]);
+        $this->beforeFilter('@find',['only' => ['edit','update','show']]);
     }
     public function find(Route $route)
     {
@@ -45,38 +45,47 @@ class TickeoController extends Controller
     public function tickeoEmpleado($id, $fecha)
     {
         $people = \Institute\People::find($id);
-        $hours = $this->horas_por_dia($people);
-        //return $hours;
-        $tickeos = Tickeo::where('biometric_id',$people->code)->whereBetween('fecha', array($fecha, Carbon::now()))->orderBy('fecha','asc')->get();
-        if (count($tickeos)==0) {
-            return "Rango de fechas: ".$fecha." a ".Carbon::now()->format('Y-m-d').": No hay tiqueos para mostrar";
-        }
-        //return $tickeos;
-        $col = collect();
         $fechas = collect();
         $date = Carbon::parse($fecha);
         do {
             $fechas->push($date->format('Y-m-d'));
             $date->addDay();
         } while ($date->format('Y-m-d') <= Carbon::now()->format('Y-m-d'));
-        $tickeos->first()->dia = Date::parse($tickeos->first()->fecha)->format('l');
-        $col->push($tickeos->first());
-        foreach ($tickeos as $key => $tickeo) {
-            $fecha_tickeo = Date::parse($tickeo->fecha);
-            $fecha_col = Date::parse($col->last()->fecha);
-            if ($fecha_tickeo->diffInMinutes($fecha_col) <= 1 && $tickeo->tipo == $col->last()->tipo) {
-            } else {
-                $tickeo->dia = $fecha_tickeo->format('l');
-                $col->push($tickeo);
-            }
-        }
-        //return $fechas;
-        $view =  view('pdf/PDFTickeo', ['tickeos'=>$col,'hours'=>$hours, 'fechas'=>$fechas,'people'=>$people])->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('Tickeos '.$tickeos->first()->biometric->nombre.'.pdf');
+        return view('admin/tickeo.verMiTickeo',['fechas'=>$fechas,'people'=>$people]);
     }
 
+    public function payment_ajax(Request $request)
+    {
+        if ($request->ajax()) {
+            if (0<count($request['fecha'])){
+                for ($i=0; $i < count($request['fecha']); $i++) {
+                    $tickeos = Tickeo::select('tickeos.*')->where('biometric_id',$request['code'])->whereBetween('fecha',array(Carbon::parse($request['fecha'][$i])->format('Y-m-d 00:00:00'),Carbon::parse($request['fecha'][$i])->format('Y-m-d 23:59:59')))->where('estado','!=','invalido')->get();
+                    $tickeos->each(function($tickeo){
+                        $tickeo->cancelado = "si";
+                        $tickeo->save();
+                    });
+                }
+                $people = \Institute\People::find($request['people_id']);
+                $egress = new \Institute\Egress;
+                $h = explode(":", $request["horas"]);
+                $egress->fill([
+                    'fecha' => \Carbon\Carbon::now(),
+                    'glosa' => "Pago de salario a empleado ".$people->nombrecompleto().". Con cantidad de horas sumadas: ".$h[0]." hrs. y ".$h[1]." min.",
+                    'monto' => $request['monto'],
+                    'tipo' => "Pago de Horas",
+                    'people_id' => $request['people_id'],
+                    'user_id' => Auth::user()->id
+                    ]);
+                $egress->save();
+            } else {
+                header('HTTP/1.1 500 No hay tickeos');
+                header('Content-Type: application/json; charset=UTF-8');
+                die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
+            }
+            Session::flash('message','Proceso concluido');
+            return $request['people_id'];
+        }
+    }
     public function horas_por_dia($people)
     {
         $semana = collect(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]);
@@ -124,7 +133,21 @@ class TickeoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'fecha' => 'required|unique:tickeos',
+            ]);
+
+        if ($validator->fails()) {
+            return Redirect::to(str_replace("/cien/public/", "", $request['url']));
+        }
+        $tickeo = Tickeo::create($request->all());
+        if (!empty($request['subjects'])){
+            $tickeo->subjects()->attach($request['subjects']);
+        }
+        Session::flash('message','Tickeo en fecha y hora repetidos');
+        return Redirect::to(str_replace("/cien/public/", "", $request['url']));
+        Session::flash('message','Tickeo registrada exitosamente');
+        return Redirect::to('/admin/item');
     }
 
     /**
@@ -135,8 +158,8 @@ class TickeoController extends Controller
      */
     public function show( $id)
     {
+        return view('admin');
         return 'hola';
-        return view('admin/tickeo.delete',['tickeo'=>$this->tickeo]);
     }
 
     /**
@@ -159,15 +182,17 @@ class TickeoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->tickeo->fill([
-            'fecha' => \Carbon\Carbon::now(),
-            'glosa' => $request['glosa'],
-            'monto' => $request['monto'],
-            'codigo' => $request['codigo'],
-            'tipo' => $request['tipo'],
-            'user_id' => Auth::user()->id
-            ]);
+        if ($this->tickeo->estado == 'creado') {
+            $this->tickeo->delete();
+        }
+        if ($this->tickeo->estado == "invalido") {
+            $this->tickeo->estado = "";
         $this->tickeo->save();
+        } elseif ($this->tickeo->estado == '') {
+            $this->tickeo->estado = 'invalido';
+        $this->tickeo->save();
+        }
+        return Redirect::to(str_replace("/cien/public/", "", $request['url']));
         Session::flash('message','Egreso editado exitosamente');
         return Redirect::to('/admin/tickeo');
     }
@@ -180,8 +205,13 @@ class TickeoController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-
-        return 'hola';
+        return 'entra';
+        $this->tickeo->estado = 'invalido';
+        $this->tickeo->save();
+        $link = str_replace("/cien/public/", "", str_replace("/admin", "admin", $request['url']));
+        return $link;
+        return Redirect::to($link);
+        return false;
     }
     public function logTickeoEmpleado($id, $fecha)
     {
@@ -230,6 +260,6 @@ class TickeoController extends Controller
                 $col->push($tickeo);
             }
         }
-        return view('admin/tickeo.verMiTickeo',['tickeos'=>$col,'hours'=>$hours]);
+        return view('admin/tickeo.verMiLogTickeo',['tickeos'=>$col,'hours'=>$hours]);
     }
 }

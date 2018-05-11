@@ -11,8 +11,9 @@
 				<th>Nombre</th>
 				<th># Asis.</th>
 				<th>Estado</th>
-				@foreach ($fechas as $fecha)
+				@foreach ($fechas as $k=>$fecha)
 				<th style="position: relative; height: 70px;"><p style="transform: rotate(90deg); position: absolute; top: 23px; left: -20px;">{{\Carbon\Carbon::parse($fecha->fecha)->format('d/m/y')}}</p></th>
+				<?php $cont[$k]=0; ?>
 				@endforeach
 			</thead>
 			@foreach($inscriptions as $i=>$inscription)
@@ -35,15 +36,26 @@
 				<td>{{$inscription->people->nombrecompleto()}}</td>
 				<td>{{$inscription->asisCont($group_id,$materia_id,Auth::id())}}</td>
 				<td>{{$inscription->estado}}</td>
-				@foreach ($fechas as $fecha)
+				@foreach ($fechas as $k=>$fecha)
 				@if ($inscription->asistencia($group_id,$materia_id,Auth::id(),$fecha->fecha)) 
 				<td>✔</td>
+				<?php $cont[$k] = $cont[$k]+1; ?>
 				@else
 				<td>✗</td>
 				@endif
 				@endforeach
 			</tr>
 			@endforeach
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><b>Conteo:</b></td>
+				@foreach ($fechas as $k=>$fecha)
+				<td>{{$cont[$k]}}</td>
+				@endforeach
+			</tr>
 		</table>
 		<!--oculto para uso de ajax-->
 	<!--<input type="hidden" name="group_id" value="{{$group_id}}" id="">

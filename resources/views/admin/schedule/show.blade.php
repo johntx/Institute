@@ -31,11 +31,11 @@
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P4' && $hora->aula=='A'.$i)
 							<div class="hour show" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px; font-style: italic;">
+								<select onclick="window.location.href=this.value" disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px; font-style: italic;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else
-									<option value="{{$hora->people_id}}" selected>{{$hora->people['nombre']}}</option>
+									<option value="{{ url('admin/tickeo/logPerson/'.$hora->people['id'].'/'.Carbon\Carbon::now()->subMonth()->format('Y-m-d') ) }}" selected>{{$hora->people['nombre']}}</option>
 									@endif
 								</select>
 							</div>
@@ -48,11 +48,11 @@
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P3' && $hora->aula=='A1')
 							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
+								<select onclick="window.location.href=this.value" disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else
-									<option value="{{$hora->people_id}}" selected>{{$hora->people['nombre']}}</option>
+									<option value="{{ url('admin/tickeo/logPerson/'.$hora->people['id'].'/'.Carbon\Carbon::now()->subMonth()->format('Y-m-d') ) }}" selected>{{$hora->people['nombre']}}</option>
 									@endif
 								</select>
 							</div>
@@ -65,11 +65,11 @@
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='P3' && $hora->aula=='A6')
 							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
+								<select onclick="window.location.href=this.value" disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else
-									<option value="{{$hora->people_id}}" selected>{{$hora->people['nombre']}}</option>
+									<option value="{{ url('admin/tickeo/logPerson/'.$hora->people['id'].'/'.Carbon\Carbon::now()->subMonth()->format('Y-m-d') ) }}" selected>{{$hora->people['nombre']}}</option>
 									@endif
 								</select>
 							</div>
@@ -82,11 +82,11 @@
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='B2' && $hora->aula=='B2')
 							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
+								<select onclick="window.location.href=this.value" disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else
-									<option value="{{$hora->people_id}}" selected>{{$hora->people['nombre']}}</option>
+									<option value="{{ url('admin/tickeo/logPerson/'.$hora->people['id'].'/'.Carbon\Carbon::now()->subMonth()->format('Y-m-d') ) }}" selected>{{$hora->people['nombre']}}</option>
 									@endif
 								</select>
 							</div>
@@ -99,11 +99,11 @@
 							@foreach ($horas as $hora)
 							@if ($hora->piso=='ext' && $hora->aula=='ext')
 							<div class="hour" size="{{$hora->periodos}}" texto="{{$hora->group->startclass->career->texto}}" asignatura="{{$hora->subject->nombre}}" carrera="{{$hora->subject->nombre}}" fecha="{{$hora->group->startclass->fecha_inicio}}" color="{{$hora->group->startclass->career->color}}" group_id="{{$hora->group->id}}" career_id="{{$hora->group->startclass->career_id}}" subject_id="{{$hora->subject_id}}" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; ">{{$hora->group->startclass->career->nombre}}
-								<select disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
+								<select onclick="window.location.href=this.value" disabled hidden name="people_id[]" class="teacher_select" style="background-color: {{$hora->group->startclass->career->color}}; color: {{$hora->group->startclass->career->texto}}; font-size: 8px;">
 									@if ($hora->people_id==0)
 									<option value="null">Nadie</option>
 									@else
-									<option value="{{$hora->people_id}}" selected>{{$hora->people['nombre']}}</option>
+									<option value="{{ url('admin/tickeo/logPerson/'.$hora->people['id'].'/'.Carbon\Carbon::now()->subMonth()->format('Y-m-d') ) }}" selected>{{$hora->people['nombre']}}</option>
 									@endif
 								</select>
 							</div>

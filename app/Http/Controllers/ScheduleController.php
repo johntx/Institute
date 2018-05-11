@@ -126,7 +126,8 @@ class ScheduleController extends Controller
         ->where('estado','!=','Cerrado')
         ->select('startclasses.*')
         ->orderBy('fecha_inicio','desc')->get();
-        return view('admin/schedule.edit',['schedule'=>$this->schedule, 'startclasses'=>$startclasses,'semana'=>$semana,'horario'=>$horario]);
+        $availables = \Institute\Available::get();
+        return view('admin/schedule.edit',['schedule'=>$this->schedule, 'startclasses'=>$startclasses,'semana'=>$semana,'horario'=>$horario,'availables'=>$availables]);
     }
 
     public function ver($id)

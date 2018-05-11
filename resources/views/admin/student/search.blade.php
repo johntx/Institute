@@ -47,6 +47,7 @@
 		@foreach ($inscription->extras as $extra)
 			{{$extra->nombre}}, 
 		@endforeach</p>
+		<p>{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-warning'])!!}</p>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-hover">

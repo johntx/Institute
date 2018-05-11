@@ -27,11 +27,17 @@
 	<select name="code" id="" class="form-control selectpicker">
 		<option value="">--Seleccione--</option>
 		@foreach ($biometrics as $bio)
-		<option @if ($bio->id==$teacher->code)
-			selected
+		<option @if ($teacher!=null)
+			@if ($teacher->code == $bio->id)
+				 selected 
+			@endif
 		@endif value="{{$bio->id}}">{{$bio->nombre}}</option>
 		@endforeach
 	</select>
+</div>
+<div class="form-group">
+	{!! Form::label('Pago por Hora') !!}
+	{!! Form::text('genero',null,['class'=>'form-control','placeholder'=>'Insert Gender', 'maxlength'=>10,'onkeypress'=>"return justNumbers(event);"]) !!}
 </div>
 <div class="panel panel-default">
 	<div class="panel-body">

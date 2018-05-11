@@ -18,8 +18,8 @@ $('document').ready(function(){
 		ordering: false
 	});
 	$('.tablaSearch').DataTable({
-		searching: true,
-		ordering: true
+		paging: false,
+		searching: true
 	});
 	$('#boton_fecha_income').click(function() {
 		var href = $('#boton_fecha_income').attr('href');

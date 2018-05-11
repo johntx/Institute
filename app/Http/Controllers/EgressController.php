@@ -103,8 +103,8 @@ class EgressController extends Controller
         ->where('roles.code','!=','ROOT')
         ->where('roles.code','!=','DIS')
         ->orderBy('roles.id','DESC')
-        ->paginate(20);
-        return view('admin/egress.employees',compact('employees'));
+        ->get();
+        return view('admin/egress.employees',['employees'=>$employees]);
     }
 
     public function paymentform($id)

@@ -83,49 +83,41 @@ class AssistanceController extends Controller
     {
 
     }
-    public function register(Request $request)
+    public function register($grupo, $materia)
     {
         $inscriptions = \Institute\Inscription::leftjoin('assistances','assistances.inscription_id','=','inscriptions.id')
         ->join('peoples','inscriptions.people_id','=','peoples.id')
         ->select('inscriptions.*','assistances.asistencia as asistencia')
-        ->where('inscriptions.group_id',$request['group_id'])
+        ->where('inscriptions.group_id',$grupo)
         ->groupBy('inscriptions.id')
         ->orderBy('peoples.nombre','asc')
         ->get();
         $fechas = \Institute\Assistance::select('assistances.fecha')
         ->where('asistencia',1)
-        ->where('group_id',$request['group_id'])
-        ->where('subject_id',$request['materia_id'])
+        ->where('group_id',$grupo)
+        ->where('subject_id',$materia)
         ->where('people_id',Auth::user()->id)
         ->distinct('fecha')
         ->orderBy('fecha','asc')
         ->get();
-        return view('admin/assistance.index',['inscriptions'=>$inscriptions,'group_id'=>$request['group_id'],'materia_id'=>$request['materia_id'],'fechas'=>$fechas]);
+        return view('admin/assistance.index',['inscriptions'=>$inscriptions,'group_id'=>$grupo,'materia_id'=>$materia,'fechas'=>$fechas]);
     }
-    public function ver(Request $request)
+    public function ver($id)
     {
-        $docentes = \Institute\People::select('peoples.*')
-        ->join('assistances','assistances.people_id','=','peoples.id')
-        ->where('assistances.group_id',$request['group_id'])
-        ->groupBy('peoples.id')
-        ->get();
         $inscriptions = \Institute\Inscription::leftjoin('assistances','assistances.inscription_id','=','inscriptions.id')
         ->join('peoples','inscriptions.people_id','=','peoples.id')
         ->select('inscriptions.*','assistances.asistencia as asistencia')
-        ->where('inscriptions.group_id',$request['group_id'])
+        ->where('inscriptions.group_id',$id)
         ->groupBy('inscriptions.id')
         ->orderBy('peoples.nombre','asc')
         ->get();
-        $fechas = \Institute\Assistance::select('assistances.fecha')
-        ->where('asistencia',1)
-        ->where('group_id',$request['group_id'])
-        ->where('subject_id',$request['materia_id'])
-        ->where('people_id',Auth::user()->id)
-        ->distinct('fecha')
+        $asistencias = \Institute\Assistance::where('asistencia',1)
+        ->where('group_id',$id)
+        ->groupBy('fecha','subject_id')
         ->orderBy('fecha','asc')
         ->get();
-        $group = \Institute\Group::find($request['group_id']);
-        return view('admin/assistance.ver',['inscriptions'=>$inscriptions,'group'=>$group,'fechas'=>$fechas,'docentes'=>$docentes]);
+        $group = \Institute\Group::find($id);
+        return view('admin/assistance.ver',['inscriptions'=>$inscriptions,'group'=>$group,'asistencias'=>$asistencias]);
     }
 
     /**

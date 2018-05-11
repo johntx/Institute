@@ -4,7 +4,7 @@
 {!! Form::open(['url' => ['admin/egress/savepayment'],'method'=>'post']) !!}
 <div class="form-group">
 	{!! Form::label('Empleado/a') !!}
-	{!! Form::label('monto',$employee->nombrecompleto(),['class'=>'form-control']) !!}
+	{!! Form::label('empleado',$employee->nombrecompleto(),['class'=>'form-control']) !!}
 	{!! Form::hidden('people_id',$employee->id,['class'=>'form-control']) !!}
 </div>
 <div class="form-group">

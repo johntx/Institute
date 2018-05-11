@@ -1,20 +1,32 @@
 @extends('layouts.admin')
 @section('content')
 @include('alerts.succes')
+<?php $editar=false; $eliminar=false; ?>
+@foreach(Auth::user()->role->functionalities as $func)
+@if ($func->code=='EGRO')
+<?php $editar=true; ?>
+@endif
+@if ($func->code=='DGRO')
+<?php $eliminar=true; ?>
+@endif
+@endforeach
 <div class="table-responsive">
-	<table class="table table-hover">
-		<thead>
-			<th>Id</th>
-			<th>Fecha de Inicio</th>
-			<th>Carrera</th>
-			<th>Turno</th>
-			<th>Inscritos</th>
-			<th>Estado</th>
-			<th>Horario</th>
-			<th>Edit</th>
-		</thead>
+	<table class="table table-hover tablaNoOrder compact">		<thead>
+		<th>Id</th>
+		<th>Fecha de Inicio</th>
+		<th>Carrera</th>
+		<th>Turno</th>
+		<th>Inscritos</th>
+		<th>Estado</th>
+		<th>Horario</th>
+		<th>Anticipado</th>
+		<th>Asistencia</th>
+		<th>Edit</th>
+		<th></th>
+	</thead>
+	<tbody>
 		@foreach($groups as $group)
-		<tbody>
+		<tr>
 			<td>{{$group->id}}</td>
 			<td>{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}</td>
 			<td>{{$group->startclass->career->nombre}}</td>
@@ -30,28 +42,23 @@
 			<!--td>
 				{!!link_to_action('GroupController@horario', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-success'])!!}
 			</td-->
-			@foreach(Auth::user()->role->functionalities as $func)
-			@if ($func->code=='EGRO')
 			<td>
+				{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $group->id, $attributes = ['class'=>'btn btn-warning'])!!}
+			</td>
+			<td>
+				@if ($editar)
 				{!!link_to_route('admin.group.edit', $title = 'Editar', $parameters = $group->id, $attributes = ['class'=>'btn btn-primary'])!!}
+				@endif
 			</td>
-			@endif
-			@if ($func->code=='DGRO' && sizeof($group->inscriptions)==0)
 			<td>
+				@if ($eliminar)
 				{!!link_to_route('admin.group.show', $title = 'Borrar', $parameters = $group->id, $attributes = ['class'=>'btn btn-danger'])!!}
+				@endif
 			</td>
-			@endif
-			@endforeach
-			<td>
-				{!!Form::open(['url'=>'assistance/ver'])!!}
-				<input type="hidden" name="group_id" value="{{$group->id}}" id="">
-				<input type="hidden" name="materia_id" value="{{$group->materia_id}}" id="">
-				{!! Form::submit('Asistencias',['class'=>'btn btn-default']) !!}
-				{!! Form::close() !!}
-			</td>
-		</tbody>
+		</tr>
 		@endforeach
-	</table>
+	</tbody>
+</table>
 </div>
 <div class="modal fade" id="pdfModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document" style="z-index: 2000">
@@ -66,5 +73,7 @@
 		</div>
 	</div>
 </div>
-{!!$groups->render()!!}
+<style>
+	form{ margin: 0; }
+</style>
 @endsection

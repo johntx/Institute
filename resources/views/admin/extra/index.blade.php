@@ -9,25 +9,30 @@
 			<th>Precio</th>
 			<th>Edit</th>
 		</thead>
-		@foreach($extras as $extra)
 		<tbody>
-			<td>{{$extra->id}}</td>
-			<td>{{$extra->nombre}}</td>
-			<td>{{$extra->precio}}</td>
-			@foreach(Auth::user()->role->functionalities as $func)
-			@if ($func->code=='EEXT')
-			<td>
-				{!!link_to_route('admin.extra.edit', $title = 'Editar', $parameters = $extra->id, $attributes = ['class'=>'btn btn-primary'])!!}
-			</td>
-			@endif
-			@if ($func->code=='DEXT')
-			<td>
-				{!!link_to_route('admin.extra.show', $title = 'Borrar', $parameters = $extra->id, $attributes = ['class'=>'btn btn-danger'])!!}
-			</td>
-			@endif
+			@foreach($extras as $extra)
+			<tr>
+				<td>{{$extra->id}}</td>
+				<td>{{$extra->nombre}}</td>
+				<td>{{$extra->precio}}</td>
+				@foreach(Auth::user()->role->functionalities as $func)
+				@if ($func->code=='EEXT')
+				<td>
+					{!!link_to_route('admin.extra.edit', $title = 'Editar', $parameters = $extra->id, $attributes = ['class'=>'btn btn-primary'])!!}
+				</td>
+				@endif
+				@if ($func->code=='DEXT')
+				<td>
+					{!!link_to_route('admin.extra.show', $title = 'Borrar', $parameters = $extra->id, $attributes = ['class'=>'btn btn-danger'])!!}
+				</td>
+				@endif
+				@endforeach
+				<td>
+					{!!link_to_action('ExtraController@curso', $title = 'Estudiantes', $parameters = $extra->id, $attributes = ['class'=>'btn btn-primary'])!!}
+				</td>
+			</tr>
 			@endforeach
 		</tbody>
-		@endforeach
 	</table>
 </div>
 {!!$extras->render()!!}

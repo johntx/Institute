@@ -48,14 +48,18 @@ class Inscription extends Model
             return false;
         }
     }
-    public function asisCont($group_id,$subject_id,$people_id)
+    public function asisCont($group_id)
     {
         $assistances = \Institute\Assistance::where('asistencia',1)
         ->where('group_id',$group_id)
-        ->where('subject_id',$subject_id)
-        ->where('people_id',$people_id)
         ->where('inscription_id',$this->id)
+        ->groupBy('fecha')
         ->get();
+        $cant=0;
+        $assistances->each(function($asistencia)
+        {
+            
+        });
         return count($assistances);
     }
     public function extras()
