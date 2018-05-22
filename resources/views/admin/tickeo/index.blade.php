@@ -2,8 +2,12 @@
 @section('content')
 @include('alerts.succes')
 <div>
+<?php $people=\Institute\People::find($people_id); ?>
+	<br>
+	{!! Form::label(\Institute\Biometric::find($people->code)->nombre) !!}
+	<br>
 	<div class="form-group">
-		{!! Form::label('Desde') !!}
+		{!! Form::label('Desde:') !!}
 		{!! Form::text('fecha',Carbon\Carbon::now()->subMonth()->format('Y-m-d'),['class'=>'form-control datepicker','id'=>'fecha_tickeos','placeholder'=>'yyyy-mm-dd']) !!}
 	</div>
 	@if (Auth::user()->role->code == "ADM" || Auth::user()->role->code == "ROOT")

@@ -52,7 +52,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $biometrics = \Institute\Biometric::get();
+        $biometrics = \Institute\Biometric::orderBy('nombre','asc')->get();
         $roles = \Institute\Role::where('roles.code','!=','ROOT')
         ->where('roles.code','!=','ADM')
         ->where('roles.code','!=','EST')
@@ -124,7 +124,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $biometrics = \Institute\Biometric::get();
+        $biometrics = \Institute\Biometric::orderBy('nombre','asc')->get();
         $roles = \Institute\Role::where('roles.code','!=','ROOT')
         ->where('roles.code','!=','EST')
         ->where('roles.code','!=','DOC')

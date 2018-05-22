@@ -96,7 +96,7 @@ class IncomeController extends Controller
         $income = Income::find($id);
         $view =  view('pdf/PDFComprobante', ['income'=>$income])->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('a5', 'landscape');
         return $pdf->stream('comprobante '.$income->nombre.'.pdf');
     }
 

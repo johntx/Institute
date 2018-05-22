@@ -32,7 +32,13 @@
 			<td>{{Jenssegers\Date\Date::parse($tickeo->fecha)->format('j M Y - H:i:s')}}</td>
 			<td>@if ($tickeo->tipo == 0) entrada @else salida @endif</td>
 			<td>{{$tickeo->dia}}</td>
-			<td>{{$tickeo->estado}}</td>
+			<td>
+				@if (!$tickeo->estado && !$tickeo->cancelado)
+				{!!link_to_action('TickeoController@observar', $title = 'Observar', $parameters = $tickeo->id, $attributes = ['class'=>'btn btn-warning observar'])!!}
+				@else
+				{{$tickeo->estado}}
+				@endif
+			</td>
 			@if (Auth::user()->role->code == "ADM" || Auth::user()->role->code == "ROOT")
 			<td>
 				{!! Form::open(['route' => ['admin.tickeo.update',$tickeo->id],'method'=>'put','style'=>"margin:0;"]) !!}

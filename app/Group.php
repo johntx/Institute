@@ -33,4 +33,9 @@ class Group extends Model
     {
         return $this->hasMany('Institute\Hour');
     }
+    public function inscritos($group)
+    {
+    	$inscriptions = \Institute\Inscription::where('estado','Inscrito')->where('group_id',$group->id)->get();
+    	return '<b>'.sizeof($inscriptions).'</b> / '.sizeof($group->inscriptions);
+    }
 }

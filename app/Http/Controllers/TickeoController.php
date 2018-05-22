@@ -21,7 +21,7 @@ class TickeoController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin',['only' => ['index','create','edit']]);
-        $this->beforeFilter('@find',['only' => ['edit','update','show']]);
+        $this->beforeFilter('@find',['only' => ['edit','update','show','observar']]);
     }
     public function find(Route $route)
     {
@@ -39,6 +39,15 @@ class TickeoController extends Controller
 
     public function tickeo($id)
     {
+        return view('admin/tickeo.index',['people_id'=>$id]);
+    }
+
+    public function observar($id)
+    {
+        $tickeo = Tickeo::find($id);
+        $tickeo->estado = "observado";
+        $tickeo->save();
+        return $tickeo->estado;
         return view('admin/tickeo.index',['people_id'=>$id]);
     }
 
@@ -187,10 +196,10 @@ class TickeoController extends Controller
         }
         if ($this->tickeo->estado == "invalido") {
             $this->tickeo->estado = "";
-        $this->tickeo->save();
-        } elseif ($this->tickeo->estado == '') {
+            $this->tickeo->save();
+        } elseif ($this->tickeo->estado == '' || $this->tickeo->estado == 'observado') {
             $this->tickeo->estado = 'invalido';
-        $this->tickeo->save();
+            $this->tickeo->save();
         }
         return Redirect::to(str_replace("/cien/public/", "", $request['url']));
         Session::flash('message','Egreso editado exitosamente');

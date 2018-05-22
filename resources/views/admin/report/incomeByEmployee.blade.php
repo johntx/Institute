@@ -2,7 +2,6 @@
 @section('content')
 @include('alerts.succes')
 <br>
-
 <div class="form-group">
 	{!! Form::label('Fecha de Reporte') !!}
 	<div class="col-xs-12" style="padding: 0;">
@@ -14,11 +13,11 @@
 		</div>
 	</div>
 </div>
-
 <br>
 <br>
 <?php $total = 0; $total2 = 0; ?>
 @foreach($users as $user)
+{!! Form::open(['action' => 'PaymentController@recibir']) !!}
 <div class="panel @if (sizeof($user->payments()->where('estado','Pagado')->where('fecha_pago',\Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d'))->get()) > 0 )
 	panel-primary
 	@else
@@ -38,6 +37,7 @@
 					<th>Abono</th>
 					<th>Saldo</th>
 					<th>Total</th>
+					<th>Recibido</th>
 				</thead>
 				<?php $subtotal = 0; $subtotal2 = 0; ?>
 				<tbody>
@@ -49,9 +49,16 @@
 						<td>{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}</td>
 						<td>{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}</td>
 						<td>{{$payment->inscription->group->startclass->career->nombre}}</td>
-						<td>{{$payment->abono}}</td>
+						<td><b>{{$payment->abono}}</b></td>
 						<td>{{$payment->saldo-$payment->abono}}</td>
 						<td>{{$payment->saldo}}</td>
+						<td style="text-align: center">
+							@if (!$payment->recibido)
+							<input type="checkbox" class="check_mediano" monto="{{$payment->abono}}" user="{{$user->id}}" value="{{$payment->id}}" name="recibido[]">
+							@else
+							✔
+							@endif
+						</td>
 					</tr>
 					<?php $subtotal += $payment->abono; ?>
 					<?php $total += $payment->abono; ?>
@@ -64,9 +71,10 @@
 						<td>{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}</td>
 						<td>{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}</td>
 						<td>{{$payment->inscription->group->startclass->career->nombre}}</td>
-						<td>{{$payment->abono}}</td>
+						<td><b>{{$payment->abono}}</b></td>
 						<td>{{$payment->saldo-$payment->abono}}</td>
 						<td>{{$payment->saldo}}</td>
+						<td></td>
 					</tr>
 					<?php $subtotal2 += $payment->abono; ?>
 					<?php $total2 += $payment->abono; ?>
@@ -76,13 +84,18 @@
 		</div>
 	</div>
 	<div class="panel-footer">
-		<h4>Subtotal: {{$subtotal}}</h4>
+		<span style="font-size: 24px;">Subtotal: {{$subtotal}}</span>
 		@if ($subtotal2>0)
 		<br>
 		Subtotal: {{$subtotal2}} (registros de otras fechas)
 		@endif
+		@if ($subtotal>0)
+		{!! Form::submit('Recibido',['class'=>'btn-primary btn_me']) !!}
+		<span class="{{$user->id}}" style="font-size: 20px; float: right; padding-right: 30px;">Recibir: 0</span>
+		@endif
 	</div>
 </div>
+{!! Form::close() !!}
 @endforeach
 <div class="panel panel-primary">
 	<div class="panel-heading">Suma de Totales</div>

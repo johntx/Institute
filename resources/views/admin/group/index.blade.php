@@ -31,7 +31,7 @@
 			<td>{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}</td>
 			<td>{{$group->startclass->career->nombre}}</td>
 			<td>{{$group->turno}}</td>
-			<td>{{sizeof($group->inscriptions)}}</td>
+			<td>{!!$group->inscritos($group)!!}</td>
 			<td>({{$group->estado}})</td>
 			<td>
 				{!!link_to_action('GroupController@pdf', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$group->id])!!}

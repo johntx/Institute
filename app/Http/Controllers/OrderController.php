@@ -99,7 +99,7 @@ class OrderController extends Controller
         $order = Order::find($id);
         $view =  view('pdf/PDFVenta', ['order'=>$order])->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('a5', 'landscape');
         return $pdf->stream('recivo '.$order->nombre.'.pdf');
     }
 

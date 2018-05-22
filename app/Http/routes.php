@@ -22,6 +22,7 @@ Route::get('assistance/register/{grupo}/{materia}','AssistanceController@registe
 Route::get('assistance/ver/{id}','AssistanceController@ver');
 Route::post('assistance/assistance_ajax','AssistanceController@assistance_ajax');
 Route::post('teacher/payment_ajax','TickeoController@payment_ajax');
+Route::post('admin/payment/recibir/save','PaymentController@recibir');
 
 Route::resource('user','UserController');
 Route::resource('admin/role','RoleController');
@@ -63,6 +64,7 @@ Route::get('admin/report/chart/{inicio}/{fin}','ReportController@chart');
 Route::get('admin/report/students','ReportController@students');
 Route::get('admin/report/retirados','ReportController@retirados');
 Route::get('admin/payments/{id}','PaymentController@getpayments');
+Route::get('admin/payments/my/payments','PaymentController@mypayments');
 Route::get('admin/search/{name}','StudentController@getpeople');
 Route::get('admin/inscriptions/{id}','PaymentController@getinscriptions');
 Route::get('admin/payment/pdf/{id?}','PaymentController@pdf');
@@ -70,6 +72,7 @@ Route::get('admin/order/pdf/{id?}','OrderController@pdf');
 Route::get('admin/income/pdf/{id?}','IncomeController@pdf');
 Route::get('admin/egress/pdf/{id?}','EgressController@pdf');
 Route::get('admin/group/pdf/{id?}','GroupController@pdf');
+Route::get('admin/tickeo/observar/{id}','TickeoController@observar');
 Route::get('admin/tickeo/person/{id}','TickeoController@tickeo');
 Route::get('admin/tickeo/person/{id}/{fecha}','TickeoController@tickeoEmpleado');
 Route::get('admin/tickeo/logPerson/{id}/{fecha}','TickeoController@logTickeoEmpleado');

@@ -96,7 +96,7 @@
 									<td>Pagado</td>
 									<td>-</td>
 									<td>-</td>
-									<td>{{$inscription->people->telefono}}</td>
+									<td><a href="https://api.whatsapp.com/send?phone=591{{$inscription->people->telefono}}" target="_blank">{{$inscription->people->telefono}}</a></td>
 								</tr>
 								@endforeach
 							</tbody>

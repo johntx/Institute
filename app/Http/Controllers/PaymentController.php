@@ -50,7 +50,7 @@ class PaymentController extends Controller
     $suma = Numeroaletras::convertir($payment->abono);
     $view =  view('pdf/PDFRecibo', ['payment'=>$payment, 'suma'=>$suma])->render();
     $pdf = \App::make('dompdf.wrapper');
-    $pdf->loadHTML($view);
+    $pdf->loadHTML($view)->setPaper('a5', 'landscape');
     return $pdf->stream('Recibo '.$payment->inscription->people->nombrecompleto().'.pdf');
   }
 
@@ -67,6 +67,25 @@ class PaymentController extends Controller
     ->where('payments.estado', 'LIKE','Pagado%')
     ->orderBy('payments.id','DESC')->paginate(20);
     return view('admin/payment.index',compact('payments'));
+  }
+
+  public function mypayments()
+  {
+    $payments = \Institute\Payment::where('estado', 'LIKE','Pagado%')
+    ->where('user_id',Auth::user()->id)
+    ->orderBy('created_at','desc')
+    ->paginate(20);
+    return view('admin/payment.mypayments',['payments'=>$payments]);
+  }
+
+  public function recibir(Request $request)
+  {
+    for ($i=0; $i < count($request['recibido']); $i++) {
+      $payment = \Institute\Payment::find($request['recibido'][$i]);
+      $payment->recibido = true;
+      $payment->save();
+    }
+    return Redirect::to('/admin/report/incomeByEmployee');
   }
 
   /**
@@ -162,7 +181,7 @@ class PaymentController extends Controller
         $inscription->save();
         if ($inscription->abono < $inscription->total) {
           if ($PaymentSaldo == 0) {
-            $mes = $inscription->abono / $inscription->monto;
+            $mes = round($inscription->abono / $inscription->monto);
             $payment = new \Institute\Payment;
             if ($inscription->group->startclass->fecha_inicio > $inscription->fecha_ingreso) {
               $fecha_pagar = date('Y-m-d',strtotime('+'.$mes.' month', strtotime($inscription->group->startclass->fecha_inicio)));

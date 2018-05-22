@@ -62,7 +62,7 @@
 				@elseif ($k==1)
 				<td rowspan="{{count($tickeos)-1}}"><p style="text-align: center;">({{\Jenssegers\Date\Date::parse($fecha)->format('l')}}) </p></td>
 				@endif
-				<td>@if ($tickeo->tipo == 0)Entrada @else Salida<?php $cam=true;?>@endif</td>
+				<td>@if ($tickeo->tipo == 0)Entrada @if ($tickeo->estado == "observado") (observado)@endif @else Salida @if ($tickeo->estado == "observado") (observado)@endif <?php $cam=true;?>@endif</td>
 				<td style="text-align:center;">{{$hora}}</td>
 				<td style="text-align:center;"@if ($tickeo->tipo == 0) e_pos='{{$pos}}'@else s_pos='{{$pos}}'@endif>{{$ajuste}}</td>
 				<td style="text-align:center;"><button type="button" class="btn btn-xs btn-warning btn_invalidar" data-toggle="modal" data-target=".bs-delete-modal-sm{{$tickeo->id}}">×</button></td>
@@ -77,7 +77,7 @@
 			<td rowspan="{{count($tickeos)}}"
 			<?php $tickeos_cont = \Institute\Tickeo::select('tickeos.*')->where('biometric_id',$people->code)->whereBetween('fecha',array(Carbon\Carbon::parse($fecha)->format('Y-m-d 00:00:00'),Carbon\Carbon::parse($fecha)->format('Y-m-d 23:59:59')))->where('estado','!=','invalido')->where('cancelado','!=','si')->get(); ?>
 			@if (count($tickeos_cont)>0)
-			><input type="checkbox" name="cancelado" value="{{$fecha}}" style="width: 100%; height: 35px;">
+			><input type="checkbox" class="check" name="cancelado" value="{{$fecha}}" style="width: 100%; height: 35px;">
 			@else
 			style="background-color:#F15D5D;text-align:center;vertical-align:middle;color:white;">CANCELADO
 			@endif
@@ -145,42 +145,29 @@
 	@endforeach
 </tbody>
 @endforeach
-<tbody>
-	<tr>
-		<td colspan="7"></td>
-		<td>
-			<button style="width: 100%;" class="btn btn-success btn-lg" onclick="cancelar()" data-toggle="modal" data-target=".modal_pagar">Pagar</button>
-		</td>
-	</tr>
-</tbody>
 </table>
 </div>
-<div class="modal fade modal_pagar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-	<div class="modal-dialog modal-sm" role="document" style="z-index:2000;">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Pagar Horas</h4>
-			</div>
-			<div class="modal-body">
-				<p>Esta seguro que desea registrar el pago</p>
-				<p>{{$tickeo->biometric->nombre}}</p>
-				<p id="horas_pagar"></p>
-				<p id="monto_pagar"></p>
-			</div>
-			<div class="modal-footer">
-				{!! Form::open(['url'=>'teacher/payment_ajax','id'=>"form_pagar"]) !!}
-				<input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
-				<input type="hidden" id="i_horas_pagar" name="horas" value="">
-				<input type="hidden" id="i_monto_pagar" name="monto" value="">
-				<input type="hidden" name="code" value="{{$people->code}}">
-				<input type="hidden" name="people_id" value="{{$people->id}}">
-				<input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-				{!! Form::submit('Pagar',['class'=>' btn-success','style' => 'float:left;padding: 6px 12px;']) !!}
-				{!! Form::close() !!}
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-			</div>
-		</div>
+<div id="modal_pagar_overall" class="panel panel-default" style="display: none; width: 350px; position: fixed; top: 20%; left: 40%;-webkit-box-shadow: 10px 10px 13px 1px rgba(0,0,0,0.45);
+-moz-box-shadow: 10px 10px 13px 1px rgba(0,0,0,0.45);
+box-shadow: 10px 10px 13px 1px rgba(0,0,0,0.45);">
+	<div class="panel-heading">Pagar Horas</div>
+	<div class="panel-body">
+		<p>Esta seguro que desea registrar el pago</p>
+		<p>{{$tickeo->biometric->nombre}}</p>
+		<p id="horas_pagar"></p>
+		<p id="monto_pagar"></p>
+	</div>
+	<div class="panel-footer">
+		{!! Form::open(['url'=>'teacher/payment_ajax','id'=>"form_pagar"]) !!}
+		<input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
+		<input type="hidden" id="i_horas_pagar" name="horas" value="">
+		<input type="hidden" id="i_monto_pagar" name="monto" value="">
+		<input type="hidden" name="code" value="{{$people->code}}">
+		<input type="hidden" name="people_id" value="{{$people->id}}">
+		<input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+		{!! Form::submit('Pagar',['class'=>'btn btn-success']) !!}
+		{!! Form::close() !!}
+		<button type="button" class="btn btn-default" onclick="ocultar()">Cancelar</button>
 	</div>
 </div>
 <div class="modal fade modal_editar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">

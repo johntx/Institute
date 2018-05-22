@@ -36,7 +36,6 @@ $('#inscribir').on('submit',function(e){
 		header:$('meta[name="_token"]').attr('content')
 	});
 	e.preventDefault(e);
-	$('#inscribir input[type=submit]').attr("disabled", true);
 	$.ajax({
 		type:"POST",
 		url:window.location.origin+'/cien/public/admin/student',
@@ -62,7 +61,6 @@ $('#reinscribir').on('submit',function(e){
 		header:$('meta[name="_token"]').attr('content')
 	});
 	e.preventDefault(e);
-	$('#reinscribir input[type=submit]').attr("disabled", true);
 	$.ajax({
 		type:"POST",
 		url:window.location.origin+'/cien/public/admin/inscription',
@@ -92,7 +90,7 @@ $('#paymentForm').on('submit',function(e){
 	//$('#paymentForm input[type=submit]').attr("disabled", true);
 	$.ajax({
 		type:"POST",
-		url:window.location.origin+'/cien/public/admin/payment',
+		url:$(this).attr('action'),
 		data:$(this).serialize(),
 		dataType: 'json',
 		success: function(payment){
@@ -478,4 +476,21 @@ $('.check_asistencia').click(function() {
 			console.log('error: '+data);
 		}
 	});
+});
+$('.observar').click(function(e){
+	e.preventDefault();
+	var link = $(this);
+	$.get($(this).attr('href'),function(tickeo,response){
+		if (tickeo=='observado') {
+			link.parent().html('observado');
+		}
+	});
+});
+$('.check_mediano').click(function () {
+	var monto = 0;
+	var user = $(this).attr('user');
+	$.each($("input[user='"+user+"']:checked"), function( key, input ) {
+		monto = monto+parseInt($(input).attr('monto'));
+	});
+	$('span.'+user).html('Recibir: '+monto);
 });

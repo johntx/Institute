@@ -48,6 +48,21 @@ $('document').ready(function(){
 		div.children('select').children('option[selected="selected"]').removeAttr('selected');
 		div.children('select').children('option[value="'+value+'"]').attr('selected','selected');
 	});
+	$('.show_group').hover(function () {
+		var ancho = $('#float_count').width();
+		var alto = $('#float_count').height();
+		var coordenadas = $(this).position();
+		var tt = coordenadas.top-8;
+		var ll = coordenadas.left-ancho-4;
+		console.log("top: " + coordenadas.top + " left: " + coordenadas.left);
+		console.log("alto: " + alto + " ancho: " + ancho);
+		$('#float_count').attr('style',$(this).attr('style'));
+		$('#float_count').addClass('active');
+		$('#float_count').offset({top:tt,left:ll});
+		$('#float_count>span').html($(this).attr('cont'));
+	},function(){
+		$('#float_count').removeClass('active');
+	});
 });
 function colorear(element){
 	$(element).removeAttr('style');
@@ -55,6 +70,7 @@ function colorear(element){
 	var size = $(element).attr('size');
 	var color = $(element).attr('color');
 	var texto = $(element).attr('texto');
+	var inscritos = $(element).attr('inscritos');
 	var carrera = $(element).attr('carrera');
 	var asignatura = $(element).attr('asignatura');
 	var fecha = $(element).attr('fecha');
@@ -86,10 +102,10 @@ function colorear(element){
 			date = date.substring(0,10).split('-');
 			date = date[1] + '-' + date[2] + '-' + date[0];
 			if ($(td).hasClass('ocupado')) {
-				$(td).children('div').append("<div style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div>");
+				$(td).children('div').append("<div cont='"+inscritos+"' class='show_group' style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div>");
 			} else {
 				$(td).empty();
-				$(td).html("<div><div style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div></div>");
+				$(td).html("<div><div cont='"+inscritos+"' class='show_group' style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div></div>");
 			}
 			$(td).css({'border-top':'1px solid '+color});
 		}

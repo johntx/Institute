@@ -48,7 +48,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        $biometrics = \Institute\Biometric::get();
+        $biometrics = \Institute\Biometric::orderBy('nombre','asc')->get();
         $subjects = \Institute\Subject::orderBy('nombre','asc')->get();
         $offices = \Institute\Office::lists('nombre', 'id');
         return view('admin/teacher.create',['biometrics'=>$biometrics, 'offices'=>$offices, 'subjects'=>$subjects, 'teacher'=>null]);
@@ -127,7 +127,7 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        $biometrics = \Institute\Biometric::get();
+        $biometrics = \Institute\Biometric::orderBy('nombre','asc')->get();
         $subjects = \Institute\Subject::orderBy('nombre','asc')->get();
         $offices = \Institute\Office::lists('nombre', 'id');
         return view('admin/teacher.edit',['teacher'=>$this->teacher,'offices'=>$offices,'biometrics'=>$biometrics,'subjects'=>$subjects]);

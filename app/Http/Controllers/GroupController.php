@@ -98,7 +98,7 @@ class GroupController extends Controller
         $group = Group::find($id);
         $view =  view('pdf/PDFHorarioGrupo', ['group'=>$group,'semana'=>$semana,'horario'=>$horario])->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('a5', 'landscape');
         return $pdf->stream('Horario '.$group->turno.'.pdf');
     }
 
@@ -109,7 +109,7 @@ class GroupController extends Controller
         $group = Group::find($id);
         $view =  view('pdf/PDFHorarioGrupoAnticipado', ['group'=>$group,'semana'=>$semana,'horario'=>$horario])->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('a5', 'landscape');
         return $pdf->stream('Horario '.$group->turno.'.pdf');
     }
 

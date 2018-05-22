@@ -77,13 +77,6 @@
 			left: 150px;
 			top: 47px;
 		}
-		.agua:last-child{
-			top: 530px;
-		}
-		table.second{
-			position: absolute;
-			top: 50%;
-		}
 	</style>
 </head>
 <body>
@@ -125,38 +118,6 @@
 			@endforeach
 		</tbody>
 	</table>
-	<table class="sch second">
-		<tbody>
-			<tr>
-				<th colspan="7">HORARIO {{$group->startclass->career->nombre}} {{$group->turno}}</th>
-			</tr>
-			<tr>
-				@foreach ($semana as $dia)
-				<th dia="dia">{{strtoupper($dia)}}</th>
-				@endforeach
-			</tr>
-			@foreach ($horario as $key=>$hora)
-			<?php $h=$key+1; ?>
-			<tr h="{{$h}}" @if ($key%2==0 && $key<10) hmas="hmas" @elseif ($key%2!=0 && $key>12 && $key<22) hmas="hmas" @endif @if ($key>7 && $key<13 || $key>20)  mid="mid" @endif>
-				@foreach ($semana as $x=>$dia)
-				@if ($dia == 'hora')
-				<td x="{{$x}}"><div>{{$hora}}</div></td>
-				@else
-				<?php
-				$hour = $group->hours()->join('schedules','hours.schedule_id','=','schedules.id')->join('subjects','hours.subject_id','=','subjects.id')->join('groups','hours.group_id','=','groups.id')->join('peoples','hours.people_id','=','peoples.id')->join('startclasses','groups.startclass_id','=','startclasses.id')->join('careers','startclasses.career_id','=','careers.id')->select('hours.*','subjects.nombre as asignatura','careers.nombre as carrera','startclasses.fecha_inicio as fecha','peoples.nombre as profesor')->where('schedules.vigente','anticipado')->where('hours.dia',$dia)->where('hours.hora_inicio',$hora)->first();
-				?>
-				<td x="{{$x}}">
-					<div class="sch_hour" hora='{{$hour['id']}}' size="{{$hour['periodos']}}" carrera="<b>{{$hour['asignatura']}}</b>" fecha="" asignatura="{{$hour['profesor']}}" aula="{{$hour['piso']}} {{$hour['aula']}}">
-						<b>{{$hour['asignatura']}}</b>
-					</div>
-				</td>
-				@endif
-				@endforeach
-			</tr>
-			@endforeach
-		</tbody>
-	</table>
-	<img class="agua" src="{!!URL::to('icons/agua.svg')!!}">
 	<img class="agua" src="{!!URL::to('icons/agua.svg')!!}">
 </body>
 </html>

@@ -380,3 +380,30 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+#float_count.active{
+	display: block;
+}
+#float_count{
+	display: none;
+	position: absolute;
+	width: 60px;
+	height: 30px;
+	border: 2px solid black;
+	padding: 0;
+	z-index: 2000;
+}
+#float_count>span{
+	padding: 3px 0 0 6px;
+	display: block;
+}
+.check_mediano{
+	margin: 0 !important;
+	height: 22px;
+	width: 22px;
+}
+.btn_me{
+	float: right;
+	padding: 7px 11px 7px 11px;
+	border: none;
+	border-radius: 3px;
+}

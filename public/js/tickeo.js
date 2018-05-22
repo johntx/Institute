@@ -27,7 +27,13 @@ $('document').ready(function(){
 		$("span[r_pos='"+pos+"']").html(parseInt(horas)+":"+minutos);
 	});
 });
-function cancelar() {
+function ocultar() {
+	$('#modal_pagar_overall').fadeOut();
+}
+$('.check').click(function() {
+	if ($(this).prop('checked')) {
+		$('#modal_pagar_overall').fadeIn();
+	}
 	var suma_hora = 0;
 	var suma_minuto = 0;
 	$.each($("input[name='cancelado']:checked"), function( key, input ) {
@@ -59,7 +65,8 @@ function cancelar() {
 	pago = pago.toFixed(2);
 	$("#monto_pagar").html(pago+" Bs.");
 	$("#i_monto_pagar").val(pago);
-}
+	
+});
 function editar_hora(e){
 	var pos = $(e).attr('ed_pos');
 	var hora = $("span[r_pos='"+pos+"']").html();
