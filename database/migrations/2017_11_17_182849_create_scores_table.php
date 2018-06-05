@@ -24,7 +24,9 @@ class CreateScoresTable extends Migration
       $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
       $table->integer('partial_id')->unsigned()->nullable();
       $table->foreign('partial_id')->references('id')->on('partials')->onDelete('cascade');
-      $table->string('nota',10)->nullable();
+      $table->integer('nota')->nullable();
+      $table->string('detalle',100)->nullable();
+      $table->date('fecha')->nullable();
       $table->timestamps();
     });
   }

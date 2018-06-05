@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <h4>Docente: <b>{{$people->nombrecompleto()}}</b> Biometrico: <b>({{$tickeos->first()->biometric->nombre}})</b></h4>
 <div class="table-responsive">
 	<table style="border: 1px solid black;">

@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <div class="table-responsive">
 	<table class="table table-responsive">
 		<thead>

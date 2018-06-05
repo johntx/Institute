@@ -2,7 +2,7 @@
 @section('content')
 @include('alerts.request')
 <?php $eliminar=false;?>
-@foreach(Auth::user()->role->functionalities as $func)
+@foreach(Session::get('functionalities') as $func)
 @if ($func->code=='DPAY')
 <?php $eliminar=true; ?>
 @endif
@@ -44,86 +44,91 @@
 		<p class="col-sm-6"><b>Fecha inicio de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}</p>
 		<p class="col-sm-6"><b>Fecha fin de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_fin)->format('j M Y')}}</p>
 		<p class="col-sm-6"><b>Cursos extras:</b>
-		@foreach ($inscription->extras as $extra)
+			@foreach ($inscription->extras as $extra)
 			{{$extra->nombre}}, 
-		@endforeach</p>
-		<p>{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-warning'])!!}</p>
-	</div>
-	<div class="table-responsive">
-		<table class="table table-hover">
-			<thead style="background-color: #EEEEEE;">
-				<th>Id</th>
-				<th>Fecha Pagar</th>
-				<th>Pagó</th>
-				@if (Auth::user()->role->code == 'ADM')
-				<th>Registro</th>
-				@endif
-				<th>Abono</th>
-				<th>Saldo</th>
-				<th>Total</th>
-				<th>Estado</th>
-				<th>Obser.</th>
-				<th><em>Usuario</em></th>
-				<th>Opción</th>
-			</thead>
-			@foreach ($inscription->payments()->orderBy('id','DESC')->get() as $payment)
-			<tbody>
-				<td>{{$payment->id}}</td>
-				<td>{{Jenssegers\Date\Date::parse($payment->fecha_pagar)->format('j M Y')}}</td>
-				<td>
-					@if ($payment->fecha_pago != null)
-					{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}
+			@endforeach</p>
+			<p>{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-warning'])!!}</p>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead style="background-color: #EEEEEE;">
+					<th>Id</th>
+					<th>Fecha Pagar</th>
+					<th>Pagó</th>
+					@if (Auth::user()->role->code == 'ADM')
+					<th>Registro</th>
 					@endif
-				</td>
-				@if (Auth::user()->role->code == 'ADM' && $payment->abono != 0)
-				<td>
-					{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}
-				</td>
-				@endif
-				<td>
-					@if ($payment->abono != 0)
-					{{$payment->abono}}
-					@endif
-				</td>
-				<td>
-					@if ($payment->abono != 0)
-					{{$payment->saldo-$payment->abono}}
-					@endif
-				</td>
-				<td>{{$payment->saldo}}</td>
-				<td>{{$payment->estado}}</td>
-				<td>{{$payment->observacion}}</td>
-				<td>
-					@if ($payment->abono != 0)
-					<em>{{\Institute\User::find($payment->user_id)->user}}</em>
-					@endif
-				</td>
-				@if ($payment->abono != 0)
-				<td>
+					<th>Abono</th>
+					<th>Saldo</th>
+					<th>Total</th>
+					<th>Estado</th>
+					<th>Obser.</th>
+					<th><em>Usuario</em></th>
+					<th>Imprimir</th>
 					@if ($eliminar)
-					{!!link_to_route('admin.payment.show', $title = 'Borrar', $parameters = $payment->id, $attributes = ['class'=>'btn btn-danger'])!!}
+					<th>Eliminar</th>
 					@endif
-					{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
-				</td>
-				@endif
-			</tbody>
-			@endforeach
-		</table>
+				</thead>
+				@foreach ($inscription->payments()->orderBy('id','DESC')->get() as $payment)
+				<tbody>
+					<td>{{$payment->id}}</td>
+					<td>{{Jenssegers\Date\Date::parse($payment->fecha_pagar)->format('j M Y')}}</td>
+					<td>
+						@if ($payment->fecha_pago != null)
+						{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}
+						@endif
+					</td>
+					@if (Auth::user()->role->code == 'ADM' && $payment->abono != 0)
+					<td>
+						{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}
+					</td>
+					@endif
+					<td>
+						@if ($payment->abono != 0)
+						{{$payment->abono}}
+						@endif
+					</td>
+					<td>
+						@if ($payment->abono != 0)
+						{{$payment->saldo-$payment->abono}}
+						@endif
+					</td>
+					<td>{{$payment->saldo}}</td>
+					<td>{{$payment->estado}}</td>
+					<td>{{$payment->observacion}}</td>
+					<td>
+						@if ($payment->abono != 0)
+						<em>{{\Institute\User::find($payment->user_id)->user}}</em>
+						@endif
+					</td>
+					@if ($payment->abono != 0)
+					<td>
+						{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
+					</td>
+					@if ($eliminar)
+					<td>
+						{!!link_to_route('admin.payment.show', $title = 'Borrar', $parameters = $payment->id, $attributes = ['class'=>'btn btn-danger'])!!}
+					</td>
+					@endif
+					@endif
+				</tbody>
+				@endforeach
+			</table>
+		</div>
 	</div>
-</div>
-<div class="modal fade" id="pdfModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-lg" role="document" style="z-index: 2000">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">RECIBO</h4>
-			</div>
-			<div style="text-align: center;">
-				<iframe src="" style="width:100%; height:80%;" frameborder="0"></iframe>
+	<div class="modal fade" id="pdfModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document" style="z-index: 2000">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">RECIBO</h4>
+				</div>
+				<div style="text-align: center;">
+					<iframe src="" style="width:100%; height:80%;" frameborder="0"></iframe>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-@endforeach
+	@endforeach
 
-@endsection
+	@endsection

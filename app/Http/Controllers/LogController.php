@@ -34,16 +34,13 @@ class LogController extends Controller
         if ($user!=null) {
             if ($user->role->code != 'DIS') {
                 if (Auth::attempt(['user'=>$request['user'],'password'=>$request['password']])) {
-                    $functionalities = \Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')
-                    ->Join('roles', 'privileges.role_id', '=', 'roles.id')
-                    ->Join('menus', 'functionalities.menu_id', '=', 'menus.id')
-                    ->select('functionalities.*')
-                    ->where('roles.code',Auth::user()->role->code)
-                    ->distinct()->get();
+                    $functionalities = Auth::user()->role->functionalities;
                     if (count($functionalities)>0){
                         if (Auth::user()->role->code == 'EST') {
                             return Redirect::to('admin/evaluation/create');
                         }
+                        Session::put('inscriptions',\Institute\Inscription::distinct('people_id')->get());
+                        Session::put('functionalities',$functionalities);
                         return Redirect::to('admin');
                     }else {
                         Session::flash('message','Usuario sin Privilegios.');
@@ -51,7 +48,7 @@ class LogController extends Controller
                         return Redirect::to('/');
                     }
                 }else{
-                    Session::flash('message-error','Contraseña incorrecta!.');
+                    Session::flash('error','Contraseña incorrecta!.');
                     return Redirect::to('log');
                 }
             }else{

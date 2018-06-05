@@ -1,15 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
-<?php $editar=false; $eliminar=false; ?>
-@foreach(Auth::user()->role->functionalities as $func)
-	@if ($func->code=='EORD')
-	<?php $editar=true; ?>
-	@endif
-	@if ($func->code=='DORD')
-	<?php $eliminar=true; ?>
-	@endif
-@endforeach
+<?php $editar=false; $eliminar=false;
+foreach (Session::get('functionalities') as $func) {
+	if ($func->code=='EORD'){ $editar=true; }
+	if ($func->code=='DORD'){ $eliminar=true; }
+}
+?>
 <div class="table-responsive">
 	<table class="table table-hover">
 		<thead>
@@ -18,9 +14,13 @@
 			<th>Cliente</th>
 			<th>Observaciones</th>
 			<th>Telefono</th>
+			<th>Usuario</th>
+			<th>Recibido</th>
 			<th>Subtotal</th>
 			<th>Total</th>
-			<th>Opción</th>
+			<th>Imprimir</th>
+			@if ($editar)<th>Editar</th>@endif
+			@if ($eliminar)<th>Eliminar</th>@endif
 		</thead>
 		@foreach($orders as $order)
 		@if ($order->cancelled_order)
@@ -33,8 +33,14 @@
 			<td>{{$order->nombre}}</td>
 			<td>{{$order->detalle}}</td>
 			<td>{{$order->telefono}}</td>
+			<td>{{$order->user->user}}</td>
+				<td style="text-align: center;">
+				@if ($order->recibido)
+				✔
+				@endif
+				</td>
 			<td>Bs. {{number_format($order->subtotal, 2,'.','')}}</td>
-			<td>Bs. {{number_format($order->total, 2,'.','')}}</td>
+			<td><b>Bs. {{number_format($order->total, 2,'.','')}}</b></td>
 			<td>
 				{!!link_to_action('OrderController@pdf', $title = 'Imprimir', $parameters = $order->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$order->id])!!}
 			</td>

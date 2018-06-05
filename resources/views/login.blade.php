@@ -15,9 +15,9 @@
   {!!Html::style('css/admin.css')!!}
 </head>
 <body>
-  @include('alerts.message')
-  @include('alerts.status')
-  @include('alerts.errors')
+  @include('alerts.success')
+  @include('alerts.alert')
+  @include('alerts.error')
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-md-offset-4">

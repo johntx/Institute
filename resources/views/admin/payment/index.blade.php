@@ -1,12 +1,10 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
-<?php $eliminar=false;?>
-@foreach(Auth::user()->role->functionalities as $func)
-@if ($func->code=='DPAY')
-<?php $eliminar=true; ?>
-@endif
-@endforeach
+<?php $eliminar=false;
+foreach (Session::get('functionalities') as $func) {
+	if ($func->code=='DPAY'){ $eliminar=true; }
+}
+?>
 <div class="table-responsive">
 	<table class="table table-hover table-condensed">
 		<thead>
@@ -23,7 +21,8 @@
 			@if (Auth::user()->role->id <= 2)
 			<th>Usuario</th>
 			@endif
-			<th>Option</th>
+			<th>Imprimir</th>
+			@if ($eliminar)<th>Eliminar</th>@endif
 		</thead>
 		@foreach($payments as $payment)
 		<tbody>
@@ -44,14 +43,14 @@
 			<td>{{$payment->user}}</td>
 			@endif
 			@if ($payment->abono != 0)
+			<td>
+				{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
+			</td>
 			@if ($eliminar)
 			<td>
 				{!!link_to_route('admin.payment.show', $title = 'Borrar', $parameters = $payment->id, $attributes = ['class'=>'btn btn-danger'])!!}
 			</td>
 			@endif
-			<td>
-				{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
-			</td>
 			@endif
 		</tbody>
 		@endforeach

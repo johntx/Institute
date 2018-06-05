@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Institute\Startclass;
 use Carbon\Carbon;
 use Mail;
+use Auth;
 
 class FrontController extends Controller
 {
@@ -30,6 +31,8 @@ class FrontController extends Controller
   }
   public function admin()
   {
+    Session::put('inscriptions',\Institute\Inscription::distinct('people_id')->get());
+    Session::put('functionalities',Auth::user()->role->functionalities);
     /*eliminador de pagos huerfanos*/
     /*
     $payments=\Institute\Payment::leftjoin('inscriptions','payments.inscription_id','=','inscriptions.id')->where('inscriptions.id',null)->get();
@@ -41,55 +44,55 @@ class FrontController extends Controller
     */
     /*$inscriptions = \Institute\Inscription::get();
     foreach ($inscriptions as $inscription) {
-        $inscription->fecha_ingreso = $inscription->people->fecha_ingreso;
-        $inscription->save();
-      }*/
-      /*Startclasses*/
-      $fecha_despues = date('Y-m-d',strtotime('+1 month', strtotime(Carbon::now()) ));
-      $fecha_antes = date('Y-m-d',strtotime('-1 month', strtotime(Carbon::now()) ));
-      $startclasses = Startclass::whereBetween('fecha_fin',array( $fecha_antes, $fecha_despues))
-      ->orWhereBetween('fecha_inicio',array( $fecha_antes, $fecha_despues))
-      ->get();
-      foreach ($startclasses as $startclass) {
-        if (Carbon::now()->format('Y-m-d') <= $startclass->fecha_fin) {
-          if (Carbon::now()->format('Y-m-d') <= $startclass->fecha_inicio) {
-            if ($startclass->estado != 'Espera') {
-              $startclass->estado = 'Espera';
-              $startclass->save();
-            }
-          } else {
-            if ($startclass->estado != 'Iniciado') {
-              $startclass->estado = 'Iniciado';
-              $startclass->save();
-            }
-          }
-          /*Inscripciones*/
-          foreach ($startclass->groups  as $group) {
-            foreach ($group->inscriptions as $inscription) {
-              if ($inscription->estado != 'Inscrito' && $inscription->estado != 'Retirado') {
-                $inscription->estado = 'Inscrito';
-                $inscription->save();
-              }
-            }
-          }
-        } else {
-          if ($startclass->estado != 'Cerrado') {
-            $startclass->estado = 'Cerrado';
+      $inscription->fecha_ingreso = $inscription->people->fecha_ingreso;
+      $inscription->save();
+    }*/
+    /*Startclasses*/
+    $fecha_despues = date('Y-m-d',strtotime('+1 month', strtotime(Carbon::now()) ));
+    $fecha_antes = date('Y-m-d',strtotime('-1 month', strtotime(Carbon::now()) ));
+    $startclasses = Startclass::whereBetween('fecha_fin',array( $fecha_antes, $fecha_despues))
+    ->orWhereBetween('fecha_inicio',array( $fecha_antes, $fecha_despues))
+    ->get();
+    foreach ($startclasses as $startclass) {
+      if (Carbon::now()->format('Y-m-d') <= $startclass->fecha_fin) {
+        if (Carbon::now()->format('Y-m-d') <= $startclass->fecha_inicio) {
+          if ($startclass->estado != 'Espera') {
+            $startclass->estado = 'Espera';
             $startclass->save();
           }
-          /*Inscripciones*/
-          foreach ($startclass->groups  as $group) {
-            foreach ($group->inscriptions as $inscription) {
-              if ($inscription->estado != 'Culminado' && $inscription->estado != 'Retirado') {
-                $inscription->estado = 'Culminado';
-                $inscription->save();
-              }
+        } else {
+          if ($startclass->estado != 'Iniciado') {
+            $startclass->estado = 'Iniciado';
+            $startclass->save();
+          }
+        }
+        /*Inscripciones*/
+        foreach ($startclass->groups  as $group) {
+          foreach ($group->inscriptions as $inscription) {
+            if ($inscription->estado != 'Inscrito' && $inscription->estado != 'Retirado') {
+              $inscription->estado = 'Inscrito';
+              $inscription->save();
+            }
+          }
+        }
+      } else {
+        if ($startclass->estado != 'Cerrado') {
+          $startclass->estado = 'Cerrado';
+          $startclass->save();
+        }
+        /*Inscripciones*/
+        foreach ($startclass->groups  as $group) {
+          foreach ($group->inscriptions as $inscription) {
+            if ($inscription->estado != 'Culminado' && $inscription->estado != 'Retirado') {
+              $inscription->estado = 'Culminado';
+              $inscription->save();
             }
           }
         }
       }
-      return view('admin/index');
     }
+    return view('admin/index');
+  }
 
   /**
    * Show the form for creating a new resource.

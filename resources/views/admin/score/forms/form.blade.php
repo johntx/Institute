@@ -3,6 +3,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Kardex del Estudiante</div>
 		<div class="panel-body">
+			<input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
 			<div class="form-group required">
 				{!! Form::label('Nombres*') !!}
 				{!! Form::text('nombre',null,['class'=>'form-control','placeholder'=>'Insert Nombre','required', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}

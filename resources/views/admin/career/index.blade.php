@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
+<?php $editar=false; $eliminar=false;
+foreach (Session::get('functionalities') as $func) {
+	if ($func->code=='ECAR'){ $editar=true; }
+	if ($func->code=='DCAR'){ $eliminar=true; }
+}
+?>
 <div class="table-responsive">
 	<table class="table table-hover">
 		<thead>
@@ -8,7 +13,8 @@
 			<th>Nombre</th>
 			<th>Color</th>
 			<th>Asignaturas</th>
-			<th>Edit</th>
+			@if ($editar)<th>Editar</th>@endif
+			@if ($eliminar)<th>Eliminar</th>@endif
 		</thead>
 		@foreach($careers as $career)
 		<tbody>
@@ -20,18 +26,16 @@
 				[{{$subject->nombre}}] - 
 				@endforeach
 			</td>
-			@foreach(Auth::user()->role->functionalities as $func)
-			@if ($func->code=='ECAR')
+			@if ($editar)
 			<td>
 				{!!link_to_route('admin.career.edit', $title = 'Editar', $parameters = $career->id, $attributes = ['class'=>'btn btn-primary'])!!}
 			</td>
 			@endif
-			@if ($func->code=='DCAR')
+			@if ($eliminar)
 			<td>
 				{!!link_to_route('admin.career.show', $title = 'Borrar', $parameters = $career->id, $attributes = ['class'=>'btn btn-danger'])!!}
 			</td>
 			@endif
-			@endforeach
 		</tbody>
 		@endforeach
 	</table>

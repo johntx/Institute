@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
-@include('alerts.errors')
 @include('alerts.request')
 <h4>Docente: <b>{{$people->nombrecompleto()}}</b> - (Pago por Hora: <b id="pxh">{{$people->genero}}</b> Bs.)</h4>
 <div class="table-responsive">

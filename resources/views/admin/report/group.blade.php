@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <div class="tab-content">
 		@foreach ($startclass->groups as $group)
 		<div class="panel panel-primary">

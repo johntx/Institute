@@ -16,39 +16,45 @@
   @yield('admincss')
 </head>
 <body>
-  @include('alerts.succes')
+  @include('alerts.success')
+  @include('alerts.alert')
+  @include('alerts.error')
   <div id="wrapper">
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;">
       <div class="navbar-header">
-        <a class="navbar-brand">
-          <img alt="C1EN" src="{!!URL::to('icons/brand.svg')!!}" height="18px">
-        </a>
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Menu</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a style="padding-left: 0" class="navbar-brand" href="{!!URL::to('admin')!!}">Admin Instituto C1EN</a>
+        <a class="navbar-brand">
+          <img alt="C1EN" src="{!!URL::to('icons/brand.svg')!!}" height="18px">
+        </a>
+        <a style="padding-left: 0;" class="navbar-brand" href="{!!URL::to('admin')!!}"><i class="fa fa-refresh fa-fw"></i> Admin Instituto C1EN</a>
       </div>
       @if (Auth::user()->role->code != 'EST' && Auth::user()->role->code != 'DOC')
-      <form class="navbar-form navbar-left" id="form_buscador" role="search">
-        <div class="form-group input-group input-group-sm">
-          <span class="input-group-addon" id="sizing-addon1">
-            <i class="fa fa-search fa-fw"></i>
-          </span>
-          <input type="text" id="buscador" class="form-control focus" placeholder="Buscar..">
-          <span class="input-group-btn">
-            <button class="btn btn-default" id="close_searcher" type="button">
-              <i class="fa fa-close fa-fw"></i>
-            </button>
-          </span>
-        </div>
-        <div id="ebuscados" class="hide focus">
-          <ul>
-          </ul>
-        </div>
-      </form>
+      <div class="col-xs-3 input-group input-group-sm navbar-left" style="padding: 10px 0 0 20px;">
+        <span class="input-group-addon" id="sizing-addon1">
+          <i class="fa fa-search fa-fw"></i>
+        </span>
+        <select class="form-control selectpicker" data-live-search="true" data-size="15" id="select_buscador">
+          <option disabled selected>Buscar..</option>
+          @foreach (Session::get('inscriptions') as $inscription)
+          <option 
+          value="{{$inscription->people->id}}">
+          ({{$inscription->people->ci}}) - {{$inscription->people->nombrecompleto()}} - [{{$inscription->people->telefono}}]</option>
+          @endforeach
+        </select>
+        <span class="input-group-btn">
+          <a href="" class="btn btn-default" id="ver_search" enlace="{!!url('admin/student/search/')!!}/">
+            <i class="fa fa-eye fa-fw" style="padding-top: 2.5px;"></i>
+          </a>
+          <a href="" class="btn btn-default" id="edit_search" enlace="{!!url('admin/student/')!!}/">
+            <i class="fa fa-pencil fa-fw" style="padding-top: 2.5px;"></i>
+          </a>
+        </span>
+      </div>
       @endif
       <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
@@ -67,51 +73,36 @@
       <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
           <ul class="nav" id="side-menu">
-            @foreach(\Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')
-              ->Join('roles', 'privileges.role_id', '=', 'roles.id')
-              ->Join('menus', 'functionalities.menu_id', '=', 'menus.id')
-              ->select('menus.*')
-              ->where('roles.code',Auth::user()->role->code)
-              ->distinct()->orderBy('id','asc')->get()
-              as $menu)
-              <li>
-                <a href="#"><i class="fa fa-{{ $menu->icon }} fa-fw"></i> {{ $menu->label }}<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                  @foreach(
-                    \Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')
-                    ->Join('roles', 'privileges.role_id', '=', 'roles.id')
-                    ->Join('menus', 'functionalities.menu_id', '=', 'menus.id')
-                    ->select('functionalities.*')
-                    ->where('menus.code',$menu->code)
-                    ->where('roles.code',Auth::user()->role->code)
-                    ->where('functionalities.path','not like','%edit')
-                    ->where('functionalities.path','not like','%delete')
-                    ->distinct()->orderBy('id','asc')->get()
-                    as $functionality)
-                    <li>
-                      <a href="{{URL::to($functionality->path)}}"><i class='fa fa-circle-o fa-fw'></i> {{ $functionality->label }}</a>
-                    </li>
-                    @endforeach
-                  </ul>
+            @foreach(\Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')->Join('roles', 'privileges.role_id', '=', 'roles.id')->Join('menus', 'functionalities.menu_id', '=', 'menus.id')->select('menus.*')->where('roles.code',Auth::user()->role->code)->distinct()->orderBy('id','asc')->get() as $menu)
+            <li>
+              <a href="#"><i class="fa fa-{{ $menu->icon }} fa-fw"></i> {{ $menu->label }}<span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level">
+                @foreach(
+                \Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')->Join('roles', 'privileges.role_id', '=', 'roles.id')->Join('menus', 'functionalities.menu_id', '=', 'menus.id')->select('functionalities.*')->where('menus.code',$menu->code)->where('roles.code',Auth::user()->role->code)->where('functionalities.path','not like','%edit')->where('functionalities.path','not like','%delete')->distinct()->orderBy('id','asc')->get() as $functionality)
+                <li>
+                  <a href="{{URL::to($functionality->path)}}"><i class='fa fa-circle-o fa-fw'></i> {{ $functionality->label }}</a>
                 </li>
                 @endforeach
               </ul>
-            </div>
-          </div>
-        </nav>
-        <div id="page-wrapper">
-          @yield('content')
+            </li>
+            @endforeach
+          </ul>
         </div>
       </div>
-      {!!Html::script('js/jquery.js')!!}
-      {!!Html::script('js/jquery-ui.min.js')!!}
-      {!!Html::script('js/bootstrap.min.js')!!}
-      {!!Html::script('js/metisMenu.min.js')!!}
-      {!!Html::script('js/sb-admin-2.js')!!}
-      {!!Html::script('js/admin.js')!!}
-      {!!Html::script('js/bootstrap-select.js')!!}
-      {!!Html::script('js/datatables.js')!!}
-      {!!Html::script('js/mdb.js')!!}
-      @yield('adminjs')
-    </body>
-    </html>
+    </nav>
+    <div id="page-wrapper">
+      @yield('content')
+    </div>
+  </div>
+  {!!Html::script('js/jquery.js')!!}
+  {!!Html::script('js/jquery-ui.min.js')!!}
+  {!!Html::script('js/bootstrap.min.js')!!}
+  {!!Html::script('js/metisMenu.min.js')!!}
+  {!!Html::script('js/sb-admin-2.js')!!}
+  {!!Html::script('js/admin.js')!!}
+  {!!Html::script('js/bootstrap-select.js')!!}
+  {!!Html::script('js/datatables.js')!!}
+  {!!Html::script('js/mdb.js')!!}
+  @yield('adminjs')
+</body>
+</html>

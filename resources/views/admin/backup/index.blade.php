@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
+<?php $editar=false; $eliminar=false;
+foreach (Session::get('functionalities') as $func) {
+	if ($func->code=='ESTA'){ $editar=true; }
+	if ($func->code=='DSTA'){ $eliminar=true; }
+}
+?>
 <div class="table-responsive">
 	<table class="table table-hover">
 		<thead>
@@ -9,7 +14,8 @@
 			<th>Carrera</th>
 			<th>Turno</th>
 			<th>Estado</th>
-			<th>Edit</th>
+			@if ($editar)<th>Editar</th>@endif
+			@if ($eliminar)<th>Eliminar</th>@endif
 		</thead>
 		@foreach($groups as $group)
 		<tbody>
@@ -18,18 +24,16 @@
 			<td>{{$group->startclass->career->nombre}}</td>
 			<td>{{$group->turno}}</td>
 			<td>({{$group->estado}})</td>
-			@foreach(Auth::user()->role->functionalities as $func)
-			@if ($func->code=='ESTA')
+			@if ($editar)
 			<td>
 				{!!link_to_route('admin.group.edit', $title = 'Editar', $parameters = $group->id, $attributes = ['class'=>'btn btn-primary'])!!}
 			</td>
 			@endif
-			@if ($func->code=='DSTA')
+			@if ($eliminar)
 			<td>
 				{!!link_to_route('admin.group.show', $title = 'Borrar', $parameters = $group->id, $attributes = ['class'=>'btn btn-danger'])!!}
 			</td>
 			@endif
-			@endforeach
 		</tbody>
 		@endforeach
 	</table>

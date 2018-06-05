@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <div>
 	<div class="form-group">
 		{!! Form::label('Desde') !!}

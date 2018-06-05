@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <br>
 <div class="form-group">
 	{!! Form::label('Fecha de Reporte') !!}
@@ -62,6 +61,28 @@
 					</tr>
 					<?php $subtotal += $payment->abono; ?>
 					<?php $total += $payment->abono; ?>
+					@endforeach
+					@foreach($user->orders()->where('fecha_compra',\Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d'))->get() as $key => $order)
+					<tr>
+						<td>{{++$key}}</td>
+						<td>{{$order->id}}</td>
+						<td>{{$order->nombre}}</td>
+						<td>{{Jenssegers\Date\Date::parse($order->fecha_compra)->format('j M Y')}}</td>
+						<td><b>(VENTA)</b></td>
+						<td>{{$order->detalle}}</td>
+						<td><b>{{$order->total}}</b></td>
+						<td>{{$order->descuento}}</td>
+						<td>{{$order->subtotal}}</td>
+						<td style="text-align: center">
+							@if (!$order->recibido)
+							<input type="checkbox" class="check_mediano" monto="{{$order->total}}" user="{{$user->id}}" value="{{$order->id}}" name="venta[]">
+							@else
+							✔
+							@endif
+						</td>
+					</tr>
+					<?php $subtotal += $order->total; ?>
+					<?php $total += $order->total; ?>
 					@endforeach
 					@foreach($user->payments()->where('estado','Pagado')->whereBetween('created_at',array(\Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d 00:00:00'), \Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d 23:59:59')))->where('fecha_pago','!=',\Carbon\Carbon::parse($fecha_inicio)->format('Y-m-d'))->get() as $key => $payment)
 					<tr style="background-color: rgba(255,120,0,0.4);">

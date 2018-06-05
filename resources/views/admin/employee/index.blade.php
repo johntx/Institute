@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
+<?php $editar=false; $eliminar=false;
+foreach (Session::get('functionalities') as $func) {
+	if ($func->code=='EEMP'){ $editar=true; }
+	if ($func->code=='DEMP'){ $eliminar=true; }
+}
+?>
 <div class="table-responsive">
 	<table class="table table-hover">
 		<thead>
@@ -10,7 +15,8 @@
 			<th>Telefono</th>
 			<th>Fecha Nacimiento</th>
 			<th>Tickeo</th>
-			<th>Edit</th>
+			@if ($editar)<th>Editar</th>@endif
+			@if ($eliminar)<th>Eliminar</th>@endif
 		</thead>
 		@foreach($employees as $employee)
 		<tbody>
@@ -24,18 +30,16 @@
 				{!!link_to_action('TickeoController@tickeo', $title = 'Tickeos', $parameters = $employee->id, $attributes = ['class'=>'btn btn-warning'])!!}
 				@endif
 			</td>
-			@foreach(Auth::user()->role->functionalities as $func)
-			@if ($func->code=='EEMP')
+			@if ($editar)
 			<td>
 				{!!link_to_route('admin.employee.edit', $title = 'Editar', $parameters = $employee->id, $attributes = ['class'=>'btn btn-primary'])!!}
 			</td>
 			@endif
-			@if ($func->code=='DEMP')
+			@if ($eliminar)
 			<td>
 				{!!link_to_route('admin.employee.show', $title = 'Borrar', $parameters = $employee->id, $attributes = ['class'=>'btn btn-danger'])!!}
 			</td>
 			@endif
-			@endforeach
 		</tbody>
 		@endforeach
 	</table>

@@ -1,15 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
-<?php $editar=false; $eliminar=false; ?>
-@foreach(Auth::user()->role->functionalities as $func)
-@if ($func->code=='EGRO')
-<?php $editar=true; ?>
-@endif
-@if ($func->code=='DGRO')
-<?php $eliminar=true; ?>
-@endif
-@endforeach
+<?php $editar=false; $eliminar=false;
+foreach (Session::get('functionalities') as $func) {
+	if ($func->code=='EGRO'){ $editar=true; }
+	if ($func->code=='DGRO'){ $eliminar=true; }
+}
+?>
 <div class="table-responsive">
 	<table class="table table-hover tablaNoOrder compact">		<thead>
 		<th>Id</th>
@@ -21,8 +17,8 @@
 		<th>Horario</th>
 		<th>Anticipado</th>
 		<th>Asistencia</th>
-		<th>Edit</th>
-		<th></th>
+		@if ($editar)<th>Editar</th>@endif
+		@if ($eliminar)<th>Eliminar</th>@endif
 	</thead>
 	<tbody>
 		@foreach($groups as $group)

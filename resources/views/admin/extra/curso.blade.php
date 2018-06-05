@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <h4>Curso Extra: {{$curso->nombre}}</h4>
 <div class="table-responsive">
 	<table class="table table-hover tablaSearch compact">

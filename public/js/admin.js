@@ -28,84 +28,6 @@ $('document').ready(function(){
 		$("#boton_fecha_income").attr('href',string);
 	});
 });
-function close_alert() {
-	$('.alert_cli').fadeOut();
-}
-$('#inscribir').on('submit',function(e){
-	$.ajaxSetup({
-		header:$('meta[name="_token"]').attr('content')
-	});
-	e.preventDefault(e);
-	$.ajax({
-		type:"POST",
-		url:window.location.origin+'/cien/public/admin/student',
-		data:$(this).serialize(),
-		dataType: 'json',
-		success: function(payment){
-			document.getElementById("inscribir").reset();
-			$('#career_select').selectpicker('refresh');
-			$('#group_id option').empty();
-			window.open(window.location.origin+'/cien/public/admin/payment/pdf/'+payment);
-		},
-		error: function(data){
-			$('.result').html(data.statusText);
-			$('.alert_cli').show();
-			setTimeout(function() {
-				$(".alert_cli").fadeOut(600);
-			},5000);
-		}
-	});
-});
-$('#reinscribir').on('submit',function(e){
-	$.ajaxSetup({
-		header:$('meta[name="_token"]').attr('content')
-	});
-	e.preventDefault(e);
-	$.ajax({
-		type:"POST",
-		url:window.location.origin+'/cien/public/admin/inscription',
-		data:$(this).serialize(),
-		dataType: 'json',
-		success: function(payment){
-			document.getElementById("reinscribir").reset();
-			$('#student_select').selectpicker('refresh');
-			$('#career_select').selectpicker('refresh');
-			$('#group_id option').empty();
-			window.open(window.location.origin+'/cien/public/admin/payment/pdf/'+payment);
-		},
-		error: function(data){
-			$('.result').html(data.statusText);
-			$('.alert_cli').show();
-			setTimeout(function() {
-				$(".alert_cli").fadeOut(600);
-			},5000);
-		}
-	});
-});
-$('#paymentForm').on('submit',function(e){
-	$.ajaxSetup({
-		header:$('meta[name="_token"]').attr('content')
-	});
-	e.preventDefault(e);
-	//$('#paymentForm input[type=submit]').attr("disabled", true);
-	$.ajax({
-		type:"POST",
-		url:$(this).attr('action'),
-		data:$(this).serialize(),
-		dataType: 'json',
-		success: function(payment){
-			window.open(window.location.origin+'/cien/public/admin/payment/pdf/'+payment);
-			location.reload();
-		},
-		error: function(data){
-			$('.result').html(data.statusText);
-			$('.alert_cli').show();
-			setTimeout(function() {
-				$(".alert_cli").fadeOut(600);
-			},5000);
-		}
-	});
-});
 $('.pdfbtn').click(function() {
 	$("#pdfModal iframe").attr('src',$(this).attr('href'));
 	$("#pdfModal .modal-title").html('PDF ID: '+$(this).attr('code'));
@@ -139,7 +61,6 @@ $('document').on('click','li.active',function() {
 	$(this).addClass('active');
 });
 $('body').on('focus','input.datepicker',function () {
-	//$(this).removeClass('hasDatepicker');
 	$(this).datepicker({
 		dateFormat: 'yy-mm-dd',
 		changeMonth: true,
@@ -391,32 +312,9 @@ function justNumbers(e){
 	te = String.fromCharCode(key); 
 	return (patron.test(te) || key == 9 || key == 8 || key == 46 || key == 13);
 }
-$('body').on('keyup','#buscador',function () {
-	if ($(this).val()!='' && $(this).val()!=' ' && $(this).val().length >1) {
-		$.get("/cien/public/admin/search/"+$(this).val()+"",function(peoples,response){
-			$("#ebuscados>ul").empty();
-			$('#ebuscados').removeClass('hide');
-			for (var i = 0 ; i < peoples.length; i++) {
-				$('#ebuscados>ul').append(
-					"<li><a href='"+window.location.origin+"/cien/public/admin/student/search/"+
-					+peoples[i].id
-					+"' class='atxt'>"
-					+peoples[i].fullname
-					+"</a><a href='"+window.location.origin+"/cien/public/admin/student/"
-					+peoples[i].id
-					+"/edit' class='btn bedit btn-warning'><i class='fa fa-edit fa-fw'></i></a></li>"
-					);
-			}
-		});
-	} else {
-		$("#ebuscados>ul").empty();
-	}
-});
-$('#buscador').focusin(function(){
-	$('#ebuscados').removeClass('hide');
-});
-$('#close_searcher').click(function(){
-	$('#ebuscados').addClass('hide');
+$('#select_buscador').change(function () {
+	$("#ver_search").attr('href',$("#ver_search").attr('enlace')+$(this).val());
+	$("#edit_search").attr('href',$("#edit_search").attr('enlace')+$(this).val()+'/edit');
 });
 $('body').on('click','.space_destroy',function () {
 	$(this).parent().parent().parent().remove();

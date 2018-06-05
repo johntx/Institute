@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
-
 <div class="panel panel-info">
 	<div class="panel-heading">Datos Personales</div>
 	<div class="panel-body">

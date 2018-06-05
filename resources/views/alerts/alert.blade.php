@@ -1,7 +1,7 @@
-@if(Session::has('status'))
-<div class="alert alert-success alert-dismissible" role="alert">
+@if(Session::has('alert'))
+<div class="alert alert-warning alert-dismissible" role="alert">
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	{{Session::get('status')}}
+	{{Session::get('alert')}}
 </div>
 @endif
 <script>

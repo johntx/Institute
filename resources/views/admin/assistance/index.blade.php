@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <!--Añadido para uso de ajax
 	{!! Form::open(['route' => ['admin.assistance.update',\Carbon\Carbon::now()->format('Y-m-d')],'method'=>'put']) !!}-->
 	<div class="table-responsive vista_movil">
@@ -22,22 +21,22 @@
 				<td>
 					{!! Form::open(['url'=>'assistance/assistance_ajax']) !!}
 					<label class="switch">
-						<input type="checkbox" name="asistencia" class="check_asistencia" value="{{$inscription->id}}" @if ($inscription->asistencia($group_id,$materia_id,Auth::id(),\Carbon\Carbon::now()->format('Y-m-d'))) checked @endif>
+						<input type="checkbox" name="asistencia" class="check_asistencia" value="{{$inscription->id}}" @if ($inscription->asistencia($materia_id,Auth::id(),\Carbon\Carbon::now()->format('Y-m-d'))) checked @endif>
 						<span class="slider round"></span>
 					</label>
 					<!--Añadido para uso de ajax-->
 					<input type="hidden" name="group_id" value="{{$group_id}}" id="">
 					<input type="hidden" name="materia_id" value="{{$materia_id}}" id="">
 					<input type="hidden" name="inscription_id" value="{{$inscription->id}}" id="">
-					<input type="hidden" name="asistio" @if ($inscription->asistencia($group_id,$materia_id,Auth::id(),\Carbon\Carbon::now()->format('Y-m-d'))) value="si" @else value="no" @endif >
+					<input type="hidden" name="asistio" @if ($inscription->asistencia($materia_id,Auth::id(),\Carbon\Carbon::now()->format('Y-m-d'))) value="si" @else value="no" @endif >
 					{!! Form::close() !!}
 					
 				</td>
 				<td>{{$inscription->people->nombrecompleto()}}</td>
-				<td>{{$inscription->asisCont($group_id,$materia_id,Auth::id())}}</td>
+				<td>{{$inscription->myAsisCont($materia_id,Auth::id())}}</td>
 				<td>{{$inscription->estado}}</td>
 				@foreach ($fechas as $k=>$fecha)
-				@if ($inscription->asistencia($group_id,$materia_id,Auth::id(),$fecha->fecha)) 
+				@if ($inscription->asistencia($materia_id,Auth::id(),$fecha->fecha)) 
 				<td>✔</td>
 				<?php $cont[$k] = $cont[$k]+1; ?>
 				@else

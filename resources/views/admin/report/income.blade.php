@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <div>
 	<div class=" col-xs-6" style="padding: 0;">
 		{!! Form::label('Fecha Inicio') !!}

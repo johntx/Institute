@@ -1,3 +1,12 @@
+<?php $del_est=false; $del_ins=false;?>
+@foreach(Session::get('functionalities') as $func)
+@if ($func->code=='DEST')
+<?php $del_est=true; ?>
+@endif
+@if ($func->code=='DINS')
+<?php $del_ins=true; ?>
+@endif
+@endforeach
 <br>
 <div class="col-xs-6" style="padding: 0;">
 	<div class="panel panel-success">
@@ -31,7 +40,7 @@
 				{!! Form::label('Carrera') !!}
 				{!! Form::text('carrera',null,['class'=>'form-control','placeholder'=>'Inserte Carrera a la que postula', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
 			</div>
-			@if (!empty(Auth::user()->role->functionalities()->select('functionalities.*')->where('code','DEST')->first()))
+			@if ($del_est)
 			{!!link_to_route('admin.student.show', $title = 'Eliminar Estudiante', $parameters = $student->id, $attributes = ['class'=>'btn btn-danger'])!!}
 			@endif
 		</div>
@@ -97,7 +106,7 @@
 				{!! Form::label($extra->nombre,$extra->nombre.' ($'.$extra->precio.')') !!}
 			</div>
 			@endforeach
-			@if (!empty(Auth::user()->role->functionalities()->select('functionalities.*')->where('code','DINS')->first()))
+			@if ($del_ins)
 			{!!link_to_route('admin.inscription.show', $title = 'Eliminar Inscripción', $parameters = $inscription->id, $attributes = ['class'=>'btn btn-warning'])!!}
 			@endif
 		</div>

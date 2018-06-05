@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <div style="padding-top: 5px;">
 	<ul class="nav nav-tabs" role="tablist">
 		@foreach ($startclasses as $key=>$startclass)

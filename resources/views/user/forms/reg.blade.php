@@ -1,4 +1,3 @@
-@include('alerts.errors')
 @include('alerts.request')
 
 {!!Form::open(['route'=>'admin.client.store', 'method'=>'POST', 'class'=>'form'])!!}

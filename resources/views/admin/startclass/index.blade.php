@@ -1,15 +1,11 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
-<?php $editar=false; $eliminar=false; ?>
-@foreach(Auth::user()->role->functionalities as $func)
-@if ($func->code=='ESTA')
-<?php $editar=true; ?>
-@endif
-@if ($func->code=='DSTA')
-<?php $eliminar=true; ?>
-@endif
-@endforeach
+<?php $editar=false; $eliminar=false;
+foreach (Session::get('functionalities') as $func) {
+	if ($func->code=='ESTA'){ $editar=true; }
+	if ($func->code=='DSTA'){ $eliminar=true; }
+}
+?>
 <div class="table-responsive">
 	<table class="table table-hover">
 		<thead>
@@ -22,7 +18,9 @@
 			<th>Estado</th>
 			<th>Costo</th>
 			<th>Sucursal</th>
-			<th>Edit</th>
+			<th>Grupos</th>
+			@if ($editar)<th>Editar</th>@endif
+			@if ($eliminar)<th>Eliminar</th>@endif
 		</thead>
 		@foreach($startclasses as $startclass)
 		<tbody>

@@ -8,7 +8,7 @@ class Order extends Model
 {
 	protected $table = 'orders';
 
-	protected $fillable = ['nombre','fecha_compra','detalle','telefono','subtotal','total','descuento','user_id','office_id','people_id'];
+	protected $fillable = ['nombre','fecha_compra','recibido','detalle','telefono','subtotal','total','descuento','user_id','office_id','people_id'];
 
 	public $timestamps = false;
 	public function setNombreAttribute($nombre)

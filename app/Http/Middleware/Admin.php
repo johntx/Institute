@@ -26,12 +26,7 @@ class Admin
         if (!Auth::user()) {
             return redirect()->to('/');
         }
-        $functionalities = \Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')
-        ->Join('roles', 'privileges.role_id', '=', 'roles.id')
-        ->Join('menus', 'functionalities.menu_id', '=', 'menus.id')
-        ->select('functionalities.*')
-        ->where('roles.code',Auth::user()->role->code)
-        ->distinct()->get();
+        $functionalities = Session::get('functionalities');
         if (count($functionalities)>0){
             if ($request->path()=='admin'){
                 return $next($request);

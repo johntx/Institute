@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <div>
 <?php $people=\Institute\People::find($people_id); ?>
 	<br>

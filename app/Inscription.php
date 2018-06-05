@@ -33,11 +33,11 @@ class Inscription extends Model
     {
         return $this->hasMany('Institute\Assistance');
     }
-    public function asistencia($group_id,$subject_id,$people_id,$fecha)
+    public function asistencia($subject_id,$people_id,$fecha)
     {
         $assistances = \Institute\Assistance::where('fecha',$fecha)
+        ->where('group_id',$this->group_id)
         ->where('asistencia',1)
-        ->where('group_id',$group_id)
         ->where('subject_id',$subject_id)
         ->where('people_id',$people_id)
         ->where('inscription_id',$this->id)
@@ -48,10 +48,20 @@ class Inscription extends Model
             return false;
         }
     }
-    public function asisCont($group_id)
+    public function nota($partial_id,$people_id,$subject_id)
+    {
+        $score = \Institute\Score::where('partial_id',$partial_id)
+        ->where('inscription_id',$this->id)
+        ->where('group_id',$this->group_id)
+        ->where('subject_id',$subject_id)
+        ->where('people_id',$people_id)
+        ->first();
+        return $score->nota;
+    }
+    public function asisCont()
     {
         $assistances = \Institute\Assistance::where('asistencia',1)
-        ->where('group_id',$group_id)
+        ->where('group_id',$this->group_id)
         ->where('inscription_id',$this->id)
         ->groupBy('fecha')
         ->get();
@@ -60,6 +70,17 @@ class Inscription extends Model
         {
             
         });
+        return count($assistances);
+    }
+    public function myAsisCont($subject_id,$people_id)
+    {
+        $assistances = \Institute\Assistance::where('asistencia',1)
+        ->where('group_id',$this->group_id)
+        ->where('inscription_id',$this->id)
+        ->where('subject_id',$subject_id)
+        ->where('people_id',$people_id)
+        ->groupBy('fecha')
+        ->get();
         return count($assistances);
     }
     public function extras()

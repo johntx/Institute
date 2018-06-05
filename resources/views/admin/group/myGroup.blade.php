@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-@include('alerts.succes')
 <div class="table-responsive vista_movil">
 	<table class="table table-hover">
 		<thead>
@@ -9,7 +8,8 @@
 			<th>Turno</th>
 			<th>Materia</th>
 			<th># Ins</th>
-			<th>Lista</th>
+			<th>Asistencia</th>
+			<!--th>Notas</th-->
 		</thead>
 		@foreach($groups as $group)
 		<tbody>
@@ -17,10 +17,13 @@
 			<td>{{$group->carrera}}</td>
 			<td>{{$group->turno}}</td>
 			<td>{{$group->materia}}</td>
-			<td>{{sizeof(\Institute\Group::find($group->id)->inscriptions)}}</td>
+			<td>{!!\Institute\Group::find($group->id)->inscritos(\Institute\Group::find($group->id))!!}</td>
 			<td>
 				{!!link_to_action('AssistanceController@register', $title = 'Asistencias', $parameters = $group->id.'/'.$group->materia_id, $attributes = ['class'=>'btn btn-success'])!!}
 			</td>
+			<!--td>
+				{!!link_to_action('ScoreController@register', $title = 'Notas', $parameters = $group->id.'/'.$group->materia_id, $attributes = ['class'=>'btn btn-primary'])!!}
+			</td-->
 		</tbody>
 		@endforeach
 	</table>

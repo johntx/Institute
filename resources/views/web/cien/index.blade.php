@@ -871,7 +871,7 @@
     </div>
   </div>
   @include('modal.login')
-  @include('alerts.succes')
+  @include('alerts.success')
 
   <!-- Bootstrap core JavaScript -->
   <!--script src="vendor/jquery/jquery.min.js"></script-->
