@@ -14,12 +14,12 @@
 			border-collapse: collapse;
 		}
 		table *{
-			font-size: 12px;
+			font-size: 11px;
 			padding: 0;
 		}
 		th{
 			padding: 5px !important;
-			font-size: 15px !important;
+			font-size: 13px !important;
 		}
 		table.sch *{
 			text-align: center;
@@ -28,7 +28,7 @@
 			height: 10px;
 		}
 		table.sch th{
-			padding: 10px;
+			padding: 8px;
 		}
 		table.sch th[dia="dia"]{
 			background-color: #5D5D5D;
@@ -39,14 +39,14 @@
 			font-size: 10px;
 		}
 		table.sch tr[hmas="hmas"] td[x="0"]{
-			height: 25px;
-			font-size: 14px;
+			height: 20px;
+			font-size: 13px;
 		}
 		table.sch td[x="0"]>div{
 			height: 20px;
 			width: 50px;
 			position: absolute;
-			padding: 2px;
+			padding: 1px;
 			top: -10px;
 			border-radius: 5px;
 			left: 5px;
@@ -58,12 +58,12 @@
 			border-right: 3px solid black;
 		}
 		table.sch tr[hmas="hmas"] td[x="0"]>div{
-			height: 20px;
+			height: 18px;
 			width: 50px;
 			position: absolute;
 			color: white;
 			background-color: black;
-			padding: 2px;
+			padding: 1px;
 			top: -10px;
 			border-radius: 5px;
 			left: 5px;

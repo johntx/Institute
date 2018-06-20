@@ -23,7 +23,7 @@
 				@foreach($inscriptions as $i=>$inscription)
 				<tr @if ($inscription->estado == 'Retirado') style="background-color: rgba(255,0,0,0.25);" @endif>
 					<td>{{++$i}}</td>
-					<td>{{$inscription->people->nombrecompleto()}}</td>
+					<td><b><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></b></td>
 					<td>{{$inscription->asisCont()}}</td>
 					<td>{{$inscription->estado}}</td>
 					@foreach ($asistencias as $k=>$asistencia)

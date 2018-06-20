@@ -33,6 +33,8 @@ class FrontController extends Controller
   {
     Session::put('inscriptions',\Institute\Inscription::distinct('people_id')->get());
     Session::put('functionalities',Auth::user()->role->functionalities);
+    Session::put('classrooms',\Institute\Classroom::get());
+    Session::put('semana',array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado"));
     /*eliminador de pagos huerfanos*/
     /*
     $payments=\Institute\Payment::leftjoin('inscriptions','payments.inscription_id','=','inscriptions.id')->where('inscriptions.id',null)->get();

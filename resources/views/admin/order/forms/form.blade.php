@@ -14,6 +14,10 @@
 	</div>
 </div>
 <div class="form-group">
+	{!! Form::label('Telefono') !!}
+	{!! Form::text('telefono',null,['class'=>'form-control','placeholder'=>'Inserte Telefono','maxlength'=>100]) !!}
+</div>
+<div class="form-group">
 	{!! Form::label('Observaciones') !!}
 	{!! Form::text('detalle',null,['class'=>'form-control','placeholder'=>'Observaciones o Comentarios','maxlength'=>255]) !!}
 </div>

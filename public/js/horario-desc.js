@@ -27,12 +27,39 @@ $('document').ready(function(){
 		colorear_sch(value);
 	});
 	$('body').on('change','.periodo>select',function() {
+		console.log('cambio');
 		var s = $(this).parent().attr('pos');
+		var x = $(this).parent().parent().parent().attr('x');
+		var y = $(this).parent().parent().parent().parent().attr('y');
+		var deleter = $(this).parent().parent();
+		y = y-s+1;
+		var div = $("div[x='"+x+"'][y='"+y+"']");
+		div.attr('size',$(this).val());
+		deleter.remove();
+		recolor();
+	});
+	$('body').on('change','select.teacher_select',function() {
+		var s = $(this).parent().children('div.periodo').children('select').children('option:selected').attr('value');
 		var x = $(this).parent().parent().attr('x');
 		var y = $(this).parent().parent().parent().attr('y');
 		y = y-s+1;
-		$("div[x='"+x+"'][y='"+y+"']").attr('size',$(this).val());
-		recolor();
+		var div = $("div[x='"+x+"'][y='"+y+"']");
+		var value = $(this).children('option:selected').attr('value');
+		div.children('select').children('option[selected="selected"]').removeAttr('selected');
+		div.children('select').children('option[value="'+value+'"]').attr('selected','selected');
+	});
+	$('.show_group').hover(function () {
+		var ancho = $('#float_count').width();
+		var alto = $('#float_count').height();
+		var coordenadas = $(this).position();
+		var tt = coordenadas.top-8;
+		var ll = coordenadas.left-ancho-4;
+		$('#float_count').attr('style',$(this).attr('style'));
+		$('#float_count').addClass('active');
+		$('#float_count').offset({top:tt,left:ll});
+		$('#float_count>span').html($(this).attr('cont'));
+	},function(){
+		$('#float_count').removeClass('active');
 	});
 });
 function colorear(element){
@@ -41,11 +68,11 @@ function colorear(element){
 	var size = $(element).attr('size');
 	var color = $(element).attr('color');
 	var texto = $(element).attr('texto');
+	var inscritos = $(element).attr('inscritos');
 	var carrera = $(element).attr('carrera');
 	var asignatura = $(element).attr('asignatura');
 	var fecha = $(element).attr('fecha');
 	var group_id = $(element).attr('group_id');
-	var career_id = $(element).attr('career_id');
 	var subject_id = $(element).attr('subject_id');
 	var x = $(element).parent().attr('x');
 	var y = $(element).parent().parent().attr('y');
@@ -58,35 +85,36 @@ function colorear(element){
 	$(element).attr('y',y);
 	var cont = 1;
 	for (var i = y; i < sum; i++) {
-		var td = $('div#'+dia+' tr[y='+i+']'+'>td[x='+x+']');
-		$(td).css({'border-top':'1px solid '+color,'color':texto});
-		//$(td).empty();
-		$(td).css({'background-color':color});
+		var td = $('div#'+dia+' tr[y='+i+']'+'>td[x='+x+']');		//$(td).empty();
 		if (cont == 1) {
 			$(td).addClass('header');
 			//$('div#'+dia+' tr[y='+i+']'+'>td[x='+x+'] div').html(carrera);
 			//$(element).clone().appendTo(td);
 			//$(select).clone().appendTo(element);
 			$(td).css({'border-top':'3px solid black'});
+			/*$(element).css({'border':'1px solid '+color});
+			$(td).children('div').css({'border':'1px solid '+color});*/
 		}
 		if (cont == 2) {
 			var date = fecha;
 			date = date.substring(0,10).split('-');
 			date = date[1] + '-' + date[2] + '-' + date[0];
 			if ($(td).hasClass('ocupado')) {
-				$(td).children('div').append("<div style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div>");
+				$(td).children('div').append("<div cont='"+inscritos+"' class='show_group' style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div>");
 			} else {
 				$(td).empty();
-				$(td).html("<div><div style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div></div>");
+				$(td).html("<div><div cont='"+inscritos+"' class='show_group' style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div></div>");
 			}
+			$(td).css({'border-top':'1px solid '+color});
 		}
 		if (cont == 3) {
 			if ($(td).hasClass('ocupado')) {
-				$(td).children('div').append("<div style='background-color:"+color+";'><b>"+carrera+'</b></div>');
+				$(td).children('div').append("<div style='padding:5px; background-color:"+color+";'><b>"+carrera+'</b></div>');
 			} else {
 				$(td).empty();
-				$(td).html("<div><div style='background-color:"+color+";'><b>"+carrera+'</b></div></div>');
+				$(td).html("<div><div style='padding:5px; background-color:"+color+";'><b>"+carrera+'</b></div></div>');
 			}
+			$(td).css({'border-top':'1px solid '+color});
 		}
 		if (i == sum-1) {
 			if ($(td).hasClass('ocupado')) {
@@ -105,14 +133,7 @@ function colorear(element){
 					}
 				}
 				$(td).children('div').append(
-					"<input type='hidden' name='aula[]' value='"+a+"' >"
-					+"<input type='hidden' name='piso[]' value='"+p+"' >"
-					+"<input type='hidden' name='hora_inicio[]' value='"+h1+"' >"
-					+"<input type='hidden' name='hora_fin[]' value='"+h2+"' >"
-					+"<input type='hidden' name='dia[]' value='"+dia+"' >"
-					+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
-					+"<input type='hidden' name='career_id[]' value='"+career_id+"' >"
-					+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
+					"<input type='hidden' name='datos[]' value='"+a+"-"+p+"-"+h1+"-"+h2+"-"+dia+"-"+group_id+"-"+subject_id+"' >"
 					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
 					);
 			} else {
@@ -133,21 +154,24 @@ function colorear(element){
 					}
 				}
 				$(td).children('div').append(
-					"<input type='hidden' name='aula[]' value='"+a+"' >"
-					+"<input type='hidden' name='piso[]' value='"+p+"' >"
-					+"<input type='hidden' name='hora_inicio[]' value='"+h1+"' >"
-					+"<input type='hidden' name='hora_fin[]' value='"+h2+"' >"
-					+"<input type='hidden' name='dia[]' value='"+dia+"' >"
-					+"<input type='hidden' name='group_id[]' value='"+group_id+"' >"
-					+"<input type='hidden' name='career_id[]' value='"+career_id+"' >"
-					+"<input type='hidden' name='subject_id[]' value='"+subject_id+"' >"
+					"<input type='hidden' name='datos[]' value='"+a+"-"+p+"-"+h1+"-"+h2+"-"+dia+"-"+group_id+"-"+subject_id+"' >"
 					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
 					);
 			}
 		}
+		$(td).children('div').children('div').last().css({color,'color':texto});
+		$(td).css({'background-color':color});
 		cont++;
 		$(td).addClass('ocupado');
 	}
+	$.each($('td.header.ocupado'), function( key, value ) {
+		if ($(value).children('div').length==1) {
+			$(value).children('div').addClass('solo');
+		} else {
+			$(value).children('div').removeClass('solo');
+		}
+	});
+	
 }
 
 function limpiar() {

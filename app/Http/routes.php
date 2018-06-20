@@ -42,6 +42,7 @@ Route::resource('admin/group','GroupController');
 Route::resource('admin/inscription','InscriptionController');
 Route::resource('admin/payment','PaymentController');
 Route::resource('admin/backup','BackupController');
+Route::resource('admin/classroom','ClassroomController');
 Route::resource('admin/schedule','ScheduleController');
 Route::resource('admin/extra','ExtraController');
 Route::resource('admin/category','CategoryController');

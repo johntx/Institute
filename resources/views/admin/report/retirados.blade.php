@@ -26,7 +26,7 @@
 									@foreach($group->inscriptions()->where('inscriptions.estado','Retirado')->get() as $inscription)
 									<tr>
 										<td>{{$inscription->people->ci}}</td>
-										<td>{{$inscription->people->nombrecompleto()}}</td>
+										<td><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></td>
 										<td>{{Jenssegers\Date\Date::parse($inscription->people->fecha_nacimiento)->format('j M Y')}}</td>
 										<td><a href="https://api.whatsapp.com/send?phone=591{{$inscription->people->telefono}}" target="_blank">{{$inscription->people->telefono}}</a></td>
 										<td>{{$career->nombre}}</td>

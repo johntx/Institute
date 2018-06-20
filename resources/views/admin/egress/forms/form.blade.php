@@ -7,10 +7,6 @@
 	{!! Form::text('monto',null,['class'=>'form-control','placeholder'=>'Inserte Monto','onkeypress'=>"return justNumbers(event);"]) !!}
 </div>
 <div class="form-group">
-	{!! Form::label('Codigo') !!}
-	{!! Form::text('codigo',null,['class'=>'form-control','placeholder'=>'Inserte Codigo', 'maxlength'=>20]) !!}
-</div>
-<div class="form-group">
 	{!! Form::label('Tipo') !!}
 	{!! Form::text('tipo',null,['class'=>'form-control dropdown-toggle tipo','placeholder'=>'Pago de alquiler, Compra de items, Reposición económica, etc.', 'maxlength'=>30]) !!}
 </div>

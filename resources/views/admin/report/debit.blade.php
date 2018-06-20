@@ -25,7 +25,7 @@
 				else
 					$fecha_ingreso=$payment->inscription->group->startclass->fecha_inicio;
 				?>
-				<td>{{$payment->inscription->people->nombrecompleto()}}</td>
+				<td><a href="{{url('admin/student/search/'.$payment->inscription->people->id)}}" style="color: #0800AB">{{$payment->inscription->people->nombrecompleto()}}</a></td>
 				<td>{{$payment->inscription->group->startclass->career->nombre}}</td>
 				<td>{{$payment->inscription->group->turno}}</td>
 				<td>{{ Jenssegers\Date\Date::parse($payment->inscription->group->startclass->fecha_inicio)->format('j M Y')}}</td>

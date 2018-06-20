@@ -53,7 +53,7 @@
 									$mes0 = \Carbon\Carbon::parse($fecha_ingreso)->diffInMonths(\Carbon\Carbon::parse($inscription->fecha_pagar));
 									?>
 									<td>{{++$n}}</td>
-									<td>{{$inscription->people->nombrecompleto()}}</td>
+									<td><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></td>
 									<td>{{$mes+1}}</td>
 									<td>{{$mese+1}}</td>
 									<td>{{$mes0+1}}</td>
@@ -82,7 +82,7 @@
 									$mes0 = \Carbon\Carbon::parse($fecha_ingreso)->diffInMonths(\Carbon\Carbon::parse($inscription->fecha_pagar));
 									?>
 									<td>{{++$n}}</td>
-									<td>{{$inscription->people->nombrecompleto()}}</td>
+									<td><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></td>
 									<td>{{$mes+1}}</td>
 									<td>{{$mese+1}}</td>
 									<td>{{$mes0+1}}</td>

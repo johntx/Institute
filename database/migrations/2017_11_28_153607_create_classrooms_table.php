@@ -14,7 +14,9 @@ class CreateClassroomsTable extends Migration
     {
         Schema::create('classrooms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre',100);
+            $table->string('area',20);
+            $table->string('piso',10);
+            $table->string('aula',10);
             $table->integer('office_id')->unsigned()->nullable();
             $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
         });

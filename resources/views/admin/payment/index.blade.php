@@ -27,7 +27,7 @@ foreach (Session::get('functionalities') as $func) {
 		@foreach($payments as $payment)
 		<tbody>
 			<td>{{$payment->id}}</td>
-			<td>{{$payment->inscription->people->nombrecompleto()}}</td>
+			<td><a href="{{url('admin/student/search/'.$payment->inscription->people->id)}}" style="color: #0800AB">{{$payment->inscription->people->nombrecompleto()}}</a></td>
 			<td>@if ($payment->fecha_pago)
 				{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}
 				@endif

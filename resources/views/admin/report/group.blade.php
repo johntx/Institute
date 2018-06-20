@@ -30,7 +30,7 @@
 									$fecha_ingreso=$inscription->group->startclass->fecha_inicio;
 								?>
 								<td>{{++$n}}</td>
-								<td>{{$inscription->people->nombrecompleto()}}</td>
+								<td><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></td>
 								<td>
 									{{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}
 								</td>

@@ -25,7 +25,7 @@
 						<?php
 						$horas = $schedule->hours()->where('dia',$dia)->where('hora_inicio',$horario[$h])->get();
 						?>
-						<tr y="{{$h+1}}" @if ($h%2==0 && $h<9) borde="si" @elseif ($h%2!=0 && $h>13) borde="si" @elseif($h>21 || $h>8 && $h<14) borde="si" @endif h1="{{$horario[$h]}}" h2="{{$horario[$h+1]}}" @if ($h>8 && $h<13) class="h tarde" @endif>
+						<tr y="{{$h}}" @if ($h%2==0 && $h<9) borde="si" @elseif ($h%2!=0 && $h>13) borde="si" @elseif($h>21 || $h>8 && $h<14) borde="si" @endif h1="{{$horario[$h]}}" h2="{{$horario[$h+1]}}" @if ($h>8 && $h<13) class="h tarde" @endif>
 							<td @if ($h<10) tamano="grande" @if ($h%2 != 0) turno="manana" @else turno="man" @endif @elseif ($h<13) turno="medio" @elseif ($h<22) tamano="grande" @if ($h%2 != 0) turno="tar" @else turno="tarde" @endif @else turno="noche" @endif><div>{{$horario[$h]}}</div>
 							</td>
 							@for ($i = 1; $i <= 12; $i++)

@@ -44,7 +44,7 @@
 					<tr>
 						<td>{{++$key}}</td>
 						<td>{{$payment->id}}</td>
-						<td>{{$payment->inscription->people->nombrecompleto()}}</td>
+						<td><a href="{{url('admin/student/search/'.$payment->inscription->people->id)}}" style="color: #0800AB">{{$payment->inscription->people->nombrecompleto()}}</a></td>
 						<td>{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}</td>
 						<td>{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}</td>
 						<td>{{$payment->inscription->group->startclass->career->nombre}}</td>
@@ -88,7 +88,7 @@
 					<tr style="background-color: rgba(255,120,0,0.4);">
 						<td>{{++$key}}</td>
 						<td>{{$payment->id}}</td>
-						<td>{{$payment->inscription->people->nombrecompleto()}}</td>
+						<td><a href="{{url('admin/student/search/'.$payment->inscription->people->id)}}" style="color: #0800AB">{{$payment->inscription->people->nombrecompleto()}}</a></td>
 						<td>{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}</td>
 						<td>{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}</td>
 						<td>{{$payment->inscription->group->startclass->career->nombre}}</td>

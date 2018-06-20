@@ -83,6 +83,7 @@ class OrderController extends Controller
                 'subtotal' => $sub,
                 'total' => $sub-$request['descuento'],
                 'descuento' => $request['descuento'],
+                'telefono' => $request['telefono'],
                 'people_id' => $request['people_id'],
                 'user_id' => Auth::user()->id
                 ]);

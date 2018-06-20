@@ -51,9 +51,7 @@ class EvaluationController extends Controller
         $fecha_fin->subDay();
 
         $fecha_inicio = \Carbon\Carbon::now();
-        $fecha_inicio->day(1);
-        $fecha_inicio->addMonth();
-        $fecha_inicio->subDay(7);
+        $fecha_inicio->day(15);
         $fecha_inicio->format('Y-m-d');
         if ($fecha_inicio<=$fecha_actual) {
             $b = false;
@@ -66,9 +64,9 @@ class EvaluationController extends Controller
                     }
                 }
             }
-            Session::flash('message','Todas las evaluaciones ya fueron realizadas');
+            Session::flash('success','Todas las evaluaciones ya fueron realizadas');
         } else {
-            Session::flash('message','Las Evaluaciones aún no estan disponibles');
+            Session::flash('request','Las Evaluaciones aún no estan disponibles');
         }
         return Redirect::to('/admin');
     }
@@ -92,7 +90,7 @@ class EvaluationController extends Controller
         $evaluation->p5 = $request['p5'];
         $evaluation->p6 = $request['p6'];
         $evaluation->save();
-        Session::flash('message','Evaluación registrada exitosamente');
+        Session::flash('success','Evaluación registrada exitosamente');
         return Redirect::to('admin/evaluation/create');
     }
 
@@ -134,7 +132,7 @@ class EvaluationController extends Controller
         if (!empty($request['subjects'])){
             $this->evaluation->subjects()->attach($request['subjects']);
         }
-        Session::flash('message','Evaluación editada exitosamente');
+        Session::flash('success','Evaluación editada exitosamente');
         return Redirect::to('/admin/evaluation');
     }
 
@@ -147,7 +145,7 @@ class EvaluationController extends Controller
     public function destroy($id)
     {
         $this->evaluation->delete();
-        Session::flash('message','Evaluación borrada exitosamente');
+        Session::flash('success','Evaluación borrada exitosamente');
         return Redirect::to('/admin/evaluation');
     }
 }

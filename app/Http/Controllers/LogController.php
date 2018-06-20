@@ -39,8 +39,7 @@ class LogController extends Controller
                         if (Auth::user()->role->code == 'EST') {
                             return Redirect::to('admin/evaluation/create');
                         }
-                        Session::put('inscriptions',\Institute\Inscription::distinct('people_id')->get());
-                        Session::put('functionalities',$functionalities);
+                        Session::put('functionalities',Auth::user()->role->functionalities);
                         return Redirect::to('admin');
                     }else {
                         Session::flash('message','Usuario sin Privilegios.');

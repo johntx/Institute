@@ -154,7 +154,6 @@ class EgressController extends Controller
     public function update(Request $request, $id)
     {
         $this->egress->fill([
-            'fecha' => \Carbon\Carbon::now(),
             'glosa' => $request['glosa'],
             'monto' => $request['monto'],
             'codigo' => $request['codigo'],

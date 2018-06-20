@@ -45,14 +45,14 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        $semana = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
         $horario = array('07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
         $startclasses = Startclass::
         join('careers','startclasses.career_id','=','careers.id')
         ->where('estado','!=','Cerrado')
         ->select('startclasses.*')
-        ->orderBy('fecha_inicio','desc')->get();
-        return view('admin/schedule.create',['startclasses'=>$startclasses,'semana'=>$semana,'horario'=>$horario]);
+        ->orderBy('careers.id','asc')
+        ->orderBy('fecha_inicio','asc')->get();
+        return view('admin/schedule.create',['startclasses'=>$startclasses,'horario'=>$horario]);
     }
 
     /**
@@ -81,17 +81,20 @@ class ScheduleController extends Controller
         if (count($request['datos'])>0) {
             for ($i=0; $i < count($request['datos']); $i++) {
                 $datos = explode("-", $request['datos'][$i]);
-                $hour = new Hour;
-                $hour->people_id = $request['people_id'][$i];
-                $hour->aula = $datos[0];
-                $hour->piso = $datos[1];
-                $hour->hora_inicio = $datos[2];
-                $hour->hora_fin = $datos[3];
-                $hour->dia = $datos[4];
-                $hour->group_id = $datos[5];
-                $hour->subject_id = $datos[6];
-                $hour->periodos = $request['periodos'][$i];
-                $col->push($hour);
+                if ($datos[0]!=null) {
+                    $hour = new Hour;
+                    $hour->people_id = $datos[0];
+                    $hour->aula = $datos[1];
+                    $hour->piso = $datos[2];
+                    $hour->hora_inicio = $datos[3];
+                    $hour->hora_fin = $datos[4];
+                    $hour->dia = $datos[5];
+                    $hour->group_id = $datos[6];
+                    $hour->subject_id = $datos[7];
+                    $hour->h = $datos[8];
+                    $hour->periodos = $datos[9];
+                    $col->push($hour);
+                }
             }
         }
         $schedule->save();
@@ -119,19 +122,26 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
+        foreach (Session::get('semana') as $dia) {
+            Session::put($dia,\Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')->select('hours.*')->where('schedules.id',$id)->where('hours.dia',$dia)->get());
+        }
         $semana = collect(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]);
         $horario = collect(['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
         $startclasses = Startclass::
         join('careers','startclasses.career_id','=','careers.id')
         ->where('estado','!=','Cerrado')
         ->select('startclasses.*')
-        ->orderBy('fecha_inicio','desc')->get();
+        ->orderBy('careers.id','asc')
+        ->orderBy('fecha_inicio','asc')->get();
         $availables = \Institute\Available::get();
         return view('admin/schedule.edit',['schedule'=>$this->schedule, 'startclasses'=>$startclasses,'semana'=>$semana,'horario'=>$horario,'availables'=>$availables]);
     }
 
     public function ver($id)
     {
+        foreach (Session::get('semana') as $dia) {
+            Session::put($dia,\Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')->select('hours.*')->where('schedules.id',$id)->where('hours.dia',$dia)->get());
+        }
         $semana = collect(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]);
         $horario = collect(['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
         return view('admin/schedule.show',['schedule'=>$this->schedule,'semana'=>$semana,'horario'=>$horario]);
@@ -151,11 +161,14 @@ class ScheduleController extends Controller
                 $hour->people_id = $hour2->people_id;
                 $hour->aula = $hour2->aula;
                 $hour->piso = $hour2->piso;
+                $hour->h = $hour2->h;
                 $hour->hora_inicio = $hour2->hora_inicio;
+                $hour->hora_fin = $hour2->hora_fin;
                 $hour->periodos = $hour2->periodos;
                 $hour->dia = $hour2->dia;
                 $hour->group_id = $hour2->group_id;
                 $hour->subject_id = $hour2->subject_id;
+                $hour->h = $hour2->h;
                 $col->push($hour);
             }
         }
@@ -198,17 +211,20 @@ class ScheduleController extends Controller
         if (count($request['datos'])>0) {
             for ($i=0; $i < count($request['datos']); $i++) {
                 $datos = explode("-", $request['datos'][$i]);
-                $hour = new Hour;
-                $hour->people_id = $request['people_id'][$i];
-                $hour->aula = $datos[0];
-                $hour->piso = $datos[1];
-                $hour->hora_inicio = $datos[2];
-                $hour->hora_fin = $datos[3];
-                $hour->dia = $datos[4];
-                $hour->group_id = $datos[5];
-                $hour->subject_id = $datos[6];
-                $hour->periodos = $request['periodos'][$i];
-                $col->push($hour);
+                if ($datos[0]!=null) {
+                    $hour = new Hour;
+                    $hour->people_id = $datos[0];
+                    $hour->aula = $datos[1];
+                    $hour->piso = $datos[2];
+                    $hour->hora_inicio = $datos[3];
+                    $hour->hora_fin = $datos[4];
+                    $hour->dia = $datos[5];
+                    $hour->group_id = $datos[6];
+                    $hour->subject_id = $datos[7];
+                    $hour->h = $datos[8];
+                    $hour->periodos = $datos[9];
+                    $col->push($hour);
+                }
             }
         }
         $this->schedule->save();

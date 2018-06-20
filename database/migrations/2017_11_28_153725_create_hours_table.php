@@ -16,6 +16,7 @@ class CreateHoursTable extends Migration
             $table->increments('id');
             $table->string('aula',20)->nullable();
             $table->string('piso',20)->nullable();
+            $table->integer('h')->nullable();
             $table->string('hora_inicio',20)->nullable();
             $table->string('hora_fin',20)->nullable();
             $table->integer('periodos')->nullable();

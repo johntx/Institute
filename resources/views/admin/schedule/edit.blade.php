@@ -2,7 +2,7 @@
 @section('content')
 @include('alerts.request')
 {!! Form::model($schedule,['route' => ['admin.schedule.update',$schedule->id],'method'=>'put']) !!}
-@include('admin.schedule.forms.edit')
+@include('admin.schedule.forms.edit2')
 {!! Form::close() !!}
 @endsection
 @section('adminjs')

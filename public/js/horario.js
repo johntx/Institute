@@ -1,18 +1,25 @@
 $('document').ready(function(){
+	$('li.cont_drop>div>div.cabeza').draggable({
+		stop: function() {
+			$(this).addClass('uso');
+		},
+		helper: "clone",
+		appendTo: 'body' });
 	$(".droppable").droppable({
-		drop: function( evento, ui ) {
-			if (!$(this).hasClass('ocupado')) {
-				$(this).empty();
-				$(this).addClass('ocupado');
-				$(evento.toElement).clone().appendTo(this);
-				$(this).children().removeAttr('style');
-				$(evento.toElement).remove();
-			} else if($(this).hasClass('header')) {
-				$(evento.toElement).clone().appendTo(this);
-				$(this).children().removeAttr('style');
-				$(evento.toElement).remove();
+		drop: function( e, ui ) {
+			if($(this).attr('id')=='trash'){
+				var contenedor = $(e.toElement).parent();
+				var dia = $(e.toElement).parent().parent().attr('dia');
+				eliminar_cont_alterior($(e.toElement),contenedor,dia);
+				$(e.toElement).remove();
 			}
-			recolor();
+			if (!$(this).children().hasClass('cuerpo')/* && !choca($(e.toElement),$(this))*/) {
+				var contenedor = $(e.toElement).parent();
+				var dia = $(this).parent().attr('dia');
+				eliminar_cont_alterior($(e.toElement),contenedor,dia);
+				crear_contenido($(e.toElement),$(this));
+			}
+			$(this).removeAttr('style');
 		},
 		over: function( evento, ui ) {
 			$(this).css({'background-color':'#FFF337','border':'dashed 2px black'});
@@ -22,193 +29,152 @@ $('document').ready(function(){
 		}
 	});
 	$('.droppable').sortable();
-	refresh();
 	$.each($('div.sch_hour'), function( key, value ) {
 		colorear_sch(value);
 	});
-	$('body').on('change','.periodo>select',function() {
-		console.log('cambio');
-		var s = $(this).parent().attr('pos');
+	$('div.cabeza').parent('div').parent('td').addClass('cabeza');
+	$('div.cubo').parent('div').parent('td').addClass('cubo');
+	$('div.pie').parent('div').parent('td').addClass('pie');
+	$.each($('div.cubo'), function() {
+		$(this).parent('div').parent('td').attr('career',$(this).attr('career'));
+	});
+	$('body').on('change','select.periodo',function() {
+		var uni = $(this).parent().attr('uni');
+		var p_last = parseInt($(this).parent().attr('p'));
+		var p = parseInt($(this).val());
 		var x = $(this).parent().parent().parent().attr('x');
-		var y = $(this).parent().parent().parent().parent().attr('y');
-		var deleter = $(this).parent().parent();
-		y = y-s+1;
-		var div = $("div[x='"+x+"'][y='"+y+"']");
-		div.attr('size',$(this).val());
-		deleter.remove();
-		recolor();
+		var h = parseInt($(this).parent().parent().parent().attr('h'));
+		var dia = $(this).parent().parent().parent().attr('dia');
+		var i = h-p_last+1;
+		var element = $("#"+dia+" td[h='"+i+"'][x='"+x+"']>div>div[uni='"+uni+"']");
+		var contenedor = element.parent();
+		eliminar_cont_alterior(element,contenedor,dia);
+		element.attr('p',p);
+		crear_contenido(element,contenedor);
 	});
-	$('body').on('change','select.teacher_select',function() {
-		var s = $(this).parent().children('div.periodo').children('select').children('option:selected').attr('value');
-		var x = $(this).parent().parent().attr('x');
-		var y = $(this).parent().parent().parent().attr('y');
-		y = y-s+1;
-		var div = $("div[x='"+x+"'][y='"+y+"']");
-		var value = $(this).children('option:selected').attr('value');
-		div.children('select').children('option[selected="selected"]').removeAttr('selected');
-		div.children('select').children('option[value="'+value+'"]').attr('selected','selected');
-	});
-	$('.show_group').hover(function () {
-		var ancho = $('#float_count').width();
-		var alto = $('#float_count').height();
-		var coordenadas = $(this).position();
-		var tt = coordenadas.top-8;
-		var ll = coordenadas.left-ancho-4;
-		console.log("top: " + coordenadas.top + " left: " + coordenadas.left);
-		console.log("alto: " + alto + " ancho: " + ancho);
-		$('#float_count').attr('style',$(this).attr('style'));
-		$('#float_count').addClass('active');
-		$('#float_count').offset({top:tt,left:ll});
-		$('#float_count>span').html($(this).attr('cont'));
-	},function(){
-		$('#float_count').removeClass('active');
-	});
-});
-function colorear(element){
-	$(element).removeAttr('style');
-	var select = $(element).children('select');
-	var size = $(element).attr('size');
-	var color = $(element).attr('color');
-	var texto = $(element).attr('texto');
-	var inscritos = $(element).attr('inscritos');
-	var carrera = $(element).attr('carrera');
-	var asignatura = $(element).attr('asignatura');
-	var fecha = $(element).attr('fecha');
-	var group_id = $(element).attr('group_id');
-	var subject_id = $(element).attr('subject_id');
-	var x = $(element).parent().attr('x');
-	var y = $(element).parent().parent().attr('y');
-	var a = $(element).parent().attr('a');
-	var p = $(element).parent().attr('p');
-	var h1 = $(element).parent().parent().attr('h1');
-	var dia = $(element).parent().parent().parent().parent().parent().attr('id');
-	var sum = parseInt(size)+parseInt(y);
-	$(element).attr('x',x);
-	$(element).attr('y',y);
-	var cont = 1;
-	for (var i = y; i < sum; i++) {
-		var td = $('div#'+dia+' tr[y='+i+']'+'>td[x='+x+']');		//$(td).empty();
-		if (cont == 1) {
-			$(td).addClass('header');
-			//$('div#'+dia+' tr[y='+i+']'+'>td[x='+x+'] div').html(carrera);
-			//$(element).clone().appendTo(td);
-			//$(select).clone().appendTo(element);
-			$(td).css({'border-top':'3px solid black'});
-			/*$(element).css({'border':'1px solid '+color});
-			$(td).children('div').css({'border':'1px solid '+color});*/
+	$('body').on('change','select.people',function() {
+		var uni = $(this).parent().attr('uni');
+		var p_last = parseInt($(this).parent().attr('p'));
+		var x = $(this).parent().parent().parent().attr('x');
+		var h = parseInt($(this).parent().parent().parent().attr('h'));
+		var dia = $(this).parent().parent().parent().attr('dia');
+		var i = h-p_last+1;
+		var element = $("#"+dia+" td[h='"+i+"'][x='"+x+"']>div>div[uni='"+uni+"']");
+		var v = $(this).val();
+		element.attr('people_id',v);
+		$(this).children('option[selected="selected"]').removeAttr('selected');
+		$(this).children("option[value='"+v+"']").attr('selected','selected');
+		var select = this.outerHTML;
+		element.attr('people',select);
+		/*cambios en el input*/
+		var strg = $(this).siblings('input.datos').val();
+		var cadena = strg.split("-");
+		var n_strg=v;
+		for (var j = 1; j < cadena.length; j++) {
+			n_strg = n_strg+"-"+cadena[j];
 		}
-		if (cont == 2) {
-			var date = fecha;
-			date = date.substring(0,10).split('-');
-			date = date[1] + '-' + date[2] + '-' + date[0];
-			if ($(td).hasClass('ocupado')) {
-				$(td).children('div').append("<div cont='"+inscritos+"' class='show_group' style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div>");
-			} else {
-				$(td).empty();
-				$(td).html("<div><div cont='"+inscritos+"' class='show_group' style='background-color:"+color+";'>"+$.datepicker.formatDate('dd M yy', new Date(date))+"</div></div>");
-			}
-			$(td).css({'border-top':'1px solid '+color});
-		}
-		if (cont == 3) {
-			if ($(td).hasClass('ocupado')) {
-				$(td).children('div').append("<div style='padding:5px; background-color:"+color+";'><b>"+carrera+'</b></div>');
-			} else {
-				$(td).empty();
-				$(td).html("<div><div style='padding:5px; background-color:"+color+";'><b>"+carrera+'</b></div></div>');
-			}
-			$(td).css({'border-top':'1px solid '+color});
-		}
-		if (i == sum-1) {
-			if ($(td).hasClass('ocupado')) {
-				var h2 = $(td).parent().attr('h2');
-				$(select).clone().appendTo(td.children('div'));
-				$(td).children('div').children('select').removeAttr('disabled');
-				$(td).children('div').children('select').removeAttr('hidden');
-				$(td).css({'border-bottom':'3px solid black'});
-				$(td).css({'border-top':'1px solid black'});
-				var options = '';
-				for (var k = 1; k <= 8; k++) {
-					if (size==k) {
-						options = options+"<option selected value='"+k+"'>"+k+"</option>"
-					} else {
-						options = options+"<option value='"+k+"'>"+k+"</option>"
-					}
-				}
-				$(td).children('div').append(
-					"<input type='hidden' name='datos[]' value='"+a+"-"+p+"-"+h1+"-"+h2+"-"+dia+"-"+group_id+"-"+subject_id+"' >"
-					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
-					);
-			} else {
-				$(td).empty();
-				$(td).append("<div></div>");
-				var h2 = $(td).parent().attr('h2');
-				$(select).clone().appendTo(td.children('div'));
-				$(td).children('div').children('select').removeAttr('disabled');
-				$(td).children('div').children('select').removeAttr('hidden');
-				$(td).css({'border-bottom':'3px solid black'});
-				$(td).css({'border-top':'1px solid black'});
-				var options = '';
-				for (var k = 1; k <= 8; k++) {
-					if (size==k) {
-						options = options+"<option selected value='"+k+"'>"+k+"</option>"
-					} else {
-						options = options+"<option value='"+k+"'>"+k+"</option>"
-					}
-				}
-				$(td).children('div').append(
-					"<input type='hidden' name='datos[]' value='"+a+"-"+p+"-"+h1+"-"+h2+"-"+dia+"-"+group_id+"-"+subject_id+"' >"
-					+"<div class='periodo' pos='"+size+"'><select style='background-color:"+color+";' name='periodos[]'>"+options+"</select></div>"
-					);
-			}
-		}
-		$(td).children('div').children('div').last().css({color,'color':texto});
-		$(td).css({'background-color':color});
-		cont++;
-		$(td).addClass('ocupado');
-	}
-	$.each($('td.header.ocupado'), function( key, value ) {
-		if ($(value).children('div').length==1) {
-			$(value).children('div').addClass('solo');
-		} else {
-			$(value).children('div').removeClass('solo');
-		}
+		$(this).siblings('input.datos').attr('value',n_strg);
 	});
-	
-}
-
-function limpiar() {
-	$('div.active td').removeAttr('style');
-	$('div.active td>select').remove();
-	$('div.active td>div.periodo>select').remove();
-	$('div.active td>b').remove();
-	$('div.active td input').remove();
-	$('div.active .ocupado').removeClass('ocupado');
-	$('div.active .header').removeClass('header');
-}
-function recolor(){
-	limpiar();
-	$.each( $('div.tab-pane.active div.hour'), function( key, value ) {
-		colorear($(value));
-	});
-	$.each( $('div.hour'), function( key, value ) {
-		var color = $(value).attr('color');
-		var texto = $(value).attr('texto');
-		$(value).css({'background-color':color,'color':texto});
-	});
-	$('div.active td.droppable:not(.ocupado)>div').remove();
-}
-function refresh(){
-	limpiar();
-	$.each( $('div.tab-pane'), function( key, panel ) {
-		$.each( $(panel).children().children().children().children().children('div.hour'), function( key, value ) {
-			colorear($(value));
+	$("li>div>div.cabeza").hover(function() {
+		var group_id = $(this).attr('group_id');
+		var subject_id = $(this).attr('subject_id');
+		$.each($(".panel-body div.cabeza[group_id='"+group_id+"'][subject_id='"+subject_id+"']"), function() {
+			$(this).addClass('ligther');
+			var dia = $(this).parent().parent().attr('dia');
+			var uni = $(this).attr('uni');
+			$("a[href='#"+dia+"']").addClass('ligther');
+			$("a[href='#"+dia+"']").parent().addClass('ligther');
+		});
+	},function () {
+		$.each($(".ligther"), function() {
+			$(this).removeClass('ligther');
 		});
 	});
-	$.each( $('div.hour'), function( key, value ) {
-		var color = $(value).attr('color');
-		var texto = $(value).attr('texto');
-		$(value).css({'background-color':color,'color':texto});
-	});
+});
+
+function choca(element,contenedor) {
+	var p = parseInt(element.attr('p'));
+	var x = contenedor.parent().attr('x');
+	var h = parseInt(contenedor.parent().attr('h'));
+	var dia = contenedor.parent().attr('dia');
+	if (contenedor.children().hasClass('cabeza')) { return false; }
+	for (var i = h+1; i < h+p; i++) {
+		var td = $("#"+dia+" td[h='"+i+"'][x='"+x+"']");
+		if (td.children('div').children().length>0) {
+			return true;
+		}
+	}
+	return false;
+}
+function crear_contenido(elemento,n_contenedor){
+	var contenedor = elemento.parent();
+	var p = parseInt(elemento.attr('p'));
+	var career = elemento.attr('career');
+	var fecha = elemento.attr('fecha');
+	var materia = elemento.attr('materia');
+	var subject_id = elemento.attr('subject_id');
+	var turno = elemento.attr('turno');
+	var inscritos = elemento.attr('inscritos');
+	var people = elemento.attr('people');
+	var uni = elemento.attr('uni');
+	var dia = n_contenedor.parent().attr('dia');
+	var x = n_contenedor.parent().attr('x');
+	var aula = n_contenedor.parent().attr('aula');
+	var piso = n_contenedor.parent().attr('piso');
+	var hora = n_contenedor.parent().attr('hora');
+	var h = parseInt(n_contenedor.parent().attr('h'));
+	var pos_hora2 = h+p;
+	var hora_2 = $("#"+dia+" td[h='"+pos_hora2+"'][x='"+x+"']").attr('hora');
+	var datos = elemento.attr('people_id')+"-"+aula+"-"+piso+"-"+hora+"-"+hora_2+"-"+dia+"-"+elemento.attr('group_id')+"-"+subject_id+"-"+h+"-"+p;
+	elemento.text(career);
+
+	for (var i = h; i < h+p; i++) {
+		var n_cont = $("#"+dia+" td[h='"+i+"'][x='"+x+"']>div");
+		n_cont.parent('td').attr('career',career);
+		if (i==h) {
+			elemento.clone().appendTo(n_cont);
+			elemento.remove();
+			n_cont.parent('td').attr('class','cabeza cubo');
+		} else if (i==h+1 && i<h+p-1) {
+			n_cont.append("<div uni='"+uni+"' career='"+career+"' class='cuerpo cubo cont_turno'>"+fecha+"<div class='turno'>"+turno+"</div><div class='inscritos'>"+inscritos+"</div></div>");
+			n_cont.parent('td').attr('class','cuerpo cubo cont_turno');
+		} else if (i==h+2 && i<h+p-1) {
+			n_cont.append("<div uni='"+uni+"' career='"+career+"' class='cuerpo cubo'>"+materia+"</div>");
+			n_cont.parent('td').attr('class','cuerpo cubo');
+		} else if (i==h+p-1) {
+			var options = '';
+			for (var k = 2; k <= 8; k++) {
+				if (p==k) { options = options+"<option selected value='"+k+"'>"+k+"</option>"; } else { options = options+"<option value='"+k+"'>"+k+"</option>"; }
+			}
+			n_cont.append("<div uni='"+uni+"' career='"+career+"' class='cuerpo cubo pie cont_periodo' p='"+p+"'>"+people+"<select class='periodo'>"+options+"</select><input type='text' class='datos' name='datos[]' value='"+datos+"'></div>");
+			n_cont.parent('td').attr('class','cuerpo cubo pie');
+		} else {
+			n_cont.append("<div uni='"+uni+"' career='"+career+"' class='cuerpo cubo'>&emsp;</div>");
+			n_cont.parent('td').attr('class','cuerpo cubo');
+
+		}
+		n_cont.parent('td').attr('career',career);
+	}
+	n_contenedor.children().removeAttr('style');
+}
+function eliminar_cont_alterior(elemento,contenedor,dia){
+	var x = contenedor.parent().attr('x');
+	var h = parseInt(contenedor.parent().attr('h'));
+	var uni = elemento.attr('uni');
+	var p = parseInt(elemento.attr('p'));
+	for (var i = h+1; i < h+p; i++) {
+		var td = $("#"+dia+" td[h='"+i+"'][x='"+x+"']");
+		var element = $("td[h='"+i+"'][x='"+x+"']>div>div[uni='"+uni+"']");
+		element.remove();
+		if (td.children().children().length<1) {
+			td.removeAttr('class');
+			td.removeAttr('career');
+		}
+	}
+	if (contenedor.children().length<3) {
+		contenedor.parent('td').removeAttr('class');
+		contenedor.parent('td').removeAttr('career');
+	}
 }
 function colorear_sch(element) {
 	var hora = $(element).attr('hora');
