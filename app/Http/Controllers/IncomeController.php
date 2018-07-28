@@ -62,10 +62,10 @@ class IncomeController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->ajax()) {
-            $col = collect();
-            $sub=0;
-            for ($i=0; $i < count($request['item']); $i++) {
+        $col = collect();
+        $sub=0;
+        for ($i=0; $i < count($request['item']); $i++) {
+            if ($request['cantidad'][$i]>0) {
                 $itm = \Institute\Item::find($request['item'][$i]);
                 $list = new \Institute\Incomelist;
                 $list->cantidad = $request['cantidad'][$i];
@@ -76,19 +76,19 @@ class IncomeController extends Controller
                 $itm->stock+=$request['cantidad'][$i];
                 $itm->save();
             }
-            $income = new Income;
-            $income->fill([
-                'fecha' => \Carbon\Carbon::now(),
-                'detalle' => $request['detalle'],
-                'total' => $sub,
-                'user_id' => Auth::user()->id
-                ]);
-            $income->save();
-            $income->incomelists()->saveMany($col);
-            Session::flash('message','Ingreso de Item registrada exitosamente');
-            return $income->id;
-            //return Redirect::to('/admin/income/pdf/'.$income->id);
         }
+        $income = new Income;
+        $income->fill([
+            'fecha' => \Carbon\Carbon::now(),
+            'detalle' => $request['detalle'],
+            'total' => $sub,
+            'user_id' => Auth::user()->id
+            ]);
+        $income->save();
+        $income->incomelists()->saveMany($col);
+        Session::flash('message','Ingreso de Item registrado exitosamente');
+        Session::flash('pdf','admin/income/pdf/'.$income->id);
+        return Redirect::to('admin/income/create');
     }
 
     public function pdf($id)

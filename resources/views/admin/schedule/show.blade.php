@@ -39,7 +39,7 @@
 								@endforeach
 								@foreach (Session::get($dia)->where('aula',$clam->aula)->where('piso',$clam->piso) as $hour)
 								@if ($hour->h+1 == $h && $h < $hour->h+$hour->periodos-1)
-								<div uni="{{$hour->id}}" class="cont_turno cuerpo cubo" career="{{$hour->group->startclass->career->nombre}}">{{Jenssegers\Date\Date::parse($hour->group->startclass->fecha_inicio)->format('j M Y')}}<div class="turno">{{$hour->group->turno}}</div><div class="inscritos">{!!$hour->group->inscritos($hour->group)!!}</div></div>
+								<div uni="{{$hour->id}}" class="cont_turno cuerpo cubo" career="{{$hour->group->startclass->career->nombre}}" onclick="window.open('{{ url('assistance/ver/'.$hour->group->id ) }}')">{{Jenssegers\Date\Date::parse($hour->group->startclass->fecha_inicio)->format('j M Y')}}<div class="turno">{{$hour->group->turno}}</div><div class="inscritos">{!!$hour->group->inscritos($hour->group)!!}</div></div>
 								@endif
 								@if ($hour->h+2 == $h && $h < $hour->h+$hour->periodos-1)
 								<div uni="{{$hour->id}}" class="cuerpo cubo" career="{{$hour->group->startclass->career->nombre}}">{{$hour->subject->nombre}}</div>

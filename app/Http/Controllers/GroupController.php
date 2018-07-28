@@ -52,7 +52,20 @@ class GroupController extends Controller
         ->where('schedules.vigente','si')
         ->distinct()
         ->get();
-        return view('admin/group.myGroup',['groups'=>$groups]);
+        $queryOrder = "CASE WHEN dia = 'lunes' THEN 1 ";
+        $queryOrder .= "WHEN dia = 'martes' THEN 2 ";
+        $queryOrder .= "WHEN dia = 'miercoles' THEN 3 ";
+        $queryOrder .= "WHEN dia = 'jueves' THEN 4 ";
+        $queryOrder .= "WHEN dia = 'viernes' THEN 5 ";
+        $queryOrder .= "WHEN dia = 'sabado' THEN 6 ";
+        $queryOrder .= "ELSE 7 END";
+        $hours = \Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')
+        ->where('schedules.vigente','si')
+        ->where('people_id',Auth::user()->id)
+        ->groupBy('aula','piso','dia')
+        ->orderByRaw($queryOrder)
+        ->get();
+        return view('admin/group.myClassrooms',['groups'=>$groups,'hours'=>$hours]);
     }
 
     /**

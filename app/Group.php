@@ -12,8 +12,7 @@ class Group extends Model
 
 	public $timestamps = false;
 
-    public function startclass()
-    {
+    public function startclass(){
         return $this->belongsTo('Institute\Startclass');
     }
 	public static function groups($id){
@@ -25,16 +24,13 @@ class Group extends Model
 		->where('startclass_id',$id)
 		->get();
 	}
-	public function inscriptions()
-	{
+	public function inscriptions(){
 		return $this->hasMany('Institute\Inscription');
 	}
-    public function hours()
-    {
+    public function hours(){
         return $this->hasMany('Institute\Hour');
     }
-    public function inscritos($group)
-    {
+    public function inscritos($group){
     	$inscriptions = \Institute\Inscription::where('estado','Inscrito')->where('group_id',$group->id)->get();
     	return '<b>'.sizeof($inscriptions).'</b> / '.sizeof($group->inscriptions);
     }

@@ -124,11 +124,13 @@ class StudentController extends Controller
       'ci' => $request['ci'],
       'nombre' => $request['nombre'],
       'paterno' => $request['paterno'],
+      'observacion' => $request['observacion'],
       'fecha_nacimiento' => $request['fecha_nacimiento'],
       'direccion' => $request['direccion'],
       'telefono' => $request['telefono'],
       'telefono2' => $request['telefono2'],
       'carrera' => $request['carrera'],
+      'encuesta' => $request['encuesta'],
       'office_id' => Auth::user()->people->office_id
       ]);
     $inscription = new Inscription;
@@ -215,7 +217,8 @@ class StudentController extends Controller
         ]);
       $payment2->save();
     }
-    Session::flash('pdf',$payment->id);
+    Session::put('inscriptions',\Institute\Inscription::distinct('people_id')->get());
+    Session::flash('pdf','admin/payment/pdf/'.$payment->id);
     return Redirect::to('admin/student/create');
   }
 
@@ -278,7 +281,9 @@ class StudentController extends Controller
       'fecha_nacimiento' => $request['fecha_nacimiento'],
       'direccion' => $request['direccion'],
       'telefono2' => $request['telefono2'],
+      'observacion' => $request['observacion'],
       'carrera' => $request['carrera'],
+      'encuesta' => $request['encuesta'],
       'telefono' => $request['telefono']
       ]);
     $this->student->save();

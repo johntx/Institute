@@ -1,7 +1,7 @@
 <br>
 <div class="col-xs-6" style="padding-left: 0;">
 	<div class="panel panel-default">
-		<div class="panel-heading">Estudiante</div>
+		<div class="panel-heading">Estudiante (Reinscripción)</div>
 		<div class="panel-body">
 			<div class="form-group required">
 				{!! Form::label('(CI) - Estudiante') !!}
@@ -17,6 +17,10 @@
 			<div class="form-group">
 				{!! Form::label('Fecha de Registro') !!}
 				{!! Form::text('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+			</div>
+			<div class="form-group">
+				{!! Form::label('Observaciones') !!}
+				{!! Form::text('observacion',null,['class'=>'form-control','placeholder'=>'Observaciones', 'maxlength'=>250]) !!}
 			</div>
 		</div>
 	</div>
@@ -59,7 +63,15 @@
 				</div>
 			</div>
 			<br><br><br>
-			<br><br><br>
+			<br>
+			<div>
+				@foreach($extras as $extra)
+				<div class="form-group">
+					{!! Form::checkbox('extras[]',$extra->id,null,[ 'class'=>'extra','id'=>$extra->nombre, 'precio'=>$extra->precio]) !!}
+					{!! Form::label($extra->nombre,$extra->nombre.' ($'.$extra->precio.')') !!}
+				</div>
+				@endforeach
+			</div>
 			<div class="form-group">
 				{!! Form::label('Pago Inicial') !!}
 				{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required']) !!}

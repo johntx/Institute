@@ -216,7 +216,7 @@ class PaymentController extends Controller
           $payment->save();
         }
       }
-      Session::flash('pdf',$lastpayment->id);
+      Session::flash('pdf','admin/payment/pdf/'.$lastpayment->id);
       return Redirect::to('admin/payment/create');
     }
   }
@@ -240,11 +240,7 @@ class PaymentController extends Controller
    */
   public function edit($id)
   {
-    $startclasses = \Institute\Startclass::select('startclasses.*')
-    ->orderBy('fecha_inicio','DESC')
-    ->get();
-    $careers = \Institute\Career::lists('nombre', 'id');
-    return view('admin/payment.edit',['payment'=>$this->payment, 'careers'=>$careers, 'startclasses'=>$startclasses]);
+    return view('admin/payment.edit',['payment'=>$this->payment]);
   }
 
   /**
@@ -256,14 +252,6 @@ class PaymentController extends Controller
    */
   public function update(Request $request, $id)
   {
-    $fecha_actual = \Carbon\Carbon::now()->format('Y-m-d');
-    $startclass = \Institute\Startclass::find($request['startclass_id']);
-
-    if ($fecha_actual<=$startclass->fecha_fin) {
-      $request['estado'] = 'Vigente';
-    } else {
-      $request['estado'] = 'Culminado';
-    }
     $this->payment->fill($request->all());
     $this->payment->save();
     Session::flash('message','Pago editado exitosamente');

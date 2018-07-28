@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 @section('content')
-<?php $eliminar=false;
+<?php $eliminar=false; $editar=false;
 foreach (Session::get('functionalities') as $func) {
 	if ($func->code=='DPAY'){ $eliminar=true; }
+	if ($func->code=='EPAY'){ $editar=true; }
 }
 ?>
 <div class="table-responsive">
@@ -22,6 +23,7 @@ foreach (Session::get('functionalities') as $func) {
 			<th>Usuario</th>
 			@endif
 			<th>Imprimir</th>
+			@if ($editar)<th>Editar</th>@endif
 			@if ($eliminar)<th>Eliminar</th>@endif
 		</thead>
 		@foreach($payments as $payment)
@@ -46,6 +48,11 @@ foreach (Session::get('functionalities') as $func) {
 			<td>
 				{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
 			</td>
+			@if ($editar)
+			<td>
+				{!!link_to_route('admin.payment.edit', $title = 'editar', $parameters = $payment->id, $attributes = ['class'=>'btn btn-primary'])!!}
+			</td>
+			@endif
 			@if ($eliminar)
 			<td>
 				{!!link_to_route('admin.payment.show', $title = 'Borrar', $parameters = $payment->id, $attributes = ['class'=>'btn btn-danger'])!!}

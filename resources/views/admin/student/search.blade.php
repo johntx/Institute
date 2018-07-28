@@ -17,6 +17,8 @@
 		<p class="col-sm-6"><b>Fecha de Nacimiento:</b> {{ Jenssegers\Date\Date::parse($student->fecha_nacimiento)->format('j M Y') }}</p>
 		<p class="col-sm-6"><b>Telefono:</b> <a href="https://api.whatsapp.com/send?phone=591{{$student->telefono}}" target="_blank">{{$student->telefono}}</a></p>
 		<p class="col-sm-6"><b>Telefono Padres:</b> {{$student->telefono2 }}</p>
+		<p class="col-sm-6"><b>Como Se Enteró del Instituto:</b> {{$student->encuesta}}</p>
+		<p class="col-sm-6"><b>Observaciones:</b> {{$student->observacion}}</p>
 		<p class="col-sm-6">{!!link_to_route('admin.student.edit', $title = 'Editar Estudiante', $parameters = $student->id, $attributes = ['class'=>'btn btn-primary'])!!}</p>
 	</div>
 </div>
@@ -43,34 +45,41 @@
 		</p>
 		<p class="col-sm-6"><b>Fecha inicio de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}</p>
 		<p class="col-sm-6"><b>Fecha fin de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_fin)->format('j M Y')}}</p>
-		<p class="col-sm-6"><b>Cursos extras:</b>
-			@foreach ($inscription->extras as $extra)
-			{{$extra->nombre}}, 
-			@endforeach</p>
-			<p>{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-warning'])!!}</p>
-		</div>
-		<div class="table-responsive">
-			<table class="table table-hover">
-				<thead style="background-color: #EEEEEE;">
-					<th>Id</th>
-					<th>Fecha Pagar</th>
-					<th>Pagó</th>
-					@if (Auth::user()->role->code == 'ADM')
-					<th>Registro</th>
-					@endif
-					<th>Abono</th>
-					<th>Saldo</th>
-					<th>Total</th>
-					<th>Estado</th>
-					<th>Obser.</th>
-					<th><em>Usuario</em></th>
-					<th>Imprimir</th>
-					@if ($eliminar)
-					<th>Eliminar</th>
-					@endif
-				</thead>
+		<p class="col-sm-6"><b>Cursos extras:</b>@foreach ($inscription->extras as $extra){{$extra->nombre}}, @endforeach</p>
+		<p>{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-warning'])!!}</p>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead style="background-color: #EEEEEE;">
+				<th>Id</th>
+				<th>Fecha Pagar</th>
+				<th>Pagó</th>
+				@if (Auth::user()->role->code == 'ADM')
+				<th>Registro</th>
+				@endif
+				<th>Abono</th>
+				<th>Desc</th>
+				<th>Saldo</th>
+				<th>Total</th>
+				<th>Estado</th>
+				<th>Obser.</th>
+				<th><em>Usuario</em></th>
+				<th>Imprimir</th>
+				@if ($eliminar)
+				<th>Eliminar</th>
+				@endif
+			</thead>
+			<tbody>
 				@foreach ($inscription->payments()->orderBy('id','DESC')->get() as $payment)
-				<tbody>
+				<tr @if ($inscription->abono == $inscription->total)
+					style="background-color: rgba(0,200,200,0.2);"
+					@elseif ($inscription->debit())
+					style="background-color: rgba(255,0,0,0.4);"
+					@elseif ($inscription->debitNext())
+					style="background-color: rgba(255,255,0,0.6);"
+					@else
+					style="background-color: rgba(0,255,0,0.6);"
+					@endif >
 					<td>{{$payment->id}}</td>
 					<td>{{Jenssegers\Date\Date::parse($payment->fecha_pagar)->format('j M Y')}}</td>
 					<td>
@@ -78,14 +87,22 @@
 						{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}
 						@endif
 					</td>
-					@if (Auth::user()->role->code == 'ADM' && $payment->abono != 0)
 					<td>
+						@if (Auth::user()->role->code == 'ADM' && $payment->abono != 0)
 						{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}
+						@endif
 					</td>
-					@endif
 					<td>
 						@if ($payment->abono != 0)
 						{{$payment->abono}}
+						@endif
+						@if ($payment->descuento > 0)
+						{{$payment->abono}}
+						@endif
+					</td>
+					<td>
+						@if ($payment->descuento > 0)
+						{{$payment->descuento}}
 						@endif
 					</td>
 					<td>
@@ -97,38 +114,39 @@
 					<td>{{$payment->estado}}</td>
 					<td>{{$payment->observacion}}</td>
 					<td>
+						<em>{{\Institute\User::find($payment->user_id)['user']}}</em>
+					</td>
+					<td>
 						@if ($payment->abono != 0)
-						<em>{{\Institute\User::find($payment->user_id)->user}}</em>
+						{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
 						@endif
 					</td>
-					@if ($payment->abono != 0)
 					<td>
-						{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
-					</td>
-					@if ($eliminar)
-					<td>
+						@if ($payment->abono != 0)
+						@if ($eliminar)
 						{!!link_to_route('admin.payment.show', $title = 'Borrar', $parameters = $payment->id, $attributes = ['class'=>'btn btn-danger'])!!}
+						@endif
+						@endif
 					</td>
-					@endif
-					@endif
-				</tbody>
+				</tr>
 				@endforeach
-			</table>
-		</div>
+			</tbody>
+		</table>
 	</div>
-	<div class="modal fade" id="pdfModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog modal-lg" role="document" style="z-index: 2000">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">RECIBO</h4>
-				</div>
-				<div style="text-align: center;">
-					<iframe src="" style="width:100%; height:80%;" frameborder="0"></iframe>
-				</div>
+</div>
+<div class="modal fade" id="pdfModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document" style="z-index: 2000">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">RECIBO</h4>
+			</div>
+			<div style="text-align: center;">
+				<iframe src="" style="width:100%; height:80%;" frameborder="0"></iframe>
 			</div>
 		</div>
 	</div>
-	@endforeach
+</div>
+@endforeach
 
-	@endsection
+@endsection

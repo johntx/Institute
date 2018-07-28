@@ -37,7 +37,7 @@
 </div>
 <div class="form-group">
 	{!! Form::label('Pago por Hora') !!}
-	{!! Form::text('genero',null,['class'=>'form-control','placeholder'=>'Insert Gender', 'maxlength'=>10,'onkeypress'=>"return justNumbers(event);"]) !!}
+	{!! Form::text('pago_hora',null,['class'=>'form-control','placeholder'=>'Insert pago por hora', 'maxlength'=>10,'onkeypress'=>"return justNumbers(event);"]) !!}
 </div>
 <div class="panel panel-default">
 	<div class="panel-body">

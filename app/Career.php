@@ -19,6 +19,14 @@ class Career extends Model
 	{
 		return $this->hasMany('Institute\Startclass');
 	}
+	public function items()
+	{
+		return $this->hasMany('Institute\Item');
+	}
+	public function tests()
+	{
+		return $this->hasMany('Institute\Test');
+	}
 	public function subjects() {
 		return $this->belongsToMany('Institute\Subject','weekly');
 	}

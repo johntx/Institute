@@ -1,4 +1,7 @@
 $('document').ready(function(){
+	setTimeout(function() {
+		$(".alert").fadeOut(1000);
+	},7000);
 	$(".checkall").change(function () {
 		$("input:checkbox."+$(this).attr('id')).prop('checked', $(this).prop("checked"));
 	});
@@ -27,6 +30,51 @@ $('document').ready(function(){
 		var string = href.split("fecha").join(fecha);  
 		$("#boton_fecha_income").attr('href',string);
 	});
+	numerar_modulo();
+});
+$('body').on('click','.tbn_clonar_nombre',function () {
+	var clon = $(this).siblings('div.clonar').clone();
+	$(clon).removeAttr('style').removeClass('clonar');
+	$(clon).children().children('input').removeAttr('disabled');
+	$(clon).insertBefore($(this));
+});
+$('body').on('click','.tbn_clonar_modulo',function () {
+	var clon = $(this).siblings('div.panel_clonar').clone();
+	$(clon).removeAttr('style').removeClass('panel_clonar');
+	$(clon).children().children().children('.primer_nombre').removeAttr('disabled');
+	$(clon).insertBefore($(this));
+	numerar_modulo();
+});
+$('body').on('click','.del_name',function () {
+	$(this).parent().parent().remove();
+	numerar_modulo();
+});
+function numerar_modulo() {
+	$.each($("div.subject_modulo"), function( key, subject ) {
+		$.each($(subject).children("div.modulo_padre"), function( key, modulo ) {
+			$(modulo).children().children().children('span.n_modulo').html(key+1);
+			$(modulo).children().children().children('input.input_modulo').val(key+1);
+		});
+	});
+}
+$('body').on('keyup','#comprador',function () {
+	if ($(this).val()!='' && $(this).val()!=' ' && $(this).val().length >1) {
+		$.get("/cien/public/admin/search/"+$(this).val()+"",function(peoples,response){
+			$("#lista_compradores>ul").empty();
+			$('#lista_compradores').removeClass('hide');
+			for (var i = 0 ; i < peoples.length; i++) {
+				$('#lista_compradores>ul').append(
+					"<li class='comprador' people_id='"
+					+peoples[i].id
+					+"'><div>"
+					+peoples[i].fullname
+					+"</div></li>"
+					);
+			}
+		});
+	} else {
+		$("#lista_compradores>ul").empty();
+	}
 });
 $('.pdfbtn').click(function() {
 	$("#pdfModal iframe").attr('src',$(this).attr('href'));
@@ -152,7 +200,7 @@ $(document).ready(function(){
 });
 $(function() {
 	$('.dropdown-menu a').click(function() {
-		$(this).closest('.dropdown').find('input.turno')
+		$(this).closest('.dropdown').find('input.inp_sel_turno')
 		.val($(this).attr('data-value'));
 	});
 });
@@ -287,24 +335,26 @@ function extra_simple(element) {
 	}
 	change_total();
 }
-$('body').on('click','.extra2',function () {
-	var total = parseInt($('#totl').val())-parseInt($('#abon').attr('abono'));
-	var mesrestante = parseInt(total / $('#monto').val());
+$('body').on('click','.extra_edit',function () {
+	var id = $(this).attr('inscription');
+	console.log(id);
+	var total = parseInt($('#'+id+' #totl').val())-parseInt($('#'+id+' #abon').attr('abono'));
+	var mesrestante = parseInt(total / $('#'+id+' #monto').val());
 	var precio = $(this).attr('precio');
 	if ($(this).prop('checked')){
-		var suma = parseInt(precio)+parseInt($('#monto').val());
-		$('#monto').val(suma);
+		var suma = parseInt(precio)+parseInt($('#'+id+' #monto').val());
+		$('#'+id+' #monto').val(suma);
 		var asumar = mesrestante*$(this).attr('precio');
-		var suma_total = parseInt(asumar)+parseInt($('#totl').val());
-		$('#totl').val(suma_total);
+		var suma_total = parseInt(asumar)+parseInt($('#'+id+' #totl').val());
+		$('#'+id+' #totl').val(suma_total);
 	} else {
-		var resta = parseInt($('#monto').val())-parseInt(precio);
-		$('#monto').val(resta);
+		var resta = parseInt($('#'+id+' #monto').val())-parseInt(precio);
+		$('#'+id+' #monto').val(resta);
 		var arestar = mesrestante*$(this).attr('precio');
-		var resta_total = parseInt($('#totl').val())-parseInt(arestar);
-		$('#totl').val(resta_total);
+		var resta_total = parseInt($('#'+id+' #totl').val())-parseInt(arestar);
+		$('#'+id+' #totl').val(resta_total);
 	}
-	$('#totl').val();
+	$('#'+id+' #totl').val();
 });
 function justNumbers(e){
 	var key = e.which || e.keyCode; 
@@ -342,22 +392,35 @@ $('.btn_expand').click(function(){
 		$(this).html('+');
 	}
 });
-$('.tickeos_btn_pdf').click(function() {
-	var str = $(this).attr('href');
-	str = str.substr(0, str.length-10) + $('#fecha_tickeos').val();
-	console.log(str);
-	$(this).attr('href',str);
-});
 $('body').on('change','#fecha_tickeos',function () {
-	$.each($('.tickeos_btn_pdf'), function( key, tickeo ) {
-		var str = $(tickeo).attr('href');
-		str = str.substr(0, str.length-10) + $('#fecha_tickeos').val();
-		console.log(str);
-		$(tickeo).attr('href',str);
-	});
+	fecha = $(this).val();
+
+	href = $('#btn_obt_tick').attr('href');
+	array_href = href.split('/');
+	var n = array_href.length - 1;
+	array_href[n]=fecha;
+	var nuevo = array_href.join('/');
+	href = $('#btn_obt_tick').attr('href',nuevo);
+
+	href2 = $('#btn_log_tick').attr('href');
+	array_href2 = href2.split('/');
+	var n = array_href2.length - 1;
+	array_href2[n]=fecha;
+	var nuevo2 = array_href2.join('/');
+	href2 = $('#btn_log_tick').attr('href',nuevo2);
+});
+$('body').on('change','#my_fecha_tickeos',function () {
+	fecha = $(this).val();
+	href2 = $('#my_btn_log_tick').attr('href');
+	array_href2 = href2.split('/');
+	var n = array_href2.length - 1;
+	array_href2[n]=fecha;
+	var nuevo2 = array_href2.join('/');
+	href2 = $('#my_btn_log_tick').attr('href',nuevo2);
 });
 $('.check_asistencia').click(function() {
 	var data = $(this).parent().parent().serialize();
+	console.log(data);
 	var url = $(this).parent().parent().attr("action");
 	$.ajaxSetup({
 		header:$('meta[name="_token"]').attr('content')
@@ -391,4 +454,59 @@ $('.check_mediano').click(function () {
 		monto = monto+parseInt($(input).attr('monto'));
 	});
 	$('span.'+user).html('Recibir: '+monto);
+});
+$('body').on('click','.new_nota',function () {
+	var inscription_id = $(this).attr('inscription_id');
+	var test_id = $(this).attr('test_id');
+	var group_id = $(this).attr('group_id');
+	var subject_id = $(this).attr('subject_id');
+	$(".inscription_id").val(inscription_id);
+	$(".test_id").val(test_id);
+	$(".group_id").val(group_id);
+	$(".subject_id").val(subject_id);
+	$('.modal_nota').addClass('nota_visible');
+	$('.background_modal').addClass('nota_visible');
+	$('.nota').focus();
+});
+$('body').on('click','.edit_nota',function () {
+	var inscription_id = $(this).attr('inscription_id');
+	var test_id = $(this).attr('test_id');
+	var score_id = $(this).attr('score_id');
+	var nota = $(this).attr('nota');
+	var group_id = $(this).attr('group_id');
+	var subject_id = $(this).attr('subject_id');
+	$(".inscription_id").val(inscription_id);
+	$(".test_id").val(test_id);
+	$(".group_id").val(group_id);
+	$(".subject_id").val(subject_id);
+	$(".nota").val(nota);
+	$(".score_id").val(score_id);
+	$('.modal_nota').addClass('nota_visible');
+	$('.background_modal').addClass('nota_visible');
+	$('.nota').select();
+	$('.nota').focus();
+});
+$('body').on('click','.modal_nota_close',function () {
+	cerrar_modales();
+});
+$('body').on('click','.background_modal',function () {
+	cerrar_modales();
+});
+function cerrar_modales() {
+	$('.nota').val(null);
+	$(".inscription_id").val(null);
+	$(".test_id").val(null);
+	$(".test_id").val(null);
+	$(".test_id").val(null);
+	$(".score_id").val(null);
+	$(".group_id").val(null);
+	$(".subject_id").val(null);
+	$('.nota_visible').removeClass('nota_visible');
+}
+$('body').on('click','#env_wha',function () {
+	$.get("/cien/public/admin/interestedsend/"+$(this).attr('int')+"",function(respuesta,response){
+		console.log('reload');
+	}).done(function() {
+		location.reload();
+	});
 });

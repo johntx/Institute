@@ -31,6 +31,34 @@ class FrontController extends Controller
   }
   public function admin()
   {
+    /*$groups = \Institute\Group::where('estado','Vigente')->get();
+    $groups->each(function ($group)
+    {
+      if ($group->startclass->estado == 'Cerrado') {
+        $group->estado = 'Cerrado';
+        $group->save();
+      }
+      $asistencias = \Institute\Assistance::where('asistencia',1)
+      ->where('group_id',$group->id)
+      ->groupBy('fecha','subject_id')
+      ->orderBy('fecha','asc')
+      ->get();
+      foreach ($group->inscriptions->where('estado','Inscrito') as $i => $inscription) {
+        $cont=0;
+        foreach ($asistencias as $k => $asistencia) {
+          if (!$inscription->asistencia($asistencia->subject_id,$asistencia->people_id,$asistencia->fecha)) {
+            $cont=$cont+1;
+          } else {
+            $cont=0;
+          }
+        }
+        if ($cont>12) {
+          $inscription->estado = "Retirado";
+          $inscription->save();
+        }
+      }
+    });*/
+
     Session::put('inscriptions',\Institute\Inscription::distinct('people_id')->get());
     Session::put('functionalities',Auth::user()->role->functionalities);
     Session::put('classrooms',\Institute\Classroom::get());

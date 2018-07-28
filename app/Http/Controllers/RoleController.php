@@ -13,6 +13,7 @@ use Illuminate\Routing\Route;
 use Institute\Role;
 use DB;
 use Validator;
+use Auth;
 
 class RoleController extends Controller
 {
@@ -128,6 +129,7 @@ class RoleController extends Controller
         if (!empty($request['functionalities'])){
             $this->role->functionalities()->attach($request['functionalities']);
         }
+        Session::put('functionalities',Auth::user()->role->functionalities);
         Session::flash('message','Rol editado exitosamente');
         return Redirect::to('/admin/role');
     }

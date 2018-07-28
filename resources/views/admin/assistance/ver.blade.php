@@ -21,33 +21,47 @@
 					@endforeach
 				</thead>
 				@foreach($inscriptions as $i=>$inscription)
-				<tr @if ($inscription->estado == 'Retirado') style="background-color: rgba(255,0,0,0.25);" @endif>
-					<td>{{++$i}}</td>
-					<td><b><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></b></td>
-					<td>{{$inscription->asisCont()}}</td>
-					<td>{{$inscription->estado}}</td>
-					@foreach ($asistencias as $k=>$asistencia)
-					@if ($inscription->asistencia($asistencia->subject_id,$asistencia->people_id,$asistencia->fecha)) 
-					<td class="al_r">✔</td>
-					<?php $cont[$k] = $cont[$k]+1; ?>
-					@else
-					<td class="al_r">✗</td>
-					@endif
-					@endforeach
-				</tr>
+				<tr
+				@if ($inscription->estado == 'Retirado')
+				style="background-color: rgba(0,0,80,0.4);"
+				@endif @if ($inscription->debit())
+				style="background-color: rgba(255,0,0,0.25);" 
+				@elseif ($inscription->debitNext())
+				style="background-color: rgba(255,255,0,0.25);" 
+				@else
+				style="background-color: rgba(0,255,0,0.25);" 
+				@endif
+				>
+				<td>{{++$i}}</td>
+				<td><b><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></b></td>
+				<td>{{$inscription->asisCont()}}</td>
+				<td>{{$inscription->estado}}</td>
+				@foreach ($asistencias as $k=>$asistencia)
+				@if ($inscription->asistencia($asistencia->subject_id,$asistencia->people_id,$asistencia->fecha)) 
+				<td class="al_r">✔</td>
+				<?php $cont[$k] = $cont[$k]+1; ?>
+				@else
+				@if ($asistencia->fecha>=$inscription->fecha_ingreso)
+				<td class="al_r">✗</td>
+				@else
+				<td class="al_r">-</td>
+				@endif
+				@endif
 				@endforeach
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td><b>Conteo:</b></td>
-					@foreach ($asistencias as $k=>$asistencia)
-					<td class="al_r">{{$cont[$k]}}</td>
-					@endforeach
-				</tr>
-			</table>
-		</div>
+			</tr>
+			@endforeach
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><b>Conteo:</b></td>
+				@foreach ($asistencias as $k=>$asistencia)
+				<td class="al_r">{{$cont[$k]}}</td>
+				@endforeach
+			</tr>
+		</table>
 	</div>
+</div>
 </div>
 <style>
 	.vista_reducida *{
@@ -63,7 +77,7 @@
 		text-align: right;
 	}
 	.contenedor_fechas{position:relative;height:110px;width:50px;}
-	.fecha_vertical{transform:rotate(90deg);position:absolute;top:20px;right:-20px;}
+	.fecha_vertical{transform:rotate(90deg);position:absolute;top:20px;right:-20px;background-color: white;z-index: 100;height: 15px;}
 	.asignatura_vertical{font-size:10px;transform:rotate(90deg);position:absolute;top:34px;right:-18px;margin:0;width: 100px;height:32px;}
 	.dia_inicial{margin: 0;font-size: 12px;}
 </style>

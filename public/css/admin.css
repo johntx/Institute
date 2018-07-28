@@ -14,59 +14,60 @@ div#page-wrapper{
 	div#page-wrapper{
 		margin-top: 176px;
 	}
-}*/
+}
+*/
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 18px;
+	position: relative;
+	display: inline-block;
+	width: 30px;
+	height: 18px;
 }
 .switch input {display:none;}
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 11px;
-  width: 11px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	content: "";
+	height: 11px;
+	width: 11px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+	background-color: #2196F3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+	box-shadow: 0 0 1px #2196F3;
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(11px);
-  -ms-transform: translateX(11px);
-  transform: translateX(11px);
+	-webkit-transform: translateX(11px);
+	-ms-transform: translateX(11px);
+	transform: translateX(11px);
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+	border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+	border-radius: 50%;
 }
 #float_count.active{
 	display: block;
@@ -428,12 +429,12 @@ div.panel-body td div.ligther{
 	animation : scales 0.3s ease infinite alternate;
 }
 @keyframes scales{
-  from{
-   transform : none;
-  }
-  to{
-   transform : scale(1.1)
-  }
+	from{
+		transform : none;
+	}
+	to{
+		transform : scale(1.1)
+	}
 }
 #cont_rig{
 	overflow-y: scroll;
@@ -450,3 +451,85 @@ div.panel-body td div.ligther{
 	display: block;
 	background-color: #337ab7;
 }
+.background_modal{
+	display: none;
+	top: 0; left: 0;
+	position: fixed;
+	z-index: 1000;
+	background-color: rgba(100,100,100,0.5);
+	width: 100%;
+	height: 100%;
+}
+.background_modal.nota_visible{
+	display: block;
+}
+.modal_nota.nota_visible,.modal_new_partial.nota_visible{
+	display: block;
+}
+.modal_nota,.modal_new_partial{
+	display: none;
+	background-color: #E1E1E1;
+	width: 100px;
+	height: auto;
+	border-radius: 20px;
+	border: 1px solid #CACACA;
+	z-index: 1010;
+	position: fixed;
+	top: calc(50% - 50px);
+	left: calc(50% - 50px);
+}
+.modal_nota form{
+	margin: 0;
+}
+.modal_nota input{
+	width: 80px;
+	margin: 10px 10px 0px 10px;
+	border-radius: 2px;
+	border: 1px solid #CACACA;
+	text-align: center;
+}
+.modal_nota button,.modal_new_partial button{
+	width: 50px;
+	margin: 15px 24px 10px 24px;
+	font-size: 11px;
+	padding: 3px 5px 3px 5px;
+	border: 1px solid #474747;
+	border-radius: 2px;
+}
+.modal_new_partial input.nombre{
+	width: 70px;
+	margin: 15px 15px -5px 15px;
+	font-size: 12px;
+}
+.modal_nota input.modal_fecha{
+	width: 66px;
+	margin: 15px 17px 0px 17px;
+	font-size: 11px;
+}
+.modal_nota input.modal_score{
+	height: 35px;
+}
+.modal_nota_close{
+	background-color: #BD6868;
+	color: white;
+	padding: 6px 10px 4px 10px;
+	border-radius: 50%;
+	right: -12px;
+	top: -12px;
+	position: absolute;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.cont_add_nota{ width: 22px; }
+li.active>a[role='tab']{
+	font-weight: bold;
+	-webkit-box-shadow: 1px 11px 8px -5px rgba(0,0,0,0.67);
+	-moz-box-shadow: 1px 11px 8px -5px rgba(0,0,0,0.67);
+	box-shadow: 1px 11px 8px -5px rgba(0,0,0,0.67);
+	z-index: 100;
+	border-radius: 5px;
+}
+tr.selected{ background-color: #43FF43; }

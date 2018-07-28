@@ -3,8 +3,8 @@
 <div style="padding-top: 5px;">
 	<ul class="nav nav-tabs" role="tablist">
 		@foreach ($startclasses as $key=>$startclass)
-		<li role="presentation" @if ($key==0) class="active" @endif >
-			<a href="#{{$startclass->id}}" aria-controls="{{$startclass->id}}" role="tab" data-toggle="tab">{{$startclass->career['nombre']}}<h6>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</h6></a>
+		<li role="presentation" @if ($key==0) class="active" @endif>
+			<a href="#{{$startclass->id}}" style="background-color: {{$startclass->career['color']}}; color: {{$startclass->career['texto']}};" aria-controls="{{$startclass->id}}" role="tab" data-toggle="tab">{{$startclass->career['nombre']}}<h6>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</h6></a>
 		</li>
 		@endforeach
 	</ul>
@@ -14,7 +14,7 @@
 		<div role="tabpanel" class="tab-pane  @if ($key==0) active @endif" id="{{$startclass->id}}">
 			@foreach ($startclass->groups()->orderBy('turno','asc')->get() as $group)
 			<div class="panel panel-primary">
-				<div class="panel-heading"><b>Grupo: </b>{{$group->turno}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> Convocatoria: </b>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>Duración: {{$group->startclass->duracion}}</b> mes/es</div>
+				<div class="panel-heading"><b>Grupo: </b>{{$group->turno}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b> Convocatoria: </b><span style="font-size: 16px; margin: 0;"> &nbsp;<b>{{Jenssegers\Date\Date::parse($startclass->fecha_inicio)->format('j M Y')}}</b></span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>Duración: {{$group->startclass->duracion}}</b> mes/es</div>
 				<div class="panel-body">
 					<div class="table-responsive">
 						<table class="table table-condensed table-hover">
@@ -22,11 +22,9 @@
 								<tr>
 									<th>Nº</th>
 									<th>Nombre</th>
+									<th>Ext</th>
 									<th>Mes</th>
-									<th>M.Est.</th>
-									<th>M.Pagar</th>
-									<th>Inicio <br>Esperado</th>
-									<th>Inicio <br>Real</th>
+									<th>Inicio Est.</th>
 									<th>Fch. Pagar</th>
 									<th>Abono</th>
 									<th>Saldo</th>
@@ -37,29 +35,25 @@
 								<?php $n = 0; ?>
 								@foreach (\Institute\Inscription::join('payments','inscriptions.id','=','payments.inscription_id')->select('inscriptions.*','payments.fecha_pagar','payments.saldo as debe')->where('payments.estado','Pendiente')->where('inscriptions.estado','Inscrito')->where('inscriptions.group_id',$group->id)->orderBy('payments.fecha_pagar','asc')->get() as $inscription)
 								<tr @if ($inscription->debit())
-									style="background-color: rgba(255,0,0,0.25);" 
+									style="background-color: rgba(255,0,0,0.4);"
 									@elseif ($inscription->debitNext())
-									style="background-color: rgba(255,255,0,0.25);" 
+									style="background-color: rgba(255,255,0,0.6);"
 									@else
-									style="background-color: rgba(0,255,0,0.25);" 
+									style="background-color: rgba(0,255,0,0.7);"
 									@endif >
 									<?php
 									if($inscription->fecha_ingreso>$inscription->group->startclass->fecha_inicio)
 										$fecha_ingreso=$inscription->fecha_ingreso;
 									else
 										$fecha_ingreso=$inscription->group->startclass->fecha_inicio;
-									$mes = \Carbon\Carbon::parse($inscription->group->startclass->fecha_inicio)->diffInMonths(\Carbon\Carbon::now());
 									$mese = \Carbon\Carbon::parse($fecha_ingreso)->diffInMonths(\Carbon\Carbon::now());
-									$mes0 = \Carbon\Carbon::parse($fecha_ingreso)->diffInMonths(\Carbon\Carbon::parse($inscription->fecha_pagar));
 									?>
 									<td>{{++$n}}</td>
 									<td><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></td>
-									<td>{{$mes+1}}</td>
-									<td>{{$mese+1}}</td>
-									<td>{{$mes0+1}}</td>
-									<td>
-										{{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->addMonth($mes)->format('j M Y')}}
-									</td>
+									<td>@foreach ($inscription->extras as $extra)
+										<b>{{$extra->nombre[0]}}</b>
+									@endforeach</td>
+									<td>{{$mese+1}}/{{$inscription->group->startclass->duracion}}</td>
 									<td>
 										{{Jenssegers\Date\Date::parse($fecha_ingreso)->addMonth($mese)->format('j M Y')}}
 									</td>
@@ -71,24 +65,20 @@
 								</tr>
 								@endforeach
 								@foreach (\Institute\Inscription::join('payments','inscriptions.id','=','payments.inscription_id')->select('inscriptions.*','payments.fecha_pagar','payments.saldo as debe')->where('inscriptions.colegiatura','Pagado')->where('inscriptions.estado','Inscrito')->where('inscriptions.group_id',$group->id)->groupBy('inscriptions.id')->distinct()->get() as $inscription)
-								<tr>
+								<tr style="background-color: rgba(0,200,200,0.2);">
 									<?php
 									if($inscription->fecha_ingreso>$inscription->group->startclass->fecha_inicio)
 										$fecha_ingreso=$inscription->fecha_ingreso;
 									else
 										$fecha_ingreso=$inscription->group->startclass->fecha_inicio;
-									$mes = \Carbon\Carbon::parse($inscription->group->startclass->fecha_inicio)->diffInMonths(\Carbon\Carbon::now());
 									$mese = \Carbon\Carbon::parse($fecha_ingreso)->diffInMonths(\Carbon\Carbon::now());
-									$mes0 = \Carbon\Carbon::parse($fecha_ingreso)->diffInMonths(\Carbon\Carbon::parse($inscription->fecha_pagar));
 									?>
 									<td>{{++$n}}</td>
 									<td><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></td>
-									<td>{{$mes+1}}</td>
-									<td>{{$mese+1}}</td>
-									<td>{{$mes0+1}}</td>
-									<td>
-										{{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->addMonth($mes)->format('j M Y')}}
-									</td>
+									<td>@foreach ($inscription->extras as $extra)
+										<b>{{$extra->nombre[0]}}</b>
+									@endforeach</td>
+									<td>{{$mese+1}}/{{$inscription->group->startclass->duracion}}</td>
 									<td>
 										{{Jenssegers\Date\Date::parse($fecha_ingreso)->addMonth($mese)->format('j M Y')}}
 									</td>

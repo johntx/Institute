@@ -1,11 +1,11 @@
 
 <div class="form-group">
 	{!! Form::label('Fecha de Inicio') !!}
-	{!! Form::text('fecha_inicio',null,['class'=>'form-control datepicker','placeholder'=>'AAAA-mm-dd']) !!}
+	{!! Form::text('fecha_inicio',null,['class'=>'form-control datepicker','placeholder'=>'AAAA-mm-dd','autocomplete'=>'off']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Fecha Fin') !!}
-	{!! Form::text('fecha_fin',null,['class'=>'form-control datepicker','placeholder'=>'AAAA-mm-dd']) !!}
+	{!! Form::text('fecha_fin',null,['class'=>'form-control datepicker','placeholder'=>'AAAA-mm-dd','autocomplete'=>'off']) !!}
 </div>
 <div class="form-group">
 	{!! Form::label('Estado') !!}

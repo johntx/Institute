@@ -4,8 +4,3 @@
 	{{Session::get('success')}}
 </div>
 @endif
-<script type="text/javascript">
-	setTimeout(function() {
-		$(".alert").fadeOut(1000);
-	},5000);
-</script>

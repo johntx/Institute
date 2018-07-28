@@ -32,7 +32,7 @@ foreach (Session::get('functionalities') as $func) {
 			<td>{{Jenssegers\Date\Date::parse($order->fecha_compra)->format('j M Y')}}</td>
 			<td>{{$order->nombre}}</td>
 			<td>{{$order->detalle}}</td>
-			<td>{{$order->telefono}}</td>
+			<td><a href="https://api.whatsapp.com/send?phone=591{{$order->telefono}}" target="_blank">{{$order->telefono}}</a></td>
 			<td>{{$order->user->user}}</td>
 				<td style="text-align: center;">
 				@if ($order->recibido)

@@ -42,7 +42,7 @@
 									@endforeach
 									@foreach (Session::get($dia)->where('aula',$clam->aula)->where('piso',$clam->piso) as $hour)
 									@if ($hour->h+1 == $h && $h < $hour->h+$hour->periodos-1)
-									<div uni="{{$hour->id}}" class="cont_turno cuerpo cubo" career="{{$hour->group->startclass->career->nombre}}">{{Jenssegers\Date\Date::parse($hour->group->startclass->fecha_inicio)->format('j M Y')}}<div class="turno">{{$hour->group->turno}}</div><div class="inscritos">{!!$hour->group->inscritos($hour->group)!!}</div></div>
+									<div uni="{{$hour->id}}" class="cont_turno cuerpo cubo" career="{{$hour->group->startclass->career->nombre}}" onclick="window.open('{{ url('assistance/ver/'.$hour->group->id ) }}')">{{Jenssegers\Date\Date::parse($hour->group->startclass->fecha_inicio)->format('j M Y')}}<div class="turno">{{$hour->group->turno}}</div><div class="inscritos">{!!$hour->group->inscritos($hour->group)!!}</div></div>
 									@endif
 									@if ($hour->h+2 == $h && $h < $hour->h+$hour->periodos-1)
 									<div uni="{{$hour->id}}" class="cuerpo cubo" career="{{$hour->group->startclass->career->nombre}}">{{$hour->subject->nombre}}</div>
@@ -131,7 +131,7 @@
 						<div class="col-xs-6" style="padding: 3;">
 							<li class="cont_drop">
 								<div class="contenedor droppable">
-									<div uni="{{++$uni}}" class="cubo cabeza @if(count(\Institute\Hour::where('group_id',$group->id)->where('subject_id',$subject->id)->where('schedule_id',$schedule->id)->get())>0) uso @endif" p="4" career="{{$group->startclass->career->nombre}}" fecha="{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}" materia="{{$subject->nombre}}" people="<select class='people'>@if (sizeof($subject->peoples)==0) <option value='null'>Nadie</option>@endif @foreach ($subject->peoples as $people) <option value='{{$people->id}}'>{{$people->nombre}}</option> @endforeach </select>" turno="{{$group->turno}}" inscritos="{!!$group->inscritos($group)!!}" people_id="{{$subject->peoples->first()['id']}}" group_id="{{$group->id}}" subject_id="{{$subject->id}}">{{$subject->nombre}}</div>
+									<div uni="{{++$uni}}" class="cubo cabeza @if(count(\Institute\Hour::where('group_id',$group->id)->where('subject_id',$subject->id)->where('schedule_id',$schedule->id)->get())>0) uso @endif" p="4" career="{{$group->startclass->career->nombre}}" fecha="{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}" materia="{{$subject->nombre}}" people="<select class='people'>@if (sizeof($subject->peoples)==0) <option value='null'>Nadie</option>@endif @foreach ($subject->peoples as $people) <option value='{{$people->id}}'>{{$people->nombre}}</option> @endforeach </select>" turno="{{$group->turno}}" inscritos="{!!$group->inscritos($group)!!}" people_id="{{$subject->peoples->first()['id']}}" group_id="{{$group->id}}" subject_id="{{$subject->id}}" asistencias="{{ url('assistance/ver/'.$group->id ) }}">{{$subject->nombre}}</div>
 								</div>
 							</li>
 						</div>

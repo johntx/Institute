@@ -89,7 +89,7 @@ class TeacherController extends Controller
             'fecha_ingreso' => $request['fecha_ingreso'],
             'fecha_nacimiento' => $request['fecha_nacimiento'],
             'telefono' => $request['telefono'],
-            'genero' => $request['genero'],
+            'pago_hora' => $request['pago_hora'],
             'office_id' => $request['office_id']
             ]);
         $user->save();

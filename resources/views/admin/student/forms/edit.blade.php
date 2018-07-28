@@ -23,7 +23,7 @@ foreach (Session::get('functionalities') as $func) {
 			</div>
 			<div class="form-group">
 				{!! Form::label('Fecha de Nacimiento') !!}
-				{!! Form::text('fecha_nacimiento',null,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+				{!! Form::text('fecha_nacimiento',null,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd','autocomplete'=>'off']) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('Telefonos') !!}
@@ -37,6 +37,24 @@ foreach (Session::get('functionalities') as $func) {
 				{!! Form::label('Carrera') !!}
 				{!! Form::text('carrera',null,['class'=>'form-control','placeholder'=>'Inserte Carrera a la que postula', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
 			</div>
+			<div class="form-group">
+				{!! Form::label('Como se enteró del instituto') !!}
+				<div class="input-group dropdown">
+					{!! Form::text('encuesta',null,['class'=>'form-control dropdown-toggle inp_sel_turno','placeholder'=>'Encuesta','autocomplete'=>'off', 'maxlength'=>50]) !!}
+					<ul class="dropdown-menu">
+						<li><a href="#" data-value="Alguien que aprobo">Alguien que aprobo</a></li>
+						<li><a href="#" data-value="Amigo/familiar">Amigo/familiar</a></li>
+						<li><a href="#" data-value="Facebook">Facebook</a></li>
+						<li><a href="#" data-value="Puesto">Puesto</a></li>
+						<li><a href="#" data-value="Radio">Radio</a></li>
+					</ul>
+					<span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
+				</div>
+			</div>
+			<div class="form-group">
+				{!! Form::label('Observaciones') !!}
+				{!! Form::text('observacion',null,['class'=>'form-control','placeholder'=>'Observaciones', 'maxlength'=>250]) !!}
+			</div>
 			@if ($del_est)
 			{!!link_to_route('admin.student.show', $title = 'Eliminar Estudiante', $parameters = $student->id, $attributes = ['class'=>'btn btn-danger'])!!}
 			@endif
@@ -44,9 +62,9 @@ foreach (Session::get('functionalities') as $func) {
 	</div>
 </div>
 @foreach ($student->inscriptions as $inscription)
-<div class="col-xs-6" style="padding-right: 0;">
+<div class="col-xs-6" style="padding-right: 0;" id="{{$inscription->id}}">
 	<div class="panel panel-info">
-		<div class="panel-heading"><b>Inscripción:</b> {{$inscription->group->startclass->career->nombre}} {{$inscription->group->startclass->descripcion}} - [{{date_format(date_create($inscription->group->startclass->fecha_inicio),'d-m-Y')}}] ({{$inscription->group->startclass->estado}}) [{{$inscription->group->startclass->costo}}bs]
+		<div class="panel-heading"><b>Inscripción:</b> {{$inscription->group->startclass->career->nombre}} {{$inscription->group->startclass->descripcion}} - [{{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}] ({{$inscription->group->startclass->estado}}) [{{$inscription->group->startclass->costo}}bs] ({{$inscription->id}})
 		</div>
 		<div class="panel-body">
 			{!! Form::hidden('inscription_id[]',$inscription->id,['class'=>'form-control']) !!}
@@ -54,13 +72,20 @@ foreach (Session::get('functionalities') as $func) {
 				{!! Form::label('Grupos') !!}
 				<br>
 				<select id="group_id" name="group_id[]" class="form-control">
-					@foreach (\Institute\Group::leftjoin('inscriptions','groups.id','=','inscriptions.group_id')->select('groups.*', DB::raw('count(inscriptions.id) as inscritos'))->groupBy('groups.id')->where('startclass_id',$inscription->group->startclass->id)->get() as $group)
+					@foreach (\Institute\Career::get() as $k=>$career)
+					<?php $b=false; ?>
+					@foreach (\Institute\Group::leftjoin('inscriptions','groups.id','=','inscriptions.group_id')->join('startclasses','startclasses.id','=','groups.startclass_id')->select('groups.*', DB::raw('count(inscriptions.id) as inscritos'))->groupBy('groups.id')->where('startclasses.fecha_inicio',$inscription->group->startclass->fecha_inicio)->where('startclasses.career_id',$career->id)->get() as $group)
 					<option value="{{$group->id}}" 
 						@if ($inscription->group->id == $group->id)
 						selected 
 						@endif
 						>{{$group->startclass->career->nombre}} {{$group->turno}} ({{$group->inscritos}} inscritos)
 					</option>
+					<?php $b=true; ?>
+					@endforeach
+					@if ($b)
+					<option value="" disabled>-------------------------------------------------------------------</option>
+					@endif
 					@endforeach
 				</select>
 			</div>
@@ -73,7 +98,7 @@ foreach (Session::get('functionalities') as $func) {
 			<div class="col-xs-6" style="padding-right: 0;">
 				<div class="form-group">
 					{!! Form::label('Fecha de Inscripción') !!}
-					{!! Form::text('fecha_ingreso[]',$inscription->fecha_ingreso,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+					{!! Form::text('fecha_ingreso[]',$inscription->fecha_ingreso,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd','autocomplete'=>'off']) !!}
 				</div>
 			</div>
 			<div class="form-group">
@@ -96,11 +121,11 @@ foreach (Session::get('functionalities') as $func) {
 			@foreach($extras as $extra)
 			<div class="form-group">
 				@if ($iextras->contains($extra->id))
-				{!! Form::checkbox('extras[]',$extra->id,$extra->id,[ 'class'=>'extra2','id'=>$extra->nombre, 'precio'=>$extra->precio]) !!}
+				{!! Form::checkbox('extras[]',$extra->id,$extra->id,[ 'class'=>'extra_edit','id'=>$extra->nombre.$inscription->id, 'precio'=>$extra->precio, 'inscription'=>$inscription->id]) !!}
 				@else
-				{!! Form::checkbox('extras[]',$extra->id,null,[ 'class'=>'extra2','id'=>$extra->nombre, 'precio'=>$extra->precio]) !!}
+				{!! Form::checkbox('extras[]',$extra->id,null,[ 'class'=>'extra_edit','id'=>$extra->nombre.$inscription->id, 'precio'=>$extra->precio, 'inscription'=>$inscription->id]) !!}
 				@endif
-				{!! Form::label($extra->nombre,$extra->nombre.' ($'.$extra->precio.')') !!}
+				{!! Form::label($extra->nombre.$inscription->id,$extra->nombre.' ($'.$extra->precio.')') !!}
 			</div>
 			@endforeach
 			@if ($del_ins)

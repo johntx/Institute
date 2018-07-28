@@ -1,56 +1,68 @@
 @extends('layouts.admin')
 @section('content')
-<?php $editar=false; $eliminar=false;
+<?php $editar=false; $eliminar=false; $ext=false;
 foreach (Session::get('functionalities') as $func) {
 	if ($func->code=='EGRO'){ $editar=true; }
 	if ($func->code=='DGRO'){ $eliminar=true; }
 }
+if (Auth::user()->role->code=='EXT'){
+	$ext=true;
+}
 ?>
 <div class="table-responsive">
-	<table class="table table-hover tablaNoOrder compact">		<thead>
-		<th>Id</th>
-		<th>Fecha de Inicio</th>
-		<th>Carrera</th>
-		<th>Turno</th>
-		<th>Inscritos</th>
-		<th>Estado</th>
-		<th>Horario</th>
-		<th>Anticipado</th>
-		<th>Asistencia</th>
-		@if ($editar)<th>Editar</th>@endif
-		@if ($eliminar)<th>Eliminar</th>@endif
-	</thead>
-	<tbody>
-		@foreach($groups as $group)
-		<tr>
-			<td>{{$group->id}}</td>
-			<td>{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}</td>
-			<td>{{$group->startclass->career->nombre}}</td>
-			<td>{{$group->turno}}</td>
-			<td>{!!$group->inscritos($group)!!}</td>
-			<td>({{$group->estado}})</td>
-			<td>
-				{!!link_to_action('GroupController@pdf', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$group->id])!!}
-			</td>
-			<td>
-				{!!link_to_action('GroupController@pdfanticipado', $title = 'Anticipado', $parameters = $group->id, $attributes = ['class'=>'btn btn-success pdfbtn','code'=>$group->id])!!}
-			</td>
+	<table class="table table-hover tablaNoOrder compact">
+		<thead>
+			<th>Id</th>
+			<th>Fecha de Inicio</th>
+			<th>Carrera</th>
+			<th>Turno</th>
+			<th>Inscritos</th>
+			<th>Estado</th>
+			<th>Horario</th>
+			<th>Anticipado</th>
+			@if (!$ext)<th>Asistencia</th>@endif
+			@if (!$ext)<th>Notas</th>@endif
+			@if ($editar)<th>Editar</th>@endif
+			@if ($eliminar)<th>Eliminar</th>@endif
+		</thead>
+		<tbody>
+			@foreach($groups as $group)
+			<tr>
+				<td>{{$group->id}}</td>
+				<td>{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}</td>
+				<td>{{$group->startclass->career->nombre}}</td>
+				<td>{{$group->turno}}</td>
+				<td style="text-align: center;">{!!$group->inscritos($group)!!}</td>
+				<td>({{$group->estado}})</td>
+				<td>
+					{!!link_to_action('GroupController@pdf', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$group->id])!!}
+				</td>
+				<td>
+					{!!link_to_action('GroupController@pdfanticipado', $title = 'Anticipado', $parameters = $group->id, $attributes = ['class'=>'btn btn-success pdfbtn','code'=>$group->id])!!}
+				</td>
 			<!--td>
 				{!!link_to_action('GroupController@horario', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-success'])!!}
 			</td-->
+			@if (!$ext)
 			<td>
 				{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $group->id, $attributes = ['class'=>'btn btn-warning'])!!}
 			</td>
+			@endif
+			@if (!$ext)
 			<td>
-				@if ($editar)
+				{!!link_to_action('ScoreController@ver', $title = 'Notas', $parameters = $group->id, $attributes = ['class'=>'btn btn-default'])!!}
+			</td>
+			@endif
+			@if ($editar)
+			<td>
 				{!!link_to_route('admin.group.edit', $title = 'Editar', $parameters = $group->id, $attributes = ['class'=>'btn btn-primary'])!!}
-				@endif
 			</td>
+			@endif
+			@if ($eliminar)
 			<td>
-				@if ($eliminar)
 				{!!link_to_route('admin.group.show', $title = 'Borrar', $parameters = $group->id, $attributes = ['class'=>'btn btn-danger'])!!}
-				@endif
 			</td>
+			@endif
 		</tr>
 		@endforeach
 	</tbody>

@@ -12,6 +12,8 @@ foreach (Session::get('functionalities') as $func) {
 			<th>Id</th>
 			<th>Fecha</th>
 			<th>Usuario</th>
+			<th>Items</th>
+			<th>Monto</th>
 			<th>Observaciones</th>
 			<th>Opción</th>
 		</thead>
@@ -24,6 +26,10 @@ foreach (Session::get('functionalities') as $func) {
 			<td>{{$income->id}}</td>
 			<td>{{Jenssegers\Date\Date::parse($income->fecha)->format('j M Y')}}</td>
 			<td>{{$income->user->user}}</td>
+			<td>@foreach ($income->incomelists as $lista)
+				[{{$lista->item->nombre}} <b>({{$lista->cantidad}})</b>] 
+			@endforeach</td>
+			<td>{{$income->total}}</td>
 			<td>{{$income->detalle}}</td>
 			<td>
 				{!!link_to_action('IncomeController@pdf', $title = 'Imprimir', $parameters = $income->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$income->id])!!}

@@ -33,6 +33,10 @@ class Inscription extends Model
     {
         return $this->hasMany('Institute\Assistance');
     }
+    public function scores()
+    {
+        return $this->hasMany('Institute\Score');
+    }
     public function asistencia($subject_id,$people_id,$fecha)
     {
         $assistances = \Institute\Assistance::where('fecha',$fecha)
@@ -48,15 +52,13 @@ class Inscription extends Model
             return false;
         }
     }
-    public function nota($partial_id,$people_id,$subject_id)
+    public function nota($test)
     {
-        $score = \Institute\Score::where('partial_id',$partial_id)
-        ->where('inscription_id',$this->id)
-        ->where('group_id',$this->group_id)
-        ->where('subject_id',$subject_id)
-        ->where('people_id',$people_id)
-        ->first();
-        return $score->nota;
+        $score = $test->scores->where('inscription_id',$this->id)->first();
+        if (count($score)==0) {
+            return null;
+        }
+        return $score;
     }
     public function asisCont()
     {
@@ -93,6 +95,7 @@ class Inscription extends Model
         ->join('careers','startclasses.career_id','=','careers.id')
         ->select('inscriptions.*','careers.nombre as carrera','startclasses.fecha_inicio','groups.turno')
         ->where('people_id',$id)
+        ->where('inscriptions.estado','Inscrito')
         ->groupBy('inscriptions.id')
         ->get();
     }

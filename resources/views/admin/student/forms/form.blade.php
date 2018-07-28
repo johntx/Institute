@@ -17,7 +17,7 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('Fecha de Nacimiento') !!}
-				{!! Form::text('fecha_nacimiento',null,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+				{!! Form::text('fecha_nacimiento',null,['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd','autocomplete'=>'off']) !!}
 			</div>
 			<div class="form-group">
 				{!! Form::label('Telefonos') !!}
@@ -31,14 +31,32 @@
 				{!! Form::label('Carrera') !!}
 				{!! Form::text('carrera',null,['class'=>'form-control','placeholder'=>'Inserte Carrera a la que postula', 'maxlength'=>50,'style'=>'text-transform: uppercase;']) !!}
 			</div>
+			<div class="form-group">
+				{!! Form::label('Como se enteró del instituto') !!}
+				<div class="input-group dropdown">
+					{!! Form::text('encuesta',null,['class'=>'form-control dropdown-toggle inp_sel_turno','placeholder'=>'Encuesta','autocomplete'=>'off', 'maxlength'=>50]) !!}
+					<ul class="dropdown-menu">
+						<li><a href="#" data-value="Alguien que aprobo">Alguien que aprobo</a></li>
+						<li><a href="#" data-value="Amigo/familiar">Amigo/familiar</a></li>
+						<li><a href="#" data-value="Facebook">Facebook</a></li>
+						<li><a href="#" data-value="Puesto">Puesto</a></li>
+						<li><a href="#" data-value="Radio">Radio</a></li>
+					</ul>
+					<span role="button" class="input-group-addon dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></span>
+				</div>
+			</div>
+			<div class="form-group">
+				{!! Form::label('Observaciones') !!}
+				{!! Form::text('observacion',null,['class'=>'form-control','placeholder'=>'Observaciones', 'maxlength'=>250]) !!}
+			</div>
 			@if (Auth::user()->role->code == 'ADM' || Auth::user()->role->code == 'REG')
 			<div class="form-group">
 				{!! Form::label('Fecha de Ingreso') !!}
-				{!! Form::text('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+				{!! Form::text('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd','autocomplete'=>'off']) !!}
 			</div>
 			@else
 			<div class="form-group">
-				{!! Form::hidden('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+				{!! Form::hidden('fecha_ingreso',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd','autocomplete'=>'off']) !!}
 			</div>
 			@endif
 		</div>

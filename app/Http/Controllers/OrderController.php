@@ -32,7 +32,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy('id','DESC')->paginate(20);
+        if (Auth::user()->role->code == "ADM" || Auth::user()->role->code == "ROOT") {
+            $orders = Order::orderBy('id','DESC')->paginate(20);
+        } else {
+            $orders = Order::where('user_id',Auth::user()->id)->orderBy('id','DESC')->paginate(20);
+        }
         return view('admin/order.index',compact('orders'));
     }
 
@@ -43,11 +47,27 @@ class OrderController extends Controller
      */
     public function create()
     {
+        $careers = \Institute\Career::join('items','careers.id','=','items.career_id')->select('careers.*')->distinct('careers.id')->get();
+        $career = $careers->first();
         $items = \Institute\Item::join('careers','items.career_id','=','careers.id')
         ->select('items.*')
         ->orderBy('careers.nombre','asc')
         ->get();
-        return view('admin/order.create',['items'=>$items]);
+        return view('admin/order.create',['items'=>$items,'careers'=>$careers, 'career'=>$career]);
+    }
+    public function create_career($career = '')
+    {
+        $careers = \Institute\Career::join('items','careers.id','=','items.career_id')->select('careers.*')->distinct('careers.id')->get();
+        if ($career == '') {
+            $career = $careers->first();
+        } else {
+            $career = \Institute\Career::where('nombre',$career)->first();
+        }
+        $items = \Institute\Item::join('careers','items.career_id','=','careers.id')
+        ->select('items.*')
+        ->orderBy('careers.nombre','asc')
+        ->get();
+        return view('admin/order.create',['items'=>$items,'careers'=>$careers, 'career'=>$career]);
     }
 
     /**
@@ -58,13 +78,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->ajax()) {
-            if ($request['people_id']=='') {
-                $request['people_id']=null;
-            }
-            $col = collect();
-            $sub=0;
-            for ($i=0; $i < count($request['item']); $i++) {
+        if ($request['people_id']=='') {
+            $request['people_id']=null;
+        }
+        $col = collect();
+        $sub=0;
+        for ($i=0; $i < count($request['item']); $i++) {
+            if ($request['cantidad'][$i]>0) {
                 $itm = \Institute\Item::find($request['item'][$i]);
                 $list = new \Institute\Buylist;
                 $list->cantidad = $request['cantidad'][$i];
@@ -75,24 +95,24 @@ class OrderController extends Controller
                 $itm->stock-=$request['cantidad'][$i];
                 $itm->save();
             }
-            $order = new Order;
-            $order->fill([
-                'nombre' => $request['nombre'],
-                'fecha_compra' => \Carbon\Carbon::now(),
-                'detalle' => $request['detalle'],
-                'subtotal' => $sub,
-                'total' => $sub-$request['descuento'],
-                'descuento' => $request['descuento'],
-                'telefono' => $request['telefono'],
-                'people_id' => $request['people_id'],
-                'user_id' => Auth::user()->id
-                ]);
-            $order->save();
-            $order->buylists()->saveMany($col);
-            Session::flash('message','Compra registrada exitosamente');
-            return $order->id;
-            //return Redirect::to('/admin/order/pdf/'.$order->id);
         }
+        $order = new Order;
+        $order->fill([
+            'nombre' => $request['nombre'],
+            'fecha_compra' => \Carbon\Carbon::now(),
+            'detalle' => $request['detalle'],
+            'subtotal' => $sub,
+            'total' => $sub-$request['descuento'],
+            'descuento' => $request['descuento'],
+            'telefono' => $request['telefono'],
+            'people_id' => $request['people_id'],
+            'user_id' => Auth::user()->id
+            ]);
+        $order->save();
+        $order->buylists()->saveMany($col);
+        Session::flash('pdf','admin/order/pdf/'.$order->id);
+        Session::flash('message','Compra registrada exitosamente');
+        return Redirect::to('admin/order/create');
     }
 
     public function pdf($id)

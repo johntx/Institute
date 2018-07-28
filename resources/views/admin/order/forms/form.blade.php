@@ -1,9 +1,4 @@
-<div id="alert_same" class="alert alert-danger alert-dismissible" role="alert" style="display: none">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<strong>Atención!</strong><br>Acabas de seleccionar el mismo item.
-</div>
 <br>
-<input type="hidden" name="_token" id="token" value="{{csrf_token()}}">
 {!! Form::hidden('people_id',null,['id'=>'people_id']) !!}
 <div class="form-group" style="padding: 0;">
 	{!! Form::label('Nombre Comprador*') !!}
@@ -26,32 +21,35 @@
 	<table class="table table-condensed">
 		<thead>
 			<th>(Codigo) Nombre</th>
-			<th>P/Unitario</th>
+			<th>Stock</th>
 			<th>Cantidad</th>
+			<th>P/Unitario</th>
 			<th>Importe</th>
-			<th>Quitar</th>
 		</thead>
 		<tbody>
-			<td>
-				<select name="item[]" class="selectpicker sel_itm last_sel" required data-live-search="true">
-					<option disabled selected value> -- Seleccione un Item -- </option>
-					@foreach ($items as $item)
-					<option value="{{$item->id}}" code="{{$item->id}}" name="{{$item->nombre}}" stock="{{$item->stock}}" price="{{$item->precio}}">({{substr($item->career->nombre, 0, 3)}}) {{$item->nombre}} ({{$item->stock}} Unid.) ({{$item->precio}} Bs.)</option>
-					@endforeach
-				</select>
-			</td>
-			<td>
-				<span class="price"></span><span> Bs.</span>
-			</td>
-			<td class="quantity">
-				<input name="cantidad[]" min="0" max="100" type="number" class="form-control col-xs-1 quant" value="1" disabled required>
-			</td>
-			<td>
-				<span class="subtotal"></span><span> Bs.</span>
-			</td>
-			<td class="remove">
-				<button type="button" disabled class="btn btn-danger remove_btn">X</button>
-			</td>
+			@foreach ($career->items as $item)
+			<tr class="{{$item->id}}" @if ($item->stock==0) style="background-color: #E09696;" @endif>
+				<td>
+				{!! Form::label($item->id,"(".substr($item->career->nombre, 0, 3).") ".$item->nombre,['style'=>'padding:8px; width:100%;','class'=>'check_item','item'=>$item->id]) !!}
+					
+					<input type="hidden" name="item[]" value="{{$item->id}}" disabled class="{{$item->id}}">
+				</td>
+				<td>
+					<input type="checkbox" id="{{$item->id}}" item="{{$item->id}}" class="check_item" name="cancelado" style="width: 100%; height: 35px;" @if ($item->stock==0) disabled @endif>
+				</td>
+				<td>
+					[<b><span class="stock">{{$item->stock}}</span><span>&nbsp; Un.</span></b>]
+				<td>
+					<span class="price {{$item->id}}">{{$item->precio}}</span><span> Bs.</span>
+				</td>
+				<td class="quantity">
+					<input name="cantidad[]" min="0" max="{{$item->stock}}" type="number" class="form-control col-xs-1 quant {{$item->id}}" item="{{$item->id}}" @if ($item->stock>0) value="1" @else value="0" @endif  required disabled>
+				</td>
+				<td>
+					<span class="subtotal {{$item->id}}"></span><span> Bs.</span>
+				</td>
+			</tr>
+			@endforeach
 		</tbody>
 		<tbody class="total_body" style="font-size: 21px;">
 			<td></td>
@@ -63,37 +61,13 @@
 			<td></td>
 		</tbody>
 	</table>
-	<table class="table" style="display: none;">
-		<tbody id="new_item">
-			<td>
-				<select name="item[]" class="sel_itm" data-live-search="true">
-					<option disabled selected value> -- Seleccione un Item -- </option>
-					@foreach ($items as $item)
-					<option value="{{$item->id}}" code="{{$item->id}}" name="{{$item->nombre}}" stock="{{$item->stock}}" price="{{$item->precio}}">({{substr($item->career->nombre, 0, 3)}}) {{$item->nombre}} ({{$item->stock}} Unid.) ({{$item->precio}} Bs.)</option>
-					@endforeach
-				</select>
-			</td>
-			<td>
-				<span class="price"></span><span> Bs.</span>
-			</td>
-			<td class="quantity">
-				<input name="cantidad[]" min="0" max="100" type="number" class="form-control col-xs-1 quant" value="1" disabled required>
-			</td>
-			<td>
-				<span class="subtotal"></span> <span> Bs.</span>
-			</td>
-			<td class="remove">
-				<button type="button" class="btn btn-danger" disabled>X</button>
-			</td>
-		</tbody>
-	</table>
 </div>
 <div class="form-group col-sm-9"></div>
 <div class="form-group col-sm-3">
 	<span>Descuento en Bs:</span>
 	<div class="input-group">
 		<span class="input-group-addon" id="basic-addon1">$</span>
-		{!! Form::number('descuento',0,['class'=>'form-control','min'=>'0','max'=>'20','id'=>'global_discount']) !!}
+		{!! Form::number('descuento',0,['class'=>'form-control','id'=>'global_discount','autocomplete'=>'off']) !!}
 	</div>
 </div>
 <div class="col-sm-8"></div>

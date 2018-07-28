@@ -49,6 +49,7 @@ class InscriptionController extends Controller
      */
     public function create()
     {
+    $extras = \Institute\Extra::get();
       $students = People::
       join('inscriptions','peoples.id','=','inscriptions.people_id')
       ->select('peoples.*')
@@ -61,7 +62,7 @@ class InscriptionController extends Controller
       ->where('startclasses.estado','!=','Cerrado')
       ->orderBy('startclasses.fecha_inicio','DESC')
       ->get();
-      return view('admin/inscription.create',['startclasses'=>$startclasses,'students'=>$students]);
+      return view('admin/inscription.create',['startclasses'=>$startclasses,'students'=>$students,'extras'=>$extras]);
     }
 
     /**
@@ -97,6 +98,8 @@ class InscriptionController extends Controller
         $colegiatura = 'Debe';
       }
       $people= People::find($request['user_id']);
+      $people->observacion = $request['observacion'];
+      $people->save();
       $startclass = \Institute\Startclass::find($request['startclass_id']);
       $inscription->fill([
         'estado' => 'Inscrito',
@@ -165,7 +168,7 @@ class InscriptionController extends Controller
           ]);
         $payment2->save();
       }
-    Session::flash('pdf',$payment->id);
+    Session::flash('pdf','admin/payment/pdf/'.$payment->id);
     return Redirect::to('admin/inscription/create');
   }
 

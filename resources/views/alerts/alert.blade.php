@@ -4,8 +4,3 @@
 	{{Session::get('alert')}}
 </div>
 @endif
-<script>
-	setTimeout(function() {
-		$(".alert").fadeOut(1000);
-	},7000);
-</script>

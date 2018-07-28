@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 @include('alerts.request')
-<h4>Docente: <b>{{$people->nombrecompleto()}}</b> - (Pago por Hora: <b id="pxh">{{$people->genero}}</b> Bs.)</h4>
+<h4>Docente: <b>{{$people->nombrecompleto()}}</b> - (Pago por Hora: <b id="pxh">{{$people->pago_hora}}</b> Bs.)</h4>
 <div class="table-responsive">
 
 	<table style="border: 1px solid black;" class="table table-hover">
@@ -33,7 +33,7 @@
 			$fecha1 = \Carbon\Carbon::parse($fechas[$k])->format('Y-m-d');
 			?>
 			@foreach ($tickeos as $k=>$tickeo)
-			<tr @if ($b) style="background-color: #E2E2E2;"@endif @if ($tickeo->estado == 'creado') style="background-color: #93D299;"@endif>
+			<tr @if ($tickeo->estado == 'creado') style="background-color: #93D299;"@endif @if ($b) style="background-color: #E2E2E2;"@endif>
 				<?php
 				$hora = \Carbon\Carbon::parse($tickeo->fecha)->format('H:i:s');
 				$min = \Carbon\Carbon::parse($tickeo->fecha)->format('i');

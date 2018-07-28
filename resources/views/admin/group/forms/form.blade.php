@@ -11,7 +11,7 @@
 <div class="form-group">
 	{!! Form::label('Turno') !!}
 	<div class="input-group dropdown">
-	{!! Form::text('turno','Mañana',['class'=>'form-control dropdown-toggle turno','placeholder'=>'Insert Turno', 'maxlength'=>30]) !!}
+	{!! Form::text('turno','Mañana',['class'=>'form-control dropdown-toggle inp_sel_turno','placeholder'=>'Insert Turno', 'maxlength'=>30]) !!}
 		<ul class="dropdown-menu">
 			<li><a href="#" data-value="Mañana">Mañana</a></li>
 			<li><a href="#" data-value="Tarde">Tarde</a></li>

@@ -22,12 +22,12 @@
 		@if ($code == 'ADM' || $code == 'REG')
 		<div class="col-xs-2" style="padding: 0;">
 			{!! Form::label('Fecha de Pago') !!}
-			{!! Form::text('fecha_pago',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+			{!! Form::text('fecha_pago',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd','autocomplete'=>'off']) !!}
 		</div>
 		@else
 		<div class="col-xs-2" style="padding: 0;">
 			{!! Form::label('') !!}
-			{!! Form::hidden('fecha_pago',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd']) !!}
+			{!! Form::hidden('fecha_pago',\Carbon\Carbon::now()->format('Y-m-d'),['class'=>'form-control datepicker','placeholder'=>'yyyy-mm-dd','autocomplete'=>'off']) !!}
 		</div>
 		@endif
 		<div class="col-xs-3" style="padding: 0;">

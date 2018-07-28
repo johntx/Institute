@@ -117,6 +117,7 @@ function crear_contenido(elemento,n_contenedor){
 	var inscritos = elemento.attr('inscritos');
 	var people = elemento.attr('people');
 	var uni = elemento.attr('uni');
+	var asistencias = elemento.attr('asistencias');
 	var dia = n_contenedor.parent().attr('dia');
 	var x = n_contenedor.parent().attr('x');
 	var aula = n_contenedor.parent().attr('aula');
@@ -136,7 +137,7 @@ function crear_contenido(elemento,n_contenedor){
 			elemento.remove();
 			n_cont.parent('td').attr('class','cabeza cubo');
 		} else if (i==h+1 && i<h+p-1) {
-			n_cont.append("<div uni='"+uni+"' career='"+career+"' class='cuerpo cubo cont_turno'>"+fecha+"<div class='turno'>"+turno+"</div><div class='inscritos'>"+inscritos+"</div></div>");
+			n_cont.append("<div uni='"+uni+"' career='"+career+"' class='cuerpo cubo cont_turno' onclick=window.open('"+asistencias+"')>"+fecha+"<div class='turno'>"+turno+"</div><div class='inscritos'>"+inscritos+"</div></div>");
 			n_cont.parent('td').attr('class','cuerpo cubo cont_turno');
 		} else if (i==h+2 && i<h+p-1) {
 			n_cont.append("<div uni='"+uni+"' career='"+career+"' class='cuerpo cubo'>"+materia+"</div>");

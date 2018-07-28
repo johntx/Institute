@@ -83,24 +83,10 @@ class AssistanceController extends Controller
     {
 
     }
-    public function register($grupo, $materia)
+    public function register($piso, $aula, $dia)
     {
-        $inscriptions = \Institute\Inscription::leftjoin('assistances','assistances.inscription_id','=','inscriptions.id')
-        ->join('peoples','inscriptions.people_id','=','peoples.id')
-        ->select('inscriptions.*','assistances.asistencia as asistencia')
-        ->where('inscriptions.group_id',$grupo)
-        ->groupBy('inscriptions.id')
-        ->orderBy('peoples.nombre','asc')
-        ->get();
-        $fechas = \Institute\Assistance::select('assistances.fecha')
-        ->where('asistencia',1)
-        ->where('group_id',$grupo)
-        ->where('subject_id',$materia)
-        ->where('people_id',Auth::user()->id)
-        ->distinct('fecha')
-        ->orderBy('fecha','asc')
-        ->get();
-        return view('admin/assistance.index',['inscriptions'=>$inscriptions,'group_id'=>$grupo,'materia_id'=>$materia,'fechas'=>$fechas]);
+        $hours = \Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')->where('schedules.vigente','si')->where('people_id',Auth::id())->where('piso',$piso)->where('aula',$aula)->where('dia',$dia)->get();
+        return view('admin/assistance.index',['hours'=>$hours]);
     }
     public function ver($id)
     {
