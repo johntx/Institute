@@ -66,7 +66,7 @@ class MenuController extends Controller
             ->withInput();
         }
         Menu::create($request->all());
-        Session::flash('message','Menu registrado exitosamente');
+        Session::flash('success','Menu registrado exitosamente');
         return Redirect::to('/admin/menu');
     }
 
@@ -115,7 +115,7 @@ class MenuController extends Controller
         }
         $this->menu->fill($request->all());
         $this->menu->save();
-        Session::flash('message','Menu editado exitosamente');
+        Session::flash('success','Menu editado exitosamente');
         return Redirect::to('/admin/menu');
     }
 
@@ -140,7 +140,7 @@ class MenuController extends Controller
             $functionality->delete();
         });
         $this->menu->delete();
-        Session::flash('message','Menu borrado exitosamente');
+        Session::flash('success','Menu borrado exitosamente');
         return Redirect::to('/admin/menu');
     }
 }

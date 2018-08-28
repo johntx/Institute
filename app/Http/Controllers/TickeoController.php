@@ -91,7 +91,7 @@ class TickeoController extends Controller
                 header('Content-Type: application/json; charset=UTF-8');
                 die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
             }
-            Session::flash('message','Proceso concluido');
+            Session::flash('success','Proceso concluido');
             return $request['people_id'];
         }
     }
@@ -153,9 +153,9 @@ class TickeoController extends Controller
         if (!empty($request['subjects'])){
             $tickeo->subjects()->attach($request['subjects']);
         }
-        Session::flash('message','Tickeo en fecha y hora repetidos');
+        Session::flash('alert','Tickeo en fecha y hora repetidos');
         return Redirect::to(str_replace("/cien/public/", "", $request['url']));
-        Session::flash('message','Tickeo registrada exitosamente');
+        Session::flash('success','Tickeo registrada exitosamente');
         return Redirect::to('/admin/item');
     }
 
@@ -202,7 +202,7 @@ class TickeoController extends Controller
             $this->tickeo->save();
         }
         return Redirect::to(str_replace("/cien/public/", "", $request['url']));
-        Session::flash('message','Egreso editado exitosamente');
+        Session::flash('success','Egreso editado exitosamente');
         return Redirect::to('/admin/tickeo');
     }
 

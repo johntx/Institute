@@ -45,7 +45,7 @@ class StartclassController extends Controller
       $startclasses = Startclass::
       join('careers','startclasses.career_id','=','careers.id')
       ->select('startclasses.*')
-      ->orderBy('id','DESC')->paginate(20);
+      ->orderBy('fecha_inicio','DESC')->paginate(20);
       return view('admin/startclass.index',compact('startclasses'));
     }
 
@@ -108,7 +108,7 @@ class StartclassController extends Controller
       }
       $startclass->save();
       $startclass->groups()->saveMany($col);
-      Session::flash('message','Inicio de Clases registrado exitosamente');
+      Session::flash('success','Inicio de Clases registrado exitosamente');
       return Redirect::to('/admin/startclass');
     }
 
@@ -156,7 +156,7 @@ class StartclassController extends Controller
         'estado' => $request['estado']
         ]);
       $this->startclass->save();
-      Session::flash('message','Inicio de Clases editado exitosamente');
+      Session::flash('success','Inicio de Clases editado exitosamente');
       return Redirect::to('/admin/startclass');
     }
 
@@ -169,7 +169,7 @@ class StartclassController extends Controller
     public function destroy($id)
     {
       $this->startclass->delete();
-      Session::flash('message','Inicio de Clases borrado exitosamente');
+      Session::flash('success','Inicio de Clases borrado exitosamente');
       return Redirect::to('/admin/startclass');
     }
   }

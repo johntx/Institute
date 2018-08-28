@@ -45,6 +45,8 @@ class ScheduleController extends Controller
      */
     public function create()
     {
+        $classrooms = \Institute\Classroom::get();
+        $semana = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
         $horario = array('07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
         $startclasses = Startclass::
         join('careers','startclasses.career_id','=','careers.id')
@@ -52,7 +54,7 @@ class ScheduleController extends Controller
         ->select('startclasses.*')
         ->orderBy('careers.id','asc')
         ->orderBy('fecha_inicio','asc')->get();
-        return view('admin/schedule.create',['startclasses'=>$startclasses,'horario'=>$horario]);
+        return view('admin/schedule.create',['startclasses'=>$startclasses,'classrooms'=>$classrooms,'semana'=>$semana,'horario'=>$horario]);
     }
 
     /**
@@ -99,7 +101,7 @@ class ScheduleController extends Controller
         }
         $schedule->save();
         $schedule->hours()->saveMany($col);
-        Session::flash('message','Horario registrado exitosamente');
+        Session::flash('success','Horario registrado exitosamente');
         return Redirect::to('/admin/schedule');
     }
 
@@ -122,10 +124,12 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        foreach (Session::get('semana') as $dia) {
-            Session::put($dia,\Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')->select('hours.*')->where('schedules.id',$id)->where('hours.dia',$dia)->get());
+        $classrooms = \Institute\Classroom::get();
+        $semana = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
+        $horas_semana = collect();
+        foreach ($semana as $dia) {
+            $horas_semana->put($dia,\Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')->select('hours.*')->where('schedules.id',$id)->where('hours.dia',$dia)->get());
         }
-        $semana = collect(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]);
         $horario = collect(['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
         $startclasses = Startclass::
         join('careers','startclasses.career_id','=','careers.id')
@@ -134,17 +138,19 @@ class ScheduleController extends Controller
         ->orderBy('careers.id','asc')
         ->orderBy('fecha_inicio','asc')->get();
         $availables = \Institute\Available::get();
-        return view('admin/schedule.edit',['schedule'=>$this->schedule, 'startclasses'=>$startclasses,'semana'=>$semana,'horario'=>$horario,'availables'=>$availables]);
+        return view('admin/schedule.edit',['schedule'=>$this->schedule, 'startclasses'=>$startclasses,'classrooms'=>$classrooms,'semana'=>$semana,'horario'=>$horario,'availables'=>$availables,'horas_semana'=>$horas_semana]);
     }
 
     public function ver($id)
     {
-        foreach (Session::get('semana') as $dia) {
-            Session::put($dia,\Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')->select('hours.*')->where('schedules.id',$id)->where('hours.dia',$dia)->get());
+        $semana = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
+        $classrooms = \Institute\Classroom::get();
+        $horas_semana = collect();
+        foreach ($semana as $dia) {
+            $horas_semana->put($dia,\Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')->select('hours.*')->where('schedules.id',$id)->where('hours.dia',$dia)->get());
         }
-        $semana = collect(["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]);
         $horario = collect(['07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00']);
-        return view('admin/schedule.show',['schedule'=>$this->schedule,'semana'=>$semana,'horario'=>$horario]);
+        return view('admin/schedule.show',['schedule'=>$this->schedule,'semana'=>$semana,'classrooms'=>$classrooms,'horario'=>$horario,'horas_semana'=>$horas_semana]);
     }
 
     public function clonar($id)
@@ -173,7 +179,7 @@ class ScheduleController extends Controller
             }
         }
         $horario->hours()->saveMany($col);
-        Session::flash('message','Horario clonado exitosamente');
+        Session::flash('success','Horario clonado exitosamente');
         return Redirect::to('/admin/schedule');
     }
 
@@ -233,7 +239,7 @@ class ScheduleController extends Controller
             $hour->delete();
         });
         $this->schedule->hours()->saveMany($col);
-        Session::flash('message','Horario editado exitosamente');
+        Session::flash('success','Horario editado exitosamente');
         return Redirect::to('/admin/schedule');
     }
 
@@ -250,7 +256,7 @@ class ScheduleController extends Controller
             $hour->delete();
         });
         $this->schedule->delete();
-        Session::flash('message','Menu borrado exitosamente');
+        Session::flash('success','Menu borrado exitosamente');
         return Redirect::to('/admin/schedule');
     }
 

@@ -70,7 +70,7 @@ class ScoreController extends Controller
                 ]);
             $score->save();
         }
-        Session::flash('message','Ingreso de Item registrada exitosamente');
+        Session::flash('success','Ingreso de Item registrada exitosamente');
 
         return Redirect::to('score/register/'.$request['piso'].'/'.$request['aula'].'/'.$request['dia']);
     }
@@ -97,6 +97,10 @@ class ScoreController extends Controller
         $inscriptions = \Institute\Inscription::leftjoin('scores','scores.inscription_id','=','inscriptions.id')->join('peoples','inscriptions.people_id','=','peoples.id')->select('inscriptions.*','scores.nota as nota')->where('inscriptions.group_id',$id)->groupBy('inscriptions.id')->orderBy('peoples.nombre','asc')->get();
         $group = \Institute\Group::find($id);
         return view('admin/score.ver',['inscriptions'=>$inscriptions,'group'=>$group]);
+    }
+    public function myscore()
+    {
+        return view('admin/score.myscore');
     }
 
     /**

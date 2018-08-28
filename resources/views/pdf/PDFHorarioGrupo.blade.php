@@ -7,7 +7,7 @@
 	<meta name = "format-detection" content = "telephone=no" />
 	<link rel="icon" type="image/png" href="{!!URL::to('icons/logomin.png')!!}" />
 	<style>
-		body { font-family: DejaVu Sans; }
+		body { font-family: DejaVu Sans; margin-top: -25px; }
 		table {
 			width: 100%;
 			border-spacing: 0;

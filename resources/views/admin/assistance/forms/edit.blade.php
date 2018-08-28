@@ -1,5 +1,5 @@
 <?php $del_est=false; $del_ins=false;?>
-@foreach(Session::get('functionalities') as $func)
+@foreach(Auth::user()->role->functionalities as $func)
 @if ($func->code=='DEST')
 <?php $del_est=true; ?>
 @endif

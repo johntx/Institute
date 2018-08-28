@@ -86,7 +86,7 @@ class IncomeController extends Controller
             ]);
         $income->save();
         $income->incomelists()->saveMany($col);
-        Session::flash('message','Ingreso de Item registrado exitosamente');
+        Session::flash('success','Ingreso de Item registrado exitosamente');
         Session::flash('pdf','admin/income/pdf/'.$income->id);
         return Redirect::to('admin/income/create');
     }
@@ -134,7 +134,7 @@ class IncomeController extends Controller
     {
         $this->income->fill($request->all());
         $this->income->save();
-        Session::flash('message','Ingreso de Item editada exitosamente');
+        Session::flash('success','Ingreso de Item editada exitosamente');
         return Redirect::to('/admin/income');
     }
 
@@ -154,9 +154,9 @@ class IncomeController extends Controller
                 $incomelist->delete();
             });
             $this->income->delete();
-            Session::flash('message','Ingreso de Item borrada exitosamente');
+            Session::flash('success','Ingreso de Item borrada exitosamente');
         } else {
-            Session::flash('message','Usted no puede realizar esta operacion');
+            Session::flash('error','Usted no puede realizar esta operacion');
         }
         return Redirect::to('/admin/income');
     }

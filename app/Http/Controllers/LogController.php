@@ -37,12 +37,18 @@ class LogController extends Controller
                     $functionalities = Auth::user()->role->functionalities;
                     if (count($functionalities)>0){
                         if (Auth::user()->role->code == 'EST') {
-                            return Redirect::to('admin/evaluation/create');
+                            if (!Auth::user()->people->inscriptions->where('estado','Inscrito')->first()->debit()) {
+                                return Redirect::to('admin/evaluation/create');
+                            } else {
+                                Session::flash('error','Saldo en su mensualidad. Pasar por secretaría');
+                                Auth::logout();
+                                return Redirect::to('log');
+                            }
                         }
-                        Session::put('functionalities',Auth::user()->role->functionalities);
                         return Redirect::to('admin');
                     }else {
-                        Session::flash('message','Usuario sin Privilegios.');
+                        Session::flush();
+                        Session::flash('message_error','Usuario sin Privilegios.');
                         Auth::logout();
                         return Redirect::to('/');
                     }
@@ -51,11 +57,11 @@ class LogController extends Controller
                     return Redirect::to('log');
                 }
             }else{
-                Session::flash('message','Esta cuenta aún no está confirmada, <br> o está desactivada.');
+                Session::flash('message_error','Esta cuenta aún no está confirmada, <br> o está desactivada.');
                 return Redirect::to('/');
             }
         }else{
-            Session::flash('message','Este usuario no existe.');
+            Session::flash('message_error','Este usuario no existe.');
             return Redirect::to('/');
         }
         return Redirect::to('/');
@@ -64,6 +70,7 @@ class LogController extends Controller
     public function logout()
     {
         Auth::logout();
+        Session::flush();
         return Redirect::to('/');
     }
 }

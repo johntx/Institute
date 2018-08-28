@@ -19,7 +19,7 @@ class TestController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin',['only' => ['index','create','edit','show']]);
-        $this->beforeFilter('@find',['only' => ['edit','update','destroy','show']]);
+        $this->beforeFilter('@find',['only' => ['edit','update','destroy','show','create_test']]);
     }
     public function find(Route $route)
     {
@@ -58,7 +58,7 @@ class TestController extends Controller
     {
         $request['nombre']=strtoupper($request['nombre']);
         Test::create($request->all());
-        Session::flash('message','Asignatura registrado exitosamente');
+        Session::flash('success','Asignatura registrado exitosamente');
         return Redirect::to('/admin/test');
     }
 
@@ -70,7 +70,8 @@ class TestController extends Controller
      */
     public function show($id)
     {
-        return view('admin/test.delete',['test'=>$this->test]);
+        $career = \Institute\Career::find($id);
+        return view('admin/test.show',['test'=>$this->test,'career'=>$career]);
     }
 
     /**
@@ -82,7 +83,18 @@ class TestController extends Controller
     public function edit($id)
     {
         $career = \Institute\Career::find($id);
-        return view('admin/test.edit',['test'=>$this->test,'career'=>$career]);
+        $subject = $career->subjects->first();
+        return view('admin/test.edit',['test'=>$this->test,'career'=>$career, 'subject'=>$subject]);
+    }
+    public function create_test($id, $subject = '')
+    {
+        $career = Career::find($id);
+        if ($subject == '') {
+            $subject = $career->subjects->first();
+        } else {
+            $subject = \Institute\Subject::where('nombre',$subject)->first();
+        }
+        return view('admin/test.edit',['test'=>$this->test,'career'=>$career, 'subject'=>$subject]);
     }
 
     /**
@@ -95,18 +107,26 @@ class TestController extends Controller
     public function update(Request $request, $id)
     {
         $career = Career::find($request['career_id']);
-        $career->tests->each(function ($test){$test->delete();});
+        $subject = \Institute\Subject::find($request['subject_id']);
+        if (count($request['modulo']) != count($request['nombre'])) {
+            Session::flash('error','No Guardado!');
+            return Redirect::to('/admin/test/create/career/'.$career->id.'/'.$subject->nombre);
+        }
+        $career->tests()->where('subject_id',$request['subject_id'])->get()->each(function ($test){$test->delete();});
         for ($i=0; $i < count($request['nombre']); $i++) {
             $test = new Test;
             $test->fill([
+                'id' => $request['id_test'][$i],
                 'nombre' => strtoupper($request['nombre'][$i]),
-                'subject_id' => $request['subject_id'][$i],
+                'orden' => $request['orden'][$i],
+                'subject_id' => $request['subject_id'],
                 'modulo' => $request['modulo'][$i],
                 'career_id' => $request['career_id']
                 ]);
             $test->save();
         }
-        Session::flash('message','Registro Guardado Exitosamente');
+        Session::flash('success','Registro "'.$subject->nombre.'" Guardado Exitosamente');
+        return Redirect::to('/admin/test/create/career/'.$career->id.'/'.$subject->nombre);
         return Redirect::to('/admin/test');
     }
 
@@ -119,7 +139,7 @@ class TestController extends Controller
     public function destroy($id)
     {
         $this->test->delete();
-        Session::flash('message','Asignatura borrado exitosamente');
+        Session::flash('success','Asignatura borrado exitosamente');
         return Redirect::to('/admin/test');
     }
 }

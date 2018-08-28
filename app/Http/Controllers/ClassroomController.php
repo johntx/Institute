@@ -58,7 +58,7 @@ class ClassroomController extends Controller
         $request['aula']=strtoupper($request['aula']);
         $request['piso']=strtoupper($request['piso']);
         Classroom::create($request->all());
-        Session::flash('message','Aula registrado exitosamente');
+        Session::flash('success','Aula registrado exitosamente');
         return Redirect::to('/admin/classroom');
     }
 
@@ -99,7 +99,7 @@ class ClassroomController extends Controller
         $request['piso']=strtoupper($request['piso']);
         $this->classroom->fill($request->all());
         $this->classroom->save();
-        Session::flash('message','Aula editada exitosamente');
+        Session::flash('success','Aula editada exitosamente');
         return Redirect::to('/admin/classroom');
     }
 
@@ -112,7 +112,7 @@ class ClassroomController extends Controller
     public function destroy($id)
     {
         $this->classroom->delete();
-        Session::flash('message','Aula borrada exitosamente');
+        Session::flash('success','Aula borrada exitosamente');
         return Redirect::to('/admin/classroom');
     }
 }

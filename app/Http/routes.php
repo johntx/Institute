@@ -22,9 +22,12 @@ Route::get('assistance/register/{piso}/{aula}/{dia}','AssistanceController@regis
 Route::get('score/register/{piso}/{aula}/{dia}','ScoreController@register');
 Route::get('assistance/ver/{id}','AssistanceController@ver');
 Route::get('score/ver/{id}','ScoreController@ver');
+Route::get('admin/score/my/score','ScoreController@myscore');
+Route::get('admin/assistance/my/assistance','AssistanceController@myassistance');
 Route::post('assistance/assistance_ajax','AssistanceController@assistance_ajax');
 Route::post('teacher/payment_ajax','TickeoController@payment_ajax');
 Route::post('admin/payment/recibir/save','PaymentController@recibir');
+Route::post('extra/filtro','ExtraController@filtro');
 
 Route::resource('user','UserController');
 Route::resource('admin/role','RoleController');
@@ -58,6 +61,7 @@ Route::resource('admin/available','AvailableController');
 Route::resource('admin/score','ScoreController');
 Route::resource('admin/test','TestController');
 Route::resource('admin/interested','InterestedController');
+Route::resource('admin/exam','ExamController');
 Route::get('admin/report/debit','ReportController@debit');
 Route::get('admin/extra/curso/{id}','ExtraController@curso');
 Route::get('admin/report/groups','ReportController@groups');
@@ -103,3 +107,5 @@ Route::get('pass/changePasswordForm','UserController@changePasswordForm');
 Route::post('admin/egress/savepayment','EgressController@savepayment');
 
 Route::get('admin/order/create/career/{career?}','OrderController@create_career');
+Route::get('admin/exam/create/career/{career}/{subject?}','ExamController@create_exam');
+Route::get('admin/test/create/career/{career}/{subject?}','TestController@create_test');

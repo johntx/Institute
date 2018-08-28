@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <?php $editar=false; $eliminar=false;
-foreach (Session::get('functionalities') as $func) {
+foreach (Auth::user()->role->functionalities as $func) {
 	if ($func->code=='EITM'){ $editar=true; }
 	if ($func->code=='DITM'){ $eliminar=true; }
 }

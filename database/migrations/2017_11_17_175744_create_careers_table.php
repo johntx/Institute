@@ -17,6 +17,7 @@ class CreateCareersTable extends Migration
             $table->string('nombre',50);
             $table->string('color',20)->nullable();
             $table->string('texto',20)->nullable();
+            $table->string('lista',20)->nullable();
         });
     }
 

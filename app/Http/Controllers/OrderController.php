@@ -111,7 +111,7 @@ class OrderController extends Controller
         $order->save();
         $order->buylists()->saveMany($col);
         Session::flash('pdf','admin/order/pdf/'.$order->id);
-        Session::flash('message','Compra registrada exitosamente');
+        Session::flash('success','Compra registrada exitosamente');
         return Redirect::to('admin/order/create');
     }
 
@@ -158,7 +158,7 @@ class OrderController extends Controller
     {
         $this->order->fill($request->all());
         $this->order->save();
-        Session::flash('message','Compra editada exitosamente');
+        Session::flash('success','Compra editada exitosamente');
         return Redirect::to('/admin/order');
     }
 
@@ -177,7 +177,7 @@ class OrderController extends Controller
             $buylist->delete();
         });
         $this->order->delete();
-        Session::flash('message','Compra borrada exitosamente');
+        Session::flash('success','Compra borrada exitosamente');
         return Redirect::to('/admin/order');
     }
 }

@@ -57,7 +57,7 @@ class SubjectController extends Controller
     {
         $request['nombre']=strtoupper($request['nombre']);
         Subject::create($request->all());
-        Session::flash('message','Asignatura registrado exitosamente');
+        Session::flash('success','Asignatura registrado exitosamente');
         return Redirect::to('/admin/subject');
     }
 
@@ -97,7 +97,7 @@ class SubjectController extends Controller
         $request['nombre']=strtoupper($request['nombre']);
         $this->subject->fill($request->all());
         $this->subject->save();
-        Session::flash('message','Asignatura editado exitosamente');
+        Session::flash('success','Asignatura editado exitosamente');
         return Redirect::to('/admin/subject');
     }
 
@@ -110,7 +110,7 @@ class SubjectController extends Controller
     public function destroy($id)
     {
         $this->subject->delete();
-        Session::flash('message','Asignatura borrado exitosamente');
+        Session::flash('success','Asignatura borrado exitosamente');
         return Redirect::to('/admin/subject');
     }
 }

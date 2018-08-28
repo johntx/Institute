@@ -187,7 +187,7 @@ class InscriptionController extends Controller
       $this->inscription->delete();
       Session::flash('success','Inscripción Eliminada exitosamente');
     } else {
-      Session::flash('danger','No se puede eliminar la inscripción de este estudiante');
+      Session::flash('error','No se puede eliminar la inscripción de este estudiante');
     }
     return Redirect::to('/admin/student/'.$this->inscription->people_id.'/edit');
   }

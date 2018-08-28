@@ -6,10 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddUserIdToInteresteds' => $baseDir . '/database/migrations/2018_08_08_101438_add_user_id_to_interesteds.php',
     'Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
     'CreateAssistancesTable' => $baseDir . '/database/migrations/2017_11_17_182303_create_assistances_table.php',
     'CreateAvailablesTable' => $baseDir . '/database/migrations/2018_05_09_101404_create_availables_table.php',
     'CreateBiometricsTable' => $baseDir . '/database/migrations/2018_03_29_093930_create_biometrics_table.php',
+    'CreateBotsTable' => $baseDir . '/database/migrations/2018_08_14_092600_create_bots_table.php',
     'CreateBuylistsTable' => $baseDir . '/database/migrations/2018_02_28_084355_create_buylists_table.php',
     'CreateCareersTable' => $baseDir . '/database/migrations/2017_11_17_175744_create_careers_table.php',
     'CreateCategoriesTable' => $baseDir . '/database/migrations/2018_02_28_084246_create_categories_table.php',
@@ -17,6 +19,8 @@ return array(
     'CreateDocumentsTable' => $baseDir . '/database/migrations/2017_11_17_182002_create_documents_table.php',
     'CreateEgressesTable' => $baseDir . '/database/migrations/2018_03_14_084451_create_egresses_table.php',
     'CreateEvaluationsTable' => $baseDir . '/database/migrations/2018_03_20_161621_create_evaluations_table.php',
+    'CreateExamsSubjectsTable' => $baseDir . '/database/migrations/2018_08_13_174035_create_exams_subjects_table.php',
+    'CreateExamsTable' => $baseDir . '/database/migrations/2018_08_13_171947_create_exams_table.php',
     'CreateExtrasTable' => $baseDir . '/database/migrations/2017_11_17_182130_create_extras_table.php',
     'CreateFamiliesTable' => $baseDir . '/database/migrations/2017_11_17_180730_create_families_table.php',
     'CreateFunctionalitiesTable' => $baseDir . '/database/migrations/2017_06_23_104740_create_functionalities_table.php',
@@ -31,7 +35,6 @@ return array(
     'CreateNoticesTable' => $baseDir . '/database/migrations/2017_11_17_180538_create_notices_table.php',
     'CreateOfficesTable' => $baseDir . '/database/migrations/2017_10_24_200719_create_offices_table.php',
     'CreateOrdersTable' => $baseDir . '/database/migrations/2018_02_28_084346_create_orders_table.php',
-    'CreatePartialsTable' => $baseDir . '/database/migrations/2017_11_17_180505_create_partials_table.php',
     'CreateParticularsTable' => $baseDir . '/database/migrations/2017_11_17_182140_create_particulars_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePaymentsTable' => $baseDir . '/database/migrations/2017_11_17_183026_create_payments_table.php',
@@ -43,7 +46,7 @@ return array(
     'CreateStartclassesTable' => $baseDir . '/database/migrations/2017_11_17_181857_create_startclasses_table.php',
     'CreateSubjectsTable' => $baseDir . '/database/migrations/2017_11_17_181749_create_subjects_table.php',
     'CreateTeachesTable' => $baseDir . '/database/migrations/2017_11_28_152022_create_teaches_table.php',
-    'CreateTestsTable' => $baseDir . '/database/migrations/2018_07_10_101617_create_tests_table.php',
+    'CreateTestsTable' => $baseDir . '/database/migrations/2017_11_17_182840_create_tests_table.php',
     'CreateTickeosTable' => $baseDir . '/database/migrations/2018_03_29_094103_create_tickeos_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'CreateWeeklyTable' => $baseDir . '/database/migrations/2017_11_28_151704_create_weekly_table.php',

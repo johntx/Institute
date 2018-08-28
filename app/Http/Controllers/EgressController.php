@@ -65,7 +65,7 @@ class EgressController extends Controller
             'user_id' => Auth::user()->id
             ]);
         $egress->save();
-        Session::flash('message','Egreso registrado exitosamente');
+        Session::flash('success','Egreso registrado exitosamente');
         return Redirect::to('/admin/egress');
     }
 
@@ -81,7 +81,7 @@ class EgressController extends Controller
             'user_id' => Auth::user()->id
             ]);
         $egress->save();
-        Session::flash('message','Pago registrado exitosamente');
+        Session::flash('success','Pago registrado exitosamente');
         return Redirect::to('/admin/egress/employees');
     }
 
@@ -161,7 +161,7 @@ class EgressController extends Controller
             'user_id' => Auth::user()->id
             ]);
         $this->egress->save();
-        Session::flash('message','Egreso editado exitosamente');
+        Session::flash('success','Egreso editado exitosamente');
         return Redirect::to('/admin/egress');
     }
 
@@ -174,7 +174,7 @@ class EgressController extends Controller
     public function destroy($id)
     {
         $this->egress->delete();
-        Session::flash('message','Egreso borrado exitosamente');
+        Session::flash('success','Egreso borrado exitosamente');
         return Redirect::to('/admin/egress');
     }
 }

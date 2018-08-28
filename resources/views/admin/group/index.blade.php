@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <?php $editar=false; $eliminar=false; $ext=false;
-foreach (Session::get('functionalities') as $func) {
+foreach (Auth::user()->role->functionalities as $func) {
 	if ($func->code=='EGRO'){ $editar=true; }
 	if ($func->code=='DGRO'){ $eliminar=true; }
 }
@@ -40,33 +40,30 @@ if (Auth::user()->role->code=='EXT'){
 				<td>
 					{!!link_to_action('GroupController@pdfanticipado', $title = 'Anticipado', $parameters = $group->id, $attributes = ['class'=>'btn btn-success pdfbtn','code'=>$group->id])!!}
 				</td>
-			<!--td>
-				{!!link_to_action('GroupController@horario', $title = 'Horario', $parameters = $group->id, $attributes = ['class'=>'btn btn-success'])!!}
-			</td-->
-			@if (!$ext)
-			<td>
-				{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $group->id, $attributes = ['class'=>'btn btn-warning'])!!}
-			</td>
-			@endif
-			@if (!$ext)
-			<td>
-				{!!link_to_action('ScoreController@ver', $title = 'Notas', $parameters = $group->id, $attributes = ['class'=>'btn btn-default'])!!}
-			</td>
-			@endif
-			@if ($editar)
-			<td>
-				{!!link_to_route('admin.group.edit', $title = 'Editar', $parameters = $group->id, $attributes = ['class'=>'btn btn-primary'])!!}
-			</td>
-			@endif
-			@if ($eliminar)
-			<td>
-				{!!link_to_route('admin.group.show', $title = 'Borrar', $parameters = $group->id, $attributes = ['class'=>'btn btn-danger'])!!}
-			</td>
-			@endif
-		</tr>
-		@endforeach
-	</tbody>
-</table>
+				@if (!$ext)
+				<td>
+					{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $group->id, $attributes = ['class'=>'btn btn-warning'])!!}
+				</td>
+				@endif
+				@if (!$ext)
+				<td>
+					{!!link_to_action('ScoreController@ver', $title = 'Notas', $parameters = $group->id, $attributes = ['class'=>'btn btn-default'])!!}
+				</td>
+				@endif
+				@if ($editar)
+				<td>
+					{!!link_to_route('admin.group.edit', $title = 'Editar', $parameters = $group->id, $attributes = ['class'=>'btn btn-primary'])!!}
+				</td>
+				@endif
+				@if ($eliminar)
+				<td>
+					{!!link_to_route('admin.group.show', $title = 'Borrar', $parameters = $group->id, $attributes = ['class'=>'btn btn-danger'])!!}
+				</td>
+				@endif
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
 </div>
 <div class="modal fade" id="pdfModal" tabindex="0" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document" style="z-index: 2000">

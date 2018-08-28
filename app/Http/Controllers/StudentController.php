@@ -111,7 +111,7 @@ class StudentController extends Controller
         ]);
     } else {
       $user->fill([
-        'user' => 'C1EN',
+        'user' => time(),
         'password' => 'C1EN',
         'role_id' => 3
         ]);
@@ -217,7 +217,6 @@ class StudentController extends Controller
         ]);
       $payment2->save();
     }
-    Session::put('inscriptions',\Institute\Inscription::distinct('people_id')->get());
     Session::flash('pdf','admin/payment/pdf/'.$payment->id);
     return Redirect::to('admin/student/create');
   }

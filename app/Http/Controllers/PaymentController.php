@@ -152,10 +152,10 @@ class PaymentController extends Controller
         'colegiatura' => 'Pagado'
         ]);
       $inscription->save();
-      Session::flash('pdf',$lastpayment->id);
+      Session::flash('pdf','admin/payment/pdf/'.$lastpayment->id);
       return Redirect::to('admin/payment/create');
     } elseif ($request['abono']+$descuento > $lastpayment->saldo) {
-      Session::flash('request',"Monto superior al saldo");
+      Session::flash('error',"Monto superior al saldo");
       return Redirect::to('admin/payment/create');
     } else {
       $PaymentSaldo = $lastpayment->saldo - $request['abono'] - $descuento;
@@ -254,7 +254,7 @@ class PaymentController extends Controller
   {
     $this->payment->fill($request->all());
     $this->payment->save();
-    Session::flash('message','Pago editado exitosamente');
+    Session::flash('success','Pago editado exitosamente');
     return Redirect::to('/admin/payment');
   }
 
@@ -310,7 +310,7 @@ class PaymentController extends Controller
       $inscription->save();
       $this->payment->delete();
     }
-    Session::flash('message','Pago borrado exitosamente');
+    Session::flash('success','Pago borrado exitosamente');
     return Redirect::to('/admin/payment');
   }
 }

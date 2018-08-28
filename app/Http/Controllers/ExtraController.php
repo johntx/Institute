@@ -49,6 +49,25 @@ class ExtraController extends Controller
         $curso = Extra::find($id);
         return view('admin/extra.curso',['inscriptions'=>$inscriptions,'curso'=>$curso]);
     }
+    public function filtro(Request $request)
+    {
+        $socabon = collect();
+        for ($i=0; $i < count($request['socabon']); $i++) {
+            $ins = \Institute\Inscription::find($request['socabon'][$i]);
+            $socabon->push($ins);
+        }
+        $oasis = collect();
+        for ($i=0; $i < count($request['oasis']); $i++) {
+            $ins = \Institute\Inscription::find($request['oasis'][$i]);
+            $oasis->push($ins);
+        }
+        $sacaba = collect();
+        for ($i=0; $i < count($request['sacaba']); $i++) {
+            $ins = \Institute\Inscription::find($request['sacaba'][$i]);
+            $sacaba->push($ins);
+        }
+        return view('admin/extra.filtro',['socabon'=>$socabon,'oasis'=>$oasis,'sacaba'=>$sacaba]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -69,7 +88,7 @@ class ExtraController extends Controller
     public function store(Request $request)
     {
         $extra = Extra::create($request->all());
-        Session::flash('message','Curso extra registrado exitosamente');
+        Session::flash('success','Curso extra registrado exitosamente');
         return Redirect::to('/admin/extra');
     }
 
@@ -106,7 +125,7 @@ class ExtraController extends Controller
     {
         $this->extra->fill($request->all());
         $this->extra->save();
-        Session::flash('message','Curso extra editado exitosamente');
+        Session::flash('success','Curso extra editado exitosamente');
         return Redirect::to('/admin/extra');
     }
 
@@ -119,7 +138,7 @@ class ExtraController extends Controller
     public function destroy($id)
     {
         $this->extra->delete();
-        Session::flash('message','Curso extra borrado exitosamente');
+        Session::flash('success','Curso extra borrado exitosamente');
         return Redirect::to('/admin/extra');
     }
 }

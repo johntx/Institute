@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Career extends Model
 {
 	protected $table = 'careers';
-	protected $fillable = ['nombre', 'color', 'texto'];
+	protected $fillable = ['nombre', 'color', 'texto', 'lista'];
 
 	public $timestamps = false;
 	
@@ -29,5 +29,11 @@ class Career extends Model
 	}
 	public function subjects() {
 		return $this->belongsToMany('Institute\Subject','weekly');
+	}
+	public function exams() {
+		return $this->belongsToMany('Institute\Exam','exams_subjects');
+	}
+	public function exam_subjects() {
+		return $this->hasMany('Institute\ExamSubject');
 	}
 }

@@ -1,6 +1,6 @@
 <br>
 <?php $del_est=false; $del_ins=false;
-foreach (Session::get('functionalities') as $func) {
+foreach (Auth::user()->role->functionalities as $func) {
 	if ($func->code=='DEST'){ $del_est=true; }
 	if ($func->code=='DINS'){ $del_ins=true; }
 }

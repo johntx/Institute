@@ -68,7 +68,7 @@ class FunctionalityController extends Controller
             ->withInput();
         }
         Functionality::create($request->all());
-        Session::flash('message','Funcionalidad registrada exitosamente');
+        Session::flash('success','Funcionalidad registrada exitosamente');
         return Redirect::to('/admin/functionality');
     }
 
@@ -120,7 +120,7 @@ class FunctionalityController extends Controller
         }
         $this->functionality->fill($request->all());
         $this->functionality->save();
-        Session::flash('message','Funcionalidad editada exitosamente');
+        Session::flash('success','Funcionalidad editada exitosamente');
         return Redirect::to('/admin/functionality');
     }
 
@@ -142,7 +142,7 @@ class FunctionalityController extends Controller
             $role->delete();
         });
         $this->functionality->delete();
-        Session::flash('message','Funcionalidad eliminada exitosamente');
+        Session::flash('success','Funcionalidad eliminada exitosamente');
         return Redirect::to('/admin/functionality');
     }
 }

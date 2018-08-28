@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <?php $editar=false; $eliminar=false;
-foreach (Session::get('functionalities') as $func) {
+foreach (Auth::user()->role->functionalities as $func) {
 	if ($func->code=='ETST'){ $editar=true; }
 	if ($func->code=='DTST'){ $eliminar=true; }
 }
@@ -11,9 +11,8 @@ foreach (Session::get('functionalities') as $func) {
 		<thead>
 			<th>Carrera</th>
 			<th>Materias</th>
-			<th>Registros</th>
+			@if ($eliminar)<th>Módulos</th>@endif
 			@if ($editar)<th>Modificar</th>@endif
-			@if ($eliminar)<th>Eliminar</th>@endif
 		</thead>
 		<tbody>
 			@foreach($careers as $career)
@@ -24,19 +23,14 @@ foreach (Session::get('functionalities') as $func) {
 						[{{$subject->nombre[0]}}{{$subject->nombre[1]}}{{$subject->nombre[2]}}] 
 					@endforeach
 				</td>
-				<td style="font-size: 12px;">
-					@foreach ($career->tests as $test)
-						[{{$test->nombre}}] 
-					@endforeach
+				@if ($eliminar)
+				<td>
+					{!!link_to_route('admin.test.show', $title = 'Ver', $parameters = $career->id, $attributes = ['class'=>'btn btn-success'])!!}
 				</td>
+				@endif
 				@if ($editar)
 				<td>
 					{!!link_to_route('admin.test.edit', $title = 'Registro', $parameters = $career->id, $attributes = ['class'=>'btn btn-primary'])!!}
-				</td>
-				@endif
-				@if ($eliminar)
-				<td>
-					{!!link_to_route('admin.test.show', $title = 'Borrar', $parameters = $career->id, $attributes = ['class'=>'btn btn-danger'])!!}
 				</td>
 				@endif
 			</tr>

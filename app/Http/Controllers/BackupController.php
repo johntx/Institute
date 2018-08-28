@@ -54,7 +54,7 @@ class BackupController extends Controller
     {
         $backup = new Backup();
 // Set to false if you want plain SQL backup files (not gzipped)
-        Session::flash('message','Backup realizado exitosamente');
+        Session::flash('success','Backup realizado exitosamente');
 
         return Redirect::to('/admin/backup/create');
 

@@ -40,10 +40,10 @@
         </span>
         <select class="form-control selectpicker" data-live-search="true" data-size="15" id="select_buscador">
           <option disabled selected>Buscar..</option>
-          @foreach (Session::get('inscriptions') as $inscription)
+          @foreach (\Institute\Inscription::distinct('people_id')->get() as $inscription)
           <option 
           value="{{$inscription->people->id}}">
-          ({{$inscription->people->ci}}) - {{$inscription->people->nombrecompleto()}} - [{{$inscription->people->telefono}}]</option>
+          ({{$inscription->people->id}}) - {{$inscription->people->nombrecompleto()}} - ({{$inscription->group->startclass->career->nombre}}) - [{{$inscription->people->telefono}}]</option>
           @endforeach
         </select>
         <span class="input-group-btn">

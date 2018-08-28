@@ -55,7 +55,7 @@ class UserController extends Controller
                 $user = Auth::user();
                 $user->password = $request['password'];
                 $user->save();
-                Session::flash('message','Contraseña camniada exitosamente');
+                Session::flash('success','Contraseña camniada exitosamente');
                 return redirect()->to('admin');
             } else {
                 return redirect('pass/changePasswordForm')
@@ -66,7 +66,7 @@ class UserController extends Controller
             return redirect()->to('/');
         }
 
-        Session::flash('request','Usuario registrado exitosamente');
+        Session::flash('success','Usuario registrado exitosamente');
         return redirect('admin')
         ->withErrors('Contraseña Cambiada Correctamente')
         ->withInput();
@@ -97,7 +97,7 @@ class UserController extends Controller
             ->withInput();
         }
         User::create($request->all());
-        Session::flash('message','Usuario registrado exitosamente');
+        Session::flash('success','Usuario registrado exitosamente');
         return Redirect::to('/user');
     }
 
@@ -144,7 +144,7 @@ class UserController extends Controller
         }
         $this->user->fill($request->all());
         $this->user->save();
-        Session::flash('message','Usuario editado exitosamente');
+        Session::flash('success','Usuario editado exitosamente');
         return Redirect::to('/user');
     }
 
@@ -163,7 +163,7 @@ class UserController extends Controller
             $this->user->employee->delete();
         }
         $this->user->delete();
-        Session::flash('message','Usuario borrado exitosamente');
+        Session::flash('success','Usuario borrado exitosamente');
         return Redirect::to('/user');
     }
 }

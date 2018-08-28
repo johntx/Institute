@@ -26,7 +26,7 @@ class Admin
         if (!Auth::user()) {
             return redirect()->to('/');
         }
-        $functionalities = Session::get('functionalities');
+        $functionalities = Auth::user()->role->functionalities;
         if (count($functionalities)>0){
             if ($request->path()=='admin'){
                 return $next($request);

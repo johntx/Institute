@@ -13,10 +13,6 @@ class Inscription extends Model
     {
         return $this->belongsTo('Institute\People');
     }
-    public function career()
-    {
-        return $this->belongsTo('Institute\Career');
-    }
     public function group()
     {
         return $this->belongsTo('Institute\Group');
@@ -70,7 +66,7 @@ class Inscription extends Model
         $cant=0;
         $assistances->each(function($asistencia)
         {
-            
+
         });
         return count($assistances);
     }
@@ -140,5 +136,27 @@ class Inscription extends Model
         $start_date_1 = date('Y-m-d',strtotime('-1 day', strtotime($fecha_inicio)));
         $start_date = date('Y-m-d',strtotime('+'.intval($mes).' month', strtotime($start_date_1)));
         return $start_date;
+    }
+    public function asistencias_semana()
+    {
+        $hoy = \Carbon\Carbon::now()->format('Y-m-d');
+        $semanas = \Carbon\Carbon::now()->subWeek()->subWeek()->format('Y-m-d');
+        $assistances = \Institute\Assistance::where('asistencia',1)
+        ->where('inscription_id',$this->id)
+        ->whereBetween('fecha', array($semanas, $hoy))
+        ->get();
+        return count($assistances);
+    }
+    public function alumno_antiguo()
+    {
+        $semanas = \Carbon\Carbon::now()->subWeek()->subWeek();
+        $fecha_ingreso = \Carbon\Carbon::parse($this->fecha_ingreso);
+        $fecha_start_class = \Carbon\Carbon::parse($this->group->startclass->fecha_inicio);
+        if($fecha_ingreso > $fecha_start_class){
+            $fecha_inicio = $fecha_ingreso;
+        }else{
+            $fecha_inicio = $fecha_start_class;
+        }
+        if ($fecha_inicio < $semanas) {return true;} else {return false;}
     }
 }

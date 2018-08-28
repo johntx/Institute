@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Institute\Interested;
 use Illuminate\Routing\Route;
 use Validator;
+use Auth;
 
 class InterestedController extends Controller
 {
@@ -54,9 +55,11 @@ class InterestedController extends Controller
      */
     public function store(Request $request)
     {
+        $request['fecha']=\Carbon\Carbon::now();
+        $request['user_id']=Auth::id();
         $request['nombre']=strtoupper($request['nombre']);
         Interested::create($request->all());
-        Session::flash('message','Asignatura registrado exitosamente');
+        Session::flash('success','Asignatura registrado exitosamente');
         return Redirect::to('/admin/interested');
     }
 
@@ -95,7 +98,7 @@ class InterestedController extends Controller
         $request['nombre']=strtoupper($request['nombre']);
         $this->interested->fill($request->all());
         $this->interested->save();
-        Session::flash('message','Asignatura editado exitosamente');
+        Session::flash('success','Asignatura editado exitosamente');
         return Redirect::to('/admin/interested');
     }
 
@@ -116,7 +119,7 @@ class InterestedController extends Controller
     public function destroy($id)
     {
         $this->interested->delete();
-        Session::flash('message','Asignatura borrado exitosamente');
+        Session::flash('success','Asignatura borrado exitosamente');
         return Redirect::to('/admin/interested');
     }
 }

@@ -97,7 +97,7 @@ class TeacherController extends Controller
         if (!empty($request['subjects'])){
             $people->subjects()->attach($request['subjects']);
         }
-        Session::flash('message','Docente registrado exitosamente');
+        Session::flash('success','Docente registrado exitosamente');
         return Redirect::to('/admin/teacher');
     }
 
@@ -155,7 +155,7 @@ class TeacherController extends Controller
         if (!empty($request['subjects'])){
             $this->teacher->subjects()->attach($request['subjects']);
         }
-        Session::flash('message','Docente editado exitosamente');
+        Session::flash('success','Docente editado exitosamente');
         return Redirect::to('/admin/teacher');
     }
 
@@ -169,7 +169,7 @@ class TeacherController extends Controller
     {
         $this->teacher->subjects()->detach();
         $this->teacher->delete();
-        Session::flash('message','Docente borrado exitosamente');
+        Session::flash('success','Docente borrado exitosamente');
         return Redirect::to('/admin/teacher');
     }
 }

@@ -41,6 +41,7 @@
   </style>
 </head>
 
+  @include('alerts.message_error')
 <body id="page-top">
 
   <!-- Navigation -->

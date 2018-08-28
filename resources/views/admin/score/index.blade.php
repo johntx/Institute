@@ -8,8 +8,8 @@
 			<th>No</th>
 			<th>Nombre</th>
 			<?php $rec_partial=0; $igual=true; $ban=1;?>
-			@foreach (\Institute\Test::where('career_id',$h->group->startclass->career_id)->where('subject_id',$h->subject_id)->groupBy('modulo')->get() as $k=>$test_modulo)
-			@foreach (\Institute\Test::where('career_id',$h->group->startclass->career_id)->where('subject_id',$h->subject_id)->where('modulo',$test_modulo->modulo)->get() as $k=>$test)
+			@foreach (\Institute\Test::where('career_id',$h->group->startclass->career_id)->where('subject_id',$h->subject_id)->groupBy('modulo')->orderBy('modulo','asc')->get() as $k=>$test_modulo)
+			@foreach (\Institute\Test::where('career_id',$h->group->startclass->career_id)->where('subject_id',$h->subject_id)->where('modulo',$test_modulo->modulo)->orderBy('orden','asc')->get() as $k=>$test)
 			<?php if ($rec_partial!=$test_modulo->id){$igual=false;$ban=$ban*-1;}
 			else{$igual=true;}
 			$rec_partial=$test_modulo->id; ?>
@@ -29,20 +29,21 @@
 			<td>{{++$i}}</td>
 			<td>{{$inscription->people->nombrecompleto()}}</td>
 			<?php $rec_partial=0; $ban=1;?>
-			@foreach (\Institute\Test::where('career_id',$h->group->startclass->career_id)->where('subject_id',$h->subject_id)->groupBy('modulo')->get() as $k=>$test_modulo)
+			@foreach (\Institute\Test::where('career_id',$h->group->startclass->career_id)->where('subject_id',$h->subject_id)->groupBy('modulo')->orderBy('modulo','asc')->get() as $k=>$test_modulo)
 			<?php $total = 0; $divisor = 0; ?>
 			<?php if ($rec_partial!=$test_modulo->id){$ban=$ban*-1;}?>
-			@foreach (\Institute\Test::where('career_id',$h->group->startclass->career_id)->where('subject_id',$h->subject_id)->where('modulo',$test_modulo->modulo)->get() as $k=>$test)
+			@foreach (\Institute\Test::where('career_id',$h->group->startclass->career_id)->where('subject_id',$h->subject_id)->where('modulo',$test_modulo->modulo)->orderBy('orden','asc')->get() as $k=>$test)
 			<td @if ($ban!=1) style="background-color: #BABABA;"@endif>
 				@if ($inscription->nota($test)!=null)
 				<button class="edit_nota btn btn-default" style="padding: 2px 3px 2px 2px;" type="button" inscription_id="{{$inscription->id}}" group_id="{{"$h->group_id"}}" test_id="{{$test->id}}" nota="{{$inscription->nota($test)['nota']}}" score_id="{{$inscription->nota($test)['id']}}" class="btn btn-default" aria-label="Left Align">{{$inscription->nota($test)['nota']}}</button>
 				<?php $total = $total+intval($inscription->nota($test)['nota']); ?>
+				<?php $divisor++; ?>
 				@else
 				<button class="new_nota btn btn-primary" style="padding: 2px 2px 2px 2px;" type="button" inscription_id="{{$inscription->id}}" group_id="{{$h->group_id}}" subject_id="{{"$h->subject_id"}}" test_id="{{$test->id}}" class="btn btn-default" aria-label="Left Align"><i class="fa fa-plus fa-fw"></i></button>
 				@endif
-				<?php $divisor++; ?>
 			</td>
 			@endforeach
+			<?php if($divisor==0){$divisor=1;} ?>
 			<td class="igual" @if ($ban!=1) style="background-color: #BABABA;"@endif>=</td>
 			<td class="cont_add_nota" @if ($ban!=1) style="background-color: #BABABA;"@endif>{{round( $total/$divisor, 1, PHP_ROUND_HALF_UP)}}</td>
 			@endforeach
@@ -66,17 +67,16 @@
 	<button class="btn btn-primary">Guardar</button>
 	{!! Form::close() !!}
 </div>
-
 <style>
 	.vista_movil *{font-size: 12px;}
 	.vista_movil td{padding: 4px !important;}
 	.vista_movil td form{margin: 0 !important;}
 	.switch{margin: 0;}
-	.nota_contenedor_fechas{position:relative; height: 110px;}
-	.nombre_test_vrt{transform:rotate(-90deg);position:absolute;width:100px;right:-15px;top:45px;
-	}
+	.nota_contenedor_fechas{position:relative; height: 220px;}
 	.nombre_modulo{
-		position: absolute; top: 0;left: 0; font-size: 14px;padding-left:10px; width: 100px;z-index: 1000;
+		position:absolute;font-size:14px;padding-left:5px;width:100px;z-index:10;top:0;left:0;
+	}
+	.nombre_test_vrt{transform:rotate(-90deg);width:170px;position: absolute;left:-70px;bottom:85px;z-index:10;height:16px;overflow: hidden;
 	}
 </style>
 <div class="background_modal">

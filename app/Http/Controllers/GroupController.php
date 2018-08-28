@@ -100,7 +100,7 @@ class GroupController extends Controller
             $request['estado'] = 'Culminado';
         }
         Group::create($request->all());
-        Session::flash('message','Grupo registrado exitosamente');
+        Session::flash('success','Grupo registrado exitosamente');
         return Redirect::to('/admin/group');
     }
 
@@ -178,7 +178,7 @@ class GroupController extends Controller
         }
         $this->group->fill($request->all());
         $this->group->save();
-        Session::flash('message','Grupo editado exitosamente');
+        Session::flash('success','Grupo editado exitosamente');
         return Redirect::to('/admin/group');
     }
 
@@ -195,7 +195,7 @@ class GroupController extends Controller
             $hour->delete();
         }
         $this->group->delete();
-        Session::flash('message','Grupo borrado exitosamente');
+        Session::flash('success','Grupo borrado exitosamente');
         return Redirect::to('/admin/group');
     }
 }

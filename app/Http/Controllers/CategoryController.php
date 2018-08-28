@@ -55,7 +55,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $category = Category::create($request->all());
-        Session::flash('message','Categoría registrada exitosamente');
+        Session::flash('success','Categoría registrada exitosamente');
         return Redirect::to('/admin/category');
     }
 
@@ -92,7 +92,7 @@ class CategoryController extends Controller
     {
         $this->category->fill($request->all());
         $this->category->save();
-        Session::flash('message','Categoría editada exitosamente');
+        Session::flash('success','Categoría editada exitosamente');
         return Redirect::to('/admin/category');
     }
 
@@ -105,7 +105,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $this->category->delete();
-        Session::flash('message','Categoría borrada exitosamente');
+        Session::flash('success','Categoría borrada exitosamente');
         return Redirect::to('/admin/category');
     }
 }

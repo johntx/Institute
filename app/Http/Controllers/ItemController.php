@@ -59,7 +59,7 @@ class ItemController extends Controller
         if (!empty($request['subjects'])){
             $item->subjects()->attach($request['subjects']);
         }
-        Session::flash('message','Item registrada exitosamente');
+        Session::flash('success','Item registrada exitosamente');
         return Redirect::to('/admin/item');
     }
 
@@ -98,7 +98,7 @@ class ItemController extends Controller
     {
         $this->item->fill($request->all());
         $this->item->save();
-        Session::flash('message','Item editada exitosamente');
+        Session::flash('success','Item editada exitosamente');
         return Redirect::to('/admin/item');
     }
 
@@ -111,7 +111,7 @@ class ItemController extends Controller
     public function destroy($id)
     {
         $this->item->delete();
-        Session::flash('message','Item borrada exitosamente');
+        Session::flash('success','Item borrada exitosamente');
         return Redirect::to('/admin/item');
     }
 }

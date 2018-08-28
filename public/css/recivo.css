@@ -32,7 +32,7 @@ body{
 	top: 50%;
 }
 .recivo>div{
-	height: 445px;
+	height: 475px;
 	width: 100%;
 	margin: 40px;
 	border: 1px solid #363070;
@@ -91,6 +91,9 @@ body{
 .recivo>div>.mid>div>div>span{
 	position: absolute;
 }
+.recivo>div>.mid>div>div>span.usuario{
+	left: 350px;
+}
 .recivo>div>.mid>div>div>span.inicio{
 	left: 350px;
 }
@@ -104,17 +107,11 @@ body{
 	left: 210px;
 }
 .recivo>div>.mid>div>div:last-child{
-	margin-top: 50px;
+	margin-top: 40px;
 }
 .recivo>.user{
 	position: absolute;
 	right: 70px;
-	bottom: 573px;
-	font-size: 14px;
-}
-.recivo>.user2{
-	position: absolute;
-	right: 70px;
-	bottom: 45px;
+	bottom: 57px;
 	font-size: 14px;
 }

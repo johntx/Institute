@@ -53,7 +53,7 @@ class AvailableController extends Controller
     public function store(Request $request)
     {
         Available::create($request->all());
-        Session::flash('message','Disponibilidad registrada exitosamente');
+        Session::flash('success','Disponibilidad registrada exitosamente');
         return Redirect::to('/admin/teacher');
     }
 
@@ -94,7 +94,7 @@ class AvailableController extends Controller
     {
         $this->available->fill($request->all());
         $this->available->save();
-        Session::flash('message','Disponibilidad Editada exitosamente');
+        Session::flash('success','Disponibilidad Editada exitosamente');
         return Redirect::to('/admin/teacher');
     }
 

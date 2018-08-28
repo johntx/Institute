@@ -10,6 +10,10 @@
 	{!! Form::label('Color de Texto*') !!}
 	{!! Form::color('texto',null) !!}
 </div>
+<div class="form-group">
+{!! Form::label('Llama lista') !!}
+	{!! Form::select('lista',['no' => 'no','si' => 'si'],null,['class'=>'form-control','maxlength'=>10]) !!}
+</div>
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="col-xs-6">

@@ -58,7 +58,7 @@ class CareerController extends Controller
         if (!empty($request['subjects'])){
             $career->subjects()->attach($request['subjects']);
         }
-        Session::flash('message','Carrera registrada exitosamente');
+        Session::flash('success','Carrera registrada exitosamente');
         return Redirect::to('/admin/career');
     }
 
@@ -100,7 +100,7 @@ class CareerController extends Controller
         if (!empty($request['subjects'])){
             $this->career->subjects()->attach($request['subjects']);
         }
-        Session::flash('message','Carrera editada exitosamente');
+        Session::flash('success','Carrera editada exitosamente');
         return Redirect::to('/admin/career');
     }
 
@@ -113,7 +113,7 @@ class CareerController extends Controller
     public function destroy($id)
     {
         $this->career->delete();
-        Session::flash('message','Carrera borrada exitosamente');
+        Session::flash('success','Carrera borrada exitosamente');
         return Redirect::to('/admin/career');
     }
 }

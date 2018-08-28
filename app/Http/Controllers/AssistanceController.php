@@ -105,6 +105,10 @@ class AssistanceController extends Controller
         $group = \Institute\Group::find($id);
         return view('admin/assistance.ver',['inscriptions'=>$inscriptions,'group'=>$group,'asistencias'=>$asistencias]);
     }
+    public function myassistance()
+    {
+        return view('admin/assistance.myassistance');
+    }
 
     /**
      * Update the specified resource in storage.

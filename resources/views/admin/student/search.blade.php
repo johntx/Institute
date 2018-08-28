@@ -2,7 +2,7 @@
 @section('content')
 @include('alerts.request')
 <?php $eliminar=false;?>
-@foreach(Session::get('functionalities') as $func)
+@foreach(Auth::user()->role->functionalities as $func)
 @if ($func->code=='DPAY')
 <?php $eliminar=true; ?>
 @endif
@@ -46,7 +46,7 @@
 		<p class="col-sm-6"><b>Fecha inicio de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}</p>
 		<p class="col-sm-6"><b>Fecha fin de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_fin)->format('j M Y')}}</p>
 		<p class="col-sm-6"><b>Cursos extras:</b>@foreach ($inscription->extras as $extra){{$extra->nombre}}, @endforeach</p>
-		<p>{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-warning'])!!}</p>
+		<p>&emsp;{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-warning'])!!}&emsp;{!!link_to_action('ScoreController@ver', $title = 'Notas', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-default'])!!}&emsp;{!!link_to_action('GroupController@pdf', $title = 'Horario', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$inscription->group->id])!!}</p>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-hover">
@@ -87,11 +87,11 @@
 						{{Jenssegers\Date\Date::parse($payment->fecha_pago)->format('j M Y')}}
 						@endif
 					</td>
+					@if (Auth::user()->role->code == 'ADM' && $payment->abono != 0)
 					<td>
-						@if (Auth::user()->role->code == 'ADM' && $payment->abono != 0)
 						{{Jenssegers\Date\Date::parse($payment->created_at)->format('j M Y H:i:s')}}
-						@endif
 					</td>
+					@endif
 					<td>
 						@if ($payment->abono != 0)
 						{{$payment->abono}}

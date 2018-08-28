@@ -37,11 +37,21 @@ $('body').on('click','.tbn_clonar_nombre',function () {
 	$(clon).removeAttr('style').removeClass('clonar');
 	$(clon).children().children('input').removeAttr('disabled');
 	$(clon).insertBefore($(this));
+	numerar_modulo();
 });
 $('body').on('click','.tbn_clonar_modulo',function () {
 	var clon = $(this).siblings('div.panel_clonar').clone();
 	$(clon).removeAttr('style').removeClass('panel_clonar');
-	$(clon).children().children().children('.primer_nombre').removeAttr('disabled');
+	$(clon).children(".principal").children().children('input').removeAttr('disabled');
+	$(clon).insertBefore($(this));
+	numerar_modulo();
+});
+$('body').on('click','.tbn_clonar_pregunta',function () {
+	var clon = $(this).siblings('div.panel_clonar').clone();
+	$(clon).removeAttr('style').removeClass('panel_clonar');
+	$(clon).children('.panel-body').addClass('cuerpo_numerador');
+	$(clon).children().children().children('input').removeAttr('disabled');
+	$(clon).children().children('input').removeAttr('disabled');
 	$(clon).insertBefore($(this));
 	numerar_modulo();
 });
@@ -49,11 +59,20 @@ $('body').on('click','.del_name',function () {
 	$(this).parent().parent().remove();
 	numerar_modulo();
 });
+$('body').on('click','.check_uniq',function () {
+	/*$(this).siblings('input.check_uniq').prop('checked', false);*/
+	if ($(this).prop('checked')){
+		$(this).siblings('input.check_uniq').attr('disabled','disabled');
+	} else {
+		$(this).siblings('input.check_uniq').removeAttr('disabled');
+	}
+});
 function numerar_modulo() {
-	$.each($("div.subject_modulo"), function( key, subject ) {
-		$.each($(subject).children("div.modulo_padre"), function( key, modulo ) {
-			$(modulo).children().children().children('span.n_modulo').html(key+1);
-			$(modulo).children().children().children('input.input_modulo').val(key+1);
+	$.each($("div.modulo_padre"), function( key, modulo ) {
+		$(modulo).children().children().children('span.n_modulo').html(key+1);
+		$(modulo).children().children().children('input.input_modulo').val(key+1);
+		$.each($(modulo).children().children().children('input.orden'), function( key, orden ) {
+			$(orden).val(key+1);
 		});
 	});
 }
@@ -206,7 +225,6 @@ $(function() {
 });
 function cargarpagos(inscription_id){
 	$.get("/cien/public/admin/payments/"+inscription_id+"",function(payments,response){
-		
 		$("#payments_pagos").empty();
 		for (var i = 0 ; i < payments.length; i++) {
 			if (payments[i].fecha_pago == null) {
@@ -337,7 +355,6 @@ function extra_simple(element) {
 }
 $('body').on('click','.extra_edit',function () {
 	var id = $(this).attr('inscription');
-	console.log(id);
 	var total = parseInt($('#'+id+' #totl').val())-parseInt($('#'+id+' #abon').attr('abono'));
 	var mesrestante = parseInt(total / $('#'+id+' #monto').val());
 	var precio = $(this).attr('precio');
@@ -505,8 +522,14 @@ function cerrar_modales() {
 }
 $('body').on('click','#env_wha',function () {
 	$.get("/cien/public/admin/interestedsend/"+$(this).attr('int')+"",function(respuesta,response){
-		console.log('reload');
 	}).done(function() {
 		location.reload();
 	});
+});
+$('body').on('change','.check_piscina',function () {
+	if($(this).prop('checked')) {
+		var ins = $(this).attr('insc');
+		$('.check_piscina[insc="'+ins+'"]').prop('checked', false);
+		$(this).prop('checked', true);
+	}
 });

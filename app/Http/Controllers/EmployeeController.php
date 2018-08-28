@@ -101,7 +101,7 @@ class EmployeeController extends Controller
         //return $user;
         $user->save();
         $user->people()->save($people);
-        Session::flash('message','Empleado registrado exitosamente');
+        Session::flash('success','Empleado registrado exitosamente');
         return Redirect::to('/admin/employee');
     }
 
@@ -156,7 +156,7 @@ class EmployeeController extends Controller
         $this->employee->fill($request->all());
         $this->user->save();
         $this->employee->save();
-        Session::flash('message','Empleado editado exitosamente');
+        Session::flash('success','Empleado editado exitosamente');
         return Redirect::to('/admin/employee');
     }
 
@@ -169,7 +169,7 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $this->employee->delete();
-        Session::flash('message','Empleado borrado exitosamente');
+        Session::flash('success','Empleado borrado exitosamente');
         return Redirect::to('/admin/employee');
     }
 }

@@ -8,7 +8,6 @@ use Institute\Http\Requests;
 use Institute\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Collection;
 use Illuminate\Routing\Route;
 use Institute\Role;
 use DB;
@@ -73,7 +72,7 @@ class RoleController extends Controller
             $role = Role::where('code', '=', $request['code'])->first();
             $role->functionalities()->attach($request['functionalities']);
         }
-        Session::flash('message','Rol registrado exitosamente');
+        Session::flash('success','Rol registrado exitosamente');
         return Redirect::to('/admin/role');
     }
 
@@ -122,15 +121,13 @@ class RoleController extends Controller
             ->withErrors($validator)
             ->withInput();
         }
-        $c = collect();
         $this->role->fill($request->all());
         $this->role->save();
         $this->role->functionalities()->detach();
         if (!empty($request['functionalities'])){
             $this->role->functionalities()->attach($request['functionalities']);
         }
-        Session::put('functionalities',Auth::user()->role->functionalities);
-        Session::flash('message','Rol editado exitosamente');
+        Session::flash('success','Rol editado exitosamente');
         return Redirect::to('/admin/role');
     }
 
@@ -148,7 +145,7 @@ class RoleController extends Controller
             $user->role_id = $role->id;
         });
         $this->role->delete();
-        Session::flash('message','Rol borrado exitosamente');
+        Session::flash('success','Rol borrado exitosamente');
         return Redirect::to('/admin/role');
     }
 }

@@ -88,7 +88,7 @@
 			<div class="form-group">
 				<div class=" col-xs-6" style="padding: 0;">
 					{!! Form::label('Costo Mensual') !!}
-					{!! Form::text('monto',null,['class'=>'form-control', 'id'=>'monto','placeholder'=>'Insert Monto', 'duracion'=>'','onkeypress'=>"return justNumbers(event);",'required']) !!}
+					{!! Form::text('monto',null,['class'=>'form-control', 'id'=>'monto','placeholder'=>'Insert Monto', 'duracion'=>'','onkeypress'=>"return justNumbers(event);",'required','autocomplete'=>'off']) !!}
 				</div>
 				<div class="col-xs-2" style="padding-right: 0;">
 					{!! Form::label('Meses') !!}
@@ -115,7 +115,7 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('Pago Inicial') !!}
-				{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required']) !!}
+				{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required','autocomplete'=>'off']) !!}
 			</div>
 		</div>
 	</div>

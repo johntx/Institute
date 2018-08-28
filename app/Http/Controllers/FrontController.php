@@ -9,6 +9,7 @@ use Institute\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Institute\Startclass;
+use Institute\Bot;
 use Carbon\Carbon;
 use Mail;
 use Auth;
@@ -31,53 +32,26 @@ class FrontController extends Controller
   }
   public function admin()
   {
-    /*$groups = \Institute\Group::where('estado','Vigente')->get();
-    $groups->each(function ($group)
-    {
-      if ($group->startclass->estado == 'Cerrado') {
-        $group->estado = 'Cerrado';
-        $group->save();
-      }
-      $asistencias = \Institute\Assistance::where('asistencia',1)
-      ->where('group_id',$group->id)
-      ->groupBy('fecha','subject_id')
-      ->orderBy('fecha','asc')
-      ->get();
-      foreach ($group->inscriptions->where('estado','Inscrito') as $i => $inscription) {
-        $cont=0;
-        foreach ($asistencias as $k => $asistencia) {
-          if (!$inscription->asistencia($asistencia->subject_id,$asistencia->people_id,$asistencia->fecha)) {
-            $cont=$cont+1;
-          } else {
-            $cont=0;
-          }
-        }
-        if ($cont>12) {
-          $inscription->estado = "Retirado";
-          $inscription->save();
-        }
-      }
-    });*/
-
-    Session::put('inscriptions',\Institute\Inscription::distinct('people_id')->get());
-    Session::put('functionalities',Auth::user()->role->functionalities);
-    Session::put('classrooms',\Institute\Classroom::get());
-    Session::put('semana',array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado"));
-    /*eliminador de pagos huerfanos*/
-    /*
-    $payments=\Institute\Payment::leftjoin('inscriptions','payments.inscription_id','=','inscriptions.id')->where('inscriptions.id',null)->get();
-    $payments->each(function($payment)
-    {
-      $payment->delete();
-    });
-    return $payments;
-    */
-    /*$inscriptions = \Institute\Inscription::get();
-    foreach ($inscriptions as $inscription) {
-      $inscription->fecha_ingreso = $inscription->people->fecha_ingreso;
-      $inscription->save();
-    }*/
-    /*Startclasses*/
+    $role = Auth::user()->role->name;
+    if ($role != 'EST' && $role != 'DOC' && $role != 'EXT') {
+      $this->iemployee();
+    }
+    return view('admin/index');
+  }
+  public function iemployee()
+  {
+    $bot_grupos = Bot::find(1);
+    $bot_faltas = Bot::find(2);
+    $fecha_hoy = \Carbon\Carbon::now()->format('Y-m-d');
+    if ($bot_grupos->fecha!=$fecha_hoy) {
+      $this->BotGrupos($bot_grupos);
+    }
+    if ($bot_faltas->fecha!=$fecha_hoy) {
+      $this->BotFaltas($bot_faltas);
+    }
+  }
+  public function BotGrupos($bot_grupos)
+  {
     $fecha_despues = date('Y-m-d',strtotime('+1 month', strtotime(Carbon::now()) ));
     $fecha_antes = date('Y-m-d',strtotime('-1 month', strtotime(Carbon::now()) ));
     $startclasses = Startclass::whereBetween('fecha_fin',array( $fecha_antes, $fecha_despues))
@@ -121,7 +95,25 @@ class FrontController extends Controller
         }
       }
     }
-    return view('admin/index');
+    $bot_grupos->fecha = \Carbon\Carbon::now();
+    $bot_grupos->save();
+  }
+  public function BotFaltas($bot_faltas)
+  {
+    $inscriptions = \Institute\Inscription::distinct('people_id')->get();
+    foreach ($inscriptions as $inscription) {
+      if ($inscription->estado != 'Retirado' && $inscription->estado != 'Culminado' && $inscription->group->startclass->career->lista == 'si') {
+        if ($inscription->alumno_antiguo()) {
+          if ($inscription->asistencias_semana() == 0) {
+            /*retirar estudiantes faltones*/
+            $inscription->estado = 'Retirado';
+            $inscription->save();
+          }
+        }
+      }
+    }
+    $bot_faltas->fecha = \Carbon\Carbon::now();
+    $bot_faltas->save();
   }
 
   /**

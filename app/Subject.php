@@ -18,6 +18,10 @@ class Subject extends Model
 	public function careers() {
 		return $this->belongsToMany('Institute\Career','weekly');
 	}
+    public function tests()
+    {
+        return $this->hasMany('Institute\Test');
+    }
     public function peoples()
     {
         return $this->belongsToMany('Institute\People','teaches');

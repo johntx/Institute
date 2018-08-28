@@ -38,7 +38,7 @@
 		</div>
 		<div class="col-xs-3">
 			{!! Form::label('Abono') !!}
-			{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required']) !!}
+			{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required','autocomplete'=>'off']) !!}
 		</div>
 		{!! Form::submit('Registrar',['class'=>'btn btn-primary col-xs-2','style'=>'margin-top:23.5px;']) !!}
 		<div class="col-xs-3" style="padding: 0;">

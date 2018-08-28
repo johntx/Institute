@@ -66,7 +66,7 @@ class EvaluationController extends Controller
             }
             Session::flash('success','Todas las evaluaciones ya fueron realizadas');
         } else {
-            Session::flash('request','Las Evaluaciones aún no estan disponibles');
+            Session::flash('alert','Las Evaluaciones aún no estan disponibles');
         }
         return Redirect::to('/admin');
     }

@@ -11,8 +11,7 @@
 	</div>
 	@if (Auth::user()->role->code == "ADM" || Auth::user()->role->code == "ROOT")
 	{!!link_to_action('TickeoController@tickeoEmpleado', $title = 'Obtener Tickeos', $parameters = $people_id.'/'.Carbon\Carbon::now()->subMonth()->format('Y-m-d'), $attributes = ['class'=>'btn btn-info','code'=>$people_id, 'id'=>'btn_obt_tick'])!!}
-	<br>
-	<br>
+	<br><br>
 	@endif
 	{!!link_to_action('TickeoController@MiLogTickeo', $title = 'Log Tickeos', $parameters = $people_id.'/'.Carbon\Carbon::now()->subMonth()->format('Y-m-d'), $attributes = ['class'=>'btn btn-warning','code'=>$people_id, 'id'=>'btn_log_tick'])!!}
 </div>

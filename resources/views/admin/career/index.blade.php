@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <?php $editar=false; $eliminar=false;
-foreach (Session::get('functionalities') as $func) {
+foreach (Auth::user()->role->functionalities as $func) {
 	if ($func->code=='ECAR'){ $editar=true; }
 	if ($func->code=='DCAR'){ $eliminar=true; }
 }
@@ -13,6 +13,7 @@ foreach (Session::get('functionalities') as $func) {
 			<th>Nombre</th>
 			<th>Color</th>
 			<th>Asignaturas</th>
+			<th>Lista</th>
 			@if ($editar)<th>Editar</th>@endif
 			@if ($eliminar)<th>Eliminar</th>@endif
 		</thead>
@@ -25,6 +26,9 @@ foreach (Session::get('functionalities') as $func) {
 				@foreach($career->subjects()->orderBy('nombre','asc')->get() as $subject)
 				[{{$subject->nombre}}] - 
 				@endforeach
+			</td>
+			<td>
+				{{$career->lista}}
 			</td>
 			@if ($editar)
 			<td>

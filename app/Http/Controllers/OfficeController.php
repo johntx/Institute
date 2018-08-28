@@ -54,7 +54,7 @@ class OfficeController extends Controller
     public function store(Request $request)
     {
         Office::create($request->all());
-        Session::flash('message','Sucursal registrado exitosamente');
+        Session::flash('success','Sucursal registrado exitosamente');
         return Redirect::to('/admin/office');
     }
 
@@ -91,7 +91,7 @@ class OfficeController extends Controller
     {
         $this->office->fill($request->all());
         $this->office->save();
-        Session::flash('message','Sucursal editado exitosamente');
+        Session::flash('success','Sucursal editado exitosamente');
         return Redirect::to('/admin/office');
     }
 
@@ -104,7 +104,7 @@ class OfficeController extends Controller
     public function destroy($id)
     {
         $this->office->delete();
-        Session::flash('message','Sucursal borrado exitosamente');
+        Session::flash('success','Sucursal borrado exitosamente');
         return Redirect::to('/admin/office');
     }
 }

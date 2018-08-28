@@ -1,7 +1,7 @@
-@if(Session::has('message'))
+@if(Session::has('message_error'))
 <div class="alert_msg">
 	<button type="button" onclick="close_alert_msg()"><span aria-hidden="true">&times;</span></button>
-	{!!Session::get('message')!!}
+	{!!Session::get('message_error')!!}
 </div>
 @endif
 <script type="text/javascript">
@@ -39,7 +39,7 @@
 	.alert_msg>button>span{
 		color: #191919;
 		position: absolute;
-		top: 1px;
-		left: 6px;
+		top: -5px;
+		left: 4px;
 	}
 </style>
