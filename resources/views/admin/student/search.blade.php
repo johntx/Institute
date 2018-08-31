@@ -36,14 +36,14 @@
 		<p class="col-sm-6"><b>Total pagado:</b> {{$inscription->abono }}</p>
 		<p class="col-sm-6"><b>Grupo:</b> {{$inscription->group->turno }}</p>
 		<p class="col-sm-6"><b>Total a cancelar:</b> {{$inscription->total }}</p>
-		<p class="col-sm-6"><b>Fecha Ingreso:</b> {{Jenssegers\Date\Date::parse($inscription->fecha_ingreso)->format('j M Y')}}</p>
+		<p class="col-sm-6"><b>Fecha Inscripción:</b> {{Jenssegers\Date\Date::parse($inscription->fecha_ingreso)->format('j M Y')}}</p>
 		<p class="col-sm-6">
 			@if ($inscription->fecha_retiro != null)
 			<b>Fecha Retiro:</b> {{Jenssegers\Date\Date::parse($inscription->fecha_retiro)->format('j M Y') }}
 			@endif
 			&nbsp;
 		</p>
-		<p class="col-sm-6"><b>Fecha inicio de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}</p>
+		<p class="col-sm-6"><b>Convocatoria (Grupo): {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_inicio)->format('j M Y')}}</b></p>
 		<p class="col-sm-6"><b>Fecha fin de clases:</b> {{Jenssegers\Date\Date::parse($inscription->group->startclass->fecha_fin)->format('j M Y')}}</p>
 		<p class="col-sm-6"><b>Cursos extras:</b>@foreach ($inscription->extras as $extra){{$extra->nombre}}, @endforeach</p>
 		<p>&emsp;{!!link_to_action('AssistanceController@ver', $title = 'Asistencias', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-warning'])!!}&emsp;{!!link_to_action('ScoreController@ver', $title = 'Notas', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-default'])!!}&emsp;{!!link_to_action('GroupController@pdf', $title = 'Horario', $parameters = $inscription->group->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$inscription->group->id])!!}</p>

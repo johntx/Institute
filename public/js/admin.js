@@ -30,7 +30,6 @@ $('document').ready(function(){
 		var string = href.split("fecha").join(fecha);  
 		$("#boton_fecha_income").attr('href',string);
 	});
-	numerar_modulo();
 });
 $('body').on('click','.tbn_clonar_nombre',function () {
 	var clon = $(this).siblings('div.clonar').clone();
@@ -60,7 +59,6 @@ $('body').on('click','.del_name',function () {
 	numerar_modulo();
 });
 $('body').on('click','.check_uniq',function () {
-	/*$(this).siblings('input.check_uniq').prop('checked', false);*/
 	if ($(this).prop('checked')){
 		$(this).siblings('input.check_uniq').attr('disabled','disabled');
 	} else {

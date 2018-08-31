@@ -22,7 +22,7 @@
 				$hour = $te->hours()->join('schedules','hours.schedule_id','=','schedules.id')->join('subjects','hours.subject_id','=','subjects.id')->join('groups','hours.group_id','=','groups.id')->join('startclasses','groups.startclass_id','=','startclasses.id')->join('careers','startclasses.career_id','=','careers.id')->select('hours.*','subjects.nombre as asignatura','careers.nombre as carrera','startclasses.fecha_inicio as fecha')->where('schedules.vigente','si')->where('hours.dia',$dia)->where('hours.hora_inicio',$hora)->first();
 				?>
 				<td x="{{$x}}">
-					<div class="sch_hour" hora='{{$hour['id']}}' size="{{$hour['periodos']}}" carrera="{{$hour['carrera']}}" fecha="{{Jenssegers\Date\Date::parse($hour['fecha'])->format('j M Y')}}" asignatura="<b>{{$hour['asignatura']}}</b>" aula="{{$hour['piso']}} {{$hour['aula']}}">{{$hour['asignatura']}}</div>
+					<div class="sch_hour" hora='{{$hour['id']}}' size="{{$hour['periodos']}}" carrera="<b>{{$hour['asignatura']}}</b>" fecha="{{Jenssegers\Date\Date::parse($hour['fecha'])->format('j M Y')}}" asignatura="{{$hour['carrera']}}" aula="{{$hour['piso']}} {{$hour['aula']}}">{{$hour['asignatura']}}</div>
 				</td>
 				@endif
 				@endforeach

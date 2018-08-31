@@ -13,7 +13,7 @@ if (Auth::user()->role->code=='EXT'){
 	<table class="table table-hover tablaNoOrder compact">
 		<thead>
 			<th>Id</th>
-			<th>Fecha de Inicio</th>
+			<th>Inicio</th>
 			<th>Carrera</th>
 			<th>Turno</th>
 			<th>Inscritos</th>
@@ -29,7 +29,7 @@ if (Auth::user()->role->code=='EXT'){
 			@foreach($groups as $group)
 			<tr>
 				<td>{{$group->id}}</td>
-				<td>{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}</td>
+				<td><b>{{Jenssegers\Date\Date::parse($group->startclass->fecha_inicio)->format('j M Y')}}</b></td>
 				<td>{{$group->startclass->career->nombre}}</td>
 				<td>{{$group->turno}}</td>
 				<td style="text-align: center;">{!!$group->inscritos($group)!!}</td>

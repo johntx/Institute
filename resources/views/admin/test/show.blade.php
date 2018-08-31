@@ -32,3 +32,21 @@
 	</div>
 </div>
 @endsection
+@section('adminjs')
+<script>
+	$('document').ready(function(){
+		numerar_modulo2();
+	});
+	function numerar_modulo2() {
+		$.each($("div.subject_modulo"), function( key, sub ) {
+			$.each($(sub).children(), function( key, modulo ) {
+				$(modulo).children().children().children('span.n_modulo').html(key+1);
+				$(modulo).children().children().children('input.input_modulo').val(key+1);
+				$.each($(modulo).children().children().children('input.orden'), function( key, orden ) {
+					$(orden).val(key+1);
+				});
+			});
+		});
+	}
+</script>
+@endsection

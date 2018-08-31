@@ -9,7 +9,7 @@
 @section('content')
 <br>
 <div class=" vista_reducida tabla_score_ver">
-	<table class="table table-hover table-condensed">
+	<table class="table table-hover table-condensed" style="width:100%">
 		<thead>
 			<tr>
 				<th class="sobre">Nombre</th>
@@ -42,16 +42,7 @@
 			</tr>
 		</thead>
 		@foreach($inscriptions as $i=>$inscription)
-		<tr 
-			@if ($inscription->estado == 'Retirado')
-			style="background-color: #A460B8;"
-			@endif @if ($inscription->debit())
-			style="background-color: #FF7878;" 
-			@elseif ($inscription->debitNext())
-			style="background-color: #FFF961;" 
-			@else
-			style="background-color: #91F47E;" 
-			@endif >
+		<tr @if ($inscription->estado == 'Retirado') style="background-color:#A460B8;" @endif @if ($inscription->debit()) style="background-color: #FF7878;"@elseif ($inscription->debitNext()) style="background-color: #FFF961;"@else style="background-color: #91F47E;"@endif>
 			<td style="white-space: pre;"><b><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></b></td>
 			<?php $rec_modulo=0; $ban=1;?>
 			<?php $promedio = 0; $div_promedio = 0;?>
@@ -62,7 +53,7 @@
 			@foreach ($group->startclass->career->subjects as $subject)
 			<?php if (count($subject->tests)>0) {$materia*=-1; } ?>
 			@foreach (\Institute\Test::where('career_id',$group->startclass->career_id)->where('subject_id',$subject->id)->where('modulo',$test_modulo->modulo)->orderBy('orden','asc')->get() as $k=>$test)
-			<td @if ($ban!=1) @if ($materia>0) style="background-color: #9A9BA3;"@else style="background-color: #BABABA;"@endif @else @if ($materia>0) style="background-color: #DBEDEA;" @endif @endif>
+			<td @if ($ban!=1) @if ($materia>0) style="background-color: #9A9BA3;"@else style="background-color: #BABABA;"@endif @else @if ($materia>0) style="background-color: #DBEDEA;" @else style="background-color:white;" @endif @endif>
 				@if ($inscription->nota($test)!=null)
 				<button class="btn btn-default" style="padding: 2px 3px 2px 2px;" type="button" inscription_id="{{$inscription->id}}" group_id="{{"$group->id"}}" test_id="{{$test->id}}" nota="{{$inscription->nota($test)['nota']}}" score_id="{{$inscription->nota($test)['id']}}" class="btn btn-default" aria-label="Left Align">{{$inscription->nota($test)['nota']}}</button>
 				<?php $total = $total+intval($inscription->nota($test)['nota']); ?>
@@ -103,7 +94,7 @@
 		z-index: 10;position: relative;background-color:#FFFFFF;
 	}
 	.nombre_materia:hover{
-		z-index:1;border:black 1px solid;margin:-2px 0 0 -2px;padding-right:4px;border-radius:2px;-webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+		z-index:5;border:black 1px solid;margin:-2px 0 0 -2px;padding-right:4px;border-radius:2px;-webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
 		-moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
 		box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
 	}

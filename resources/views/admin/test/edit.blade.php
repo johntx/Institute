@@ -11,3 +11,10 @@
 {!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}
 {!! Form::close() !!}
 @endsection
+@section('adminjs')
+<script>
+	$('document').ready(function(){
+		numerar_modulo();
+	});
+</script>
+@endsection

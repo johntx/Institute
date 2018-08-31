@@ -9,7 +9,7 @@
 @section('content')
 <br>
 <div class="tabla_assistance_ver">
-	<table class="table table-hover table-condensed">
+	<table class="table table-hover table-condensed" style="width:100%">
 		<thead>
 			<th>Nombre</th>
 			<th>Asis</th>
