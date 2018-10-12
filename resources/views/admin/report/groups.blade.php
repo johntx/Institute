@@ -23,8 +23,9 @@
 									<th>Nº</th>
 									<th>Nombre</th>
 									<th>Ext</th>
+									<th>Pagos</th>
 									<th>Mes</th>
-									<th>Inicio Est.</th>
+									<th>Inicio Estd.</th>
 									<th>Fch. Pagar</th>
 									<th>Abono</th>
 									<th>Saldo</th>
@@ -53,9 +54,10 @@
 									<td>@foreach ($inscription->extras as $extra)
 										<b>{{$extra->nombre[0]}}</b>
 									@endforeach</td>
+									<td style="text-align:center">{{round( $inscription->abono/$inscription->monto, 1, PHP_ROUND_HALF_UP)}}</td>
 									<td>{{$mese+1}}/{{$inscription->group->startclass->duracion}}</td>
 									<td>
-										{{Jenssegers\Date\Date::parse($fecha_ingreso)->addMonth($mese)->format('j M Y')}}
+										{{Jenssegers\Date\Date::parse($fecha_ingreso)->format('j M Y')}}
 									</td>
 									<td><b>{{Jenssegers\Date\Date::parse($inscription->fecha_pagar)->format('j M Y')}}</b>
 									</td>
@@ -78,9 +80,10 @@
 									<td>@foreach ($inscription->extras as $extra)
 										<b>{{$extra->nombre[0]}}</b>
 									@endforeach</td>
+									<td style="text-align:center">{{round( $inscription->abono/$inscription->monto, 1, PHP_ROUND_HALF_UP)}}</td>
 									<td>{{$mese+1}}/{{$inscription->group->startclass->duracion}}</td>
 									<td>
-										{{Jenssegers\Date\Date::parse($fecha_ingreso)->addMonth($mese)->format('j M Y')}}
+										{{Jenssegers\Date\Date::parse($fecha_ingreso)->format('j M Y')}}
 									</td>
 									<td>Pagado</td>
 									<td>-</td>

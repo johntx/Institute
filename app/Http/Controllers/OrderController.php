@@ -112,7 +112,7 @@ class OrderController extends Controller
         $order->buylists()->saveMany($col);
         Session::flash('pdf','admin/order/pdf/'.$order->id);
         Session::flash('success','Compra registrada exitosamente');
-        return Redirect::to('admin/order/create');
+        return Redirect::to('admin/order/create/career/'.$request['career']);
     }
 
     public function pdf($id)

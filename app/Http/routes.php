@@ -25,9 +25,9 @@ Route::get('score/ver/{id}','ScoreController@ver');
 Route::get('admin/score/my/score','ScoreController@myscore');
 Route::get('admin/assistance/my/assistance','AssistanceController@myassistance');
 Route::post('assistance/assistance_ajax','AssistanceController@assistance_ajax');
+Route::post('assistance/assistance_ajax_00','AssistanceController@assistance_ajax_00');
 Route::post('teacher/payment_ajax','TickeoController@payment_ajax');
 Route::post('admin/payment/recibir/save','PaymentController@recibir');
-Route::post('extra/filtro','ExtraController@filtro');
 
 Route::resource('user','UserController');
 Route::resource('admin/role','RoleController');
@@ -109,3 +109,5 @@ Route::post('admin/egress/savepayment','EgressController@savepayment');
 Route::get('admin/order/create/career/{career?}','OrderController@create_career');
 Route::get('admin/exam/create/career/{career}/{subject?}','ExamController@create_exam');
 Route::get('admin/test/create/career/{career}/{subject?}','TestController@create_test');
+Route::get('admin/income/create/career/{career?}','IncomeController@create_income');
+Route::get('/filtro/curso/extra','ExtraController@filtro');

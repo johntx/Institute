@@ -146,7 +146,7 @@ class AssistanceController extends Controller
         return Redirect::to('admin/group/my/group');
     }
 
-    public function assistance_ajax(Request $request)
+    public function assistance_ajax_00(Request $request)
     {
         if ($request->ajax()) {
             if ($request['asistencia']==$request['inscription_id']) {
@@ -182,7 +182,56 @@ class AssistanceController extends Controller
                 $Dassistance->delete();
             }
         }
-        return false;
+        $response_array['status'] = 'success';    
+        return json_encode($response_array);
+    }
+
+    public function assistance_ajax(Request $request)
+    {
+        if ($request->ajax()) {
+            $asistencia = 1;
+            if ($request['sacaba'][0]!=null) {
+                $request['asistencia'] = $request['sacaba'][0];
+                $asistencia = 2;
+            }
+            if ($request['socabon'][0]!=null) {
+                $request['asistencia'] = $request['socabon'][0];
+                $asistencia = 3;
+            }
+            if ($request['asistencia']==$request['inscription_id']) {
+                $Dassistance = \Institute\Assistance::where('fecha',\Carbon\Carbon::now()->format('Y-m-d'))
+                ->where('asistencia',$asistencia)
+                ->where('group_id',$request['group_id'])
+                ->where('subject_id',$request['materia_id'])
+                ->where('inscription_id',$request['inscription_id'])
+                ->where('people_id',Auth::user()->id)
+                ->first();
+                if (count($Dassistance)>0) {
+                    $Dassistance->delete();
+                } else {
+                    $assistance = new Assistance();
+                    $assistance->fill([
+                        'fecha' => \Carbon\Carbon::now(),
+                        'asistencia' => $asistencia,
+                        'inscription_id' => $request['inscription_id'],
+                        'people_id' => Auth::user()->id,
+                        'group_id' => $request['group_id'],
+                        'subject_id' => $request['materia_id']
+                        ]);
+                    $assistance->save();
+                }
+            } else {
+                $Dassistance = \Institute\Assistance::where('fecha',\Carbon\Carbon::now()->format('Y-m-d'))
+                ->where('group_id',$request['group_id'])
+                ->where('subject_id',$request['materia_id'])
+                ->where('inscription_id',$request['inscription_id'])
+                ->where('people_id',Auth::user()->id)
+                ->first();
+                $Dassistance->delete();
+            }
+        }
+        $response_array['status'] = 'success';    
+        return json_encode($response_array);
     }
 
     /**

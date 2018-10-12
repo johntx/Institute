@@ -59,7 +59,7 @@
 @endforeach
 <div class="modal_nota">
 	<span class="modal_nota_close">&times;</span>
-	{!! Form::open(['route' => ['admin.score.store']]) !!}
+	{!! Form::open(['route' => 'admin.score.store', 'id'=>'asig_nota']) !!}
 	<input type="text" name="nota" class="nota" placeholder="Nota" onkeypress="return justNumbers(event);" autofocus autocomplete="off">
 	<input type="hidden" name="inscription_id" class="inscription_id" value="">
 	<input type="hidden" name="test_id" value="{{null}}" class="test_id">

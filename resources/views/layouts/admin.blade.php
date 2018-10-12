@@ -104,5 +104,6 @@
   {!!Html::script('js/datatables.js')!!}
   {!!Html::script('js/mdb.js')!!}
   @yield('adminjs')
+  @yield('adminjs2')
 </body>
 </html>

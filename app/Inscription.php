@@ -48,6 +48,21 @@ class Inscription extends Model
             return false;
         }
     }
+    public function asistencia_personalizada($subject_id,$people_id,$fecha,$n)
+    {
+        $assistances = \Institute\Assistance::where('fecha',$fecha)
+        ->where('group_id',$this->group_id)
+        ->where('asistencia',$n)
+        ->where('subject_id',$subject_id)
+        ->where('people_id',$people_id)
+        ->where('inscription_id',$this->id)
+        ->get();
+        if (count($assistances)>0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function nota($test)
     {
         $score = $test->scores->where('inscription_id',$this->id)->first();

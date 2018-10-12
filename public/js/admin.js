@@ -2,9 +2,6 @@ $('document').ready(function(){
 	setTimeout(function() {
 		$(".alert").fadeOut(1000);
 	},7000);
-	$(".checkall").change(function () {
-		$("input:checkbox."+$(this).attr('id')).prop('checked', $(this).prop("checked"));
-	});
 	$('.tablab3').DataTable({
 		paging: false,
 		searching: false,
@@ -433,9 +430,9 @@ $('body').on('change','#my_fecha_tickeos',function () {
 	var nuevo2 = array_href2.join('/');
 	href2 = $('#my_btn_log_tick').attr('href',nuevo2);
 });
-$('.check_asistencia').click(function() {
+$('.check_asistencia_00').click(function() {
+	var check = $(this).parent();
 	var data = $(this).parent().parent().serialize();
-	console.log(data);
 	var url = $(this).parent().parent().attr("action");
 	$.ajaxSetup({
 		header:$('meta[name="_token"]').attr('content')
@@ -445,11 +442,39 @@ $('.check_asistencia').click(function() {
 		url:url,
 		data:data,
 		dataType: 'json',
-		success: function(payment){
-			console.log('guardado');
+		success: function(data){
+			console.log('success: '+data.status);
+			check.attr('style','animation: destellos_verde 0.3s ease;');
+			check.addClass('destello_v');
 		},
-		error: function(ret){
-			console.log('error: '+data);
+		error: function(data){
+			console.log('error: '+data.status);
+			check.attr('style','animation: destellos_rojo 0.3s ease;');
+			check.addClass('destello_r');
+		}
+	});
+});
+$('.check_asistencia').click(function() {
+	var check = $(this);
+	var data = $(this).parent().serialize();
+	var url = $(this).parent().attr("action");
+	$.ajaxSetup({
+		header:$('meta[name="_token"]').attr('content')
+	});
+	$.ajax({
+		type:"POST",
+		url:url,
+		data:data,
+		dataType: 'json',
+		success: function(data){
+			console.log('success: '+data.status);
+			check.attr('style','animation: destellos_verde 0.3s ease;');
+			check.addClass('destello_v');
+		},
+		error: function(data){
+			console.log('error: '+data.status);
+			check.attr('style','animation: destellos_rojo 0.3s ease;');
+			check.addClass('destello_r');
 		}
 	});
 });
@@ -482,6 +507,7 @@ $('body').on('click','.new_nota',function () {
 	$('.modal_nota').addClass('nota_visible');
 	$('.background_modal').addClass('nota_visible');
 	$('.nota').focus();
+	$(this).attr('open','open');
 });
 $('body').on('click','.edit_nota',function () {
 	var inscription_id = $(this).attr('inscription_id');
@@ -500,6 +526,7 @@ $('body').on('click','.edit_nota',function () {
 	$('.background_modal').addClass('nota_visible');
 	$('.nota').select();
 	$('.nota').focus();
+	$(this).attr('open','open');
 });
 $('body').on('click','.modal_nota_close',function () {
 	cerrar_modales();
@@ -517,17 +544,48 @@ function cerrar_modales() {
 	$(".group_id").val(null);
 	$(".subject_id").val(null);
 	$('.nota_visible').removeClass('nota_visible');
+	$('button[open="open"]').removeAttr('open');
 }
+$('#asig_nota').on('submit',function(e) {
+	var contenedor = $('button[open="open"]').parent();
+	var datos = $(this).serialize();
+	var nota = null;
+	var campos = $(this).serializeArray();
+	$.each(campos, function(i, field){
+		if (field.name == "nota") {
+			nota = field.value;
+			return false;
+		}
+	});
+	e.preventDefault(e);
+	$('#load_cli').fadeIn();
+	var nota = $('input.nota').val();
+	var token = $('#asig_nota input[name="_token"]').val();
+	cerrar_modales();
+	$.ajax({
+		type: 'POST',
+		url: $(this).attr('action'),
+		headers: {'X-CSRF-TOKEN': token},
+		data: datos,
+		success: function(score_id) {
+			contenedor.children().remove();
+			contenedor.append('<button class="edit_nota btn btn-default" style="padding: 2px 3px 2px 2px;" type="button" inscription_id="934" group_id="161" test_id="218" nota="'+nota+'" score_id="'+score_id+'" aria-label="Left Align">'+nota+'</button>');
+			contenedor.children().css('animation', 'destellos_verde 0.3s ease;');
+			contenedor.children().attr('style', 'padding: 2px 2px 2px 2px;');
+			contenedor.children().addClass('destello_v');
+		},
+		error: function(data) {
+			contenedor.children().css('animation', 'destellos_rojo 0.3s ease;');
+			contenedor.children().attr('style', 'padding: 2px 2px 2px 2px;');
+			contenedor.children().addClass('destello_r');
+			console.log('error');
+		}
+	});
+	return false;
+});
 $('body').on('click','#env_wha',function () {
 	$.get("/cien/public/admin/interestedsend/"+$(this).attr('int')+"",function(respuesta,response){
 	}).done(function() {
 		location.reload();
 	});
-});
-$('body').on('change','.check_piscina',function () {
-	if($(this).prop('checked')) {
-		var ins = $(this).attr('insc');
-		$('.check_piscina[insc="'+ins+'"]').prop('checked', false);
-		$(this).prop('checked', true);
-	}
 });

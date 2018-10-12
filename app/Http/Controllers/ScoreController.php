@@ -70,9 +70,14 @@ class ScoreController extends Controller
                 ]);
             $score->save();
         }
-        Session::flash('success','Ingreso de Item registrada exitosamente');
-
-        return Redirect::to('score/register/'.$request['piso'].'/'.$request['aula'].'/'.$request['dia']);
+        if ($request->ajax()) {
+            return $score->id;
+        } else {
+            if ($request['dia']==null) {
+                return Redirect::to('score/ver/'.$request['group_id']);
+            }
+            return Redirect::to('score/register/'.$request['piso'].'/'.$request['aula'].'/'.$request['dia']);
+        }
     }
 
     /**

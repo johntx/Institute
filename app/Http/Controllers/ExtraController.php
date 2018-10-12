@@ -9,8 +9,10 @@ use Institute\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Institute\Extra;
+use Institute\Assistance;
 use Illuminate\Routing\Route;
 use Validator;
+use Auth;
 
 class ExtraController extends Controller
 {
@@ -44,29 +46,16 @@ class ExtraController extends Controller
         ->where('inscriptions.estado','Inscrito')
         ->where('extras.id',$id)
         ->distinct('inscriptions.id')
-        ->orderBy('inscriptions.fecha_ingreso','DESC')
+        ->orderBy('inscriptions.id','DESC')
         ->get();
         $curso = Extra::find($id);
         return view('admin/extra.curso',['inscriptions'=>$inscriptions,'curso'=>$curso]);
     }
-    public function filtro(Request $request)
+    public function filtro()
     {
-        $socabon = collect();
-        for ($i=0; $i < count($request['socabon']); $i++) {
-            $ins = \Institute\Inscription::find($request['socabon'][$i]);
-            $socabon->push($ins);
-        }
-        $oasis = collect();
-        for ($i=0; $i < count($request['oasis']); $i++) {
-            $ins = \Institute\Inscription::find($request['oasis'][$i]);
-            $oasis->push($ins);
-        }
-        $sacaba = collect();
-        for ($i=0; $i < count($request['sacaba']); $i++) {
-            $ins = \Institute\Inscription::find($request['sacaba'][$i]);
-            $sacaba->push($ins);
-        }
-        return view('admin/extra.filtro',['socabon'=>$socabon,'oasis'=>$oasis,'sacaba'=>$sacaba]);
+        $socabon = Assistance::where('asistencia',3)->where('fecha',\Carbon\Carbon::now()->format('Y-m-d'))->where('people_id',Auth::id())->get();
+        $sacaba = Assistance::where('asistencia',2)->where('fecha',\Carbon\Carbon::now()->format('Y-m-d'))->where('people_id',Auth::id())->get();
+        return view('admin/extra.filtro',['socabon'=>$socabon,'sacaba'=>$sacaba]);
     }
 
     /**

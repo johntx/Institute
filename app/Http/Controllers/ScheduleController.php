@@ -45,7 +45,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        $classrooms = \Institute\Classroom::get();
+        $classrooms = \Institute\Classroom::orderBy('area','desc')->orderBy('aula','asc')->get();
         $semana = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
         $horario = array('07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00');
         $startclasses = Startclass::
@@ -124,7 +124,7 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        $classrooms = \Institute\Classroom::get();
+        $classrooms = \Institute\Classroom::orderBy('area','desc')->orderBy('aula','asc')->get();
         $semana = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
         $horas_semana = collect();
         foreach ($semana as $dia) {
@@ -144,7 +144,7 @@ class ScheduleController extends Controller
     public function ver($id)
     {
         $semana = array("lunes", "martes", "miercoles", "jueves", "viernes", "sabado");
-        $classrooms = \Institute\Classroom::get();
+        $classrooms = \Institute\Classroom::orderBy('area','desc')->orderBy('aula','asc')->get();
         $horas_semana = collect();
         foreach ($semana as $dia) {
             $horas_semana->put($dia,\Institute\Hour::join('schedules','hours.schedule_id','=','schedules.id')->select('hours.*')->where('schedules.id',$id)->where('hours.dia',$dia)->get());

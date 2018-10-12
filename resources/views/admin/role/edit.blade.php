@@ -8,3 +8,10 @@
 	{!! Form::close() !!}
 </div>
 @endsection
+@section('adminjs2')
+<script>
+	$(".checkall").change(function () {
+		$("input:checkbox."+$(this).attr('id')).prop('checked', $(this).prop("checked"));
+	});
+</script>
+@endsection

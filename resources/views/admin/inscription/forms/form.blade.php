@@ -74,7 +74,15 @@
 			</div>
 			<div class="form-group">
 				{!! Form::label('Pago Inicial') !!}
-				{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required']) !!}
+				{!! Form::text('abono',null,['class'=>'form-control abono','placeholder'=>'Insert Pago','onkeypress'=>"return justNumbers(event);", 'required','autocomplete'=>'off']) !!}
+			</div>
+			<div class="col-xs-5" style="padding-left: 0;">
+				{!! Form::label('Descuento') !!}
+				{!! Form::text('descuento',null,['class'=>'form-control','placeholder'=>'Descuento','onkeypress'=>"return justNumbers(event);",'autocomplete'=>'off']) !!}
+			</div>
+			<div class="col-xs-7" style="padding-right: 0;padding-left: 0;">
+				{!! Form::label('Observaciones') !!}
+				{!! Form::text('observacion_pago',null,['class'=>'form-control','placeholder'=>'Insert Observación', 'maxlength'=>255]) !!}
 			</div>
 		</div>
 	</div>

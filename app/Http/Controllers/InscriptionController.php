@@ -49,7 +49,7 @@ class InscriptionController extends Controller
      */
     public function create()
     {
-    $extras = \Institute\Extra::get();
+      $extras = \Institute\Extra::get();
       $students = People::
       join('inscriptions','peoples.id','=','inscriptions.people_id')
       ->select('peoples.*')
@@ -73,6 +73,10 @@ class InscriptionController extends Controller
      */
     public function store(Request $request)
     {
+      $descuento=0;
+      if ($request['descuento']!=null) {
+        $descuento=$request['descuento'];
+      }
       if (Auth::user()->role->code=='ROOT') {
         Session::flash('error',"Este usuario no puede realizar esta función");
         return Redirect::to('admin/inscription/create');
@@ -82,19 +86,19 @@ class InscriptionController extends Controller
         return Redirect::to('admin/inscription/create');
       }
       $group=\Institute\Group::find($request['group_id']);
-      if ($request['abono'] > $request['total']) {
+      if ($request['abono']+$descuento > $request['total']) {
         Session::flash('error',"Monto superior al total");
         return Redirect::to('admin/inscription/create');
       }
-      if ($request['abono'] > $request['monto'] && $request['abono'] != $request['total']) {
+      if ($request['abono']+$descuento > $request['monto'] && $request['abono']+$descuento != $request['total']) {
         Session::flash('error',"Monto superior al pago mensual");
         return Redirect::to('admin/inscription/create');
       }
       $inscription = new Inscription;
-      if ($request['abono'] == $request['total']) {
+      if ($request['abono']+$descuento == $request['total']) {
         $colegiatura = 'Pagado';
       }
-      if ($request['abono'] < $request['total']) {
+      if ($request['abono']+$descuento < $request['total']) {
         $colegiatura = 'Debe';
       }
       $people= People::find($request['user_id']);
@@ -106,7 +110,7 @@ class InscriptionController extends Controller
         'people_id' => $people->id,
         'fecha_ingreso' => $request['fecha_ingreso'],
         'monto' => $request['monto'],
-        'abono' => $request['abono'],
+        'abono' => $request['abono']+$descuento,
         'total' => $request['total'],
         'colegiatura' => $colegiatura,
         'group_id' => $request['group_id'],
@@ -114,15 +118,16 @@ class InscriptionController extends Controller
         ]);
       $inscription->save();
 
-      if ($request['abono'] == $request['total']) {
+      if ($request['abono'] + $descuento == $request['total']) {
         $payment = new \Institute\Payment;
         $payment->fill([
           'fecha_pagar' => $request['fecha_ingreso'],
           'fecha_pago' => $request['fecha_ingreso'],
           'estado' => 'Pagado',
-          'observacion' => 'Pagado al Contado',
+          'observacion' => '(Pagado al Contado) '.$request['observacion_pago'],
           'abono' => $request['abono'],
-          'saldo' => $request['abono'],
+          'descuento' => $descuento,
+          'saldo' => $request['total'],
           'inscription_id' => $inscription->id,
           'user_id' => Auth::user()->id
           ]);
@@ -136,11 +141,11 @@ class InscriptionController extends Controller
         }else{
           $fecha_inicio = $group->startclass->fecha_inicio;
         }
-        if ($request['abono'] < $request['monto']) {
-          $saldo = $request['monto']-$request['abono'];
+        if ($request['abono'] + $descuento < $request['monto']) {
+          $saldo = $request['monto']-$request['abono']-$descuento;
           $fecha_pagar = date('Y-m-d',strtotime('+1 week', strtotime($fecha_inicio)));
         }
-        if ($request['abono'] == $request['monto']) {
+        if ($request['abono'] + $descuento == $request['monto']) {
           $fecha_pagar = date('Y-m-d',strtotime('+1 month', strtotime($fecha_inicio)));
           $saldo = $request['monto'];
           if ($saldo > ($inscription->total - $inscription->abono)) {
@@ -153,6 +158,8 @@ class InscriptionController extends Controller
           'fecha_pago' => $request['fecha_ingreso'],
           'estado' => 'Pagado',
           'abono' => $request['abono'],
+          'observacion' => $request['observacion_pago'],
+          'descuento' => $descuento,
           'saldo' => $request['monto'],
           'inscription_id' => $inscription->id,
           'user_id' => Auth::user()->id
@@ -168,27 +175,27 @@ class InscriptionController extends Controller
           ]);
         $payment2->save();
       }
-    Session::flash('pdf','admin/payment/pdf/'.$payment->id);
-    return Redirect::to('admin/inscription/create');
-  }
-
-  public function show($id)
-  {
-    return view('admin/inscription.delete',['inscription'=>$this->inscription]);
-  }
-
-  public function destroy($id)
-  {
-    $people = \Institute\People::find($this->inscription->people_id);
-    if (count($people->inscriptions)>1) {
-      $this->inscription->payments->each(function($payment){
-        $payment->delete();
-      });
-      $this->inscription->delete();
-      Session::flash('success','Inscripción Eliminada exitosamente');
-    } else {
-      Session::flash('error','No se puede eliminar la inscripción de este estudiante');
+      Session::flash('pdf','admin/payment/pdf/'.$payment->id);
+      return Redirect::to('admin/inscription/create');
     }
-    return Redirect::to('/admin/student/'.$this->inscription->people_id.'/edit');
+
+    public function show($id)
+    {
+      return view('admin/inscription.delete',['inscription'=>$this->inscription]);
+    }
+
+    public function destroy($id)
+    {
+      $people = \Institute\People::find($this->inscription->people_id);
+      if (count($people->inscriptions)>1) {
+        $this->inscription->payments->each(function($payment){
+          $payment->delete();
+        });
+        $this->inscription->delete();
+        Session::flash('success','Inscripción Eliminada exitosamente');
+      } else {
+        Session::flash('error','No se puede eliminar la inscripción de este estudiante');
+      }
+      return Redirect::to('/admin/student/'.$this->inscription->people_id.'/edit');
+    }
   }
-}

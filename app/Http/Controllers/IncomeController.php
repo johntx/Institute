@@ -47,11 +47,28 @@ class IncomeController extends Controller
      */
     public function create()
     {
+        $careers = \Institute\Career::join('items','careers.id','=','items.career_id')->select('careers.*')->distinct('careers.id')->get();
+        $career = $careers->first();
         $items = \Institute\Item::join('careers','items.career_id','=','careers.id')
         ->select('items.*')
         ->orderBy('careers.nombre','asc')
         ->get();
-        return view('admin/income.create',['items'=>$items]);
+        return view('admin/income.create',['items'=>$items,'careers'=>$careers, 'career'=>$career]);
+    }
+
+    public function create_income($career = '')
+    {
+        $careers = \Institute\Career::join('items','careers.id','=','items.career_id')->select('careers.*')->distinct('careers.id')->get();
+        if ($career == '') {
+            $career = $careers->first();
+        } else {
+            $career = \Institute\Career::where('nombre',$career)->first();
+        }
+        $items = \Institute\Item::join('careers','items.career_id','=','careers.id')
+        ->select('items.*')
+        ->orderBy('careers.nombre','asc')
+        ->get();
+        return view('admin/income.create',['items'=>$items,'careers'=>$careers, 'career'=>$career]);
     }
 
     /**
@@ -88,7 +105,7 @@ class IncomeController extends Controller
         $income->incomelists()->saveMany($col);
         Session::flash('success','Ingreso de Item registrado exitosamente');
         Session::flash('pdf','admin/income/pdf/'.$income->id);
-        return Redirect::to('admin/income/create');
+        return Redirect::to('admin/income/create/career/'.$request['career']);
     }
 
     public function pdf($id)

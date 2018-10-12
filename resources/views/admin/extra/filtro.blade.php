@@ -7,21 +7,9 @@
 		</thead>
 		<tbody>
 			<?php $key=1; ?>
-			@foreach($socabon as $inscription)
+			@foreach($socabon as $assistance)
 			<tr style="background-color: rgba(0,255,0,0.25);" >
-				<td>@if ($key<10){{'0'.$key.'. '}}@else {{$key.'. '}}@endif {{$inscription->people->nombrecompleto()}}</td>
-			</tr>
-			<?php $key++; ?>
-			@endforeach
-		</tbody>
-		<thead>
-			<th>Oasis</th>
-		</thead>
-		<tbody>
-			<?php $key=1; ?>
-			@foreach($oasis as $inscription)
-			<tr style="background-color: rgba(255,255,0,0.25);">
-				<td>@if ($key<10){{'0'.$key.'. '}}@else {{$key.'. '}}@endif {{$inscription->people->nombrecompleto()}}</td>
+				<td>@if ($key<10){{'0'.$key.'. '}}@else {{$key.'. '}}@endif {{$assistance->inscription->people->nombrecompleto()}}</td>
 			</tr>
 			<?php $key++; ?>
 			@endforeach
@@ -31,9 +19,9 @@
 		</thead>
 		<tbody>
 			<?php $key=1; ?>
-			@foreach($sacaba as $inscription)
+			@foreach($sacaba as $assistance)
 			<tr style="background-color: rgba(255,0,0,0.25);">
-				<td>@if ($key<10){{'0'.$key.'. '}}@else {{$key.'. '}}@endif {{$inscription->people->nombrecompleto()}}</td>
+				<td>@if ($key<10){{'0'.$key.'. '}}@else {{$key.'. '}}@endif {{$assistance->inscription->people->nombrecompleto()}}</td>
 			</tr>
 			<?php $key++; ?>
 			@endforeach

@@ -108,7 +108,9 @@ class ExamController extends Controller
         $career = Career::find($request['career_id']);
         $subject = \Institute\Subject::find($request['subject_id']);
         $career->exam_subjects()->where('subject_id',$request['subject_id'])->get()->each(function ($exam_subject){
-            $exam_subject->exam->delete();
+            if ($exam_subject->exam != null) {
+                $exam_subject->exam->delete();
+            }
         });
         for ($i=0; $i < count($request['pregunta']); $i++) {
             $exam = new Exam;

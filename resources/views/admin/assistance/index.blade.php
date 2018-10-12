@@ -19,9 +19,9 @@
 		<tr @if ($inscription->estado == 'Retirado') style="background-color: rgba(0,0,80,0.4);" @endif @if ($inscription->debit()) style="background-color: rgba(255,0,0,0.25);"  @elseif ($inscription->debitNext()) style="background-color: rgba(255,255,0,0.25);"  @else style="background-color: rgba(0,255,0,0.25);"  @endif >
 			<td>{{++$i}}</td>
 			<td>
-				{!! Form::open(['url'=>'assistance/assistance_ajax']) !!}
+				{!! Form::open(['url'=>'assistance/assistance_ajax_00']) !!}
 				<label class="switch">
-					<input type="checkbox" name="asistencia" class="check_asistencia" value="{{$inscription->id}}" @if ($inscription->asistencia($h->subject_id,Auth::id(),\Carbon\Carbon::now()->format('Y-m-d'))) checked @endif>
+					<input type="checkbox" name="asistencia" class="check_asistencia_00" value="{{$inscription->id}}" @if ($inscription->asistencia($h->subject_id,Auth::id(),\Carbon\Carbon::now()->format('Y-m-d'))) checked @endif>
 					<span class="slider round"></span>
 				</label>
 				<!--Añadido para uso de ajax-->

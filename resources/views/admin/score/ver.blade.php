@@ -7,8 +7,13 @@
 <link href="https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css" rel="stylesheet"/>
 @endsection
 @section('content')
+<?php $editar=false;
+foreach (Auth::user()->role->functionalities as $func) {
+	if ($func->code=='ESCO'){ $editar=true; }
+}
+?>
 <br>
-<div class=" vista_reducida tabla_score_ver">
+<div class="vista_reducida tabla_score_ver">
 	<table class="table table-hover table-condensed" style="width:100%">
 		<thead>
 			<tr>
@@ -55,11 +60,11 @@
 			@foreach (\Institute\Test::where('career_id',$group->startclass->career_id)->where('subject_id',$subject->id)->where('modulo',$test_modulo->modulo)->orderBy('orden','asc')->get() as $k=>$test)
 			<td @if ($ban!=1) @if ($materia>0) style="background-color: #9A9BA3;"@else style="background-color: #BABABA;"@endif @else @if ($materia>0) style="background-color: #DBEDEA;" @else style="background-color:white;" @endif @endif>
 				@if ($inscription->nota($test)!=null)
-				<button class="btn btn-default" style="padding: 2px 3px 2px 2px;" type="button" inscription_id="{{$inscription->id}}" group_id="{{"$group->id"}}" test_id="{{$test->id}}" nota="{{$inscription->nota($test)['nota']}}" score_id="{{$inscription->nota($test)['id']}}" class="btn btn-default" aria-label="Left Align">{{$inscription->nota($test)['nota']}}</button>
+				<button class=" @if ($editar) edit_nota @endif btn btn-default" style="padding: 2px 3px 2px 2px;" type="button" inscription_id="{{$inscription->id}}" group_id="{{"$group->id"}}" test_id="{{$test->id}}" nota="{{$inscription->nota($test)['nota']}}" score_id="{{$inscription->nota($test)['id']}}" class="btn btn-default" aria-label="Left Align">{{$inscription->nota($test)['nota']}}</button>
 				<?php $total = $total+intval($inscription->nota($test)['nota']); ?>
 				<?php $divisor++; ?>
 				@else
-				<button class="btn btn-primary" style="padding: 2px 2px 2px 2px;" type="button" inscription_id="{{$inscription->id}}" group_id="{{$group->id}}" subject_id="{{"$subject->id"}}" test_id="{{$test->id}}" class="btn btn-default" aria-label="Left Align"><i class="fa fa-plus fa-fw"></i></button>
+				<button class=" @if ($editar) new_nota @endif btn btn-primary" style="padding: 2px 2px 2px 2px;" type="button" inscription_id="{{$inscription->id}}" group_id="{{$group->id}}" subject_id="{{$subject->id}}" test_id="{{$test->id}}" class="btn btn-default" aria-label="Left Align"><i class="fa fa-plus fa-fw"></i></button>
 				@endif
 			</td>
 			@endforeach
@@ -77,6 +82,18 @@
 		</tr>
 		@endforeach
 	</table>
+</div>
+<div class="modal_nota">
+	<span class="modal_nota_close">&times;</span>
+	{!! Form::open(['route' => 'admin.score.store', 'id'=>'asig_nota']) !!}
+	<input type="text" name="nota" class="nota" placeholder="Nota" onkeypress="return justNumbers(event);" autofocus autocomplete="off">
+	<input type="hidden" name="inscription_id" class="inscription_id" value="">
+	<input type="hidden" name="test_id" value="{{null}}" class="test_id">
+	<input type="hidden" name="score_id" value="{{null}}" class="score_id">
+	<input type="hidden" name="group_id" value="{{null}}" class="group_id">
+	<input type="hidden" name="subject_id" value="{{null}}" class="subject_id">
+	<button class="btn btn-primary">Guardar</button>
+	{!! Form::close() !!}
 </div>
 <style>
 	.vista_movil *{font-size: 12px;}
@@ -101,4 +118,8 @@
 	.nombre_test_vrt{transform:rotate(-90deg);width:170px;position: absolute;left:-70px;bottom:85px;height:16px;overflow: hidden;
 	}
 </style>
+<div class="background_modal">
+	<span>Nombre: </span><span class="nombre_mod_nota"></span><br>
+	<span>Parcial: </span><span class="parcial"></span>
+</div>
 @endsection

@@ -93,21 +93,18 @@
 					</td>
 					@endif
 					<td>
-						@if ($payment->abono != 0)
-						{{$payment->abono}}
-						@endif
-						@if ($payment->descuento > 0)
+						@if ($payment->estado == 'Pagado')
 						{{$payment->abono}}
 						@endif
 					</td>
 					<td>
 						@if ($payment->descuento > 0)
-						{{$payment->descuento}}
+						-{{$payment->descuento}}
 						@endif
 					</td>
 					<td>
-						@if ($payment->abono != 0)
-						{{$payment->saldo-$payment->abono}}
+						@if ($payment->estado == 'Pagado')
+						{{$payment->saldo - $payment->abono - $payment->descuento}}
 						@endif
 					</td>
 					<td>{{$payment->saldo}}</td>
@@ -117,17 +114,17 @@
 						<em>{{\Institute\User::find($payment->user_id)['user']}}</em>
 					</td>
 					<td>
-						@if ($payment->abono != 0)
+						@if ($payment->estado == 'Pagado')
 						{!!link_to_action('PaymentController@pdf', $title = 'Imprimir', $parameters = $payment->id, $attributes = ['class'=>'btn btn-info pdfbtn','code'=>$payment->id])!!}
 						@endif
 					</td>
+					@if ($eliminar)
 					<td>
-						@if ($payment->abono != 0)
-						@if ($eliminar)
+						@if ($payment->estado == 'Pagado')
 						{!!link_to_route('admin.payment.show', $title = 'Borrar', $parameters = $payment->id, $attributes = ['class'=>'btn btn-danger'])!!}
 						@endif
-						@endif
 					</td>
+					@endif
 				</tr>
 				@endforeach
 			</tbody>

@@ -30,7 +30,7 @@
 			@foreach ($career->items as $item)
 			<tr class="{{$item->id}}" @if ($item->stock==0) style="background-color: #E09696;" @endif>
 				<td>
-				{!! Form::label($item->id,"(".substr($item->career->nombre, 0, 3).") ".$item->nombre,['style'=>'padding:8px; width:100%;','class'=>'check_item','item'=>$item->id]) !!}
+					{!! Form::label($item->id,"(".substr($item->career->nombre, 0, 3).") ".$item->nombre,['style'=>'padding:8px; width:100%;','class'=>'check_item','item'=>$item->id]) !!}
 					
 					<input type="hidden" name="item[]" value="{{$item->id}}" disabled class="{{$item->id}}">
 				</td>
@@ -39,6 +39,7 @@
 				</td>
 				<td>
 					[<b><span class="stock">{{$item->stock}}</span><span>&nbsp; Un.</span></b>]
+				</td>
 				<td>
 					<span class="price {{$item->id}}">{{$item->precio}}</span><span> Bs.</span>
 				</td>
@@ -61,6 +62,7 @@
 			<td></td>
 		</tbody>
 	</table>
+	<input type="hidden" name="career" value="{{$career->nombre}}">
 </div>
 <div class="form-group col-sm-9"></div>
 <div class="form-group col-sm-3">

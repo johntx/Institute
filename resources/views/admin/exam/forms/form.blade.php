@@ -9,23 +9,23 @@
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta1[]" autocomplete="off" value="{{$exam->respuesta1}}" class="form-control" placeholder="Ingrese Respuesta 1" required maxlength="200">
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="1" @if($exam->correcta==1) checked @else disabled @endif>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="1" @if($exam->correcta==1) checked @else disabled @endif>
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta2[]" autocomplete="off" value="{{$exam->respuesta2}}" class="form-control" placeholder="Ingrese Respuesta 2" maxlength="200">
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="2" @if($exam->correcta==2) checked @else disabled @endif>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="2" @if($exam->correcta==2) checked @else disabled @endif>
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta3[]" autocomplete="off" value="{{$exam->respuesta3}}" class="form-control" placeholder="Ingrese Respuesta 3" maxlength="200">
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="3" @if($exam->correcta==3) checked @else disabled @endif>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="3" @if($exam->correcta==3) checked @else disabled @endif>
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta4[]" autocomplete="off" value="{{$exam->respuesta4}}" class="form-control" placeholder="Ingrese Respuesta 4" maxlength="200">
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="4" @if($exam->correcta==4) checked @else disabled @endif>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="4" @if($exam->correcta==4) checked @else disabled @endif>
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta5[]" autocomplete="off" value="{{$exam->respuesta5}}" class="form-control" placeholder="Ingrese Respuesta 5" maxlength="200">
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="5" @if($exam->correcta==5) checked @else disabled @endif>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width: 25px;" value="5" @if($exam->correcta==5) checked @else disabled @endif>
 	</div>
 </div>
 @endforeach
@@ -39,23 +39,23 @@
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta1[]" autocomplete="off" value="{{null}}" class="form-control" placeholder="Ingrese Respuesta 1" maxlength="200" required disabled>
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="1" disabled>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="1" disabled>
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta2[]" autocomplete="off" value="{{null}}" class="form-control" placeholder="Ingrese Respuesta 2" maxlength="200" disabled>
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="2" disabled>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="2" disabled>
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta3[]" autocomplete="off" value="{{null}}" class="form-control" placeholder="Ingrese Respuesta 3" maxlength="200" disabled>
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="3" disabled>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="3" disabled>
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta4[]" autocomplete="off" value="{{null}}" class="form-control" placeholder="Ingrese Respuesta 4" maxlength="200" disabled>
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="4" disabled>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="4" disabled>
 		<div class="form-group col-xs-11">
 			<input type="text" name="respuesta5[]" autocomplete="off" value="{{null}}" class="form-control" placeholder="Ingrese Respuesta 5" maxlength="200" disabled>
 		</div>
-		<input type="checkbox" name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="5" disabled>
+		<input type="checkbox" required name="correcta[]" class="form-group col-xs-1 check_uniq" style="height:25px; width:25px;" value="5" disabled>
 	</div>
 </div>
 <input type="hidden" name="career_id" value="{{$career->id}}">
