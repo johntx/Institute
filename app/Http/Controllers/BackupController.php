@@ -31,7 +31,8 @@ class BackupController extends Controller
      */
     public function index()
     {
-        //
+        $backups = Backup::orderBy('id','DESC')->paginate(20);
+        return view('admin/backup.index',['backups'=>$backups]);
     }
 
     /**
@@ -52,8 +53,17 @@ class BackupController extends Controller
      */
     public function store(Request $request)
     {
-        $backup = new Backup();
-// Set to false if you want plain SQL backup files (not gzipped)
+
+        define("BACKUP_PATH", public_path('/')."backup/");
+
+        $server_name   = "develofingers.com";
+        $username      = "johntx_cien";
+        $password      = "c6}^xMeve7Ds";
+        $database_name = "johntx_datos";
+        $date_string   = time();
+
+        $cmd = "mysqldump --routines -h {$server_name} -u {$username} -p{$password} {$database_name} > " . BACKUP_PATH . "{$date_string}_{$database_name}.sql";
+        exec($cmd);
         Session::flash('success','Backup realizado exitosamente');
 
         return Redirect::to('/admin/backup/create');

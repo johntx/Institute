@@ -121,7 +121,7 @@ foreach (Auth::user()->role->functionalities as $func) {
 			@foreach($extras as $extra)
 			<div class="form-group">
 				@if ($iextras->contains($extra->id))
-				{!! Form::checkbox('extras[]',$extra->id,$extra->id,[ 'class'=>'extra_edit','id'=>$extra->nombre.$inscription->id, 'precio'=>$extra->precio, 'inscription'=>$inscription->id]) !!}
+				{!! Form::checkbox('extras-'.$inscription->id.'[]',$extra->id,$extra->id,[ 'class'=>'extra_edit','id'=>$extra->nombre.$inscription->id, 'precio'=>$extra->precio, 'inscription'=>$inscription->id]) !!}
 				@else
 				{!! Form::checkbox('extras[]',$extra->id,null,[ 'class'=>'extra_edit','id'=>$extra->nombre.$inscription->id, 'precio'=>$extra->precio, 'inscription'=>$inscription->id]) !!}
 				@endif

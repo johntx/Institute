@@ -1,90 +1,126 @@
 @extends('layouts.admin')
-@section('adminjs')
-{!!Html::script('js/score.js')!!}
-<link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet"/>
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
-<link href="https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css" rel="stylesheet"/>
-@endsection
 @section('content')
 <?php $editar=false;
 foreach (Auth::user()->role->functionalities as $func) {
 	if ($func->code=='ESCO'){ $editar=true; }
 }
 ?>
-<br>
-<div class="vista_reducida tabla_score_ver">
-	<table class="table table-hover table-condensed" style="width:100%">
-		<thead>
-			<tr>
-				<th class="sobre">Nombre</th>
-				<?php $rec_modulo=0; $igual=true; $ban=1;?>
+<div class="tabla-scroll-doble">
+	<div class="nombres">
+		<div class="header">Nombre</div>
+		<div class="body">
+			@foreach($inscriptions as $i=>$inscription)
+			<div class="{{$inscription->id}}" @if ($inscription->estado=='Retirado') style="background-color:rgba(156,39,176,0.5);" @endif @if ($inscription->debit()) style="background-color:rgba(244,67,54,0.5);" @elseif ($inscription->debitNext()) style="background-color:rgba(255,152,0,0.5);" @else style="background-color:rgba(76,175,80,0.5);" @endif>
+				<a target="_blank" href="{{url('admin/student/search/'.$inscription->people->id)}}">{{$inscription->people->nombrecompleto()}}</a>
+			</div>
+			@endforeach
+		</div>
+	</div>
+	<div class="notas">
+		<div class="conte">
+			<div class="header">
+				<?php $rec_modulo=0; $ban=1;?>
 				@foreach (\Institute\Test::where('career_id',$group->startclass->career_id)->groupBy('modulo')->orderBy('modulo','asc')->get() as $k=>$test_modulo)
-				<?php $materia=1;  $m_c=$materia;?>
-				@foreach ($group->startclass->career->subjects as $subject)
-				<?php if (count($subject->tests)>0) {$materia*=-1; } ?>
-				@foreach (\Institute\Test::where('career_id',$group->startclass->career_id)->where('subject_id',$subject->id)->where('modulo',$test_modulo->modulo)->orderBy('orden','asc')->get() as $k=>$test)
-				<?php if ($rec_modulo!=$test_modulo->id){$igual=false;$ban=$ban*-1;}
-				else{$igual=true;}
-				$rec_modulo=$test_modulo->id; ?>
-				<th class="nota_contenedor_fechas vista_movil" @if ($ban!=1) @if ($materia>0) style="background-color: #9A9BA3;"@else style="background-color: #BABABA;"@endif @else @if ($materia>0) style="background-color: #DBEDEA;" @else style="background-color:white;"@endif @endif>
-					@if (!$igual)
-					<div class="nombre_modulo">{{'MODULO '.$test_modulo->modulo}}</div>
+				<div class="modulos" modulo="{{$test_modulo->id}}" style="width: 150px; overflow: hidden;">
+					<div class="nombre_modulo btn btn-primary" style="top: 10px;">{{'MODULO '.$test_modulo->modulo}}</div>
+					<?php $materia=1;?>
+					@foreach ($group->startclass->career->subjects as $subject)
+					<?php
+					$tsts = \Institute\Test::where('career_id',$group->startclass->career_id)->where('subject_id',$subject->id)->where('modulo',$test_modulo->modulo)->orderBy('orden','asc')->get();
+					?>
+					@if (count($tsts)>0)
+					<div class="materias" materia="{{$subject->id}}">
+						<div class="nombre_materia btn btn-warning">{{$subject->nombre}}</div>
+						<?php if (count($subject->tests)>0) {$materia*=-1; } ?>
+						@foreach ($tsts as $k=>$test)
+						<?php if ($rec_modulo!=$test_modulo->id){$ban=$ban*-1;}
+						$rec_modulo=$test_modulo->id; ?>
+						<div class="registros asis_{{$test->id}}" @if ($ban!=1) @if ($materia>0) style="background-color: #9A9BA3;"@else style="background-color: #BABABA;"@endif @else @if ($materia>0) style="background-color: #DBEDEA;" @else style="background-color:white;"@endif @endif>
+							<div class="nombre_test">{{$test->nombre}}</div>
+						</div>
+						<?php $cont[$k]=0; ?>
+						@endforeach
+					</div>
 					@endif
-					@if ($m_c != $materia)
-					<?php $m_c=$materia;?>
-					<div class="nombre_materia">{{$subject->nombre}}</div>
-					@endif
-					<div class="nombre_test_vrt vista_movil">{{$test->nombre}}</div>
-				</th>
+					@endforeach
+					<div class="materias" materia="total_modulo_{{$test_modulo->modulo}}">
+						<div class="nombre_materia btn btn-warning">PROMEDIO</div>
+						<div class="registros asis_igual_{{$test_modulo->modulo}}">
+							<div class="nombre_test"></div>
+						</div>
+						<div class="registros asis_total_{{$test_modulo->modulo}}">
+							<div class="nombre_test">TOTAL MODULO</div>
+						</div>
+					</div>
+				</div>
 				@endforeach
-
+				<div class="modulos" modulo="promedio" style="width: 150px; overflow: hidden;">
+					<div class="nombre_modulo promo btn btn-success" style="top: 10px;">PROMEDIO</div>
+					<div class="materias" materia="promedio">
+						<div class="registros asis_igual">
+							<div class="nombre_test"></div>
+						</div>
+						<div class="registros asis_promedio">
+							<div class="nombre_test">PROMEDIO</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="body">
+				@foreach($inscriptions as $i=>$inscription)
+				<div>
+					<div class="asis_hover" ins="{{$inscription->id}}">
+						<?php $rec_modulo=0; $ban=1;?>
+						<?php $promedio = 0; $div_promedio = 0;?>
+						@foreach (\Institute\Test::where('career_id',$group->startclass->career_id)->groupBy('modulo')->orderBy('modulo','asc')->get() as $k=>$test_modulo)
+						<div class="body_modulos" modulo="{{$test_modulo->id}}" style="width: 150px; overflow: hidden;">
+							<?php $total = 0; $divisor = 0;?>
+							<?php if ($rec_modulo!=$test_modulo->id){$ban=$ban*-1;}?>
+							<?php $materia=1;?>
+							@foreach ($group->startclass->career->subjects as $subject)
+							<?php if (count($subject->tests)>0) {$materia*=-1; } ?>
+							@foreach (\Institute\Test::where('career_id',$group->startclass->career_id)->where('subject_id',$subject->id)->where('modulo',$test_modulo->modulo)->orderBy('orden','asc')->get() as $k=>$test)
+							<div asis="asis_{{$test->id}}" modulo="{{$test_modulo->id}}" materia="{{$subject->id}}" @if($inscription->estado=='Retirado') style="background-color:rgba(156,39,176,0.4);" @endif @if ($inscription->debit()) style="background-color:rgba(244,67,54,0.4);" @elseif ($inscription->debitNext()) style="background-color:rgba(255,152,0,0.4);" @else style="background-color:rgba(76,175,80,0.4);" @endif>
+								@if ($inscription->nota($test)!=null)
+								<button class="@if ($editar) edit_nota @endif btn btn-primary" inscription_id="{{$inscription->id}}" group_id="{{"$group->id"}}" test_id="{{$test->id}}" nota="{{$inscription->nota($test)['nota']}}" score_id="{{$inscription->nota($test)['id']}}">{{$inscription->nota($test)['nota']}}</button>
+								<?php $total = $total+intval($inscription->nota($test)['nota']); ?>
+								<?php $divisor++; ?>
+								@else
+								<button class=" @if ($editar) new_nota @endif btn btn-default" inscription_id="{{$inscription->id}}" group_id="{{$group->id}}" subject_id="{{$subject->id}}" test_id="{{$test->id}}">+</button>
+								@endif
+							</div>
+							@endforeach
+							@endforeach
+							<?php $div_promedio++; ?>
+							<div asis="asis_igual_{{$test_modulo->modulo}}" modulo="{{$test_modulo->id}}" materia="materia_{{$test_modulo->id}}">
+								<div>=</div>
+							</div>
+							<?php if($divisor==0){$divisor=1;} ?>
+							<div asis="asis_total_{{$test_modulo->modulo}}" modulo="{{$test_modulo->id}}" materia="materia_{{$test_modulo->id}}">
+								<button class="btn btn-success btn_promedio">{{round( $total/$divisor, 1, PHP_ROUND_HALF_UP)}}</button>
+							</div>
+						</div>
+						<?php $promedio = $promedio+round( $total/$divisor, 1, PHP_ROUND_HALF_UP); ?>
+						@endforeach
+						<div class="body_modulos" modulo="promedio" style="width: 150px; overflow: hidden;">
+							<div asis="asis_igual" modulo="igual" materia="materia_promedio">
+								<div>=</div>
+							</div>
+							<div asis="asis_promedio" modulo="promedio" materia="materia_promedio">
+								@if ($promedio!=0)
+								<button class="btn btn-success btn_promedio">{{round( $promedio/$div_promedio, 1, PHP_ROUND_HALF_UP)}}</button>
+								@endif
+							</div>
+						</div>
+					</div>
+				</div>
 				@endforeach
-				<th class="igual" @if ($ban!=1) style="background-color: #BABABA;"@endif></th>
-				<th class="vista_movil" @if ($ban!=1) style="background-color: #BABABA;"@endif><p>Total</p></th>
-				@endforeach
-				<th style="text-align: center;"><p>Promedio</p></th>
-			</tr>
-		</thead>
-		@foreach($inscriptions as $i=>$inscription)
-		<tr @if ($inscription->estado == 'Retirado') style="background-color:#A460B8;" @endif @if ($inscription->debit()) style="background-color: #FF7878;"@elseif ($inscription->debitNext()) style="background-color: #FFF961;"@else style="background-color: #91F47E;"@endif>
-			<td style="white-space: pre;"><b><a href="{{url('admin/student/search/'.$inscription->people->id)}}" style="color: #0800AB">{{$inscription->people->nombrecompleto()}}</a></b></td>
-			<?php $rec_modulo=0; $ban=1;?>
-			<?php $promedio = 0; $div_promedio = 0;?>
-			@foreach (\Institute\Test::where('career_id',$group->startclass->career_id)->groupBy('modulo')->orderBy('modulo','asc')->get() as $k=>$test_modulo)
-			<?php $total = 0; $divisor = 0;?>
-			<?php if ($rec_modulo!=$test_modulo->id){$ban=$ban*-1;}?>
-			<?php $materia=1;?>
-			@foreach ($group->startclass->career->subjects as $subject)
-			<?php if (count($subject->tests)>0) {$materia*=-1; } ?>
-			@foreach (\Institute\Test::where('career_id',$group->startclass->career_id)->where('subject_id',$subject->id)->where('modulo',$test_modulo->modulo)->orderBy('orden','asc')->get() as $k=>$test)
-			<td @if ($ban!=1) @if ($materia>0) style="background-color: #9A9BA3;"@else style="background-color: #BABABA;"@endif @else @if ($materia>0) style="background-color: #DBEDEA;" @else style="background-color:white;" @endif @endif>
-				@if ($inscription->nota($test)!=null)
-				<button class=" @if ($editar) edit_nota @endif btn btn-default" style="padding: 2px 3px 2px 2px;" type="button" inscription_id="{{$inscription->id}}" group_id="{{"$group->id"}}" test_id="{{$test->id}}" nota="{{$inscription->nota($test)['nota']}}" score_id="{{$inscription->nota($test)['id']}}" class="btn btn-default" aria-label="Left Align">{{$inscription->nota($test)['nota']}}</button>
-				<?php $total = $total+intval($inscription->nota($test)['nota']); ?>
-				<?php $divisor++; ?>
-				@else
-				<button class=" @if ($editar) new_nota @endif btn btn-primary" style="padding: 2px 2px 2px 2px;" type="button" inscription_id="{{$inscription->id}}" group_id="{{$group->id}}" subject_id="{{$subject->id}}" test_id="{{$test->id}}" class="btn btn-default" aria-label="Left Align"><i class="fa fa-plus fa-fw"></i></button>
-				@endif
-			</td>
-			@endforeach
-			@endforeach
-			<?php $div_promedio++; ?>
-			<td class="igual" @if ($ban!=1) style="background-color: #BABABA;"@endif>=</td>
-			<?php if($divisor==0){$divisor=1;} ?>
-			<td class="cont_add_nota" @if ($ban!=1) style="background-color: #BABABA;text-align:center;"@else style="text-align:center;"@endif>{{round( $total/$divisor, 1, PHP_ROUND_HALF_UP)}}</td>
-			<?php $promedio = $promedio+round( $total/$divisor, 1, PHP_ROUND_HALF_UP); ?>
-			@endforeach
-			<td style="text-align: center;"> @if ($promedio!=0)
-				<b>{{round( $promedio/$div_promedio, 1, PHP_ROUND_HALF_UP)}}</b>
-				@endif
-			</td>
-		</tr>
-		@endforeach
-	</table>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="modal_nota">
-	<span class="modal_nota_close">&times;</span>
+	<span class="modal_nota_close btn btn-danger">&times;</span>
 	{!! Form::open(['route' => 'admin.score.store', 'id'=>'asig_nota']) !!}
 	<input type="text" name="nota" class="nota" placeholder="Nota" onkeypress="return justNumbers(event);" autofocus autocomplete="off">
 	<input type="hidden" name="inscription_id" class="inscription_id" value="">
@@ -95,31 +131,6 @@ foreach (Auth::user()->role->functionalities as $func) {
 	<button class="btn btn-primary">Guardar</button>
 	{!! Form::close() !!}
 </div>
-<style>
-	.vista_movil *{font-size: 12px;}
-	.vista_movil td{padding: 4px !important;}
-	.vista_movil td form{margin: 0 !important;}
-	.switch{margin: 0;}
-	.nota_contenedor_fechas{position:relative; height: 220px;}
-	.nombre_modulo{
-		position:absolute;font-size:14px;padding-left:5px;width:100px;bottom:200px;left:0;z-index:1;
-	}
-	.nombre_materia{
-		position:absolute;padding-left:5px;bottom:185;left:0;white-space: pre;background-color:inherit;cursor:pointer;overflow: hidden;z-index:1;
-	}
-	.sobre{
-		z-index: 10;position: relative;background-color:#FFFFFF;
-	}
-	.nombre_materia:hover{
-		z-index:5;border:black 1px solid;margin:-2px 0 0 -2px;padding-right:4px;border-radius:2px;-webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
-		-moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
-		box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
-	}
-	.nombre_test_vrt{transform:rotate(-90deg);width:170px;position: absolute;left:-70px;bottom:85px;height:16px;overflow: hidden;
-	}
-</style>
 <div class="background_modal">
-	<span>Nombre: </span><span class="nombre_mod_nota"></span><br>
-	<span>Parcial: </span><span class="parcial"></span>
 </div>
 @endsection

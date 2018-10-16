@@ -61,42 +61,36 @@ class FrontController extends Controller
       if (Carbon::now()->format('Y-m-d') <= $startclass->fecha_fin) {
         if (Carbon::now()->format('Y-m-d') <= $startclass->fecha_inicio) {
           if ($startclass->estado != 'Espera') {
-            $startclass->estado = 'Espera';
-            $startclass->save();
+            $inscription->update(['estado' => 'Espera']);
           }
         } else {
           if ($startclass->estado != 'Iniciado') {
-            $startclass->estado = 'Iniciado';
-            $startclass->save();
+            $inscription->update(['estado' => 'Iniciado']);
           }
         }
         /*Inscripciones*/
         foreach ($startclass->groups  as $group) {
           foreach ($group->inscriptions as $inscription) {
             if ($inscription->estado != 'Inscrito' && $inscription->estado != 'Retirado') {
-              $inscription->estado = 'Inscrito';
-              $inscription->save();
+            $inscription->update(['estado' => 'Inscrito']);
             }
           }
         }
       } else {
         if ($startclass->estado != 'Cerrado') {
-          $startclass->estado = 'Cerrado';
-          $startclass->save();
+            $inscription->update(['estado' => 'Cerrado']);
         }
         /*Inscripciones*/
         foreach ($startclass->groups  as $group) {
           foreach ($group->inscriptions as $inscription) {
             if ($inscription->estado != 'Culminado' && $inscription->estado != 'Retirado') {
-              $inscription->estado = 'Culminado';
-              $inscription->save();
+            $inscription->update(['estado' => 'Culminado']);
             }
           }
         }
       }
     }
-    $bot_grupos->fecha = \Carbon\Carbon::now();
-    $bot_grupos->save();
+    $bot_grupos->update(['fecha' => \Carbon\Carbon::now()]);
   }
   public function BotFaltas($bot_faltas)
   {
@@ -106,14 +100,12 @@ class FrontController extends Controller
         if ($inscription->alumno_antiguo()) {
           if ($inscription->asistencias_semana() == 0) {
             /*retirar estudiantes faltones*/
-            $inscription->estado = 'Retirado';
-            $inscription->save();
+            $inscription->update(['estado' => 'Retirado']);
           }
         }
       }
     }
-    $bot_faltas->fecha = \Carbon\Carbon::now();
-    $bot_faltas->save();
+    $bot_faltas->update(['fecha' => \Carbon\Carbon::now()]);
   }
 
   /**

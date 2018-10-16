@@ -324,8 +324,8 @@ class StudentController extends Controller
         ]);
       $inscription->save();
       $inscription->extras()->detach();
-      if (!empty($request['extras'])){
-        $inscription->extras()->attach($request['extras']);
+      if (!empty($request['extras-'.$inscription->id])){
+        $inscription->extras()->attach($request['extras-'.$inscription->id]);
       }
     }
     Session::flash('success','Estudiante editado exitosamente');

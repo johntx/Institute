@@ -73,7 +73,7 @@
       <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
           <ul class="nav" id="side-menu">
-            @foreach(\Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')->Join('roles', 'privileges.role_id', '=', 'roles.id')->Join('menus', 'functionalities.menu_id', '=', 'menus.id')->select('menus.*')->where('roles.code',Auth::user()->role->code)->distinct()->orderBy('id','asc')->get() as $menu)
+            @foreach(\Institute\Functionality::Join('privileges', 'privileges.functionality_id', '=', 'functionalities.id')->Join('roles', 'privileges.role_id', '=', 'roles.id')->Join('menus', 'functionalities.menu_id', '=', 'menus.id')->select('menus.*')->where('roles.code',Auth::user()->role->code)->distinct()->orderBy('orden','asc')->get() as $menu)
             <li>
               <a href="#"><i class="fa fa-{{ $menu->icon }} fa-fw"></i> {{ $menu->label }}<span class="fa arrow"></span></a>
               <ul class="nav nav-second-level">

@@ -33,7 +33,9 @@
 			<td>{{$tickeo->dia}}</td>
 			<td>
 				@if (!$tickeo->estado && !$tickeo->cancelado)
+				@if (Auth::user()->role->code == "ADM" || Auth::user()->role->code == "ROOT")
 				{!!link_to_action('TickeoController@observar', $title = 'Observar', $parameters = $tickeo->id, $attributes = ['class'=>'btn btn-warning observar'])!!}
+				@endif
 				@else
 				{{$tickeo->estado}}
 				@endif

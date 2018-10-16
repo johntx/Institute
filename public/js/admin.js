@@ -589,3 +589,42 @@ $('body').on('click','#env_wha',function () {
 		location.reload();
 	});
 });
+
+$(".conte>div.body").on("scroll", function() {
+	$("div.nombres>.body").scrollTop($(this).scrollTop());
+	$(".conte>div.header").scrollLeft($(this).scrollLeft());
+});
+$('.asis_hover>div>div').hover(function() {
+	var ins = '.'+$(this).parent().parent().attr('ins');
+	$(ins).children().attr('style','background-color: rgba(0,0,0,0.6);color:#FFF;');
+	var asis = '.'+$(this).attr('asis');
+	var stilo_asis = $(asis).attr('style');
+	$(asis).attr('style',stilo_asis+'background-color:rgba(156,39,176,0.3);');
+},function() {
+	var ins = '.'+$(this).parent().parent().attr('ins');
+	$(ins).children().removeAttr('style');
+	var asis = '.'+$(this).attr('asis');
+	var stilo_asis = $(asis).attr('style');
+	var res = stilo_asis.replace("background-color:rgba(156,39,176,0.3);", "");
+	$(asis).attr('style',res);
+});
+$('body').on('click','.nombre_modulo',function (e) {
+	if ($(this).hasClass('promo')) {
+		return null;
+	} else {
+		var padre = $(this).parent().width();
+		var modulo = $(this).parent().attr('modulo');
+		if (padre > 150) {
+			$(this).css({'top':'10px'});
+			$(this).parent().width(150);
+			$(this).parent().css({'overflow':'hidden'});
+			$(".body_modulos[modulo='"+modulo+"']").width(150);
+			$(".body_modulos[modulo='"+modulo+"']").css({'overflow':'hidden'});
+		}
+		if (padre <= 150) {
+			$(this).removeAttr('style');
+			$(this).parent().removeAttr('style');
+			$(".body_modulos[modulo='"+modulo+"']").removeAttr('style');
+		}
+	}
+});

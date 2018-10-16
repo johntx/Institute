@@ -8,7 +8,7 @@ class Menu extends Model
 {
 	protected $table = 'menus';
 
-	protected $fillable = ['code','label', 'icon'];
+	protected $fillable = ['code','label', 'icon','orden'];
 
 	public $timestamps = false;
 	public function setCodeAttribute($code)
